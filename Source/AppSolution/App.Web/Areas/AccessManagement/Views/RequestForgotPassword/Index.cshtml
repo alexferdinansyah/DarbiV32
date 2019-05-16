@@ -1,0 +1,34 @@
+﻿@model IEnumerable<App.Entities.Models.RequestForgotPassword>
+
+@{
+    ViewBag.Title = "Request Forgot Password";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestDate)
+        </td>
+        <td>
+            @Html.ActionLink("Update Password", "UpdateUserPassword", new { Email=item.Email })
+        </td>
+    </tr>
+}
+
+</table>

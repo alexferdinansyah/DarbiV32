@@ -1,0 +1,49 @@
+﻿<input type="hidden" id="RoleId" value="@ViewData["RoleId"]" />
+
+<hr />
+<table id="tableRoleChild" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Role Child</th>
+            <th>Role Hirarcy</th>
+            <th>(Is Active) Module</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var tableUser = $('#tableRoleChild').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/AccessManagement/Role/AjaxAllRoleChild?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "RoleId", "value": $('#RoleId').val() }
+                );
+            },
+            "aoColumns": [
+                    {
+                        "render": function (data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    { "sName": "RoleChild" },
+                    { "sName": "Hirarcy" },
+                    { "sName": "Modules" }
+            ]
+        });
+    });
+</script>

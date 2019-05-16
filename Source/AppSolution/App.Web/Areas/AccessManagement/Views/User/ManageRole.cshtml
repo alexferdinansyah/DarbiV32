@@ -1,0 +1,39 @@
+﻿@model App.Entities.Models.User
+@{
+    ViewBag.Title = "Manage Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+</div>
+
+@{
+    var AddRoleToUserForm = new App.Web.Areas.AccessManagement.Models.AddRoleToUserFormVM();
+    AddRoleToUserForm.UserId = Model.UserId;
+}
+
+@Html.Partial("AddRoleToUser", @AddRoleToUserForm)
+
+@Html.Partial("ListUserRoles", Model)

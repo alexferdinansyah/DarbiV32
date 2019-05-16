@@ -1,0 +1,45 @@
+﻿@model App.Entities.Models.User 
+@{ 
+    var modelRoles = Model.Roles;
+}
+<br />
+<table class="table">
+    <tr>
+        <th>
+            No
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th></th>
+    </tr>
+@{ 
+    var i = 0;
+}
+@foreach (var item in modelRoles) {
+    i++;
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "RemoveRoleFromUser", new {UserId=Model.UserId, RoleId =item.RoleId })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<div>
+    @Html.ActionLink("Back to User List", "Index")
+</div>

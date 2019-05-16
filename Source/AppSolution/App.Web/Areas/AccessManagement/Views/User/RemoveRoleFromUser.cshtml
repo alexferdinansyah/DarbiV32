@@ -1,0 +1,38 @@
+﻿@model App.Web.Areas.AccessManagement.Models.RemoveRoleFromUserFormVM
+
+@{
+    ViewBag.Title = "Remove Role From User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.UserId, Model.UserId)
+
+        @Html.HiddenFor(model => model.RoleId, Model.RoleId)
+
+        @Html.Partial("DetailUser", Model.User)
+        <br />
+
+        @Html.Partial("DetailRole", Model.Role)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Remove" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<br />
+<div>
+    @Html.ActionLink("Back to List Manage User Role", "ManageRole", new { UserId = Model.UserId})
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

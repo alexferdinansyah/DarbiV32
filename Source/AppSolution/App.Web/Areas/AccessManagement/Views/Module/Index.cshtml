@@ -1,0 +1,88 @@
+﻿@model App.Web.Areas.AccessManagement.Models.ModuleSearchFormVM
+
+@{
+    ViewBag.Title = "Module";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("Search", Model)
+
+<table id="tableModule" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Area</th>
+            <th>Controller</th>
+            <th>Action</th>
+            <th>Is Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var tableUser = $('#tableModule').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/AccessManagement/Module/AjaxModule?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "Name", "value": $('#Name').val() },
+                    { "name": "Area", "value": $('#Area').val() },
+                    { "name": "ControllerName", "value": $('#ControllerName').val() },
+                    { "name": "ActionName", "value": $('#ActionName').val() },
+                    { "name": "IsActive", "value": $("#IsActive").is(':checked') }
+                );
+            },
+            "aoColumns": [
+                    {
+                        "render": function (data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    { "sName": "Name" },
+                    { "sName": "Area" },
+                    { "sName": "Controller" },
+                    { "sName": "Action" },
+                    { "sName": "IsActive" },
+                    {
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                var x = '<a href="/AccessManagement/Module/Details?id=' + data + '">Details</a> | ';
+                                x += '<a href="/AccessManagement/Module/Edit?id=' + data + '">Edit</a> | ';
+                                x += '<a href="/AccessManagement/Module/Delete?id=' + data + '">Delete</a>';
+                            }
+
+                            return x;
+                        }
+                    }
+            ]
+        });
+
+        $('#btnsearch').click(function () {
+            tableUser.fnDraw(null);
+        });
+
+    });
+</script>

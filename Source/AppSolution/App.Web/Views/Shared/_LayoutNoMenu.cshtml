@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />
+    <script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
+
+    <style>
+        #loader {
+            z-index: 1;
+            position: relative;
+            left: 45%;
+            width: 70px;
+            height: 70px;
+            border-style: solid;
+            border-top-color: #808080;
+            border-right-color: #808080;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: rotate 3s ease-in-out infinite;
+            transform: rotate(-200deg);
+        }
+
+        @@keyframes rotate {
+            0% {
+                border-width: 10px;
+            }
+
+            25% {
+                border-width: 3px;
+            }
+
+            50% {
+                transform: rotate(115deg);
+                border-width: 10px;
+            }
+
+            75% {
+                border-width: 3px;
+            }
+
+            100% {
+                border-width: 10px;
+            }
+        }
+
+        .load {
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+            .load > div {
+                width: 400px;
+                position: relative;
+                margin: 10% auto;
+                padding: 2rem;
+                background: transparent;
+                color: #444;
+            }
+
+        .active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+</body>
+</html>

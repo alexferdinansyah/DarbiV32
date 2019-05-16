@@ -1,0 +1,62 @@
+﻿@model App.Entities.Models.Role
+@{
+    var modelModules = Model.Modules;
+}
+<table class="table">
+    <tr>
+        <th>
+            No
+        </th>
+        <th>
+            Area
+        </th>
+        <th>
+            Controller
+        </th>
+        <th>
+            Action
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th></th>
+    </tr>
+@{
+    var i = 0;
+}
+@foreach (var item in modelModules) {
+    i++;
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Area)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Controller)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Action)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "RemoveModuleFromRole", new { ModuleId = item.ModuleId, RoleId = Model.RoleId })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+<div>
+    @Html.ActionLink("Back to List Role", "Index")
+</div>

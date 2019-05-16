@@ -1,0 +1,39 @@
+﻿@model App.Web.Areas.AccessManagement.Models.RemoveChildFromRoleFormVM
+
+@{
+    ViewBag.Title = "Remove Child From Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.RoleIdChild, Model.RoleIdChild)
+
+        @Html.HiddenFor(model => model.RoleId, Model.RoleId)
+
+        @Html.Partial("DetailRole", Model.Role)
+        <br />
+
+        @Html.Partial("DetailRoleChild", Model.RoleChild)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Remove" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List Manage Child", "ManageChild", new { RoleId = Model.RoleId })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
