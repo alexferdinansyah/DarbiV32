@@ -14,6 +14,7 @@
     <script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
 
     <style>
+
         #loader {
             z-index: 1;
             position: relative;
@@ -105,34 +106,29 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="panel panel-default">
-
-                    @{ 
-                        var GroupUserModules = Function.GroupUserModules();
-                        var CurrentAreaName = Function.CurrentAreaName();
-                    }
-                    @foreach (var group in GroupUserModules)
-                    {
-                        <div class="panel-heading">
-                            <a href="#" data-toggle="collapse" data-target="#@group">@Function.CamelCaseToSentenceCase(group)</a>
+                    <div class="panel-heading">
+                        <a href="~/Dashboard/Dashboard/Index">Home</a>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="#" data-toggle="collapse" data-target="#groupMD">Master Data</a>
+                    </div>
+                    <div class="panel-body collapse" id="groupMD">
+                        <div class="list-group-item">
+                            <a href="~/AccessManagement/User/Index">Siswa</a>
                         </div>
-                       
-                        var InCollapse = "collapse";
-                        if (CurrentAreaName == group)
-                        {
-                            InCollapse = "in";
-                        }                        
-                        <div class="panel-body @InCollapse" id="@group">
-                            @{
-                                var UserModules = Function.UserModulesByArea(group);
-                            }
-                            @foreach (var module in UserModules)
-                            {
-                                <div class="list-group-item">
-                                    <a href="/@module.Area/@module.Controller/@module.Action">@module.Name</a>
-                                </div>
-                            }
+                        <div class="list-group-item">
+                            <a href="~/AccessManagement/User/Index">Biaya</a>
                         </div>
-                    }
+                        <div class="list-group-item">
+                            <a href="~/AccessManagement/User/Index">Kelas</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/AccessManagement/User/Index">Bank</a>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="~/AccessManagement/User/Index">User Management</a>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-9">
@@ -141,7 +137,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Darul Abidin</p>
         </footer>
     </div>
 </body>

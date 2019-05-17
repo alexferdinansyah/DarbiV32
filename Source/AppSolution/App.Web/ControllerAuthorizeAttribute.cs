@@ -44,30 +44,30 @@ namespace App.Web
                     return false;
                 }
 
-                List<Role> Roles = new List<Role>();
-                foreach (var item in Module.Roles)
-                {
-                    IEnumerable<Role> Query = db.Roles;
-                    var CurrentQuery = Query.Where(x => x.RoleId == item.RoleId).ToList();
-                    var QueryChild = new List<Role>();
-                    Boolean IsFirst = true;
-                    while (CurrentQuery != null && CurrentQuery.Count() > 0)
-                    {
-                        if (!IsFirst)
-                        {
-                            QueryChild.AddRange(CurrentQuery);
-                        }
-                        else
-                        {
-                            IsFirst = false;
-                        }
-                        CurrentQuery = CurrentQuery.SelectMany(x => x.Roles).ToList();
-                    }
+                //List<Role> Roles = new List<Role>();
+                //foreach (var item in Module.Roles)
+                //{
+                //    IEnumerable<Role> Query = db.Roles;
+                //    var CurrentQuery = Query.Where(x => x.RoleId == item.RoleId).ToList();
+                //    var QueryChild = new List<Role>();
+                //    Boolean IsFirst = true;
+                //    while (CurrentQuery != null && CurrentQuery.Count() > 0)
+                //    {
+                //        if (!IsFirst)
+                //        {
+                //            QueryChild.AddRange(CurrentQuery);
+                //        }
+                //        else
+                //        {
+                //            IsFirst = false;
+                //        }
+                //        CurrentQuery = CurrentQuery.SelectMany(x => x.Roles).ToList();
+                //    }
 
-                    Roles.AddRange(QueryChild);
-                }
-                Roles.AddRange(Module.Roles);
-                Roles = Roles.Where(x => x.IsActive == true).ToList();
+                //    Roles.AddRange(QueryChild);
+                //}
+                //Roles.AddRange(Module.Roles);
+                //Roles = Roles.Where(x => x.IsActive == true).ToList();
 
                 User User = db.Users.Where(
                     x => 
@@ -79,40 +79,41 @@ namespace App.Web
                 {
                     return false;
                 }
-                List<Role> UserRoles = new List<Role>();
-                foreach (var item in User.Roles)
-                {
-                    IEnumerable<Role> Query = db.Roles;
-                    var CurrentQuery = Query.Where(x => x.RoleId == item.RoleId).ToList();
-                    var QueryChild = new List<Role>();
-                    Boolean IsFirst = true;
-                    while (CurrentQuery != null && CurrentQuery.Count() > 0)
-                    {
-                        if (!IsFirst)
-                        {
-                            QueryChild.AddRange(CurrentQuery);
-                        }
-                        else
-                        {
-                            IsFirst = false;
-                        }
-                        CurrentQuery = CurrentQuery.SelectMany(x => x.Roles).ToList();
-                    }
+                //List<Role> UserRoles = new List<Role>();
+                //foreach (var item in User.Roles)
+                //{
+                //    IEnumerable<Role> Query = db.Roles;
+                //    var CurrentQuery = Query.Where(x => x.RoleId == item.RoleId).ToList();
+                //    var QueryChild = new List<Role>();
+                //    Boolean IsFirst = true;
+                //    while (CurrentQuery != null && CurrentQuery.Count() > 0)
+                //    {
+                //        if (!IsFirst)
+                //        {
+                //            QueryChild.AddRange(CurrentQuery);
+                //        }
+                //        else
+                //        {
+                //            IsFirst = false;
+                //        }
+                //        CurrentQuery = CurrentQuery.SelectMany(x => x.Roles).ToList();
+                //    }
 
-                    UserRoles.AddRange(QueryChild);
-                }
-                UserRoles.AddRange(User.Roles);
-                UserRoles = UserRoles.Where(x => x.IsActive == true).ToList();
+                //    UserRoles.AddRange(QueryChild);
+                //}
+                //UserRoles.AddRange(User.Roles);
+                //UserRoles = UserRoles.Where(x => x.IsActive == true).ToList();
 
-                var RoleAuthorized = Roles.Where(x => UserRoles.Contains(x));
-                if (RoleAuthorized.Count() > 0 )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                //var RoleAuthorized = Roles.Where(x => UserRoles.Contains(x));
+                //if (RoleAuthorized.Count() > 0 )
+                //{
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+                return true;
             }
             else
             {
