@@ -14,6 +14,7 @@ using App.Entities;
 
 namespace App.Web.Areas.MasterData.Controllers
 {
+    [ControllerAuthorize]
     public class BankController : Controller
     {
         // GET: MasterData/Bank

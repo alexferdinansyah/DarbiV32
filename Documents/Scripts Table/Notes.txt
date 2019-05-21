@@ -1,0 +1,68 @@
+jejang
+------
+SMP
+SD
+TK B
+TK A
+PG
+Toddler
+
+tingkat
+-------
+Toddler
+TK B
+TK A
+PG
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+kelas (nama kelas - tingakat)
+-----
+Little Black Rabbit Toddler
+Little White Rabbit Toddler
+Little Red Ant PG
+Little Yellow Ant PG
+Little Black Ant PG
+Little Cat TK B
+Little Cow TK B
+Little Camel TK B
+Little Butterfly TK A
+Little Bee TK A
+Little Bird TK A
+1 Makkah 1 
+1 Madinah 1
+1 Marwah 1
+2 Makkah 2
+2 Madinah 2
+2 Marwah 2
+3 Makkah 3
+3 Madinah 3
+3 Marwah 3
+4 Makkah 4
+4 Madinah 4
+4 Marwah 4
+5 Makkah 5
+5 Madinah 5
+5 Marwah 5
+6 Makkah 6
+6 Madinah 6
+6 Marwah 6
+7 Cordova A 7
+7 Cordova B 7
+7 Cordova C 7
+7 Cordova D 7
+8 Andalusia A 8
+8 Andalusia B 8
+8 Andalusia C 8
+8 Andalusia D 8
+9 Granada A 9
+9 Granada B 9
+9 Granada C 9
+9 Granada D 9
