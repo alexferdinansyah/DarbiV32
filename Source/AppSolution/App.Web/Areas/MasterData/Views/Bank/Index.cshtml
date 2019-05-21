@@ -1,0 +1,24 @@
+﻿@model App.Web.Areas.MasterData.Models.BankSearchForm
+
+@{
+    ViewBag.Title = "Bank";
+    Layout = "~Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("Search", Model)
+
+<table id="tableUser" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Bank</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
