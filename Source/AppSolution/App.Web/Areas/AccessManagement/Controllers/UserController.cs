@@ -46,7 +46,7 @@ namespace App.Web.Areas.AccessManagement.Controllers
                 IEnumerable<User> Query = db.Users;
                 if (Username != "")
                 {
-                    Query = Query.Where(x => x.Username == Username);
+                    Query = Query.Where(x => x.Username.Contains(Username));
                 }
 
                 //Query = Query.Where(x => x.IsActive == IsActive);

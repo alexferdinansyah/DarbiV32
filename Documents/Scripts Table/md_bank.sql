@@ -1,0 +1,21 @@
+USE [DarbiV32]
+GO
+
+/****** Object:  Table [dbo].[md_bank]    Script Date: 5/21/2019 12:41:53 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[md_bank](
+	[id] [int] NOT NULL,
+	[bank_name] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_md_bank] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
