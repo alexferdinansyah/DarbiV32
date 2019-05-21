@@ -87,7 +87,7 @@ namespace App.Web.Controllers
             var claims = new List<Claim>();
             try
             {
-                claims.Add(new Claim(ClaimTypes.Name, user.Email));                
+                claims.Add(new Claim(ClaimTypes.Name, user.Username));                
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
@@ -112,7 +112,7 @@ namespace App.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                RequestForgotPassword RequestForgotPassword = db.RequestForgotPasswords.Where(x => x.Email == model.Email).FirstOrDefault();
+                RequestForgotPassword RequestForgotPassword = db.RequestForgotPasswords.Where(x => x.Username == model.Username).FirstOrDefault();
                 if (RequestForgotPassword != null)
                 {
                     RequestForgotPassword.RequestDate = DateTime.Now;
@@ -122,7 +122,7 @@ namespace App.Web.Controllers
                 else
                 {
                     RequestForgotPassword = new RequestForgotPassword();
-                    RequestForgotPassword.Email = model.Email;
+                    RequestForgotPassword.Username = model.Username;
                     RequestForgotPassword.RequestDate = DateTime.Now;
                     db.RequestForgotPasswords.Add(RequestForgotPassword);
                     db.SaveChanges();

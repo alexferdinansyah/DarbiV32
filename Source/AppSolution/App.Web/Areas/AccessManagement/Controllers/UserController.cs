@@ -25,7 +25,7 @@ namespace App.Web.Areas.AccessManagement.Controllers
             if (model == null)
             {
                 model = new UserSearchFormVM();
-                model.IsActive = true;
+                //model.IsActive = true;
             }
             
             return View(model);
@@ -35,8 +35,8 @@ namespace App.Web.Areas.AccessManagement.Controllers
         public ActionResult AjaxUser(JQueryDataTableParamModel param)
         {
             var QS = Request.QueryString;
-            String Email = QS["Email"];
-            Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
+            String Username = QS["Username"];
+            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -44,12 +44,12 @@ namespace App.Web.Areas.AccessManagement.Controllers
             try
             {
                 IEnumerable<User> Query = db.Users;
-                if (Email != "")
+                if (Username != "")
                 {
-                    Query = Query.Where(x => x.Email == Email);
+                    Query = Query.Where(x => x.Username == Username);
                 }
 
-                Query = Query.Where(x => x.IsActive == IsActive);
+                //Query = Query.Where(x => x.IsActive == IsActive);
 
                 int TotalRecord = Query.Count();
 
@@ -66,8 +66,8 @@ namespace App.Web.Areas.AccessManagement.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
-                        data.Email,
-                        (data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
+                        data.Username,
+                        //(data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
                         data.UserId.ToString()
                     });
                 }
@@ -156,7 +156,7 @@ namespace App.Web.Areas.AccessManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Email,Password,IsActive")] User user)
+        public ActionResult Create([Bind(Include = "UserId,Fullname, Username,Password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -220,13 +220,13 @@ namespace App.Web.Areas.AccessManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,Email,Password,IsActive")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,Fullname, Username,Password")] User user)
         {
             if (ModelState.IsValid)
             {
                 User UserCek = db.Users.Find(user.UserId);
-                UserCek.Email = user.Email;
-                UserCek.IsActive = user.IsActive;
+                UserCek.Username = user.Username;
+                //UserCek.IsActive = user.IsActive;
                 if (user.Password != UserCek.Password)
                 {
                     UserCek.Password = Security.GetHashString(user.Password);

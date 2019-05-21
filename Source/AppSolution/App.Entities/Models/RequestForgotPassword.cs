@@ -15,9 +15,9 @@ namespace App.Entities.Models
         public int RequestForgotPasswordId { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
 
         [Required]
@@ -29,11 +29,11 @@ namespace App.Entities.Models
         {
             DatabaseContext db = new DatabaseContext();
 
-            User User = db.Users.Where(x=> x.Email == Email).FirstOrDefault();
+            User User = db.Users.Where(x=> x.Username == Username).FirstOrDefault();
 
             if (User == null)
             {
-                yield return new ValidationResult("Email Not Found!", new[] { "Email" });
+                yield return new ValidationResult("Username Not Found!", new[] { "Username" });
             }
         }
     }    

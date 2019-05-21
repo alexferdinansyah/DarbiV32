@@ -25,10 +25,10 @@ namespace App.Web.Areas.AccessManagement.Controllers
         }
 
 
-        public ActionResult UpdateUserPassword(String Email)
+        public ActionResult UpdateUserPassword(String Username)
         {
             UpdateUserPasswordFormVM model = new UpdateUserPasswordFormVM();
-            model.Email = Email;
+            model.Username = Username;
 
             return View(model);
         }
@@ -40,34 +40,34 @@ namespace App.Web.Areas.AccessManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                User User = db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+                User User = db.Users.Where(x => x.Username == model.Username).FirstOrDefault();
                 User.Password = Security.GetHashString(model.NewPassword);
                 db.Entry(User).State = EntityState.Modified;
                 db.SaveChanges();                
 
-                var UserModules = Function.UserModules();
-                UserModules = UserModules.Where(x => 
-                    x.Area.ToLower() == "AccessManagement".ToLower()
-                    && x.Controller.ToLower() == "RequestForgotPassword".ToLower()
-                    && x.Action.ToLower() == "Index".ToLower()).ToList();
+                //var UserModules = Function.UserModules();
+                //UserModules = UserModules.Where(x => 
+                //    x.Area.ToLower() == "AccessManagement".ToLower()
+                //    && x.Controller.ToLower() == "RequestForgotPassword".ToLower()
+                //    && x.Action.ToLower() == "Index".ToLower()).ToList();
 
-                if (UserModules.Count() > 0)
-                {
-                    RequestForgotPassword requestForgotPassword = db.RequestForgotPasswords.Where(x => x.Email == model.Email).FirstOrDefault();
-                    if (requestForgotPassword != null)
-                    {
-                        db.RequestForgotPasswords.Remove(requestForgotPassword);
-                        db.SaveChanges();
-                    }
+                //if (UserModules.Count() > 0)
+                //{
+                //    RequestForgotPassword requestForgotPassword = db.RequestForgotPasswords.Where(x => x.Username == model.Username).FirstOrDefault();
+                //    if (requestForgotPassword != null)
+                //    {
+                //        db.RequestForgotPasswords.Remove(requestForgotPassword);
+                //        db.SaveChanges();
+                //    }
 
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.MessageInfo = "Update Password Success";
+                //    return RedirectToAction("Index");
+                //}
+                //else
+                //{
+                //    ViewBag.MessageInfo = "Update Password Success";
 
-                    return View(model);
-                }
+                //    return View(model);
+                //}
             }
             return View(model);
         }        

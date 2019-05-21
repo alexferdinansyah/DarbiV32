@@ -33,16 +33,16 @@ namespace App.Web
                     return true;
                 }
                 DatabaseContext db = new DatabaseContext();
-                Module Module = db.Modules.Where(
-                    x => 
-                        x.Action == currentAction 
-                        && x.Controller == currentController
-                        && x.Area == currentArea).FirstOrDefault();
+                //Module Module = db.Modules.Where(
+                //    x => 
+                //        x.Action == currentAction 
+                //        && x.Controller == currentController
+                //        && x.Area == currentArea).FirstOrDefault();
 
-                if (Module == null)
-                {
-                    return false;
-                }
+                //if (Module == null)
+                //{
+                //    return false;
+                //}
 
                 //List<Role> Roles = new List<Role>();
                 //foreach (var item in Module.Roles)
@@ -69,16 +69,16 @@ namespace App.Web
                 //Roles.AddRange(Module.Roles);
                 //Roles = Roles.Where(x => x.IsActive == true).ToList();
 
-                User User = db.Users.Where(
-                    x => 
-                        x.Email == HttpContext.Current.User.Identity.Name 
-                        && x.IsActive == true
-                ).FirstOrDefault();
+                //User User = db.Users.Where(
+                //    x => 
+                //        x.Email == HttpContext.Current.User.Identity.Name 
+                //        && x.IsActive == true
+                //).FirstOrDefault();
 
-                if (User == null)
-                {
-                    return false;
-                }
+                //if (User == null)
+                //{
+                //    return false;
+                //}
                 //List<Role> UserRoles = new List<Role>();
                 //foreach (var item in User.Roles)
                 //{

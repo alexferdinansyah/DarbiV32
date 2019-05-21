@@ -17,8 +17,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Email</th>
-            <th>Is Active</th>
+            <th>Username</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -45,8 +44,7 @@
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
                 aoData.push(
-                    { "name": "Email", "value": $('#Email').val() },
-                    { "name": "IsActive", "value": $("#IsActive").is(':checked') }
+                    { "name": "Username", "value": $('#Username').val() }
                 );
             },
             "aoColumns": [
@@ -55,8 +53,7 @@
                             return data;
                         }
                     },
-                    { "sName": "Email" },
-                    { "sName": "IsActive" },
+                    { "sName": "Username" },
                     {
                         "render": function (data, type, row, meta) {
                             if (type === 'display') {

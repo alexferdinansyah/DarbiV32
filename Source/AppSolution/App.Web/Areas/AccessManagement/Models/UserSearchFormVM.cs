@@ -9,10 +9,10 @@ namespace App.Web.Areas.AccessManagement.Models
 {
     public class UserSearchFormVM 
     {
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
-        [Display(Name = "Is Active")]
-        public bool IsActive { get; set; } = true;
+        //[Display(Name = "Is Active")]
+        //public bool IsActive { get; set; } = true;
     }
 }

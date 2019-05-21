@@ -19,20 +19,25 @@ namespace App.Entities.Models
         [Display(Name = "User Id")]
         public int UserId { get; set; }
 
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[Display(Name = "Email")]
+        //public string Email { get; set; }
+
         [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Full Name")]
+        public string Fullname { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Required]
-        [Display(Name = "Is Active")]
-        public bool IsActive { get; set; }
-
 
         public virtual ICollection<Role> Roles { get; set; }
 
@@ -42,18 +47,18 @@ namespace App.Entities.Models
 
             if (UserId == 0)
             {
-                var user = db.Users.Where(e => e.Email == Email).ToList();
+                var user = db.Users.Where(e => e.Username == Username).ToList();
                 if (user.Count > 0)
                 {
-                    yield return new ValidationResult("Has been added! Please use another email.", new[] { "Email" });
+                    yield return new ValidationResult("Has been added! Please use another username.", new[] { "Username" });
                 }                
             }
             else
             {
-                var user = db.Users.Where(e => e.Email == Email && e.UserId != UserId).ToList();
+                var user = db.Users.Where(e => e.Username == Username && e.UserId != UserId).ToList();
                 if (user.Count > 0)
                 {
-                    yield return new ValidationResult("Already used! Please use another email.", new[] { "Email" });
+                    yield return new ValidationResult("Already used! Please use another username.", new[] { "Username" });
                 }
             }     
         }

@@ -12,8 +12,8 @@ namespace App.Web.Areas.AccessManagement.Models
     public class UpdateUserPasswordFormVM : IValidatableObject
     {
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -27,19 +27,19 @@ namespace App.Web.Areas.AccessManagement.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var UserModules = Function.UserModules();
-            UserModules = UserModules.Where(x =>
-                x.Area.ToLower() == "AccessManagement".ToLower()
-                && x.Controller.ToLower() == "RequestForgotPassword".ToLower()
-                && x.Action.ToLower() == "Index".ToLower()).ToList();
+            //var UserModules = Function.UserModules();
+            //UserModules = UserModules.Where(x =>
+            //    x.Area.ToLower() == "AccessManagement".ToLower()
+            //    && x.Controller.ToLower() == "RequestForgotPassword".ToLower()
+            //    && x.Action.ToLower() == "Index".ToLower()).ToList();
 
-            if (UserModules.Count() <= 0)
-            {
-                if (Email != HttpContext.Current.User.Identity.Name)
-                {
-                    yield return new ValidationResult("You dont have access this email!", new[] { "Email" });
-                }
-            }
+            //if (UserModules.Count() <= 0)
+            //{
+            //    if (Username != HttpContext.Current.User.Identity.Name)
+            //    {
+            //        yield return new ValidationResult("You dont have access this email!", new[] { "Username" });
+            //    }
+            //}
 
             if (NewPassword != ReTypeNewPassword)
             {

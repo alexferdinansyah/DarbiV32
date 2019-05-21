@@ -12,16 +12,16 @@ namespace App.Web.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
     }
 
     public class LoginViewModel : IValidatableObject
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        [DataType(DataType.Text)]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -32,14 +32,14 @@ namespace App.Web.Models
         
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!String.IsNullOrEmpty(Email) && !String.IsNullOrEmpty(Password))
+            if (!String.IsNullOrEmpty(Username) && !String.IsNullOrEmpty(Password))
             {
                 DatabaseContext db = new DatabaseContext();
                 String PasswordHash = Security.GetHashString(Password);
-                User = db.Users.Where(x => x.Email == Email && x.Password == PasswordHash).FirstOrDefault();
+                User = db.Users.Where(x => x.Username == Username && x.Password == PasswordHash).FirstOrDefault();
                 if (User == null)
                 {
-                    yield return new ValidationResult("Invalid email or Password", new[] { "Password" });
+                    yield return new ValidationResult("Invalid username or Password", new[] { "Password" });
                 }
             }
 
@@ -50,19 +50,19 @@ namespace App.Web.Models
     public class ForgotPasswordViewModel : IValidatableObject
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             DatabaseContext db = new DatabaseContext();
 
-            User User = db.Users.Where(x => x.Email == Email).FirstOrDefault();
+            User User = db.Users.Where(x => x.Username == Username).FirstOrDefault();
 
             if (User == null)
             {
-                yield return new ValidationResult("Email Not Found!", new[] { "Email" });
+                yield return new ValidationResult("Username Not Found!", new[] { "Username" });
             }
         }
     }
