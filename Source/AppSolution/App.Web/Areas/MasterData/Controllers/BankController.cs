@@ -52,6 +52,69 @@ namespace App.Web.Areas.MasterData.Controllers
             return View(bank);
         }
 
+        [HttpGet]
+        public ActionResult AjaxBank(JQueryDataTableParamModel param)
+        {
+            var QS = Request.QueryString;
+            String Bankname = QS["Bankname"];
+            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
+            List<string[]> listResult = new List<string[]>();
+            String errorMessage = "";
+
+            try
+            {
+                IEnumerable<Bank> Query = db.Banks;
+                if (Bankname != "")
+                {
+                    Query = Query.Where(x => x.Bankname.Contains(Bankname));
+                }
+
+                //Query = Query.Where(x => x.IsActive == IsActive);
+
+                int TotalRecord = Query.Count();
+
+                var OrderedQuery = Query.OrderBy(x => x.BankId);
+
+                int pageSize = param.iDisplayLength;
+                int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
+                var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+
+                int i = 0;
+                foreach (var data in PagedQuery)
+                {
+                    i++;
+                    listResult.Add(new string[]
+                    {
+                        i.ToString(),
+                        data.Bankname,
+                        //(data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
+                        data.BankId.ToString()
+                    });
+                }
+                return Json(new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = TotalRecord,
+                    iTotalDisplayRecords = TotalRecord,
+                    aaData = listResult
+                },
+                JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+
+            return Json(new
+            {
+                sEcho = param.sEcho,
+                iTotalRecords = 0,
+                iTotalDisplayRecords = 0,
+                aaData = listResult,
+                error = errorMessage
+            },
+            JsonRequestBehavior.AllowGet);
+        }
     }
 }
