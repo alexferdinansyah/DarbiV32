@@ -17,15 +17,41 @@ namespace App.Web.Areas.MasterData.Controllers
     [ControllerAuthorize]
     public class BankController : Controller
     {
+        private DatabaseContext db = new DatabaseContext();
+
         // GET: MasterData/Bank
-        public ActionResult Index()
+        public ActionResult Index(BankSearchFormVM model = null)
         {
-            return View();
+            if (model == null)
+            {
+                model = new BankSearchFormVM();
+                //model.IsActive = true;
+            }
+
+            return View(model);
         }
 
+        //GET : MasterData/Bank/Create
         public ActionResult Create()
         {
             return View();
         }
+
+        //POST : MasterData/Bank/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Bank bank)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Banks.Add(bank);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(bank);
+        }
+
+
     }
 }

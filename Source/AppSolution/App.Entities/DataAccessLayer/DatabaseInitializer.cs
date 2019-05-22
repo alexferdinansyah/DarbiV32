@@ -79,6 +79,13 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+            var banks = new List<Bank>
+            {
+                new Bank {Bankname = "bank mandiri"}
+            };
+            banks.ForEach(s => context.Banks.Add(s));
+            context.SaveChanges();
+
             var modules = new List<Module>
             {
                 new Module {Name = "Dashboard", Area = "Dashboard", Controller="Dashboard", Action = "Index", IsActive = true},
