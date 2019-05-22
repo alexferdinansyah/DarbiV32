@@ -26,6 +26,8 @@ namespace App.Entities.DataAccessLayer
         public DbSet<Role> Roles { get; set; }
         public DbSet<RequestForgotPassword> RequestForgotPasswords { get; set; }
 
+        public DbSet<Bank> Banks { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
