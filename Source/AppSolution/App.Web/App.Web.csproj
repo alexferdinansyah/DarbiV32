@@ -197,6 +197,8 @@
     <Compile Include="Areas\AccessManagement\Models\EditRoleFormVM.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\MasterData\Controllers\BankController.cs" />
+    <Compile Include="Areas\MasterData\Models\BankSearchForm.cs" />
     <Compile Include="Common\Function.cs" />
     <Compile Include="ControllerAuthorizeAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -288,6 +290,9 @@
     <Content Include="Areas\AccessManagement\Views\RequestForgotPassword\UpdateUserPassword.cshtml" />
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\MasterData\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -376,6 +381,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\MasterData\Views\BankSearchForm\" />
+    <Folder Include="Areas\MasterData\Views\Biaya\" />
+    <Folder Include="Areas\MasterData\Views\Kelas\" />
+    <Folder Include="Areas\MasterData\Views\Siswa\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
