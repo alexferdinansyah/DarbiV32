@@ -22,5 +22,10 @@ namespace App.Web.Areas.MasterData.Controllers
         {
             return View();
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
     }
 }
