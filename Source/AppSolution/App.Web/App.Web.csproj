@@ -298,6 +298,9 @@
     <Content Include="Areas\MasterData\Views\web.config" />
     <Content Include="Areas\MasterData\Views\Bank\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Bank\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Delete.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
