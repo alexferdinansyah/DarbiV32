@@ -28,7 +28,14 @@ namespace App.Entities.DataAccessLayer
 
 		public DbSet<Bank> Banks { get; set; }
 
+<<<<<<< HEAD
 		public DbSet<Jenjang> Jenjangs { get; set; }
+=======
+        public DbSet<Tingkat> Tingkats { get; set; }
+        public DbSet<Bank> Banks { get; set; }
+        
+
+>>>>>>> 911c1ea6dfe489dd1edcc34639d190bf150371b8
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
