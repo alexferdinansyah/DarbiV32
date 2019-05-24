@@ -16,7 +16,6 @@ namespace App.Web.Areas.MasterData.Controllers
 {
     public class TingkatController : Controller
     {
-        [ControllerAuthorize]
         private DatabaseContext db = new DatabaseContext();
 
         // GET: MasterData/Tingkat
@@ -76,7 +75,7 @@ namespace App.Web.Areas.MasterData.Controllers
                     Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
                 }
 
-                Query = Query.Where(x => x.IsActive == IsActive);
+                //Query = Query.Where(x => x.IsActive == IsActive);
 
                 int TotalRecord = Query.Count();
 
