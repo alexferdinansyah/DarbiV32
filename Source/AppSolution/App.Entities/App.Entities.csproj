@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="DataAccessLayer\DatabaseContext.cs" />
     <Compile Include="DataAccessLayer\DatabaseInitializer.cs" />
+    <Compile Include="Models\Jenjang.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RequestForgotPassword.cs" />
