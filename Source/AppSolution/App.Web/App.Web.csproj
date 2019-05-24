@@ -197,10 +197,12 @@
     <Compile Include="Areas\AccessManagement\Models\EditRoleFormVM.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\MasterData\Controllers\TingkatController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\BankController.cs" />
     <Compile Include="Areas\MasterData\Models\BankSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBankFormVM.cs" />
+    <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
     <Compile Include="Common\Function.cs" />
     <Compile Include="ControllerAuthorizeAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -298,6 +300,12 @@
     <Content Include="Areas\MasterData\Views\web.config" />
     <Content Include="Areas\MasterData\Views\Bank\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Bank\Create.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Delete.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Bank\Details.cshtml" />
+    <Content Include="Areas\MasterData\Views\Tingkat\Index.cshtml" />
+    <Content Include="Areas\MasterData\Views\Tingkat\Search.cshtml" />
+    <Content Include="Areas\MasterData\Views\Tingkat\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -386,6 +394,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\MasterData\Views\Jenjang\" />
+    <Folder Include="Areas\MasterData\Views\TingkatSearchFormVm\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

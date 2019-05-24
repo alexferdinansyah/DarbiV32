@@ -1,0 +1,77 @@
+﻿@model App.Web.Areas.MasterData.Models.TingkatSearchFormVM
+@{
+    ViewBag.Title = "Tingkat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("Search", Model)
+
+<table id="tableTingkat" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Tingkat</th>
+            <th>Jenjang</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var tableTingkat = $('#tableTingkat').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/MasterData/Tingkat/AjaxTingkat?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "Namatingkat", "value": $('#Namatingkat').val() }
+                    { "name": "Jenjang", "value": $('#Jenjang').val() }
+                );
+            },
+            "aoColumns": [
+                {
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                { "sName": "Namatingkat" },
+                {
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            var x = '<a href="/MasterData/Tingkat/Details?id=' + data + '">Details</a> | ';
+                            x += '<a href="/MasterData/Tingkat/Edit?id=' + data + '">Edit</a> | ';
+                            x += '<a href="/MasterData/Tingkat/Delete?id=' + data + '">Delete</a>';
+                        }
+
+                        return x;
+                    }
+                }
+            ]
+        });
+
+        $('#btnsearch').click(function () {
+            tableTingkat.fnDraw(null);
+        });
+
+    });
+</script>

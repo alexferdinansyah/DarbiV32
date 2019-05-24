@@ -79,6 +79,7 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+
             var banks = new List<Bank>
             {
                 new Bank {Bankname = "bank mandiri"}
