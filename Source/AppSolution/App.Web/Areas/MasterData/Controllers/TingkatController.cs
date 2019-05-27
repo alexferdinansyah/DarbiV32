@@ -57,7 +57,7 @@ namespace App.Web.Areas.MasterData.Controllers
         {
             var QS = Request.QueryString;
             String Namatingkat = QS["Namatingkat"];
-            String Jenjang = QS["Jenjang"];
+            //String Jenjang = QS["Jenjang"];
             //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<string[]> listResult = new List<string[]>();
@@ -70,7 +70,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 {
                     Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat));
                 }
-                if (Jenjang != "")
+                if (Jenjang != null)
                 {
                     Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
                 }
@@ -123,7 +123,40 @@ namespace App.Web.Areas.MasterData.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+        // GET: MasterData/Tingkat/Delete
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tingkat tingkat = db.Tingkats.Find(id);
+            if (tingkat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tingkat);
+        }
 
+        // POST: MasterData/Tingkat/Delete
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Tingkat tingkat = db.Tingkats.Find(id);
+            db.Tingkats.Remove(tingkat);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        
     }
 }

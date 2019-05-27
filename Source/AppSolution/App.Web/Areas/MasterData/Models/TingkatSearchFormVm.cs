@@ -11,13 +11,11 @@ namespace App.Web.Areas.MasterData.Models
 {
     public class TingkatSearchFormVM : Controller
     {
-        // GET: MasterData/TingkatSearchFormVm
-        //public ActionResult Index()
-        //  {
-        //     return View();
-        //   }
 
         [Display(Name = "Nama Tingkat")]
         public string Namatingkat { get; set; }
+
+        //[Display(Name = "Jenjang")]
+        //public string Jenjang { get; set; }
     }
 }
