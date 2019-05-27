@@ -24,4 +24,5 @@ namespace App.Entities.Models
         [Display(Name = "Jenjang")]
         public string Jenjang { get; set; }
     }
+
 }
