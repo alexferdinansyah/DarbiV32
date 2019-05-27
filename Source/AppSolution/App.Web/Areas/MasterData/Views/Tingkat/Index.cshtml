@@ -44,8 +44,8 @@
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
                 aoData.push(
-                    { "name": "Namatingkat", "value": $('#Namatingkat').val() }
-                    { "name": "Jenjang", "value": $('#Jenjang').val() }
+                    { "name": "Namatingkat", "value": $('#Namatingkat').val() },
+                    { "name": "NamaJenjang", "value": $('#Jenjang').val() }
                 );
             },
             "aoColumns": [
@@ -54,8 +54,8 @@
                         return data;
                     }
                 },
-				{ "sName": "Namatingkat" },
-				{ "sName": "Jenjang"},
+                { "sName": "Namatingkat" },
+                { "sName": "NamaJenjang" },
                 {
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {

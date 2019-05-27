@@ -19,10 +19,9 @@ namespace App.Entities.Models
         [Display(Name = "Nama tingkat")]
         public string Namatingkat { get; set; }
 
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Jenjang")]
-        public string Jenjang { get; set; }
+        public int? JenjangId { get; set; }
+
+        public virtual Jenjang Jenjangs { get; set; }
     }
 
 }

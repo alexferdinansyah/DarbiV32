@@ -18,5 +18,5 @@ namespace App.Entities.Models
 			[DataType(DataType.Text)]
 			[Display(Name = "Jenjang Name")]
 			public string JenjangName { get; set; }
-	}
+    }
 }

@@ -103,6 +103,13 @@ namespace App.Entities.DataAccessLayer
             users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();
 
+            var jenjangs = new List<Jenjang>
+            {
+                new Jenjang {JenjangName="Toddler" }
+            };
+            jenjangs.ForEach(s => context.Jenjangs.Add(s));
+            context.SaveChanges();
+
             base.Seed(context);
         }
     }
