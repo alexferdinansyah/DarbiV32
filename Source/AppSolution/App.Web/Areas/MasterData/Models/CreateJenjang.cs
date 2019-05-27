@@ -11,7 +11,7 @@ namespace App.Web.Areas.MasterData.Models
 	public class CreateJenjang : Controller
 	{
 		[Required]
-		[Display(Name = "Jenjang Name" )]
+		[Display(Name = "Jenjang Name")]
 		public string JenjangName { get; set; }
 	}
 }

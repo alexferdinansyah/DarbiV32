@@ -10,7 +10,7 @@ namespace App.Web.Areas.MasterData.Models
 {
 	public class SearchJenjang : Controller
 	{
-	
+
 
 		[Display(Name = "Name")]
 		public string Name { get; set; }
