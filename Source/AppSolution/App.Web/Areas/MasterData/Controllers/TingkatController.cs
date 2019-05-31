@@ -77,11 +77,11 @@ namespace App.Web.Areas.MasterData.Controllers
                 {
                     Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat));
                 }
-                if (Jenjang != "")
-                {
-                    int? j = int.Parse(Jenjang);
-                    Query = Query.Where(x => x.JenjangId.Equals(j));
-                }
+                //if (Jenjang != null)
+                //{
+                //    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
+                //}
+
 
                 int TotalRecord = Query.Count();
 

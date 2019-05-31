@@ -1,0 +1,77 @@
+﻿@model App.Web.Areas.MasterData.Models.SiswaSearchFormVM
+@{
+    ViewBag.Title = "Siswa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@Html.Partial("Search", Model)
+
+<table id="tableSiswa" class="table" style="width:200%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>No Sisda</th>
+            <th>Nama Lengkap</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var tableSiswa = $('#tableSiswa').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/MasterData/Siswa/AjaxSiswa?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "Nosisda", "value": $('#Nosisda').val() },
+                    { "name": "Fullname", "value": $('#Fullname').val() }
+
+                );
+            },
+            "aoColumns": [
+                    {
+                        "render": function (data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    { "sName": "Nosisda" },
+                    { "sName": "Fullname" },
+                    {
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                var x = '<a href="/MasterData/Siswa/Details?id=' + data + '">Details</a> | ';
+                                x += '<a href="/MasterData/Siswa/Edit?id=' + data + '">Edit</a> | ';
+                                x += '<a href="/MasterData/Siswa/Delete?id=' + data + '">Delete</a>';
+                            }
+
+                            return x;
+                        }
+                    }
+            ]
+        });
+
+        $('#btnsearch').click(function () {
+            tableSiswa.fnDraw(null);
+        });
+
+    });
+</script>
