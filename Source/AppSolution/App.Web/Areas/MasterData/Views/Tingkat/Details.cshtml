@@ -1,0 +1,32 @@
+﻿@model App.Entities.Models.Tingkat
+
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+	<h4>Tingkat</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Namatingkat)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Namatingkat)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Jenjangs)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Jenjangs.JenjangName)
+		</dd>
+	</dl>
+</div>
+<p>
+	@Html.ActionLink("Edit", "Edit", new { id = Model.TingkatId }) |
+	@Html.ActionLink("Back to List", "Index")
+</p>

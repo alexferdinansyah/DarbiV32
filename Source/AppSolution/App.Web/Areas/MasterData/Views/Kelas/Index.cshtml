@@ -18,8 +18,7 @@
 		<tr>
 			<th>No</th>
 			<th>Kelas</th>
-			<th>Tingkat</th>
-			<th>Jenjang</th>
+			<th>Tingkat/Jenjang</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -46,9 +45,8 @@
 			"fnServerParams": function (aoData) {
 				formdata = $('#Req').serializeArray()
 				aoData.push(
-					{ "name": "KelasName", "value": $('#Name').val() },
-					{ "name": "Tingkat", "value": $('#Name').val() },
-					{ "name": "Jenjang", "value": $('#Name').val() },
+					{ "name": "KelasName", "value": $('#KelasName').val() },
+					{ "name": "Namatingkat", "value": $('#Namatingkat').val() }
 				);
 			},
 			"aoColumns": [
@@ -58,9 +56,8 @@
 					}
 				},
 				{ "sName": "KelasName" },
-				{ "sName": "Tingkat" },
-				{ "sName": "Jenjang" },
-				
+				{ "sName": "Namatingkat" },
+
 				{
 					"render": function (data, type, row, meta) {
 						if (type === 'display') {
@@ -81,3 +78,7 @@
 
 	});
 </script>
+
+
+
+

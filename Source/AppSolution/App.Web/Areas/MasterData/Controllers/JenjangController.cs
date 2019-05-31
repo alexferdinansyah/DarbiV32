@@ -114,6 +114,93 @@ namespace App.Web.Areas.MasterData.Controllers
 			},
 			JsonRequestBehavior.AllowGet);
 		}
+		// GET: MasterData/Bank/Delete/5
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Jenjang jenjang = db.Jenjangs.Find(id);
+			if (jenjang == null)
+			{
+				return HttpNotFound();
+			}
+			return View(jenjang);
+		}
+
+		// POST: MasterDataBank/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			Jenjang jenjang = db.Jenjangs.Find(id);
+			db.Jenjangs.Remove(jenjang);
+			db.SaveChanges();
+			return RedirectToAction("Index");
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		// GET: AccessManagement/User/Edit/5
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Jenjang jenjang = db.Jenjangs.Find(id);
+			if (jenjang == null)
+			{
+				return HttpNotFound();
+			}
+			return View(jenjang);
+		}
+
+		// POST: AccessManagement/User/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "JenjangId,JenjangName")] Jenjang jenjang)
+		{
+			if (ModelState.IsValid)
+			{
+				Jenjang JenjangCek = db.Jenjangs.Find(jenjang.JenjangId);
+				JenjangCek.JenjangName = jenjang.JenjangName;
+				//UserCek.IsActive = user.IsActive;
+				//if (bank.Bankname != UserCek.Password)
+				//{
+				//    UserCek.Password = Security.GetHashString(user.Password);
+				//}
+				db.Entry(JenjangCek).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(jenjang);
+		}
+
+		// GET: MasterData/Jenjang/Details/5
+		public ActionResult Details(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Jenjang jenjang = db.Jenjangs.Find(id);
+			if (jenjang == null)
+			{
+				return HttpNotFound();
+			}
+			return View(jenjang);
+		}
 
 	}
 }
