@@ -1,0 +1,263 @@
+﻿@model App.Entities.Models.Siswa
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Siswa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nosisda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nosisda)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fullname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nickname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nickname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nisn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nisn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pob)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Dob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dob)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NamaAyah)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamaAyah)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NamaIbu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NamaIbu)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PekerjaanAyah)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PekerjaanAyah)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PekerjaanIbu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PekerjaanIbu)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NoTelpAyah)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoTelpAyah)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NoTelpIbu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoTelpIbu)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailOrtu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailOrtu)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Alamat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alamat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kota)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kota)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Provinsi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Provinsi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KodePos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KodePos)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Negara)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Negara)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Anakke)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anakke)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailSaudara)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DetailSaudara)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Agama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Agama)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Suku)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Suku)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kewarganegaraan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kewarganegaraan)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TinggiBadan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeratBadan)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Goldar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Goldar)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Periode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Periode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kelas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kelas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StatKat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatKat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KontakSiswa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontakSiswa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SekolahAsal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SekolahAsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StatSekolahAsal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatSekolahAsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JarakRumahSekolah)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JarakRumahSekolah)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tgldaftar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tgldaftar)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GelTest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GelTest)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SiswaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

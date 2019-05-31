@@ -70,10 +70,10 @@ namespace App.Web.Areas.MasterData.Controllers
                 {
                     Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat));
                 }
-                if (Jenjang != null)
-                {
-                    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
-                }
+                //if (Jenjang != null)
+                //{
+                //    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
+                //}
 
                 //Query = Query.Where(x => x.IsActive == IsActive);
 

@@ -79,6 +79,21 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+            var siswas = new List<Siswa>
+            {
+                new Siswa {Nosisda = "00112233", Fullname = "Sarah Nuriah", Nickname = "Sarah", Nisn = "0123", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "29 April 2001",
+                NamaAyah = "Sahroni", NamaIbu = "Mudrikah", PekerjaanAyah = "Pegawai swasta", PekerjaanIbu= "Pegawai Swasta", NoTelpAyah = "08133344555", NoTelpIbu = "08966752542",
+                EmailOrtu = "test@gmail.com", Alamat = "Kp. Babakan Rajabrana", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16453", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
+                Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "162 cm", BeratBadan = "45kg", Goldar = "O", Periode = "2016-2019", Kelas = "9 Madinah",
+                StatKat = "Umum", KontakSiswa = "089625432536", SekolahAsal = "SD RRI", StatSekolahAsal = "Negri", JarakRumahSekolah = "15km", Tgldaftar = "7 Juli 2012", GelTest = "1"},
+                new Siswa {Nosisda = "00113344", Fullname = "Syadiyah", Nickname = "Diyah", Nisn = "0124", IsActive = true, Sex = "Perempuan", Pob = "Malang", Dob = "17 Juni 2001",
+                NamaAyah = "Ayah", NamaIbu = "Ibu", PekerjaanAyah = "Pegawai swasta", PekerjaanIbu= "IRT", NoTelpAyah = "081656754", NoTelpIbu = "08345678",
+                EmailOrtu = "ayahibu@gmail.com", Alamat = "Kp. Sidamukti", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16455", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
+                Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "162 cm", BeratBadan = "45kg", Goldar = "O", Periode = "2016-2019", Kelas = "9 Mekkah",
+                StatKat = "Umum", KontakSiswa = "08123456", SekolahAsal = "SD Sukatani", StatSekolahAsal = "Negri", JarakRumahSekolah = "5km", Tgldaftar = "10 Juli 2012", GelTest = "1"}
+            };
+            siswas.ForEach(s => context.Siswas.Add(s));
+            context.SaveChanges();
 
             var banks = new List<Bank>
             {
