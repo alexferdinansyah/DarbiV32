@@ -33,22 +33,29 @@ namespace App.Web.Areas.MasterData.Controllers
         //GET : MasterData/Tingkat/Create
         public ActionResult Create()
         {
-            return View();
+
+            CreateTingkatFormVM model = new CreateTingkatFormVM();
+
+            return View(model);
         }
 
         //POST : MasterData/Tingkat/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Tingkat tingkat)
+        public ActionResult Create(CreateTingkatFormVM model)
         {
             if (ModelState.IsValid)
             {
-                db.Tingkats.Add(tingkat);
+                Tingkat newmodel = new Tingkat();
+                newmodel.Namatingkat = model.Namatingkat;
+                newmodel.JenjangId = model.JenjangId;
+
+                db.Tingkats.Add(newmodel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(tingkat);
+            return View(model);
         }
 
         //Tampil Data Table
@@ -57,7 +64,7 @@ namespace App.Web.Areas.MasterData.Controllers
         {
             var QS = Request.QueryString;
             String Namatingkat = QS["Namatingkat"];
-            //String Jenjang = QS["Jenjang"];
+            String Jenjang = QS["NamaJenjang"];
             //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<string[]> listResult = new List<string[]>();
@@ -75,14 +82,13 @@ namespace App.Web.Areas.MasterData.Controllers
                 //    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
                 //}
 
-                //Query = Query.Where(x => x.IsActive == IsActive);
 
                 int TotalRecord = Query.Count();
 
                 var OrderedQuery = Query.OrderBy(x => x.TingkatId);
 
                 int pageSize = param.iDisplayLength;
-                int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
+                int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1;
                 var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
 
                 int i = 0;
@@ -93,7 +99,8 @@ namespace App.Web.Areas.MasterData.Controllers
                     {
                         i.ToString(),
                         data.Namatingkat,
-                        data.Jenjang,
+                        data.Jenjangs.JenjangName,
+                        //data.Jenjang,
                         //(data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
                         data.TingkatId.ToString()
                     });
@@ -123,40 +130,7 @@ namespace App.Web.Areas.MasterData.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
-        // GET: MasterData/Tingkat/Delete
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tingkat tingkat = db.Tingkats.Find(id);
-            if (tingkat == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tingkat);
-        }
 
-        // POST: MasterData/Tingkat/Delete
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Tingkat tingkat = db.Tingkats.Find(id);
-            db.Tingkats.Remove(tingkat);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-        
     }
 }

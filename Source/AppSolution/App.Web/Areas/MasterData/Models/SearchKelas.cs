@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace App.Web.Areas.MasterData.Models
 {
-	public class SearchJenjang : Controller
+	public class SearchKelas : Controller
 	{
 		[Display(Name = "Name")]
 		public string Name { get; set; }

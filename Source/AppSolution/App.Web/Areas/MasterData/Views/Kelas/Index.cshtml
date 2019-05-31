@@ -1,0 +1,83 @@
+﻿@model App.Web.Areas.MasterData.Models.SearchKelas
+
+@{
+	ViewBag.Title = "Kelas";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("Search", Model)
+
+<table id="tableKelas" class="table" style="width:100%">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Kelas</th>
+			<th>Tingkat</th>
+			<th>Jenjang</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+		var tableKelas = $('#tableKelas').dataTable({
+			"scrollX": true,
+			"processing": true,
+			"sProcessing": true,
+			"bLengthChange": true,
+			//"sLoadingRecords":true,
+			"scrollCollapse": true,
+			"searching": false,
+			"bServerSide": true,
+			"ordering": false,
+			"sAjaxSource": "/MasterData/Kelas/AjaxKelas?format=JSON",
+			"bProcessing": true,
+			oLanguage: { sProcessing: "<div id='loader'></div>" },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+				aoData.push(
+					{ "name": "KelasName", "value": $('#Name').val() },
+					{ "name": "Tingkat", "value": $('#Name').val() },
+					{ "name": "Jenjang", "value": $('#Name').val() },
+				);
+			},
+			"aoColumns": [
+				{
+					"render": function (data, type, row, meta) {
+						return data;
+					}
+				},
+				{ "sName": "KelasName" },
+				{ "sName": "Tingkat" },
+				{ "sName": "Jenjang" },
+				
+				{
+					"render": function (data, type, row, meta) {
+						if (type === 'display') {
+							var x = '<a href="/MasterData/Kelas/Details?id=' + data + '">Details</a> | ';
+							x += '<a href="/MasterData/Kelas/Edit?id=' + data + '">Edit</a> | ';
+							x += '<a href="/MasterData/Kelas/Delete?id=' + data + '">Delete</a>';
+						}
+
+						return x;
+					}
+				}
+			]
+		});
+
+		$('#btnsearch').click(function () {
+			tableKelas.fnDraw(null);
+		});
+
+	});
+</script>

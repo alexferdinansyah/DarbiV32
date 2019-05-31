@@ -30,6 +30,7 @@ namespace App.Entities.DataAccessLayer
 		public DbSet<Jenjang> Jenjangs { get; set; }
         public DbSet<Tingkat> Tingkats { get; set; }
         public DbSet<Siswa> Siswas { get; set; }
+		public DbSet<Kelas> Kelass { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
