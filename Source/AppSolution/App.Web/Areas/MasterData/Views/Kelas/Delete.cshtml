@@ -1,4 +1,4 @@
-﻿@model App.Entities.Models.Jenjang
+﻿@model App.Entities.Models.Kelas
 @{
 	ViewBag.Title = "Delete";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,11 +12,27 @@
 	<hr />
 	<dl class="dl-horizontal">
 		<dt>
-			@Html.DisplayNameFor(model => model.JenjangName)
+			@Html.DisplayNameFor(model => model.KelasName)
 		</dt>
 
 		<dd>
-			@Html.DisplayFor(model => model.JenjangName)
+			@Html.DisplayFor(model => model.KelasName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.TingkatId)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.TingkatId)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.JenjangId)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.JenjangId)
 		</dd>
 
 	</dl>

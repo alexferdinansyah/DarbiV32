@@ -19,12 +19,17 @@ namespace App.Entities.Models
 		[Display(Name = "Kelas Name")]
 		public string KelasName { get; set; }
 
-		[Required]
-		[Display(Name = "Tingkat")]
-		public int Tingkat { get; set; }
+		//[Required]
+		[Display(Name = "Tingkat Id")]
+		public int? TingkatId { get; set; }
 
-		[Required]
+		[Display(Name = "Nama Tingkat")]
+		public virtual Tingkat Namatingkat { get; set; }
+
+		[Display(Name = "Jenjang Id")]
+		public int JenjangId { get; set; }
+
 		[Display(Name = "Jenjang")]
-		public int Jenjang { get; set; }
+		public string  JenjangName { get; set; }
 	}
 }

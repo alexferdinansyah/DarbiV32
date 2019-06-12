@@ -199,8 +199,6 @@
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\BiayaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\JenjangController.cs" />
-    <Compile Include="Areas\MasterData\Controllers\SchoolSupportController.cs" />
-    <Compile Include="Areas\MasterData\Controllers\SiswaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\KelasController.cs" />
     <Compile Include="Areas\MasterData\Controllers\TingkatController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
@@ -209,10 +207,12 @@
     <Compile Include="Areas\MasterData\Models\BiayaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBankFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateJenjang.cs" />
+    <Compile Include="Areas\MasterData\Models\EditKelasFormVM.cs" />
+    <Compile Include="Areas\MasterData\Models\CreateKelas.cs" />
+    <Compile Include="Areas\MasterData\Models\EditTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SchoollSupportSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SearchJenjang.cs" />
-    <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
     <Compile Include="Common\Function.cs" />
@@ -250,12 +250,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\App.Web.dll" />
+    <Content Include="bin\App.Web.pdb" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="obj\Debug\App.Web.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\App.Web.dll" />
+    <Content Include="obj\Debug\App.Web.pdb" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -320,7 +325,7 @@
     <Content Include="Areas\MasterData\Views\Tingkat\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\Jenjang\Create.cshtml" />
     <Content Include="Areas\MasterData\Views\Jenjang\Delete.cshtml" />
-    <Content Include="Areas\MasterData\Views\Jenjang\Detail.cshtml" />
+    <Content Include="Areas\MasterData\Views\Jenjang\Details.cshtml" />
     <Content Include="Areas\MasterData\Views\Jenjang\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Jenjang\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Jenjang\Search.cshtml" />
@@ -328,6 +333,7 @@
     <Content Include="Areas\MasterData\Views\Kelas\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Tingkat\Delete.cshtml" />
+
     <Content Include="Areas\MasterData\Views\Siswa\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\Delete.cshtml" />
@@ -342,6 +348,18 @@
     <Content Include="Areas\MasterData\Views\Biaya\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Biaya\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Biaya\Create.cshtml" />
+    <Content Include="obj\Debug\App.Web.csproj.CopyComplete" />
+    <Content Include="obj\Debug\App.Web.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\App.Web.csprojAssemblyReference.cache" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\App.Web.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\App.Web.csprojAssemblyReference.cache" />
+    <Content Include="Areas\MasterData\Views\Tingkat\Details.cshtml" />
+    <Content Include="Areas\MasterData\Views\Tingkat\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Kelas\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Kelas\Delete.cshtml" />
+    <Content Include="Areas\MasterData\Views\Kelas\Details.cshtml" />
+
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -431,7 +449,9 @@
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
     <Folder Include="Areas\MasterData\Views\BiayaSearchFormVM\" />
+
     <Folder Include="Areas\MasterData\Views\TingkatSearchFormVm\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
