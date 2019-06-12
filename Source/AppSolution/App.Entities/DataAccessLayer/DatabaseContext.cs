@@ -31,8 +31,9 @@ namespace App.Entities.DataAccessLayer
         public DbSet<Tingkat> Tingkats { get; set; }
         public DbSet<Siswa> Siswas { get; set; }
 		public DbSet<Kelas> Kelass { get; set; }
+        public DbSet<SchoolSupport> SchoolSupports { get; set; }
 
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }

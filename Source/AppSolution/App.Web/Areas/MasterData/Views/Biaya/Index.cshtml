@@ -1,0 +1,29 @@
+﻿@model App.Web.Areas.MasterData.Models.BiayaSearchFormVM
+
+@{
+    ViewBag.Title = "School Support";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@Html.Partial("Search", Model)
+
+<table id="tableSS" class="table" style="width:200%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Kategori</th>
+            <th>Jenis</th>
+            <th>Tingkat</th>
+            <th>Nominal</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
