@@ -41,6 +41,13 @@ namespace App.Web.Areas.MasterData.Controllers
                 new SelectListItem {Text="School Support",Value="3"},
             };
 
+            List<SelectListItem> ObjJenis = new List<SelectListItem>()
+
+            {
+                //new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },                
+            };
+
+            ViewBag.JenisItem = ObjJenis;
             ViewBag.ListItem = ObjItem;
             return View(model);
     }
