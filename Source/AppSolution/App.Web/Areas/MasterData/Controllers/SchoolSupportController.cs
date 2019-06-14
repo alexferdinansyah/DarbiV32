@@ -176,7 +176,7 @@ namespace App.Web.Areas.MasterData.Controllers
         }
 
         // GET: MasterData/SchoolSupport/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Detail(int? id)
         {
             if (id == null)
             {

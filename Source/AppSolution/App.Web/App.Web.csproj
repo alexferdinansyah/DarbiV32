@@ -200,12 +200,15 @@
     <Compile Include="Areas\MasterData\Controllers\BiayaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\JenjangController.cs" />
     <Compile Include="Areas\MasterData\Controllers\KelasController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\SchoolSupportController.cs" />
+    <Compile Include="Areas\MasterData\Controllers\SiswaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\TingkatController.cs" />
     <Compile Include="Areas\MasterData\MasterDataAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\BankController.cs" />
     <Compile Include="Areas\MasterData\Models\BankSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\BiayaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBankFormVM.cs" />
+    <Compile Include="Areas\MasterData\Models\CreateBiaya.cs" />
     <Compile Include="Areas\MasterData\Models\CreateJenjang.cs" />
     <Compile Include="Areas\MasterData\Models\EditKelasFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateKelas.cs" />
@@ -214,6 +217,7 @@
     <Compile Include="Areas\MasterData\Models\SchoollSupportSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SearchJenjang.cs" />
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
+    <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
     <Compile Include="Common\Function.cs" />
     <Compile Include="ControllerAuthorizeAttribute.cs" />
@@ -333,7 +337,6 @@
     <Content Include="Areas\MasterData\Views\Kelas\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Tingkat\Delete.cshtml" />
-
     <Content Include="Areas\MasterData\Views\Siswa\Index.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\Search.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\Delete.cshtml" />
@@ -359,7 +362,6 @@
     <Content Include="Areas\MasterData\Views\Kelas\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Delete.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Details.cshtml" />
-
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -449,7 +451,7 @@
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
     <Folder Include="Areas\MasterData\Views\BiayaSearchFormVM\" />
-
+    <Folder Include="Areas\MasterData\Views\CreateBiaya\" />
     <Folder Include="Areas\MasterData\Views\TingkatSearchFormVm\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
