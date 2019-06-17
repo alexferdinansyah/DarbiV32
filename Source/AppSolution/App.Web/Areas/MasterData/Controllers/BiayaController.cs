@@ -59,16 +59,26 @@ namespace App.Web.Areas.MasterData.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateBiaya model)
         {
+            var kategori = ViewBag.ListItem;
             if (ModelState.IsValid)
             {
                 Biaya newmodel = new Biaya();
                 newmodel.KatBiaya = model.KatBiaya;
-                newmodel.JenisBiaya = model.JenisBiaya;
+                SchoolSupport ss = db.SchoolSupports.Find(model.SsId);
+                if(model.KatBiaya == "School Support")
+                {
+                    newmodel.JenisBiaya = ss.JenisSS;
+                }
+                else
+                {
+                    newmodel.JenisBiaya = model.JenisBiaya;
+                }
+                
                 newmodel.TingkatId = model.TingkatId;
                 newmodel.NomBiaya = model.NomBiaya;
 
-                //db.Biayas.Add(newmodel);
-                //db.SaveChanges();
+                db.Biayas.Add(newmodel);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -109,16 +119,16 @@ namespace App.Web.Areas.MasterData.Controllers
                 int i = 0;
                 foreach (var data in PagedQuery)
                 {
+                    Tingkat tgk = db.Tingkats.Find(data.TingkatId);
+                    data.Tingkat = tgk.Namatingkat;
                     i++;
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.KatBiaya,
-                        //data.JenisBiaya,
-                        //data.Tingkats.TingkatId,
-                        //data.NomBiaya,
-                        //data.Jenjang,
-                        //(data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
+                        data.JenisBiaya,
+                        data.Tingkat,
+                        data.NomBiaya,
                         data.BiayaId.ToString()
                     });
                 }

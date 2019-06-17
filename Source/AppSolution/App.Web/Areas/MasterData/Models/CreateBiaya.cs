@@ -27,12 +27,23 @@ namespace App.Web.Areas.MasterData.Models
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
 
+        [Display(Name = "School Support")]
+        public int? SsId { get; set; }
+
         public SelectList Tingkats()
         {
             DatabaseContext db = new DatabaseContext();
             var Tingkats = db.Tingkats;
 
             return new SelectList(Tingkats.ToList(), "TingkatId", "Namatingkat", "0");
+        }
+
+        public SelectList SS()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Sss = db.SchoolSupports;
+
+            return new SelectList(Sss.ToList(), "SsId", "JenisSS", "0");
         }
     }
 }
