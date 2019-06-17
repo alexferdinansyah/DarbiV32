@@ -28,60 +28,60 @@
     <tbody></tbody>
 </table>
 
-@*<script type="text/javascript">
-	$(document).ready(function () {
+<script type="text/javascript">
+    $(document).ready(function () {
 
 
-		var tableBiaya = $('#tableBiaya').dataTable({
-			"scrollX": true,
-			"processing": true,
-			"sProcessing": true,
-			"bLengthChange": true,
-			//"sLoadingRecords":true,
-			"scrollCollapse": true,
-			"searching": false,
-			"bServerSide": true,
-			"ordering": false,
-			"sAjaxSource": "/MasterData/Biaya/AjaxBiaya?format=JSON",
-			"bProcessing": true,
-			oLanguage: { sProcessing: "<div id='loader'></div>" },
-			"fnServerParams": function (aoData) {
-				formdata = $('#Req').serializeArray()
-				aoData.push(
-					{ "name": "KatBiaya", "value": $('#KatBiaya').val() },
+        var tableBiaya = $('#tableBiaya').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/MasterData/Biaya/AjaxBiaya?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "KatBiaya", "value": $('#KatBiaya').val() },
                     { "name": "JenisBiaya", "value": $('#JenisBiaya').val() },
                     { "name": "Namatingkat", "value": $('#Namatingkat').val() },
                     { "name": "NomBiaya", "value": $('#NomBiaya').val() }
-				);
-			},
-			"aoColumns": [
-				{
-					"render": function (data, type, row, meta) {
-						return data;
-					}
-				},
-				{ "sName": "KatBiaya" },
+                );
+            },
+            "aoColumns": [
+                {
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                { "sName": "KatBiaya" },
                 { "sName": "JenisBiaya" },
                 { "sName": "Namatingkat" },
-				{ "sName": "NomBiaya" },
+                { "sName": "NomBiaya" },
 
-				{
-					"render": function (data, type, row, meta) {
-						if (type === 'display') {
-							var x = '<a href="/MasterData/Kelas/Details?id=' + data + '">Details</a> | ';
-							x += '<a href="/MasterData/Kelas/Edit?id=' + data + '">Edit</a> | ';
-							x += '<a href="/MasterData/Kelas/Delete?id=' + data + '">Delete</a>';
-						}
+                {
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            var x = '<a href="/MasterData/Kelas/Details?id=' + data + '">Details</a> | ';
+                            x += '<a href="/MasterData/Kelas/Edit?id=' + data + '">Edit</a> | ';
+                            x += '<a href="/MasterData/Kelas/Delete?id=' + data + '">Delete</a>';
+                        }
 
-						return x;
-					}
-				}
-			]
-		});
+                        return x;
+                    }
+                }
+            ]
+        });
 
-		$('#btnsearch').click(function () {
-			tableBiaya.fnDraw(null);
-		});
+        $('#btnsearch').click(function () {
+            tableBiaya.fnDraw(null);
+        });
 
-	});
-</script>*@
+    });
+</script>
