@@ -15,7 +15,9 @@ using App.Entities;
 namespace App.Web.Areas.MasterData.Controllers
 {
     public class BiayaController : Controller
+
     {
+        private DatabaseContext db = new DatabaseContext();
         // GET: MasterData/Biaya
         public ActionResult Index(BiayaSearchFormVM model = null)
         {

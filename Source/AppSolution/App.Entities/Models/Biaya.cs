@@ -1,22 +1,20 @@
-﻿using App.Entities.DataAccessLayer;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace App.Web.Areas.MasterData.Models
+namespace App.Entities.Models
 {
-    public class CreateBiaya
+    public class Biaya
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Tingkat Id")]
+        public int BiayaId { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Kategori")]
         public string KatBiaya { get; set; }
 
-        public IEnumerable<SelectListItem> Biayas { get; set; }
+        //public IEnumerable<SelectListItem> Biayas { get; set; }
 
         [Display(Name = "Jenis")]
         public string JenisBiaya { get; set; }
@@ -27,12 +25,12 @@ namespace App.Web.Areas.MasterData.Models
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
 
-        public SelectList Tingkats()
-        {
-            DatabaseContext db = new DatabaseContext();
-            var Tingkats = db.Tingkats;
+        //public SelectList Tingkats()
+        //{
+        //    DatabaseContext db = new DatabaseContext();
+        //    var Tingkats = db.Tingkats;
 
-            return new SelectList(Tingkats.ToList(), "TingkatId", "Namatingkat", "0");
-        }
+        //    return new SelectList(Tingkats.ToList(), "TingkatId", "Namatingkat", "0");
+        //}
     }
 }
