@@ -17,6 +17,8 @@ namespace App.Web.Areas.MasterData.Models
         [Display(Name = "Kategori")]
         public string KatBiaya { get; set; }
 
+        public int BiayaId { get; set; }
+
         public IEnumerable<SelectListItem> Biayas { get; set; }
 
         [Display(Name = "Jenis")]
