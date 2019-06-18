@@ -156,5 +156,82 @@ namespace App.Web.Areas.MasterData.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
+
+        // GET: MasterData/Biaya/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Biaya biaya = db.Biayas.Find(id);
+            if (biaya == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(biaya);
+        }
+
+        // POST: MasterData/Biaya/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Biaya biaya = db.Biayas.Find(id);
+            db.Biayas.Remove(biaya);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        // GET: MasterData/Bank/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Biaya biaya = db.Biayas.Find(id);
+            if (biaya == null)
+            {
+                return HttpNotFound();
+            }
+            return View(biaya);
+        }
+
+        //GET : MasterData/Biaya/Edit
+        public ActionResult Edit()
+        {
+            EditBiayaFormVM model = new EditBiayaFormVM();
+
+            List<SelectListItem> ObjItem = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },
+                new SelectListItem {Text="Biaya Masuk",Value="1" },
+                new SelectListItem {Text="SPP",Value="2"},
+                new SelectListItem {Text="School Support",Value="3"},
+            };
+
+            List<SelectListItem> ObjJenis = new List<SelectListItem>()
+
+            {
+                //new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },                
+            };
+
+            ViewBag.JenisItem = ObjJenis;
+            ViewBag.ListItem = ObjItem;
+            return View(model);
+        }
+
     }
 }
