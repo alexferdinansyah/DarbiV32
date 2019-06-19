@@ -33,6 +33,7 @@ namespace App.Entities.DataAccessLayer
 		public DbSet<Kelas> Kelass { get; set; }
         public DbSet<SchoolSupport> SchoolSupports { get; set; }
         public DbSet<Biaya> Biayas { get; set; }
+        //public DbSet<HistoryBiaya> HistoryBiayas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

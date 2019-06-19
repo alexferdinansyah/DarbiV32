@@ -1,0 +1,78 @@
+﻿@model App.Web.Areas.MasterData.Models.SearchHistoryBiayaFormVM
+
+@{
+	ViewBag.Title = "Histoy Biaya";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("Search", Model)
+
+<table id="tabelhistorybiaya" class="table" style="width:100%">
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Periode</th>
+			<th>Kategori</th>
+			<th>Jenis</th>
+			<th>Tingkat</th>
+			<th>Nominal</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+		var tabelhistorybiaya = $('#tabelhistorybiaya').dataTable({
+			"scrollX": true,
+			"processing": true,
+			"sProcessing": true,
+			"bLengthChange": true,
+			//"sLoadingRecords":true,
+			"scrollCollapse": true,
+			"searching": false,
+			"bServerSide": true,
+			"ordering": false,
+			"sAjaxSource": "/MasterData/HistoryBiaya/AjaxHistory?format=JSON",
+			"bProcessing": true,
+			oLanguage: { sProcessing: "<div id='loader'></div>" },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+				aoData.push(
+					{ "name": "periode", "value": $('#periode').val() },
+					{ "name": "ketegori", "value": $('#kategori').val() },
+				);
+			},
+			"aoColumns": [
+				{
+					"render": function (data, type, row, meta) {
+						return data;
+					}
+				},
+				{ "periode": "periode" },
+				{ "kategori": "kategori" },
+				{
+					"render": function (data, type, row, meta) {
+						if (type === 'display') {
+							var x = '<a href="/MasterData/HistoryBiaya/Details?id=' + data + '">Details</a> | ';
+							x += '<a href="/MasterData/HistoryBiaya/Edit?id=' + data + '">Edit</a> | ';
+							x += '<a href="/MasterData/HistoryBiaya/Delete?id=' + data + '">Delete</a>';
+						}
+
+						return x;
+					}
+				}
+			]
+		});
+
+		$('#btnsearch').click(function () {
+			tabelhistorybiaya.fnDraw(null);
+		});
+
+	});
+</script>
