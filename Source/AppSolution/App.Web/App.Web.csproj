@@ -198,7 +198,6 @@
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\BiayaController.cs" />
-    <Compile Include="Areas\MasterData\Controllers\HistoryBiayaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\JenjangController.cs" />
     <Compile Include="Areas\MasterData\Controllers\KelasController.cs" />
     <Compile Include="Areas\MasterData\Controllers\SchoolSupportController.cs" />
@@ -211,12 +210,12 @@
     <Compile Include="Areas\MasterData\Models\CreateBankFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBiaya.cs" />
     <Compile Include="Areas\MasterData\Models\CreateJenjang.cs" />
+    <Compile Include="Areas\MasterData\Models\EditBiayaFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\EditKelasFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateKelas.cs" />
     <Compile Include="Areas\MasterData\Models\EditTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SchoollSupportSearchFormVM.cs" />
-    <Compile Include="Areas\MasterData\Models\SearchHistoryBiayaFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SearchJenjang.cs" />
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
@@ -364,8 +363,9 @@
     <Content Include="Areas\MasterData\Views\Kelas\Edit.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Delete.cshtml" />
     <Content Include="Areas\MasterData\Views\Kelas\Details.cshtml" />
-    <Content Include="Areas\MasterData\Views\HistoryBiaya\Index.cshtml" />
-    <Content Include="Areas\MasterData\Views\HistoryBiaya\Search.cshtml" />
+    <Content Include="Areas\MasterData\Views\Biaya\Delete.cshtml" />
+    <Content Include="Areas\MasterData\Views\Biaya\Edit.cshtml" />
+    <Content Include="Areas\MasterData\Views\Biaya\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -454,8 +454,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
-    <Folder Include="Areas\MasterData\Views\SearchBiayaHistoryFormVM\" />
-    <Folder Include="Areas\MasterData\Views\TingkatSearchFormVm\" />
+    <Folder Include="Areas\MasterData\Views\CreateBiaya\" />
+    <Folder Include="Areas\MasterData\Views\EditBiayaFormVM\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>

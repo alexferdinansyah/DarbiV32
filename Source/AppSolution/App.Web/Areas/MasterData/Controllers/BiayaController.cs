@@ -121,13 +121,14 @@ namespace App.Web.Areas.MasterData.Controllers
                 {
                     Tingkat tgk = db.Tingkats.Find(data.TingkatId);
                     data.Tingkat = tgk.Namatingkat;
+                    Jenjang j = db.Jenjangs.Find(tgk.JenjangId);
                     i++;
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.KatBiaya,
                         data.JenisBiaya,
-                        data.Tingkat,
+                        data.Tingkat + " - " + j.JenjangName,
                         data.NomBiaya,
                         data.BiayaId.ToString()
                     });
@@ -156,5 +157,115 @@ namespace App.Web.Areas.MasterData.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
+
+        // GET: MasterData/Biaya/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Biaya biaya = db.Biayas.Find(id);
+            if (biaya == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(biaya);
+        }
+
+        // POST: MasterData/Biaya/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Biaya biaya = db.Biayas.Find(id);
+            db.Biayas.Remove(biaya);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        // GET: MasterData/Bank/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Biaya biaya = db.Biayas.Find(id);
+            if (biaya == null)
+            {
+                return HttpNotFound();
+            }
+            return View(biaya);
+        }
+
+        //GET : MasterData/Biaya/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Biaya biaya = db.Biayas.Find(id);
+            if (biaya == null)
+            {
+                return HttpNotFound();
+            }
+            EditBiayaFormVM model = new EditBiayaFormVM();
+
+            model.BiayaId = biaya.BiayaId;
+            model.KatBiaya = biaya.KatBiaya;
+            model.JenisBiaya = biaya.JenisBiaya;
+            model.NomBiaya = biaya.NomBiaya;
+            model.TingkatId = biaya.TingkatId;
+            List<SelectListItem> ObjItem = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },
+                new SelectListItem {Text="Biaya Masuk",Value="1" },
+                new SelectListItem {Text="SPP",Value="2"},
+                new SelectListItem {Text="School Support",Value="3"},
+            };
+
+            List<SelectListItem> ObjJenis = new List<SelectListItem>()
+
+            {
+                //new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },                
+            };
+
+            ViewBag.JenisItem = ObjJenis;
+            ViewBag.ListItem = ObjItem;
+            return View(model);
+        }
+        //POST : Masterdata/Biaya/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya")] Biaya biaya)
+        {
+            if (ModelState.IsValid)
+            {
+                Biaya BiayaCek = db.Biayas.Find(biaya.BiayaId);
+                BiayaCek.KatBiaya = biaya.KatBiaya;
+                BiayaCek.JenisBiaya = biaya.JenisBiaya;
+                BiayaCek.TingkatId = biaya.TingkatId;
+                BiayaCek.NomBiaya = biaya.NomBiaya;
+
+                db.Entry(BiayaCek).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(biaya);
+        }
+
     }
 }

@@ -19,7 +19,7 @@
             <th>No</th>
             <th>Kategori</th>
             <th>Jenis</th>
-            <th>Tingkat</th>
+            <th>Tingkat/Jenjang</th>
             <th>Nominal</th>
             <th>Action</th>
 
@@ -50,7 +50,7 @@
                 aoData.push(
                     { "name": "KatBiaya", "value": $('#KatBiaya').val() },
                     { "name": "JenisBiaya", "value": $('#JenisBiaya').val() },
-                    { "name": "Namatingkat", "value": $('#Namatingkat').val() },
+                    { "name": "Tingkat", "value": $('#Tingkat').val() },
                     { "name": "NomBiaya", "value": $('#NomBiaya').val() }
                 );
             },
@@ -62,15 +62,15 @@
                 },
                 { "sName": "KatBiaya" },
                 { "sName": "JenisBiaya" },
-                { "sName": "Namatingkat" },
+                { "sName": "Tingkat" },
                 { "sName": "NomBiaya" },
 
                 {
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {
-                            var x = '<a href="/MasterData/Kelas/Details?id=' + data + '">Details</a> | ';
-                            x += '<a href="/MasterData/Kelas/Edit?id=' + data + '">Edit</a> | ';
-                            x += '<a href="/MasterData/Kelas/Delete?id=' + data + '">Delete</a>';
+                            var x = '<a href="/MasterData/Biaya/Details?id=' + data + '">Details</a> | ';
+                            x += '<a href="/MasterData/Biaya/Edit?id=' + data + '">Edit</a> | ';
+                            x += '<a href="/MasterData/Biaya/Delete?id=' + data + '">Delete</a>';
                         }
 
                         return x;

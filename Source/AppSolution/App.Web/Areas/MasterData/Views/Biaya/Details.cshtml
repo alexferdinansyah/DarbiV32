@@ -1,0 +1,52 @@
+﻿@model App.Entities.Models.Biaya
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Biaya</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KatBiaya)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KatBiaya)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JenisBiaya)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JenisBiaya)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TingkatId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TingkatId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomBiaya)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomBiaya)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
