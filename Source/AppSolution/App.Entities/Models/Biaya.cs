@@ -24,5 +24,8 @@ namespace App.Entities.Models
         public int? TingkatId { get; set; }
 
         public string Tingkat { get; set; }
+
+        [Display(Name = "Jenjang")]
+        public string JenjangName { get; set; }
     }
 }

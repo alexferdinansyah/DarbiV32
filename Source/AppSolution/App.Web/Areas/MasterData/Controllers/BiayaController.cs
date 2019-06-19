@@ -121,13 +121,14 @@ namespace App.Web.Areas.MasterData.Controllers
                 {
                     Tingkat tgk = db.Tingkats.Find(data.TingkatId);
                     data.Tingkat = tgk.Namatingkat;
+                    Jenjang j = db.Jenjangs.Find(tgk.JenjangId);
                     i++;
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.KatBiaya,
                         data.JenisBiaya,
-                        data.Tingkat,
+                        data.Tingkat + " - " + j.JenjangName,
                         data.NomBiaya,
                         data.BiayaId.ToString()
                     });
@@ -245,6 +246,25 @@ namespace App.Web.Areas.MasterData.Controllers
             ViewBag.JenisItem = ObjJenis;
             ViewBag.ListItem = ObjItem;
             return View(model);
+        }
+        //POST : Masterdata/Biaya/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya")] Biaya biaya)
+        {
+            if (ModelState.IsValid)
+            {
+                Biaya BiayaCek = db.Biayas.Find(biaya.BiayaId);
+                BiayaCek.KatBiaya = biaya.KatBiaya;
+                BiayaCek.JenisBiaya = biaya.JenisBiaya;
+                BiayaCek.TingkatId = biaya.TingkatId;
+                BiayaCek.NomBiaya = biaya.NomBiaya;
+
+                db.Entry(BiayaCek).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(biaya);
         }
 
     }

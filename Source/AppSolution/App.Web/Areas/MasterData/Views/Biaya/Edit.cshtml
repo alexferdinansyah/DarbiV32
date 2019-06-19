@@ -73,37 +73,52 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var e = document.getElementById("KatBiaya");
-        var eJB = document.getElementById("JenisBiaya");
-        var katlist = document.getElementById("ListItem");
-        //alert(e.value);
-        if (e.value == "Biaya Masuk") {
-            $('select[id$=ListItem]> option[value="1"]').attr("selected", true);
-            $('#JenisBiaya12').show();
-            $('#JenisBiaya3').hide();
-            $("select[id$=JenisItem] > option").remove();
-            $('#JenisItem').append($("<option></option>").attr("value", "Biaya Masuk").text("Biaya Masuk"));
-        }
-        else if (e.value == "SPP") {
-            $('select[id$=ListItem]> option[value="2"]').attr("selected", true);
-            $('#JenisBiaya12').show();
-            $('#JenisBiaya3').hide();
-            $("select[id$=JenisItem] > option").remove();
-            $('#JenisItem').append($("<option></option>").attr("value", 'SPP').text("SPP"));
-            $('#JenisItem').append($("<option></option>").attr("value", 'KS').text("KS"));
-            if (eJB.value == "SPP") {
-                $('select[id$=JenisItem]> option[value="SPP"]').attr("selected", true);
-            }
-            else {
-                $('select[id$=JenisItem]> option[value="KS"]').attr("selected", true);
-            }
-        }
-        else {
-            $('select[id$=ListItem]> option[value="3"]').attr("selected", true);
-            $('#JenisBiaya12').hide();
-            $('#JenisBiaya3').show();
-        }
+        $('#JenisBiaya3').hide();
+        var kategori = document.getElementById("KatBiaya");
+        var JenisBiaya = document.getElementById("JenisBiaya")
+        $('#ListItem').change(function () {
+            //alert("ima");
+            var e = document.getElementById("ListItem");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            $.each($('#JenisItem'), function (key, value) {
+                if (strUser == "Biaya Masuk") {
+                    $('#JenisBiaya12').show();
+                    kategori.value = "Biaya Masuk";
+                    JenisBiaya.value = "Biaya Masuk";
+                    $('#JenisBiaya3').hide();
+                    $("select[id$=JenisItem] > option").remove();
+                    $('#JenisItem').append($("<option></option>").attr("value", "Biaya Masuk").text("Biaya Masuk"));
+                }
 
+                if (strUser == "SPP") {
+                    kategori.value = "SPP";
+                    $('#JenisBiaya12').show();
+                    $('#JenisBiaya3').hide();
+                    $("select[id$=JenisItem] > option").remove();
+                    $('#JenisItem').append($("<option></option>").attr("value", 'SPP').text("SPP"));
+                    $('#JenisItem').append($("<option></option>").attr("value", 'KS').text("KS"));
+                }
+
+                if (strUser == "School Support") {
+                    kategori.value = "School Support";
+                    //JenisBiaya.value = "Biaya Masuk";
+                    $('#JenisBiaya12').hide();
+                    $('#JenisBiaya3').show();
+                }
+            });
+        });
+
+        $('#JenisItem').change(function () {
+            var e = document.getElementById("JenisItem");
+            var strUser = e.options[e.selectedIndex].text;
+            JenisBiaya.value = strUser;
+        });
+
+        //$('#SchoolSupport').change(function () {
+        //    var e = document.getElementById("SchoolSupport");
+        //    var strUser = e.options[e.selectedIndex].text;
+        //    JenisBiaya.value = strUser;
+        //});
     });
-
 </script>
