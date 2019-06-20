@@ -1,7 +1,7 @@
 ﻿@model App.Web.Areas.MasterData.Models.SearchHistoryBiayaFormVM
 
 @{
-	ViewBag.Title = "Histoy Biaya";
+	ViewBag.Title = "History Biaya";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,16 +9,17 @@
 
 @Html.Partial("Search", Model)
 
-<table id="tabelhistorybiaya" class="table" style="width:100%">
+<table id="tabelHB" class="table" style="width:100%">
 	<thead>
-		<tr>
-			<th>No</th>
-			<th>Periode</th>
-			<th>Kategori</th>
-			<th>Jenis</th>
-			<th>Tingkat</th>
-			<th>Nominal</th>
-		</tr>
+        <tr>
+            <th>No</th>
+            <th>Periode</th>
+            <th>Kategori</th>
+            <th>Jenis</th>
+        <th>Tingkat</th>
+        <th>Nominal</th>
+            <th>Action</th>
+        </tr>
 	</thead>
 	<tbody></tbody>
 </table>
@@ -28,7 +29,7 @@
 	$(document).ready(function () {
 
 
-		var tabelhistorybiaya = $('#tabelhistorybiaya').dataTable({
+		var tabelHB = $('#tabelHB').dataTable({
 			"scrollX": true,
 			"processing": true,
 			"sProcessing": true,
@@ -44,18 +45,26 @@
 			"fnServerParams": function (aoData) {
 				formdata = $('#Req').serializeArray()
 				aoData.push(
-					{ "name": "periode", "value": $('#periode').val() },
-					{ "name": "ketegori", "value": $('#kategori').val() },
+					{ "name": "PeriodeHB", "value": $('#PeriodeHB').val() },
+                    { "name": "KategoriHB", "value": $('#KategoriHB').val() },
+                    { "name": "JenisHB", "value": $('#JenisHB').val() },
+                    { "name": "TingkatHB", "value": $('#TingkatHB').val() },
+                    { "name": "NomHisBiaya", "value": $('#NomHisBiaya').val() }
+
 				);
 			},
-			"aoColumns": [
-				{
-					"render": function (data, type, row, meta) {
-						return data;
-					}
-				},
-				{ "periode": "periode" },
-				{ "kategori": "kategori" },
+            "aoColumns": [
+                {
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                { "PeriodeHB": "PeriodeHB" },
+                { "KategoriHB": "KategoriHB" },
+                { "JenisHB": "JenisHB" },
+                { "TingkatHB": "TingkatHB" },
+                { "NomHisBiaya": "NomHisBiaya" },            
+
 				{
 					"render": function (data, type, row, meta) {
 						if (type === 'display') {
@@ -71,7 +80,7 @@
 		});
 
 		$('#btnsearch').click(function () {
-			tabelhistorybiaya.fnDraw(null);
+			tabelHB.fnDraw(null);
 		});
 
 	});

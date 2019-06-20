@@ -10,24 +10,28 @@ namespace App.Entities.Models
 {
 	public class HistoryBiaya
 	{
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
 		[Display(Name = "History Id")]
 		public int HistoryId { get; set; }
 
-		[Display(Name = "Periode")]
-		public string periode { get; set; }
+        [Required]
+        [Display(Name = "Periode")]
+		public string PeriodeHB { get; set; }
 
-		[Display(Name = "Kategori")]
-		public string kategori { get; set; }
+        [Required]
+        [Display(Name = "Kategori")]
+		public string KategoriHB { get; set; }
 
-		[Display(Name = "Jenis")]
-		public string jenis { get; set; }
+        [Required]
+        [Display(Name = "Jenis")]
+		public string JenisHB { get; set; }
 
 		[Required]
 		[Display(Name = "Tingkat")]
-		public int tingkat { get; set; }
+		public int TingkatHB { get; set; }
 
-		[Display(Name = "Nominal")]
-		public double nominal { get; set; }
+        [Required]
+        [Display(Name = "Nominal")]
+		public double NomHisBiaya { get; set; }
 	}
 }

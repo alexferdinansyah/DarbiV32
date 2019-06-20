@@ -13,6 +13,6 @@ namespace App.Web.Areas.MasterData.Models
 		// GET: MasterData/SearchBiayaHistoryFormVM
 
 		[Display(Name = "Periode")]
-		public string Name{ get; set; }
+		public string PeriodeHB { get; set; }
 	}
 }

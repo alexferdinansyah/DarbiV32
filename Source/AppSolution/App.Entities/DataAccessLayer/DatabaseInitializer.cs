@@ -79,6 +79,16 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+            var historybiayas = new List<HistoryBiaya>
+            {
+                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "Biaya Masuk", JenisHB = "Biaya Masuk",
+                TingkatHB = 1, NomHisBiaya = 1600000},
+                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "SPP", JenisHB = "KS",
+                TingkatHB = 2, NomHisBiaya = 1200000}
+            };
+            historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
+            context.SaveChanges();
+
             var siswas = new List<Siswa>
             {
                 new Siswa {Nosisda = "00112233", Fullname = "Sarah Nuriah", Nickname = "Sarah", Nisn = "0123", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "29 April 2001",
