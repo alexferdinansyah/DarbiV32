@@ -8,30 +8,31 @@ using System.Web;
 
 namespace App.Entities.Models
 {
-	public class HistoryBiaya
-	{
+    public class HistoryBiaya
+    {
         [Key]
-		[Display(Name = "History Id")]
-		public int HistoryId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "History Id")]
+        public int HistoryId { get; set; }
 
         [Required]
         [Display(Name = "Periode")]
-		public string PeriodeHB { get; set; }
+        public string PeriodeHB { get; set; }
 
         [Required]
         [Display(Name = "Kategori")]
-		public string KategoriHB { get; set; }
+        public string KategoriHB { get; set; }
 
         [Required]
         [Display(Name = "Jenis")]
-		public string JenisHB { get; set; }
+        public string JenisHB { get; set; }
 
-		[Required]
-		[Display(Name = "Tingkat")]
-		public int TingkatHB { get; set; }
+        [Required]
+        [Display(Name = "Tingkat")]
+        public int TingkatHB { get; set; }
 
         [Required]
         [Display(Name = "Nominal")]
-		public double NomHisBiaya { get; set; }
-	}
+        public double NomHisBiaya { get; set; }
+    }
 }

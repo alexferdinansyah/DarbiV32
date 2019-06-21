@@ -1,0 +1,53 @@
+﻿@model App.Entities.Models.HistoryBiaya
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>History Biaya</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodeHB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodeHB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KategoriHB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KategoriHB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JenisHB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JenisHB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TingkatHB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TingkatHB)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NomHisBiaya)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomHisBiaya)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HistoryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
