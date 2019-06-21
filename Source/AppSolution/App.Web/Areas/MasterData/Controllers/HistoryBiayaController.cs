@@ -129,12 +129,13 @@ namespace App.Web.Areas.MasterData.Controllers
         }
 
         // POST: MasterData/HistoryBiaya/Edit
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "HistoryId,PeriodeHB,KategoriHB,JenisHB,TingkatHB,NomHisBiaya")] HistoryBiaya historybiaya)
+        public ActionResult Edit([Bind(Include = "HistoryId, PeriodeHB, KategoriHB, JenisHB, TingkatHB, NomHisBiaya")] HistoryBiaya historybiaya)
         {
             if (ModelState.IsValid)
             {
-                HiastoryBiaya HBcek = db.HistoryBiayas.Find(historybiaya.HistoryId);
+                HistoryBiaya HBcek = db.HistoryBiayas.Find(historybiaya.HistoryId);
                 HBcek.PeriodeHB = historybiaya.PeriodeHB;
                 HBcek.KategoriHB = historybiaya.KategoriHB;
                 HBcek.JenisHB = historybiaya.JenisHB;
