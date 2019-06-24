@@ -98,5 +98,90 @@ namespace App.Web.Areas.MasterData.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+        // GET: MasterData/HistoryBiaya/Details
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            HistoryBiaya historybiaya = db.HistoryBiayas.Find(id);
+            if (historybiaya == null)
+            {
+                return HttpNotFound();
+            }
+            return View(historybiaya);
+        }
+
+        // GET: MasterData/HistoryBiaya/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            HistoryBiaya historybiaya = db.HistoryBiayas.Find(id);
+            if (historybiaya == null)
+            {
+                return HttpNotFound();
+            }
+            return View(historybiaya);
+        }
+
+        // POST: MasterData/HistoryBiaya/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "HistoryId, PeriodeHB, KategoriHB, JenisHB, TingkatHB, NomHisBiaya")] HistoryBiaya historybiaya)
+        {
+            if (ModelState.IsValid)
+            {
+                HistoryBiaya HBcek = db.HistoryBiayas.Find(historybiaya.HistoryId);
+                HBcek.PeriodeHB = historybiaya.PeriodeHB;
+                HBcek.KategoriHB = historybiaya.KategoriHB;
+                HBcek.JenisHB = historybiaya.JenisHB;
+                HBcek.TingkatHB = historybiaya.TingkatHB;
+                HBcek.NomHisBiaya = historybiaya.NomHisBiaya;
+
+                db.Entry(HBcek).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(historybiaya);
+        }
+
+        // GET: MasterData/Bank/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            HistoryBiaya historybiaya = db.HistoryBiayas.Find(id);
+            if (historybiaya == null)
+            {
+                return HttpNotFound();
+            }
+            return View(historybiaya);
+        }
+
+        // POST: MasterDataBank/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            HistoryBiaya historybiaya = db.HistoryBiayas.Find(id);
+            db.HistoryBiayas.Remove(historybiaya);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
