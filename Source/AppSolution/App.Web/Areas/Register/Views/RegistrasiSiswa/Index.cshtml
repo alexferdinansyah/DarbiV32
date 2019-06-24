@@ -1,0 +1,36 @@
+﻿@model App.Web.Areas.Register.Models.RegSiswaSearchFormVM
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Register Siswa", "Create")
+</p>
+
+    @Html.Partial("Search", Model)
+
+    <table id="tableBank" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Siswa</th>
+                <th>Nama Ayah Siswa</th>
+                <th>Nama Ibu Siswa</th>
+                <th>Kontak Ayah Siswa</th>
+                <th>Kontak Ibu Siswa</th>
+                <th>Asal Sekolah</th>
+                <th>Kategori SPP</th>
+                <th>Tingkat</th>
+                <th>Periode Daftar</th>
+                <th>Gelombang Test</th>
+                <th>Tahap 1</th>
+                <th>Tahap 2</th>
+                <th>Kategori Adm</th>
+                <th>Tanggal Daftar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
