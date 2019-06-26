@@ -1,0 +1,158 @@
+﻿@model App.Entities.Models.RegSiswa
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Registrasi Siswa</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.RegSiswaId)
+    @Html.HiddenFor(model => model.KatSpp)
+    @Html.HiddenFor(model => model.PerDaftar)
+    @Html.HiddenFor(model => model.GelTest)
+    @Html.HiddenFor(model => model.KatAdm)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NamaSiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NamaSiswa, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NamaSiswa, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NamaAyah, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NamaAyah, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NamaAyah, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NamaIbu, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NamaIbu, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NamaIbu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.KontakAyah, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KontakAyah, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.KontakAyah, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.KontakIbu, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KontakIbu, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.KontakIbu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AsalSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AsalSekolah, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AsalSekolah, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.KatSpp, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ListItem")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.TingkatId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TingkatId, Model.Tingkats(), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TingkatId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PerDaftar, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MonthItem")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.GelTest, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("TestItem")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tahapsatu, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Tahapsatu, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tahapsatu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tahapdua, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Tahapdua, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Tahapdua, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.KatAdm, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("KatItem")
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var KategoriSpp = document.getElementById("KatSpp")
+        $('#ListItem').change(function () {
+            var e = document.getElementById("ListItem");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            KategoriSpp.value = strUser;
+        });
+        var Periode = document.getElementById("PerDaftar")
+        $('#MonthItem').change(function () {
+            var e = document.getElementById("MonthItem");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            Periode.value = strUser;
+        });
+        var Gelombang = document.getElementById("GelTest")
+        $('#TestItem').change(function () {
+            var e = document.getElementById("TestItem");
+            var strUser = e.options[e.selectedIndex].text;
+            Gelombang.value = strUser;
+        });
+        var KategoriAdm = document.getElementById("KatAdm")
+        $('#KatItem').change(function () {
+            var e = document.getElementById("KatItem");
+            var strUser = e.options[e.selectedIndex].text;
+            KategoriAdm.value = strUser;
+        });
+
+    });
+
+</script>

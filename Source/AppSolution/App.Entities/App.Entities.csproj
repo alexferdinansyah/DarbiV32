@@ -146,6 +146,7 @@
     <Compile Include="Models\Jenjang.cs" />
     <Compile Include="Models\Kelas.cs" />
     <Compile Include="Models\Module.cs" />
+    <Compile Include="Models\RegSiswa.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RequestForgotPassword.cs" />
     <Compile Include="Models\Bank.cs" />

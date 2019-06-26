@@ -1,0 +1,79 @@
+KATEGORI SPP :
+
+UMUM
+ANAK GURU
+KHUSUS
+===
+PERIODE DAFTAR :
+
+JULI
+AGUSTUS
+SEPTEMBER
+OKTOBER
+NOVEMBER
+DESEMBER
+JANUARI
+FEBRUARI
+MARET
+APRIL
+MEI
+JUNI
+===
+DROPDOWN GELOMBANG TEST:
+
+1
+2
+3
+4
+===
+DROPDOWN KATEGORIADM : 
+
+
+Umum
+
+Bersamaan dengan saudara kandung
+
+Memiliki saudara kandung
+
+Umum grade B
+
+Umum memiliki saudara kandung di SMP + grade B
+
+Umum bersamaan dengan saudara kandung + grade B
+
+Asal Darbi + Grade A
+
+Asal Darbi + Grade B
+
+Anak Pegawai ke-1
+
+Anak Pegawai ke-2
+
+Anak Pegawai ke-3, dst
+
+Anak Pegawai ke-1 + Grade A
+
+Anak Pegawai ke-2 + Grade B
+
+Anak Pegawai ke-3, dst + Grade A
+
+Anak Pegawai ke-3, dst + Grade B
+
+Siswa Pindahan ke Toddler semester II
+
+Siswa pindahan ke PG/TK A/TK B Semester II
+
+Siswa pindahan ke SD 3-4
+
+Siswa pindahan ke SD 5-6
+
+Siswa pindahan ke SMP 8
+
+Siswa pindahan ke SMP 9
+
+Daftar ulang siswa TK A
+
+Daftar ulang siswa TK B
+
+
+===

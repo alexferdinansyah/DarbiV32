@@ -1,18 +1,18 @@
 ﻿@model App.Web.Areas.Register.Models.RegSiswaSearchFormVM
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Registrasi Siswa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Register Siswa", "Create")
+    @Html.ActionLink("Registrasi Siswa Baru", "Create")
 </p>
 
 @Html.Partial("Search", Model)
 
-<table id="tableBank" class="table" style="width:100%">
+<table id="tableRegSiswa" class="table" style="width:100%">
     <thead>
         <tr>
             <th>No</th>
@@ -30,7 +30,86 @@
             <th>Tahap 2</th>
             <th>Kategori Adm</th>
             <th>Tanggal Daftar</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody></tbody>
 </table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var tableRegSiswa = $('#tableRegSiswa').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/Register/RegSiswa/AjaxRegSiswa?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "NamaSiswa", "value": $('#NamaSiswa').val() },
+                    { "name": "NamaAyah", "value": $('#NamaAyah').val() },
+                    { "name": "NamaIbu", "value": $('#NamaIbu').val() },
+                    { "name": "KontakAyah", "value": $('#KontakAyah').val() },
+                    { "name": "KontakIbu", "value": $('#KontakIbu').val() },
+                    { "name": "AsalSekolah", "value": $('#AsalSekolah').val() },
+                    { "name": "KatSpp", "value": $('#KatSpp').val() },
+                    { "name": "TingkatId", "value": $('#TingkatId').val() },
+                    { "name": "PerDaftar", "value": $('#PerDaftar').val() },
+                    { "name": "GelTest", "value": $('#GelTest').val() },
+                    { "name": "Tahapsatu", "value": $('#Tahapsatu').val() },
+                    { "name": "Tahapdua", "value": $('#Tahapdua').val() },
+                    { "name": "KatAdm", "value": $('#KatAdm').val() },
+                    { "name": "TglDaftar", "value": $('#TglDaftar').val() }
+                );
+            },
+            "aoColumns": [
+                {
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                { "sName": "NamaSiswa" },
+                { "sName": "NamaAyah" },
+                { "sName": "NamaIbu" },
+                { "sName": "KontakAyah" },
+                { "sName": "KontakIbu" },
+                { "sName": "AsalSekolah" },
+                { "sName": "KatSpp" },
+                { "sName": "TingkatId" },
+                { "sName": "PerDaftar" },
+                { "sName": "GelTest" },
+                { "sName": "Tahapsatu" },
+                { "sName": "Tahapdua" },
+                { "sName": "KatAdm" },
+                { "sName": "TglDaftar" },
+
+                {
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            var x = '<a href="/Register/RegSiswa/Details?id=' + data + '">Details</a> | ';
+                            x += '<a href="/Register/RegSiswa/Edit?id=' + data + '">Edit</a> | ';
+                            x += '<a href="/Register/RegSiswa/Delete?id=' + data + '">Delete</a>';
+                        }
+
+                        return x;
+                    }
+                }
+            ]
+        });
+
+        $('#btnsearch').click(function () {
+            tableRegSiswa.fnDraw(null);
+        });
+
+    });
+</script>
