@@ -59,8 +59,22 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.KatSpp, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ListItem")
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.KatSpp, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KatSpp, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" id="tipediskon">
+            @Html.LabelFor(model => model.TypeDisc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DropDownList("Disc")
+            </div>
+        </div>
+        <div class="form-group" id="nomdiskon">
+            @Html.LabelFor(model => model.NomDisc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.NomDisc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NomDisc, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -77,9 +91,10 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.GelTest, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TestItem")
+                @Html.DropDownList("Years", new SelectList(ViewBag.Years as System.Collections.IEnumerable, Model.Year))
+                @Html.ValidationMessageFor(model => model.Year)
             </div>
         </div>
         <div class="form-group">
@@ -99,21 +114,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.KatAdm, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("KatItem")
+                @Html.EditorFor(model => model.KatAdm, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KatAdm, "", new { @class = "text-danger" })
             </div>
         </div>
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.TglDaftar, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TglDaftar, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TglDaftar, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
-        @Html.HiddenFor(model => model.KatSpp)
         @Html.HiddenFor(model => model.PerDaftar)
-        @Html.HiddenFor(model => model.GelTest)
-        @Html.HiddenFor(model => model.KatAdm)
+        @Html.HiddenFor(model => model.Year)
+        @Html.HiddenFor(model => model.TypeDisc)
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -132,31 +140,54 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        var KategoriSpp = document.getElementById("KatSpp")
-        $('#ListItem').change(function () {
-            var e = document.getElementById("ListItem");
+        var Tipedis = document.getElementById("TypeDisc")
+        $('#Disc').change(function () {
+            var e = document.getElementById("Disc");
+            var strUser = e.options[e.selectedIndex].text;
+            Tipedis.value = strUser;
+        });
+
+        $('#nomdiskon').change(function () {
+            if (document.getElementById("TypeDisc").value == 'Rp') {
+                var e = document.getElementById("NomDisc").value;
+                var prsE = parseInt(e);
+                if (!/\D/.test(e)) {
+                    alert("number");
+                }
+                else {
+                    alert("number only");
+                    document.getElementById("NomDisc").value = "";
+                }
+            }
+            else if (document.getElementById("TypeDisc").value == '%') {
+                var e = document.getElementById("NomDisc").value;
+
+                if (!/\D/.test(e)) {
+                    var prsE = parseInt(e);
+                    if (prsE >= 0 && prsE <= 100) {
+                        alert("percentage accepted");
+                    }
+                    else {
+                        alert("percentage not accepted");
+                        document.getElementById("NomDisc").value = "";
+                    }
+                    
+                }
+                else {
+                    alert("number only");
+                    document.getElementById("NomDisc").value = "";
+                }
+            }
+            else {
+                alert("not number");
+            }
+        });
+        var Tahun = document.getElementById("Year");
+        $('#Years').change(function () {
+            var e = document.getElementById("Years");
             var strUser = e.options[e.selectedIndex].text;
             //alert(strUser);
-            KategoriSpp.value = strUser;
-        });
-        var Periode = document.getElementById("PerDaftar")
-        $('#MonthItem').change(function () {
-            var e = document.getElementById("MonthItem");
-            var strUser = e.options[e.selectedIndex].text;
-            //alert(strUser);
-            Periode.value = strUser;
-        });
-        var Gelombang = document.getElementById("GelTest")
-        $('#TestItem').change(function () {
-            var e = document.getElementById("TestItem");
-            var strUser = e.options[e.selectedIndex].text;
-            Gelombang.value = strUser;
-        });
-        var KategoriAdm = document.getElementById("KatAdm")
-        $('#KatItem').change(function () {
-            var e = document.getElementById("KatItem");
-            var strUser = e.options[e.selectedIndex].text;
-            KategoriAdm.value = strUser;
+            Tahun.value = strUser;
         });
 
     });

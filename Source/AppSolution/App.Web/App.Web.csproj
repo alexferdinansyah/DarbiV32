@@ -270,6 +270,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\LOGODA2.png" />
     <Content Include="obj\Debug\App.Web.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\App.Web.dll" />
     <Content Include="obj\Debug\App.Web.pdb" />
@@ -476,8 +477,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
-    <Folder Include="Areas\Register\Views\CreateRegSiswa\" />
-    <Folder Include="Areas\Register\Views\EditRegSiswaFormVM\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>

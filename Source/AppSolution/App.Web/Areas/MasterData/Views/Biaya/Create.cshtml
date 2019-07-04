@@ -100,7 +100,8 @@
                     $('#JenisBiaya12').show();
                     $('#JenisBiaya3').hide();
                     $("select[id$=JenisItem] > option").remove();
-                    $('#JenisItem').append($("<option></option>").attr("value", 'SPP').text("SPP"));
+                    $('#JenisItem').append($("<option></option>").attr("value",'').text("Pilih Jenis"));
+                    $('#JenisItem').append($("<option></option>").attr("value",'SPP').text("SPP"));
                     $('#JenisItem').append($("<option></option>").attr("value", 'KS').text("KS"));
                 }
 
@@ -116,6 +117,7 @@
         $('#JenisItem').change(function () {
             var e = document.getElementById("JenisItem");
             var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
             JenisBiaya.value = strUser;
         });
 

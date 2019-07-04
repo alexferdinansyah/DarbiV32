@@ -13,8 +13,10 @@ namespace App.Web.Areas.Register.Models
         // GET: Register/EditRegSiswaFormVM
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "Nama Lengkap Siswa")]
+        [Display(Name = "Nama Siswa")]
         public string NamaSiswa { get; set; }
+
+        public int RegSiswaId { get; set; }
 
         [Display(Name = "Nama Ayah Siswa")]
         public string NamaAyah { get; set; }
@@ -34,6 +36,12 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Kategori Spp")]
         public string KatSpp { get; set; }
 
+        [Display(Name = "Tipe Discount")]
+        public string TypeDisc { get; set; }
+
+        [Display(Name = "Nominal Discount")]
+        public string NomDisc { get; set; }
+
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
 
@@ -42,20 +50,20 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Periode Daftar")]
         public string PerDaftar { get; set; }
 
-        [Display(Name = "Gelombang Test")]
-        public string GelTest { get; set; }
+        [Display(Name = "Tahun")]
+        public string Year { get; set; }
 
-        [Display(Name = "Tahap 1")]
+        [Display(Name = "Tahap Pembayaran 1")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Tahapsatu { get; set; }
 
-        [Display(Name = "Tahap 2")]
+        [Display(Name = "Tahap Pembayaran 2")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Tahapdua { get; set; }
 
-        [Display(Name = "Kategori Administrasi")]
+        [Display(Name = "Kategori Biaya Masuk")]
         public string KatAdm { get; set; }
 
         [Display(Name = "Tanggal Daftar")]
