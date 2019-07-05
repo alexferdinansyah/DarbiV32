@@ -76,6 +76,12 @@ namespace App.Entities.Models
         [Display(Name = "Kategori Biaya Masuk")]
         public string KatAdm { get; set; }
 
+        [Display(Name = "Tipe Discount BM")]
+        public string TypeDiscAdm { get; set; }
+
+        [Display(Name = "Nominal Discount BM")]
+        public string NomDiscAdm { get; set; }
+
         [Required]
         [Display(Name = "Tanggal Daftar")]
         public DateTime TglDaftar { get; set; }

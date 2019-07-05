@@ -60,20 +60,15 @@ namespace App.Web.Areas.Register.Controllers
                 int i = 0;
                 foreach (var data in PagedQuery)
                 {
+                    Tingkat infotingkat = db.Tingkats.Find(data.TingkatId);
+                    data.Tingkat = infotingkat.Namatingkat;
                     i++;
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.NamaSiswa,
-                        data.NamaAyah,
-                        data.NamaIbu,
-                        data.KontakAyah,
-                        data.KontakIbu,
-                        data.AsalSekolah,
                         data.KatSpp,
-                        data.TypeDisc,
-                        data.NomDisc,
-                        data.TingkatId.ToString(),
+                        data.Tingkat,
                         data.PerDaftar,
                         data.Year,
                         data.Tahapsatu.ToString(),
@@ -125,7 +120,14 @@ namespace App.Web.Areas.Register.Controllers
 
             List<SelectListItem> Disc = new List<SelectListItem>()
             {
-                new SelectListItem {Text="Pilih Tipe",Value="0",Selected=true },
+                new SelectListItem {Text="Pilih Tipe Diskon",Value="0",Selected=true },
+                new SelectListItem {Text="Rp",Value="Rp"},
+                new SelectListItem {Text="%",Value="%" },
+            };
+
+            List<SelectListItem> DiscAdm = new List<SelectListItem>()
+            {
+                new SelectListItem {Text="Pilih Tipe Diskon",Value="0",Selected=true },
                 new SelectListItem {Text="Rp",Value="Rp"},
                 new SelectListItem {Text="%",Value="%" },
             };
@@ -146,7 +148,7 @@ namespace App.Web.Areas.Register.Controllers
                 new SelectListItem {Text="Mei",Value="Mei"},
                 new SelectListItem {Text="Juni",Value="Juni"},
             };
-
+            ViewBag.DiscAdm = DiscAdm;
             ViewBag.Disc = Disc;
             ViewBag.Years = Years;
             ViewBag.MonthItem = ObjDaftar;
@@ -176,6 +178,8 @@ namespace App.Web.Areas.Register.Controllers
                 newmodel.Tahapsatu = model.Tahapsatu;
                 newmodel.Tahapdua = model.Tahapdua;
                 newmodel.KatAdm = model.KatAdm;
+                newmodel.TypeDiscAdm = model.TypeDiscAdm;
+                newmodel.NomDiscAdm = model.NomDiscAdm;
                 newmodel.TglDaftar = DateTime.UtcNow.Date;
 
                 db.RegSiswas.Add(newmodel);
@@ -201,6 +205,8 @@ namespace App.Web.Areas.Register.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             RegSiswa regsiswa = db.RegSiswas.Find(id);
+            Tingkat infotingkat = db.Tingkats.Find(regsiswa.TingkatId);
+            regsiswa.Tingkat = infotingkat.Namatingkat;
             if (regsiswa == null)
             {
                 return HttpNotFound();
@@ -278,40 +284,21 @@ namespace App.Web.Areas.Register.Controllers
 
             List<SelectListItem> Disc = new List<SelectListItem>()
             {
-                new SelectListItem {Text="Pilih Tipe",Value="0",Selected=true },
+                new SelectListItem {Text="Pilih Tipe Diskon",Value="0",Selected=true },
                 new SelectListItem {Text="Rp",Value="Rp"},
                 new SelectListItem {Text="%",Value="%" },
             };
 
-            List<SelectListItem> ObjAdm = new List<SelectListItem>()
+            List<SelectListItem> DiscAdm = new List<SelectListItem>()
             {
-                new SelectListItem {Text="Umum",Value="1"},
-                new SelectListItem {Text="Bersamaan dengan saudara kandung",Value="2" },
-                new SelectListItem {Text="Memiliki saudara kandung",Value="3"},
-                new SelectListItem {Text="Umum grade B",Value="4"},
-                new SelectListItem {Text="Umum memiliki saudara kandung di SMP + grade B",Value="5"},
-                new SelectListItem {Text="Umum bersamaan dengan saudara kandung + grade B",Value="6"},
-                new SelectListItem {Text="Asal Darbi + Grade A",Value="7"},
-                new SelectListItem {Text="Asal Darbi + Grade B",Value="8"},
-                new SelectListItem {Text="Anak Pegawai ke-1",Value="9"},
-                new SelectListItem {Text="Anak Pegawai ke-2",Value="10" },
-                new SelectListItem {Text="Anak Pegawai ke-3, dst",Value="11"},
-                new SelectListItem {Text="Anak Pegawai ke-1 + Grade A",Value="12"},
-                new SelectListItem {Text="Anak Pegawai ke-2 + Grade B",Value="13" },
-                new SelectListItem {Text="Anak Pegawai ke-3, dst + Grade A",Value="14"},
-                new SelectListItem {Text="Anak Pegawai ke-3, dst + Grade B",Value="15"},
-                new SelectListItem {Text="Siswa Pindahan ke Toddler semester II",Value="16"},
-                new SelectListItem {Text="Siswa pindahan ke PG/TK A/TK B Semester II",Value="17"},
-                new SelectListItem {Text="Siswa pindahan ke SD 3-4",Value="18"},
-                new SelectListItem {Text="Siswa pindahan ke SD 5-6",Value="19"},
-                new SelectListItem {Text="Siswa pindahan ke SMP 8",Value="20"},
-                new SelectListItem {Text="Siswa pindahan ke SMP 9",Value="21" },
-                new SelectListItem {Text="Daftar ulang siswa TK A, dst",Value="22"},
-                new SelectListItem {Text="Daftar ulang siswa TK B",Value="23"},
+                new SelectListItem {Text="Pilih Tipe Diskon",Value="0",Selected=true },
+                new SelectListItem {Text="Rp",Value="Rp"},
+                new SelectListItem {Text="%",Value="%" },
             };
+
+            ViewBag.DiscAdm = DiscAdm;
             ViewBag.Disc = Disc;
             ViewBag.Years = Years;
-            ViewBag.KatItem = ObjAdm;
             ViewBag.MonthItem = ObjDaftar;
             return View(model);
     }
@@ -319,7 +306,7 @@ namespace App.Web.Areas.Register.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit([Bind(Include = "RegSiswaId,NamaSiswa,NamaAyah,NamaIbu,KontakAyah,KontakIbu," +
-            "AsalSekolah,KatSpp,Discount,TingkatId,PerDaftar,Year,Tahapsatu,Tahapdua,KatAdm,TglDaftar")] RegSiswa regsiswa)
+            "AsalSekolah,KatSpp,TypeDisc,NomDisc,TingkatId,PerDaftar,Year,Tahapsatu,Tahapdua,KatAdm,TypeDiscAdm,NomDiscAdm,TglDaftar")] RegSiswa regsiswa)
     {
         if (ModelState.IsValid)
         {
@@ -339,6 +326,8 @@ namespace App.Web.Areas.Register.Controllers
             RegCek.Tahapsatu = regsiswa.Tahapsatu;
             RegCek.Tahapdua = regsiswa.Tahapdua;
             RegCek.KatAdm = regsiswa.KatAdm;
+            RegCek.TypeDiscAdm = regsiswa.TypeDiscAdm;
+            RegCek.NomDiscAdm = regsiswa.NomDiscAdm;
             RegCek.TglDaftar = DateTime.UtcNow.Date;
 
             db.Entry(RegCek).State = EntityState.Modified;

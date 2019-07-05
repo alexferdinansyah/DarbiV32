@@ -17,14 +17,7 @@
         <tr>
             <th>No</th>
             <th>Nama Siswa</th>
-            <th>Nama Ayah Siswa</th>
-            <th>Nama Ibu Siswa</th>
-            <th>Kontak Ayah Siswa</th>
-            <th>Kontak Ibu Siswa</th>
-            <th>Asal Sekolah</th>
             <th>Kategori SPP</th>
-            <th>Tipe Discount</th>
-            <th>Nominal</th>
             <th>Tingkat</th>
             <th>Periode Daftar</th>
             <th>Tahun</th>
@@ -59,15 +52,8 @@
                 formdata = $('#Req').serializeArray()
                 aoData.push(
                     { "name": "NamaSiswa", "value": $('#NamaSiswa').val() },
-                    { "name": "NamaAyah", "value": $('#NamaAyah').val() },
-                    { "name": "NamaIbu", "value": $('#NamaIbu').val() },
-                    { "name": "KontakAyah", "value": $('#KontakAyah').val() },
-                    { "name": "KontakIbu", "value": $('#KontakIbu').val() },
-                    { "name": "AsalSekolah", "value": $('#AsalSekolah').val() },
                     { "name": "KatSpp", "value": $('#KatSpp').val() },
-                    { "name": "TypeDisc", "value": $('#TypeDisc').val() },
-                    { "name": "NomDisc", "value": $('#NomDisc').val() },
-                    { "name": "TingkatId", "value": $('#TingkatId').val() },
+                    { "name": "Tingkat", "value": $('#Tingkat').val() },
                     { "name": "PerDaftar", "value": $('#PerDaftar').val() },
                     { "name": "Year", "value": $('#Year').val() },
                     { "name": "Tahapsatu", "value": $('#Tahapsatu').val() },
@@ -83,15 +69,8 @@
                     }
                 },
                 { "sName": "NamaSiswa" },
-                { "sName": "NamaAyah" },
-                { "sName": "NamaIbu" },
-                { "sName": "KontakAyah" },
-                { "sName": "KontakIbu" },
-                { "sName": "AsalSekolah" },
                 { "sName": "KatSpp" },
-                { "sName": "TypeDisc" },
-                { "sName": "NomDisc" },
-                { "sName": "TingkatId" },
+                { "sName": "Tingkat" },
                 { "sName": "PerDaftar" },
                 { "sName": "Year" },
                 { "sName": "Tahapsatu" },

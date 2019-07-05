@@ -66,6 +66,12 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Kategori Biaya Masuk")]
         public string KatAdm { get; set; }
 
+        [Display(Name = "Tipe Discount BM")]
+        public string TypeDiscAdm { get; set; }
+
+        [Display(Name = "Nominal Discount BM")]
+        public string NomDiscAdm { get; set; }
+
         [Display(Name = "Tanggal Daftar")]
         [DataType(DataType.Date)]
         public DateTime TglDaftar { get; set; }

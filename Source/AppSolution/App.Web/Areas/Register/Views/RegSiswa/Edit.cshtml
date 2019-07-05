@@ -18,6 +18,7 @@
     @Html.HiddenFor(model => model.Year)
     @Html.HiddenFor(model => model.PerDaftar)
     @Html.HiddenFor(model => model.TypeDisc)
+    @Html.HiddenFor(model => model.TypeDiscAdm)
 
     <div class="form-group">
         @Html.LabelFor(model => model.NamaSiswa, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -63,20 +64,14 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.KatSpp, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.KatSpp, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.KatSpp, "", new { @class = "text-danger" })
         </div>
-    </div>
-    <div class="form-group" id="tipediskon">
-        @Html.LabelFor(model => model.TypeDisc, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
+        <div class="col-md-2" id="tipediskon">
             @Html.DropDownList("Disc")
         </div>
-    </div>
-    <div class="form-group" id="nomdiskon">
-        @Html.LabelFor(model => model.NomDisc, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
+        <div class="col-md-2" id="nomdiskon">
             @Html.EditorFor(model => model.NomDisc, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.NomDisc, "", new { @class = "text-danger" })
         </div>
@@ -99,7 +94,6 @@
         <div class="col-md-10">
             @*@Html.DropDownList(model => model.Year, new SelectList(ViewBag.Years as System.Collections.IEnumerable, Model.Year))*@
             @Html.DropDownList("Years")
-            @*@Html.ValidationMessageFor(model => Model .Year)*@
         </div>
     </div>
     <div class="form-group">
@@ -118,9 +112,16 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.KatAdm, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.EditorFor(model => model.KatAdm, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.KatAdm, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2" id="tipediskonadm">
+            @Html.DropDownList("DiscAdm")
+        </div>
+        <div class="col-md-2" id="nomdiskonadm">
+            @Html.EditorFor(model => model.NomDiscAdm, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NomDiscAdm, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -172,7 +173,7 @@
                 var e = document.getElementById("NomDisc").value;
                 var prsE = parseInt(e);
                 if (!/\D/.test(e)) {
-                    alert("number");
+                    //alert("number");
                 }
                 else {
                     alert("number only");
@@ -196,6 +197,50 @@
                 else {
                     alert("number only");
                     document.getElementById("NomDisc").value = "";
+                }
+            }
+            else {
+                alert("not number");
+            }
+        });
+
+        //Tipe diskon Biaya Masuk
+        var Disadm = document.getElementById("TypeDiscAdm")
+        $('#DiscAdm').change(function () {
+            var e = document.getElementById("DiscAdm");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser)
+            Disadm.value = strUser;
+        });
+        $('#nomdiskonadm').change(function () {
+            if (document.getElementById("TypeDiscAdm").value == 'Rp') {
+                var e = document.getElementById("NomDiscAdm").value;
+                var prsE = parseInt(e);
+                if (!/\D/.test(e)) {
+                    //alert("number");
+                }
+                else {
+                    alert("number only");
+                    document.getElementById("NomDiscAdm").value = "";
+                }
+            }
+            else if (document.getElementById("TypeDiscAdm").value == '%') {
+                var e = document.getElementById("NomDiscAdm").value;
+
+                if (!/\D/.test(e)) {
+                    var prsE = parseInt(e);
+                    if (prsE >= 0 && prsE <= 100) {
+                        alert("percentage accepted");
+                    }
+                    else {
+                        alert("percentage not accepted");
+                        document.getElementById("NomDiscAdm").value = "";
+                    }
+
+                }
+                else {
+                    alert("number only");
+                    document.getElementById("NomDiscAdm").value = "";
                 }
             }
             else {

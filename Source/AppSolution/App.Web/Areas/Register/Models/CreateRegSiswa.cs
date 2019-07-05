@@ -39,14 +39,17 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Nominal Discount")]
         public string NomDisc { get; set; }
 
+        [Required]
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
 
         public string Tingkat { get; set; }
 
+        [Required]
         [Display(Name = "Periode Daftar")]
         public string PerDaftar { get; set; }
 
+        [Required]
         [Display(Name = "Tahun")]
         public string Year { get; set; }
 
@@ -62,6 +65,12 @@ namespace App.Web.Areas.Register.Models
 
         [Display(Name = "Kategori Biaya Masuk")]
         public string KatAdm { get; set; }
+
+        [Display(Name = "Tipe Discount BM")]
+        public string TypeDiscAdm { get; set; }
+
+        [Display(Name = "Nominal Discount BM")]
+        public string NomDiscAdm { get; set; }
 
         [Display(Name = "Tanggal Daftar")]
         [DataType(DataType.Date)]
