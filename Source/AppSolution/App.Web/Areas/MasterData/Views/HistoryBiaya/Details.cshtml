@@ -5,15 +5,32 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
-<div>
-    <h4>History Biaya</h4>
+<div id="details">
+    <h4>History Biaya    -    <input type="button" id="cmd" value="Print" class="btn btn-default"/> </h4>
     <hr />
+    <div id="detail" style="padding-left:100px">
+        <table>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.PeriodeHB)</th>
+                <td> : </td>
+                <td>
+                    @Html.DisplayFor(model => model.PeriodeHB)
+                </td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.KategoriHB)</th>
+                <td> : </td>
+                <td>
+                    @Html.DisplayFor(model => model.KategoriHB)
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.PeriodeHB)
+            @Html.DisplayNameFor(model => model.PeriodeHB) : 
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.PeriodeHB)
         </dd>
@@ -51,3 +68,9 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.HistoryId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    $('#cmd').click(function () {
+        $("#detail").printThis();
+    });
+
+</script>
