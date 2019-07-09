@@ -1,0 +1,45 @@
+﻿@model App.Web.Areas.Transaction.Models.TransactionFormCreate
+@{
+    ViewBag.Title = "Form Transaksi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div>
+    <h4>Transaksi Biaya</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nosisda)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nosisda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NamaSiswa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NamaSiswa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kelas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kelas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jenjang)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Jenjang)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
