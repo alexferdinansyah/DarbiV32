@@ -1,0 +1,81 @@
+﻿@model App.Entities.Models.DetailSaudara
+@{
+    ViewBag.Title = "Detail Saudara";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@*@Html.Partial("Search", Model)*@
+@Html.HiddenFor(model => model.SiswaId)
+@Html.ActionLink("Add Saudara", "CreateSaudara", new { id = Model.SiswaId }) |
+@Html.ActionLink("Back to Siswa", "Details", new { id = Model.SiswaId })
+
+<table id="tableDetailSaudara" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Lengkap</th>
+            <th>Jenis Kelamin</th>
+            <th>Tanggal Lahir</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+		var tableDetailSaudara = $('#tableDetailSaudara').dataTable({
+			"scrollX": true,
+			"processing": true,
+			"sProcessing": true,
+			"bLengthChange": true,
+			//"sLoadingRecords":true,
+			"scrollCollapse": true,
+			"searching": false,
+			"bServerSide": true,
+			"ordering": false,
+			"sAjaxSource": "/MasterData/Siswa/AjaxDS?format=JSON&SiswaId="+@Model.SiswaId,
+			"bProcessing": true,
+			oLanguage: { sProcessing: "<div id='loader'></div>" },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "Fullname", "value": $('#Fullname').val() },
+                    { "name": "Sex", "value": $('#Sex').val() },
+                    { "name": "Dob", "value": $('#Dob').val() }
+				);
+			},
+			"aoColumns": [
+				{
+					"render": function (data, type, row, meta) {
+						return data;
+					}
+                },
+                { "sName": "Fullname" },
+                { "sName": "Sex" },
+                { "sName": "Dob" },
+				{
+					"render": function (data, type, row, meta) {
+						if (type === 'display') {
+							var x = '<a href="/MasterData/Siswa/DetailsSaudara?id=' + data + '">Details</a> | ';
+							x += '<a href="/MasterData/Siswa/EditSaudara?id=' + data + '">Edit</a> | ';
+							x += '<a href="/MasterData/Siswa/DeleteSaudara?id=' + data + '">Delete</a>';
+						}
+
+						return x;
+					}
+				}
+			]
+		});
+
+		$('#btnsearch').click(function () {
+			tableDetailSaudara.fnDraw(null);
+		});
+
+	});
+</script>

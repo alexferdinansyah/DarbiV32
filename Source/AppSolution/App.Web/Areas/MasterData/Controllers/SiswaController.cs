@@ -126,10 +126,145 @@ namespace App.Web.Areas.MasterData.Controllers
             return View(siswa);
         }
 
+        public ActionResult DetailSaudara(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DetailSaudara detailsaudara = db.DetailSaudaras.Find(id);
+            if (detailsaudara == null)
+            {
+                detailsaudara = new DetailSaudara();
+                detailsaudara.SiswaId = Convert.ToInt32(id);
+            }
+
+            return View(detailsaudara);
+        }
+
+        public ActionResult CreateSaudara(int? id)
+        {
+            DetailSaudara detailsaudara = new DetailSaudara();
+
+            if (id != null)
+            {
+                detailsaudara.SiswaId = Convert.ToInt32(id);
+            }
+
+            List<SelectListItem> ListItem = new List<SelectListItem>()
+            {
+                new SelectListItem {Text="Pilih Jenis Kelamin",Value="0",Selected=true},
+                new SelectListItem {Text="Laki-Laki",Value="1"},
+                new SelectListItem {Text="Perempuan",Value="2"},
+            };
+
+            ViewBag.ListItem = ListItem;
+            return View(detailsaudara);
+        }
+
+        //POST : MasterData/DetailSaudara/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSaudara(DetailSaudara detailsaudara)
+        {
+            if (ModelState.IsValid)
+            {
+                DetailSaudara newdetailsaudara = new DetailSaudara();
+                newdetailsaudara.Fullname = detailsaudara.Fullname;
+                newdetailsaudara.Sex = detailsaudara.Sex;
+                newdetailsaudara.Dob = detailsaudara.Dob;
+                db.DetailSaudaras.Add(newdetailsaudara);
+                db.SaveChanges();
+                return RedirectToAction("DetailSaudara", new { id = newdetailsaudara.SiswaId });
+            }
+
+            return View(detailsaudara);
+        }
+
+        [HttpGet]
+        public ActionResult AjaxDS(JQueryDataTableParamModel param, int? id)
+        {
+            var QS = Request.QueryString;
+            string val = Convert.ToString(Request.Params["SiswaId"]);
+            int SiswaId = Convert.ToInt32(QS["SiswaId"]);
+            //String Namatingkat = QS["Namatingkat"];
+
+            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
+
+            List<string[]> listResult = new List<string[]>();
+            String errorMessage = "";
+            if (SiswaId == null)
+            {
+                //var ds = db.DetailSaudaras.Find()
+                return Json(new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
+                    aaData = listResult
+                },
+                JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                try
+                {
+                    IEnumerable<DetailSaudara> Query = db.DetailSaudaras.Where(x => x.SiswaId.Equals(SiswaId));
+
+
+                    int TotalRecord = Query.Count();
+
+                    var OrderedQuery = Query.OrderBy(x => x.SiswaId);
+
+                    int pageSize = param.iDisplayLength;
+                    int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
+                    var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+
+                    int i = 0;
+                    foreach (var data in PagedQuery)
+                    {
+                        i++;
+                        listResult.Add(new string[]
+                        {
+                        i.ToString(),
+                        data.Fullname,
+                        data.Sex,
+                        data.Dob,
+                        data.DetailSaudaraId.ToString()
+                        });
+                    }
+                    return Json(new
+                    {
+                        sEcho = param.sEcho,
+                        iTotalRecords = TotalRecord,
+                        iTotalDisplayRecords = TotalRecord,
+                        aaData = listResult
+                    },
+                    JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
+
+                return Json(new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
+                    aaData = listResult,
+                    error = errorMessage
+                },
+                JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
         // POST: MasterData/Siswa/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = 
+        public ActionResult Edit([Bind(Include =
             "SiswaId,Nosisda,Nisn,Fullname,Nickname,Sex,Pob,Dob,NamaAyah,NamaIbu,PekerjaanAyah,PekerjaanIbu,NoTelpAyah,NoTelpIbu,EmailOrtu,Alamat,Kota,Provinsi,KodePos,Negara,Anakke,Agama,Suku,Kewarganegaraan,TinggiBadan,BeratBadan,Goldar,Periode,Kelas,StatKat,KontakSiswa,SekolahAsal,StatSekolahAsal,JarakRumahSekolah,Tgldaftar,Geltest")]
          Siswa siswa)
         {
@@ -203,6 +338,88 @@ namespace App.Web.Areas.MasterData.Controllers
             db.Siswas.Remove(siswa);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: MasterData/DetailSaudara/Delete/5
+        public ActionResult DeleteSaudara(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
+            }
+            DetailSaudara detailsaudara = db.DetailSaudaras.Find(id);
+            if (detailsaudara == null)
+            {
+                return HttpNotFound();
+            }
+            return View(detailsaudara);
+        }
+
+        // POST: MasterData/DetailSaudara/Delete/5
+        [HttpPost, ActionName("DeleteSaudara")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedSaudara(int id)
+        {
+            DetailSaudara detailsaudara = db.DetailSaudaras.Find(id);
+            db.DetailSaudaras.Remove(detailsaudara);
+            db.SaveChanges();
+            return RedirectToAction("DetailSaudara", new { id = detailsaudara.SiswaId });
+        }
+
+        // GET: MasterData/DetailSaudara/Details/5
+        public ActionResult DetailsSaudara(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DetailSaudara detailsaudara = db.DetailSaudaras.Find(id);
+            if (detailsaudara == null)
+            {
+                return HttpNotFound();
+            }
+            return View(detailsaudara);
+        }
+
+        // GET: MasterData/DetailSaudara/Edit/5
+        public ActionResult EditSaudara(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DetailSaudara detailsaudara = db.DetailSaudaras.Find(id);
+            if (detailsaudara == null)
+            {
+                return HttpNotFound();
+            }
+            return View(detailsaudara);
+        }
+
+        // POST: MasterData/DetailSaudara/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSaudara([Bind(Include = "DetailSaudaraId, SiswaId,Fullname,Sex,Dob")]
+         DetailSaudara detailsaudara)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                DetailSaudara DetailSaudaraCek = db.DetailSaudaras.Find(detailsaudara.DetailSaudaraId);
+                DetailSaudaraCek.Fullname = detailsaudara.Fullname;
+                DetailSaudaraCek.Sex = detailsaudara.Sex;
+                DetailSaudaraCek.Dob = detailsaudara.Dob;
+
+                db.Entry(DetailSaudaraCek).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("DetailSaudara", new { id = DetailSaudaraCek.SiswaId });
+                //return RedirectToAction("DetailSaudara", "Siswa", new { id = detailsaudara.SiswaId });
+            }
+            return View(detailsaudara);
         }
 
         protected override void Dispose(bool disposing)

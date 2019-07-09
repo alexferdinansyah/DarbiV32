@@ -144,6 +144,7 @@
     <Compile Include="Models\Biaya.cs" />
     <Compile Include="Models\HistoryBiaya.cs" />
     <Compile Include="Models\Jenjang.cs" />
+    <Compile Include="Models\DetailSaudara.cs" />
     <Compile Include="Models\Kelas.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\RegSiswa.cs" />

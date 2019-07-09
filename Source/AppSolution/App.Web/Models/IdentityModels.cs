@@ -29,5 +29,7 @@ namespace App.Web.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<App.Entities.Models.DetailSaudara> DetailSaudaras { get; set; }
     }
 }

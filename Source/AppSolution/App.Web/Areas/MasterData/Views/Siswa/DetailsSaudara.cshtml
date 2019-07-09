@@ -1,0 +1,51 @@
+﻿@model App.Entities.Models.DetailSaudara
+
+@{
+    ViewBag.Title = "Details Saudara";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details Saudara</h2>
+
+<div>
+    <h4>Detail Saudara</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SiswaId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiswaId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fullname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dob)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditSaudara", new { id = Model.DetailSaudaraId }) |
+    @Html.ActionLink("Back to List", "DetailSaudara", new { id = Model.SiswaId })
+</p>

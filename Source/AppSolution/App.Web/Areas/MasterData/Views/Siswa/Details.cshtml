@@ -155,7 +155,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DetailSaudara)
+            @Html.ActionLink("Details", "DetailSaudara", new { id = Model.SiswaId })
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Agama)
