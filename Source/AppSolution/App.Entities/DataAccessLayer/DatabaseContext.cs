@@ -36,6 +36,7 @@ namespace App.Entities.DataAccessLayer
         public DbSet<HistoryBiaya> HistoryBiayas { get; set; }
         public DbSet<RegSiswa> RegSiswas { get; set; }
         public DbSet<DetailSaudara> DetailSaudaras { get; set; }
+        public DbSet<Transaksi> Transaksis { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

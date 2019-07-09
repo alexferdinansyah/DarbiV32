@@ -197,6 +197,7 @@
     <Compile Include="Areas\AccessManagement\Models\EditRoleFormVM.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
     <Compile Include="Areas\MasterData\Controllers\BiayaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\HistoryBiayaController.cs" />
     <Compile Include="Areas\MasterData\Controllers\JenjangController.cs" />
@@ -222,11 +223,17 @@
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
+    <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />
     <Compile Include="Areas\Register\Models\CreateRegSiswa.cs" />
     <Compile Include="Areas\Register\Models\EditRegSiswaFormVM.cs" />
     <Compile Include="Areas\Register\Models\RegSiswaSearchFormVM.cs" />
     <Compile Include="Areas\Register\RegisterAreaRegistration.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
+    <Compile Include="Areas\Transaction\Controllers\TransactionController.cs" />
+    <Compile Include="Areas\Transaction\Models\TransactionFormCreate.cs" />
+    <Compile Include="Areas\Transaction\Models\TransactionSearchFormVM.cs" />
+    <Compile Include="Areas\Transaction\TransactionAreaRegistration.cs" />
     <Compile Include="Common\Function.cs" />
     <Compile Include="ControllerAuthorizeAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -270,6 +277,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\LOGODA2.png" />
     <Content Include="obj\Debug\App.Web.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\App.Web.dll" />
     <Content Include="obj\Debug\App.Web.pdb" />
@@ -393,6 +401,16 @@
     <Content Include="Areas\MasterData\Views\Siswa\DeleteSaudara.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\DetailsSaudara.cshtml" />
     <Content Include="Areas\MasterData\Views\Siswa\EditSaudara.cshtml" />
+    <Content Include="Areas\Transaction\Views\web.config" />
+    <Content Include="Areas\Recapitulation\Views\web.config" />
+    <Content Include="Areas\Invoice\Views\web.config" />
+    <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="Areas\Transaction\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Transaction\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Index.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Search.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Details.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\FormTrans.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -481,8 +499,17 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Dashboard\Views\Shared\" />
-    <Folder Include="Areas\Register\Views\CreateRegSiswa\" />
-    <Folder Include="Areas\Register\Views\EditRegSiswaFormVM\" />
+    <Folder Include="Areas\Invoice\Controllers\" />
+    <Folder Include="Areas\Invoice\Models\" />
+    <Folder Include="Areas\Invoice\Views\Shared\" />
+    <Folder Include="Areas\Recapitulation\Controllers\" />
+    <Folder Include="Areas\Recapitulation\Models\" />
+    <Folder Include="Areas\Recapitulation\Views\Shared\" />
+    <Folder Include="Areas\Report\Controllers\" />
+    <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Report\Views\Shared\" />
+    <Folder Include="Areas\Transaction\Views\TransactionFormCreate\" />
+    <Folder Include="Areas\Transaction\Views\TransactionSearchFormVM\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>

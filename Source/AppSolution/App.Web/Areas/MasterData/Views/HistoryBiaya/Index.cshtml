@@ -29,11 +29,15 @@
 	$(document).ready(function () {
 
 
-		var tabelHB = $('#tabelHB').dataTable({
+        var tabelHB = $('#tabelHB').dataTable({
 			"scrollX": true,
 			"processing": true,
 			"sProcessing": true,
-			"bLengthChange": true,
+            "bLengthChange": true,
+            dom: 'lBfrtip',
+        buttons: [
+            'print'
+        ],
 			//"sLoadingRecords":true,
 			"scrollCollapse": true,
 			"searching": false,
@@ -85,3 +89,9 @@
 
 	});
 </script>
+
+<style>
+    div.dataTables_length {
+  margin-right: 1em;
+}
+</style>

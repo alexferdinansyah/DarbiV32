@@ -11,7 +11,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/buttons.dataTables.css" />
     <script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/DataTables/buttons.print.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/printThis.js"></script>
 
     <style>
 
@@ -94,7 +98,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Sistem Darul Abidin 3.2", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
@@ -114,6 +118,9 @@
                     </div>
                     <div class="panel-body collapse" id="groupMD">
                         <div class="list-group-item">
+                            <a href="~/MasterData/Bank/Index">Bank</a>
+                        </div>
+                        <div class="list-group-item">
                             <a href="~/MasterData/Siswa/Index">Siswa</a>
                         </div>
                         <div class="list-group-item">
@@ -123,16 +130,13 @@
                             <a href="~/MasterData/HistoryBiaya/Index">History Biaya</a>
                         </div>
                         <div class="list-group-item">
-                            <a href="~/MasterData/Kelas/Index">Kelas</a>
-                        </div>
-                        <div class="list-group-item">
                             <a href="~/MasterData/Jenjang/Index">Jenjang</a>
                         </div>
                         <div class="list-group-item">
                             <a href="~/MasterData/Tingkat/Index">Tingkat</a>
                         </div>
                         <div class="list-group-item">
-                            <a href="~/MasterData/Bank/Index">Bank</a>
+                            <a href="~/MasterData/Kelas/Index">Kelas</a>
                         </div>
                         <div class="list-group-item">
                             <a href="~/MasterData/SchoolSupport/Index">School Support</a>
@@ -143,6 +147,46 @@
                     </div>
                     <div class="panel-heading">
                         <a href="~/Register/RegSiswa/Index">Registrasi Siswa</a>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="~/Transaction/Transaction/Index">Transaction</a>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="#" data-toggle="collapse" data-target="#groupRecap">Recapitulation</a>
+                    </div>
+                    <div class="panel-body collapse" id="groupRecap">
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/RecapDaftarUlang/Index">Re-registration</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/RecapBiayaMasuk/Index">Entry Fee</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/RecapSPP/Index">SPP</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/RecapRumahBerbagi/Index">Rumah Berbagi</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/RecapSchoolSupport/Index">School Support</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Recapitulation/Recapitulation/Index">Print</a>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="~/Invoice/Invoice/Index">Invoice</a>
+                    </div>
+                    <div class="panel-heading">
+                        <a href="#" data-toggle="collapse" data-target="#groupReport">Report</a>
+                    </div>
+                    <div class="panel-body collapse" id="groupReport">
+                        <div class="list-group-item">
+                            <a href="~/Report/ReportStatusPembayaran/Index">Payment Status</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="~/Report/ReportStatusTunggakan/Index">Arrears Status</a>
+                        </div>
                     </div>
                 </div>
             </div>
