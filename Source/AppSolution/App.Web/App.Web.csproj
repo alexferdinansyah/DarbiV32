@@ -223,6 +223,8 @@
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
+    <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
+    <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />
     <Compile Include="Areas\Register\Models\CreateRegSiswa.cs" />
@@ -397,6 +399,10 @@
     <Content Include="Areas\Recapitulation\Views\web.config" />
     <Content Include="Areas\Invoice\Views\web.config" />
     <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="Areas\Recapitulation\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapBiayaMasuk\Index.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapBiayaMasuk\Search.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -488,9 +494,6 @@
     <Folder Include="Areas\Invoice\Controllers\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
-    <Folder Include="Areas\Recapitulation\Controllers\" />
-    <Folder Include="Areas\Recapitulation\Models\" />
-    <Folder Include="Areas\Recapitulation\Views\Shared\" />
     <Folder Include="Areas\Report\Controllers\" />
     <Folder Include="Areas\Report\Models\" />
     <Folder Include="Areas\Report\Views\Shared\" />

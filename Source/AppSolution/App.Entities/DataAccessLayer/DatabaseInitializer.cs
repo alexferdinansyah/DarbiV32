@@ -89,6 +89,14 @@ namespace App.Entities.DataAccessLayer
             historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
             context.SaveChanges();
 
+            var rekapbiayamasuks = new List<RekapBiayaMasuk>
+            {
+                new RekapBiayaMasuk {Nosisda="12345", Namasiswa="gg", Jenjang="sd", Tingkat="1", periode="2019",
+                tanggalhistory="13-jun-19"}
+            };
+            rekapbiayamasuks.ForEach(s => context.RekapBiayaMasuks.Add(s));
+            context.SaveChanges();
+
             var siswas = new List<Siswa>
             {
                 new Siswa {Nosisda = "00112233", Fullname = "Sarah Nuriah", Nickname = "Sarah", Nisn = "0123", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "29 April 2001",

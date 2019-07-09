@@ -35,7 +35,7 @@ namespace App.Entities.DataAccessLayer
         public DbSet<Biaya> Biayas { get; set; }
         public DbSet<HistoryBiaya> HistoryBiayas { get; set; }
         public DbSet<RegSiswa> RegSiswas { get; set; }
-
+        public DbSet<RekapBiayaMasuk> RekapBiayaMasuks { get; set; } 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
