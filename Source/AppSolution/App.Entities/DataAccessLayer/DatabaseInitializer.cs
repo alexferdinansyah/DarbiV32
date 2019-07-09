@@ -79,6 +79,16 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+            var transaksis = new List<Transaksi>
+            {
+                new Transaksi {Nosisda = "001122", totalBM = "12.000.000", bayarBM = "7.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "transfer",
+                tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 1},
+                new Transaksi {Nosisda = "001123", totalBM = "6.000.000", bayarBM = "2.000.000", periode = "SD", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "tunai",
+                tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 2}
+            };
+            transaksis.ForEach(s => context.Transaksis.Add(s));
+            context.SaveChanges();
+
             var historybiayas = new List<HistoryBiaya>
             {
                 new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "Biaya Masuk", JenisHB = "Biaya Masuk",
