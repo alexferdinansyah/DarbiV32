@@ -148,6 +148,7 @@
     <Compile Include="Models\Kelas.cs" />
     <Compile Include="Models\Module.cs" />
     <Compile Include="Models\RegSiswa.cs" />
+    <Compile Include="Models\RekapBiayaMasuk.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RequestForgotPassword.cs" />
     <Compile Include="Models\Bank.cs" />
@@ -160,7 +161,7 @@
     <Compile Include="Security.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\HistoryBiaya\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
