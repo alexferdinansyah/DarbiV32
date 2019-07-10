@@ -143,7 +143,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     if (d.tipebayar.ToLower() != "cash")
                     {
                         tr.tgltransfer = d.tgltransfer;
-                        tr.namabank = d.namabank;
+                        tr.BankId = d.BankId;
                     }
                 }
                 IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(tr.Nosisda));
@@ -159,6 +159,13 @@ namespace App.Web.Areas.Transaction.Controllers
         //GET : Transaction/Transaction/Lakukan Transaksi
         public ActionResult FormTrans(TransactionFormCreateVM mod)
         {
+            List<SelectListItem> OpTrans = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih Cara Transaksi",Value="0",Selected=true },
+                new SelectListItem {Text="Tunai",Value="Tunai" },
+                new SelectListItem {Text="Transfer",Value="Transfer"},
+            };
             //info siswa
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
             string[] keltingkat = null;
@@ -205,10 +212,41 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             foreach(var t in dtts)
             {
-                mod.paidBM = t.bayarBM;
+                mod.paidBM = t.bayarBM.ToString();
             }
 
+            ViewBag.OpTrans = OpTrans;
             return View(mod);
+        }
+
+        //POST : Transaction/Transaction/Lakukan Transaksi
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FormTrans(TransactionFormCreateVM model,string status)
+        {
+            if (ModelState.IsValid)
+            {
+                Transaksi newmodel = new Transaksi();
+                newmodel.totalBM = model.totalBM;
+                newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
+                newmodel.tipebayar = model.tipebayar;
+                newmodel.BankId = model.BankId;
+                if (model.tipebayar == "Tunai")
+                {
+                    newmodel.tglbayar = DateTime.UtcNow.Date;
+                } else
+                {
+                    newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
+                }
+                newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+
+                db.Transaksis.Add(newmodel);
+                db.SaveChanges();
+
+                return RedirectToAction("Details");
+            }
+
+            return View(model);
         }
     }
 }
