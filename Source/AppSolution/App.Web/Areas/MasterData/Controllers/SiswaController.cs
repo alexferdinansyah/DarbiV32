@@ -173,9 +173,16 @@ namespace App.Web.Areas.MasterData.Controllers
                 newdetailsaudara.Fullname = detailsaudara.Fullname;
                 newdetailsaudara.Sex = detailsaudara.Sex;
                 newdetailsaudara.Dob = detailsaudara.Dob;
-                db.DetailSaudaras.Add(newdetailsaudara);
-                db.SaveChanges();
-                return RedirectToAction("DetailSaudara", new { id = newdetailsaudara.SiswaId });
+                db.DetailSaudaras.Add(detailsaudara);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+
+                }
+                return RedirectToAction("DetailSaudara", new { id = detailsaudara.DetailSaudaraId });
             }
 
             return View(detailsaudara);
