@@ -1,6 +1,6 @@
-﻿@model App.Web.Areas.Transaction.Models.TransactionFormCreate
+﻿@model App.Entities.Models.Transaksi
 @{
-    ViewBag.Title = "Detail Transaksi";
+    ViewBag.Title = "Detail Transaksi Terakhir";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,31 +15,71 @@
         <dd>
             @Html.DisplayFor(model => model.Nosisda)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.NamaSiswa)
+            @Html.DisplayNameFor(model => model.Namasiswa)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NamaSiswa)
+            @Html.DisplayFor(model => model.Namasiswa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kelastingkat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kelastingkat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.periode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.periode)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalBM)
+        </dt>
+        <dd>
+            Rp. @Html.DisplayFor(model => model.totalBM)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Kelas)
+            @Html.DisplayNameFor(model => model.bayarBM)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Kelas)
+            Rp. @Html.DisplayFor(model => model.bayarBM)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Jenjang)
+            @Html.DisplayNameFor(model => model.bulanspp)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Jenjang)
+            @Html.DisplayFor(model => model.bulanspp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.bayarspp)
+        </dt>
+        <dd>
+            Rp. @Html.DisplayFor(model => model.bayarspp)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipebayar)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tipebayar).ToString().ToUpper()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tglbayar)
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.tglbayar) <br />*@
+            @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", Model.tglbayar))
         </dd>
 
     </dl>
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
-    @Html.ActionLink("Back to List", "Index", new { id = Model.TransId })
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa =  System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </p>

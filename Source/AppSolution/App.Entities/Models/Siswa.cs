@@ -12,6 +12,7 @@ namespace App.Entities.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Siswa Id")]
         public int SiswaId { get; set; }
+        public int RegId { get; set; }
 
         [Required]
         [Display(Name = "No Sisda")]

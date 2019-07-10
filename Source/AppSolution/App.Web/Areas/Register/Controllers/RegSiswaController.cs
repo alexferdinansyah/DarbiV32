@@ -186,6 +186,8 @@ namespace App.Web.Areas.Register.Controllers
                 try
                 {
                     db.SaveChanges();
+                    //getlatestID
+                    //save to siswa
                 }
                 catch (Exception e)
                 {

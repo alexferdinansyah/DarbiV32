@@ -2,16 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace App.Entities.Models
+namespace App.Web.Areas.Transaction.Models
 {
-    public class Transaksi
+    public class TransactionFormCreateVM
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Transaksi Id")]
         public int TransId { get; set; }
 
@@ -20,8 +18,12 @@ namespace App.Entities.Models
         public string Namasiswa { get; set; }
         public string Kelastingkat { get; set; }
 
+        //[DisplayFormat(DataFormatString = "{0:N2}")]
         [Display(Name = "Total Pembayaran Biaya Masuk")]
         public string totalBM { get; set; }
+
+        [Display(Name = "Biaya Masuk Yang sudah Dibayarkan")]
+        public string paidBM { get; set; }
 
         [Display(Name = "Bayar Biaya Masuk")]
         public string bayarBM { get; set; }
@@ -47,5 +49,4 @@ namespace App.Entities.Models
         [Display(Name = "Nama Bank")]
         public int namabank { get; set; }
     }
-
 }

@@ -7,22 +7,15 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
-@Html.HiddenFor(model => model.NamaSiswa)
 
 <table id="tableTS" class="table" style="width:100%">
     <thead>
         <tr>
             <th>No</th>
             <th>No Sisda</th>
-            <th>Total Biaya Masuk</th>
-            <th>Bayar Biaya Masuk</th>
+            <th>Nama Lengkap</th>
             <th>Periode</th>
-            <th>Bulan SPP</th>
-            <th>Pembayaran SPP</th>
-            <th>Tipe Pembayaran</th>
-            <th>Tanggal Transfer</th>
-            <th>Tanggal Pembayaran</th>
-            <th>Nama Bank</th>
+            <th>Kelas - Tingkat</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -50,15 +43,9 @@
                 formdata = $('#Req').serializeArray()
                 aoData.push(
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
-                    { "name": "totalBM", "value": $('#totalBM').val() },
-                    { "name": "bayarBM", "value": $('#bayarBM').val() },
-                    { "name": "periode", "value": $('#periode').val() },
-                    { "name": "bulanspp", "value": $('#bulanspp').val() },
-                    { "name": "bayarspp", "value": $('#bayarspp').val() },
-                    { "name": "tipebayar", "value": $('#tipebayar').val() },
-                    { "name": "tgltransfer", "value": $('#tgltransfer').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() },
-                    { "name": "namabank", "value": $('#namabank').val() }
+                    { "name": "Fullname", "value": $('#Fullname').val() },
+                    { "name": "Periode", "value": $('#Periode').val() },
+                    { "name": "Kelas", "value": $('#Kelas').val() },
                 );
             },
             "aoColumns": [
@@ -68,21 +55,15 @@
                         }
                     },
                 { "sName": "Nosisda" },
-                { "sName": "totalBM" },
-                { "sName": "bayarBM" },
-                { "sName": "periode" },
-                { "sName": "bulanspp" },
-                { "sName": "bayarspp" },
-                { "sName": "tipebayar" },
-                { "sName": "tgltransfer" },
-                { "sName": "tglbayar" },
-                { "sName": "namabank" },
+                { "sName": "Fullname" },
+                { "sName": "Periode" },
+                { "sName": "Kelas" },
                     {
                         "render": function (data, type, row, meta) {
                             if (type === 'display') {
-                                var x = '<a href="/Transaction/Transaction/Details?id=' + data + '">Detail Transaksi</a> | ';
-                                x += '<a href="/Transaction/Transaction/FormTrans?id=' + data + '">Lakukan Transaksi</a> | ';
-                                x += '<a href="/Transaction/Transaction/Delete?id=' + data + '">Batal Transaksi Terakhir</a>';
+                                var x = '<a href="/Transaction/Transaction/Details?nosisda=' + data + '">Detail Transaksi Terakhir</a> | ';
+                                x += '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a> | ';
+                                x += '<a href="/Transaction/Transaction/Delete?nosisda=' + data + '">Batal Transaksi Terakhir</a>';
                             }
 
                             return x;

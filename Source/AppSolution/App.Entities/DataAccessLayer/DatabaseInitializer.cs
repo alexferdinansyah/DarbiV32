@@ -81,9 +81,9 @@ namespace App.Entities.DataAccessLayer
 
             var transaksis = new List<Transaksi>
             {
-                new Transaksi {Nosisda = "001122", totalBM = "12.000.000", bayarBM = "7.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "transfer",
+                new Transaksi {Nosisda = "00113344", totalBM = "12.000.000", bayarBM = "7.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "transfer",
                 tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 1},
-                new Transaksi {Nosisda = "001123", totalBM = "6.000.000", bayarBM = "2.000.000", periode = "SD", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "tunai",
+                new Transaksi {Nosisda = "00112233", totalBM = "6.000.000", bayarBM = "2.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "tunai",
                 tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 2}
             };
             transaksis.ForEach(s => context.Transaksis.Add(s));
