@@ -101,13 +101,13 @@ namespace App.Entities.DataAccessLayer
             historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
             context.SaveChanges();
 
-            var rekapbiayamasuks = new List<RekapBiayaMasuk>
+            /*var rekapbiayamasuks = new List<RekapBiayaMasuk>
             {
                 new RekapBiayaMasuk {Nosisda="0011856", Namasiswa="Aulia Raina", Jenjang="SMP", Tingkat="9", periode="2019",
                 tanggalhistory="15-Juni-2019"}
             };
             rekapbiayamasuks.ForEach(s => context.RekapBiayaMasuks.Add(s));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var siswas = new List<Siswa>
             {

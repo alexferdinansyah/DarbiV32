@@ -8,6 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.Namasiswa)
 
 <table id="tableRekapBiayaMasuk" class="table" style="width:100%">
 	<thead>
@@ -15,11 +16,10 @@
 			<th>No</th>
 			<th>No Sisda</th>
 			<th>Nama Siswa</th>
-			<th>Jenjang</th>
+			@*<th>Jenjang</th>
 			<th>Tingkat</th>
 			<th>Periode</th>
-			<th>Tanggal History</th>
-			<th>Action</th>
+			<th>Tanggal History</th>*@
 		</tr>
 	</thead>
 	<tbody></tbody>
@@ -46,11 +46,11 @@
 				formdata = $('#Req').serializeArray()
 				aoData.push(
 					{ "name": "Nosisda", "value": $('#Nosisda').val() },
-					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
-					{ "name": "Jenjang", "value": $('#Jenjang').val() },
-					{ "name": "Tingkat", "value": $('#Tingkat').val() },
-					{ "name": "periode", "value": $('#periode').val() },
-					{ "name": "tanggalhistory", "value": $('#tanggalhistory').val() }
+					{ "name": "Namasiswa", "value": $('#Namasiswa').val() }
+					//{ "name": "Jenjang", "value": $('#Jenjang').val() },
+					//{ "name": "Tingkat", "value": $('#Tingkat').val() },
+					//{ "name": "periode", "value": $('#periode').val() },
+					//{ "name": "tanggalhistory", "value": $('#tanggalhistory').val()}
 
 				);
 			},
@@ -60,23 +60,9 @@
 						return data;
 					}
 				},
-				{ "sNosisda": "Nosisda" },
-				{ "sNamasiswa": "Namasiswa" },
-				{ "sJenjang": "Jenjang" },
-				{ "sTingkat": "Tingkat" },
-				{ "speriode": "periode" },
-				{ "stanggalhistory": "tanggalhistory" },
-				{
-					"render": function (data, type, row, meta) {
-						if (type === 'display') {
-							var x = '<a href="Recapitulation/RekapBiayaMasuk/Details?id=' + data + '">Details</a> | ';
-							x += '<a href="/Recapitulation/RekapBiayaMasuk/Edit?id=' + data + '">Edit</a> | ';
-							x += '<a href="/Recapitulation/RekapBiayaMasuk/Delete?id=' + data + '">Delete</a>';
-						}
-
-						return x;
-					}
-				}
+				{ "sName": "Nosisda" },
+				{ "sName": "Namasiswa" },
+				
 			]
 		});
 

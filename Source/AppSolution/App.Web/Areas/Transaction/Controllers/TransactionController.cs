@@ -53,7 +53,7 @@ namespace App.Web.Areas.Transaction.Controllers
             try
             {
                 IEnumerable<Siswa> Query = db.Siswas;
-                Query = Query.Where(x => x.Fullname.ToLower().Contains(Convert.ToString(Fullname)));
+                Query = Query.Where(x => x.Fullname.ToLower().Contains(Convert.ToString(Fullname.ToString().ToLower())));
 
                 //Query = Query.Where(x => x.IsActive == IsActive);
                 //IEnumerable<Transaksi> Query = db.Transaksis;
