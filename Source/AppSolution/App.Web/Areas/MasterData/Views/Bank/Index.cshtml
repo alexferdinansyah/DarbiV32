@@ -12,7 +12,7 @@
 
 @Html.Partial("Search", Model)
 
-<table id="tableRegSiswa" class="table" style="width:100%">
+<table id="tableBank" class="table" style="width:100%">
     <thead>
         <tr>
             <th>No</th>
@@ -43,7 +43,7 @@
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
                 aoData.push(
-                    { "name": "Bankname", "value": $('#Bankname').val() }
+                    { "name": "Bankname", "value": $('#Name').val() }
                 );
             },
             "aoColumns": [
