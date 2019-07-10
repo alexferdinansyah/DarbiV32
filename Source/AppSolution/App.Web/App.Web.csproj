@@ -224,11 +224,9 @@
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
-<<<<<<< HEAD
     <Compile Include="Areas\Recapitulation\Controllers\RekapSPPController.cs" />
-=======
     <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
->>>>>>> 40bd70c5b2f161a0daf2eb51bbd5051a5877cbc4
+    <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />

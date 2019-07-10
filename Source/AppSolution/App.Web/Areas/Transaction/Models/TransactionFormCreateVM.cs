@@ -41,12 +41,24 @@ namespace App.Web.Areas.Transaction.Models
         public string tipebayar { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
-        public DateTime tgltransfer { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tanggal Pembayaran")]
-        public DateTime tglbayar { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? tglbayar { get; set; }
 
-        [Display(Name = "Nama Bank")]
-        public int namabank { get; set; }
+        [Display(Name = "Bank")]
+        public int? BankId { get; set; }
+
+        public SelectList Bank()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var banks = db.Banks;
+
+            return new SelectList(banks.ToList(), "BankId", "Bankname", "0");
+        }
     }
 }
