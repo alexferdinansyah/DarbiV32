@@ -30,34 +30,43 @@ namespace App.Web.Areas.Recapitulation.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param)
+        public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
             var QS = Request.QueryString;
-            String Namasiswa = QS["Namasiswa"];
-            String Jenjang = QS["Jenjang"];
+            string Namasiswa = m.Namasiswa;
             //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
+            List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
+            RekapBiayaMasukVM model = new RekapBiayaMasukVM();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-
+            if (Namasiswa == "")
+            {
+                return Json(new
+                {
+                    sEcho = param.sEcho,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
+                    aaData = models,
+                    error = errorMessage
+                },
+            JsonRequestBehavior.AllowGet);
+            }
             try
             {
-                IEnumerable<RekapBiayaMasuk> Query = db.RekapBiayaMasuks;
-                if (Namasiswa != "")
+                IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                string Nosisda = "";
+                foreach (var d in datasiswa)
                 {
-                    Query = Query.Where(x => x.Namasiswa.Contains(Namasiswa));
+                    model.Nosisda = d.Nosisda;
+                    model.Namasiswa = d.Fullname;
                 }
-                //if (Jenjang !="")
-                //{
-                //    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
-                //}
-                int TotalRecord = Query.Count();
-
-                var OrderedQuery = Query.OrderBy(x => x.RekapBiayaId);
+                models.Add(model);
+                int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
-                int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1;
-                var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+                int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
+                var PagedQuery = models.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
 
                 int i = 0;
                 foreach (var data in PagedQuery)
@@ -68,13 +77,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         i.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
-                        data.Jenjang,
-                        data.Tingkat,
-                        data.periode,
-                        data.tanggalhistory,
-                        //data.Jenjang,
-                        //(data.IsActive == true ? "<input type=\"checkbox\" disabled checked>" : "<input type=\"checkbox\" disabled>"),
-                        data.RekapBiayaId.ToString()
                     });
                 }
                 return Json(new
@@ -100,6 +102,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 error = errorMessage
             },
             JsonRequestBehavior.AllowGet);
-            }
         }
+    }
 }

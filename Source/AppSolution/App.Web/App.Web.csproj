@@ -224,6 +224,7 @@
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />
@@ -508,6 +509,7 @@
     <Folder Include="Areas\Invoice\Controllers\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
+    <Folder Include="Areas\Recapitulation\Views\RekapBiayaMasukVM\" />
     <Folder Include="Areas\Report\Controllers\" />
     <Folder Include="Areas\Report\Models\" />
     <Folder Include="Areas\Report\Views\Shared\" />
