@@ -24,7 +24,7 @@ namespace App.Entities.Models
         public string totalBM { get; set; }
 
         [Display(Name = "Bayar Biaya Masuk")]
-        public string bayarBM { get; set; }
+        public int bayarBM { get; set; }
 
         [Display(Name = "Periode")]
         public string periode { get; set; }
@@ -33,19 +33,23 @@ namespace App.Entities.Models
         public string bulanspp { get; set; }
 
         [Display(Name = "Bayar SPP")]
-        public string bayarspp { get; set; }
+        public int bayarspp { get; set; }
 
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
-        public DateTime tgltransfer { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tanggal Pembayaran")]
-        public DateTime tglbayar { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? tglbayar { get; set; }
 
-        [Display(Name = "Nama Bank")]
-        public int namabank { get; set; }
+        [Display(Name = "Bank")]
+        public int? BankId { get; set; }
     }
 
 }

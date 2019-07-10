@@ -79,53 +79,57 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
+
+
             var transaksis = new List<Transaksi>
             {
-                new Transaksi {Nosisda = "00113344", totalBM = "12.000.000", bayarBM = "7.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "transfer",
-                tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 1},
-                new Transaksi {Nosisda = "00112233", totalBM = "6.000.000", bayarBM = "2.000.000", periode = "2019-2020", bulanspp = "Januari", bayarspp = "450.000", tipebayar = "tunai",
-                tgltransfer = Convert.ToDateTime("01/01/2019"), tglbayar = Convert.ToDateTime("01/01/2019"), namabank = 2}
+                new Transaksi {Nosisda = "0011856", totalBM = "12000000", bayarBM = 10000000, periode = "2019-2020", bulanspp = "Juni", bayarspp = 500000, tipebayar = "tunai",
+                tgltransfer = Convert.ToDateTime("10/06/2019"), tglbayar = Convert.ToDateTime("10/06/2019"), BankId = 1},
+                new Transaksi {Nosisda = "0011857", totalBM = "12000000", bayarBM = 5000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
+                tgltransfer = Convert.ToDateTime("20/06/2019"), tglbayar = Convert.ToDateTime("20/06/2019"), BankId = 2}
             };
             transaksis.ForEach(s => context.Transaksis.Add(s));
             context.SaveChanges();
 
             var historybiayas = new List<HistoryBiaya>
             {
+                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "SPP", JenisHB = "SPP",
+                TingkatHB = 2, NomHisBiaya = 500000},
                 new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "Biaya Masuk", JenisHB = "Biaya Masuk",
-                TingkatHB = 1, NomHisBiaya = 1600000},
-                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "SPP", JenisHB = "KS",
-                TingkatHB = 2, NomHisBiaya = 1200000}
+                TingkatHB = 2, NomHisBiaya = 12000000}
             };
             historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
             context.SaveChanges();
 
-            var rekapbiayamasuks = new List<RekapBiayaMasuk>
+            /*var rekapbiayamasuks = new List<RekapBiayaMasuk>
             {
-                new RekapBiayaMasuk {Nosisda="12345", Namasiswa="gg", Jenjang="sd", Tingkat="1", periode="2019",
-                tanggalhistory="13-jun-19"}
+                new RekapBiayaMasuk {Nosisda="0011856", Namasiswa="Aulia Raina", Jenjang="SMP", Tingkat="9", periode="2019",
+                tanggalhistory="15-Juni-2019"}
             };
             rekapbiayamasuks.ForEach(s => context.RekapBiayaMasuks.Add(s));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var siswas = new List<Siswa>
             {
-                new Siswa {Nosisda = "00112233", Fullname = "Sarah Nuriah", Nickname = "Sarah", Nisn = "0123", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "29 April 2001",
-                NamaAyah = "Sahroni", NamaIbu = "Mudrikah", PekerjaanAyah = "Pegawai swasta", PekerjaanIbu= "Pegawai Swasta", NoTelpAyah = "08133344555", NoTelpIbu = "08966752542",
-                EmailOrtu = "test@gmail.com", Alamat = "Kp. Babakan Rajabrana", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16453", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
-                Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "162 cm", BeratBadan = "45kg", Goldar = "O", Periode = "2016-2019", Kelas = "9 Madinah",
-                StatKat = "Umum", KontakSiswa = "089625432536", SekolahAsal = "SD RRI", StatSekolahAsal = "Negri", JarakRumahSekolah = "15km", Tgldaftar = "7 Juli 2012", GelTest = "1"},
-                new Siswa {Nosisda = "00113344", Fullname = "Syadiyah", Nickname = "Diyah", Nisn = "0124", IsActive = true, Sex = "Perempuan", Pob = "Malang", Dob = "17 Juni 2001",
-                NamaAyah = "Ayah", NamaIbu = "Ibu", PekerjaanAyah = "Pegawai swasta", PekerjaanIbu= "IRT", NoTelpAyah = "081656754", NoTelpIbu = "08345678",
-                EmailOrtu = "ayahibu@gmail.com", Alamat = "Kp. Sidamukti", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16455", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
-                Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "162 cm", BeratBadan = "45kg", Goldar = "O", Periode = "2016-2019", Kelas = "9 Mekkah",
-                StatKat = "Umum", KontakSiswa = "08123456", SekolahAsal = "SD Sukatani", StatSekolahAsal = "Negri", JarakRumahSekolah = "5km", Tgldaftar = "10 Juli 2012", GelTest = "1"}
+                new Siswa {Nosisda = "0011856", Fullname = "Aulia Raina", Nickname = "Aulia", Nisn = "0856", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "28 Desember 2004",
+                NamaAyah = "Abi", NamaIbu = "Umi", PekerjaanAyah = "Wirausaha", PekerjaanIbu= "Ibu Rumah Tangga", NoTelpAyah = "0812999666", NoTelpIbu = "0813444555",
+                EmailOrtu = "AbiUmi@gmail.com", Alamat = "Jl. Beji Timur", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16453", Negara = "Indonesia", Anakke = "2", DetailSaudara = "1",
+                Agama = "Islam", Suku = "Sunda", Kewarganegaraan = "Indonesia", TinggiBadan = "160 cm", BeratBadan = "55kg", Goldar = "O", Periode = "2019-2020", Kelas = "9 Mekah",
+                StatKat = "Umum", KontakSiswa = "0896777888", SekolahAsal = "SD Angkasa", StatSekolahAsal = "Swasta", JarakRumahSekolah = "5km", Tgldaftar = "9 Juli 2012", GelTest = "1"},
+                new Siswa {Nosisda = "0011857", Fullname = "Raditya", Nickname = "Radit", Nisn = "0857", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Desember 2004",
+                NamaAyah = "Papa", NamaIbu = "Mama", PekerjaanAyah = "Pegawai Negri", PekerjaanIbu= "Wirausaha", NoTelpAyah = "0816888777", NoTelpIbu = "0834777666",
+                EmailOrtu = "PapaMama@gmail.com", Alamat = "Kp. Sukamaju", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16455", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
+                Agama = "Kristen", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "165 cm", BeratBadan = "60kg", Goldar = "AB", Periode = "2016-2019", Kelas = "9 Madinah",
+                StatKat = "Umum", KontakSiswa = "0896333444", SekolahAsal = "SD Tadika", StatSekolahAsal = "Negri", JarakRumahSekolah = "20km", Tgldaftar = "20 Juli 2012", GelTest = "1"}
             };
             siswas.ForEach(s => context.Siswas.Add(s));
             context.SaveChanges();
 
             var banks = new List<Bank>
             {
-                new Bank {Bankname = "bank mandiri"}
+                new Bank {Bankname = "bank BCA"},
+                new Bank {Bankname = "bank Mandiri"},
+                new Bank {Bankname = "bank BRI"}
             };
             banks.ForEach(s => context.Banks.Add(s));
             context.SaveChanges();
@@ -148,7 +152,10 @@ namespace App.Entities.DataAccessLayer
 
             var jenjangs = new List<Jenjang>
             {
-                new Jenjang {JenjangName="Toddler" }
+                new Jenjang {JenjangName="TK A"},
+                new Jenjang {JenjangName="TK B"},
+                new Jenjang {JenjangName="SD"},
+                new Jenjang {JenjangName="SMP"}
             };
             jenjangs.ForEach(s => context.Jenjangs.Add(s));
             context.SaveChanges();
