@@ -16,6 +16,7 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
         public string Namasiswa { get; set; }
+        [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
         //[DisplayFormat(DataFormatString = "{0:N2}")]
@@ -57,7 +58,6 @@ namespace App.Web.Areas.Transaction.Models
         {
             DatabaseContext db = new DatabaseContext();
             var banks = db.Banks;
-
             return new SelectList(banks.ToList(), "BankId", "Bankname", "0");
         }
     }

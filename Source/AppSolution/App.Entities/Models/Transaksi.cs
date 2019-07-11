@@ -20,7 +20,7 @@ namespace App.Entities.Models
         public string Namasiswa { get; set; }
         public string Kelastingkat { get; set; }
 
-        [Display(Name = "Total Pembayaran Biaya Masuk")]
+        [Display(Name = "Total Biaya Masuk")]
         public string totalBM { get; set; }
 
         [Display(Name = "Bayar Biaya Masuk")]

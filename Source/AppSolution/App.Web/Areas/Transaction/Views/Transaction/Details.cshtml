@@ -1,85 +1,111 @@
-﻿@model App.Entities.Models.Transaksi
+﻿@model IEnumerable<App.Entities.Models.Transaksi>
 @{
     ViewBag.Title = "Detail Transaksi Terakhir";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <h2>@ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 <div>
     <h4>Transaksi Biaya</h4>
     <hr />
+
+    @{
+        App.Entities.DataAccessLayer.DatabaseContext db = new App.Entities.DataAccessLayer.DatabaseContext();
+        var nm = "";
+        var kelas = "";
+        var nosisda = "";
+        var periode = "";
+        foreach (var d in Model)
+        {
+            IEnumerable<App.Entities.Models.Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(d.Nosisda));
+            foreach (var d1 in dts)
+            {
+                nm = d1.Fullname;
+                kelas = d1.Kelas;
+                nosisda = d1.Nosisda;
+                periode = d1.Periode;
+                break;
+            }
+            break;
+        }
+    }
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Nosisda)
+            No Sisda
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Nosisda)
+            @nosisda
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Namasiswa)
+            Nama Siswa
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Namasiswa)
+            @nm
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Kelastingkat)
+            Kelas
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Kelastingkat)
+            @kelas
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.periode)
+            Periode
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.periode)
+            @periode
         </dd>
-        <hr />
-
-        <dt>
-            @Html.DisplayNameFor(model => model.totalBM)
-        </dt>
-        <dd>
-            Rp. @Html.DisplayFor(model => model.totalBM)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.bayarBM)
-        </dt>
-        <dd>
-            Rp. @Html.DisplayFor(model => model.bayarBM)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.bulanspp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.bulanspp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.bayarspp)
-        </dt>
-        <dd>
-            Rp. @Html.DisplayFor(model => model.bayarspp)
-        </dd>
-        <hr />
-
-        <dt>
-            @Html.DisplayNameFor(model => model.tipebayar)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.tipebayar).ToString().ToUpper()
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.tglbayar)
-        </dt>
-        <dd>
-            @*@Html.DisplayFor(model => model.tglbayar) <br />*@
-            @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", Model.tglbayar))
-        </dd>
-
     </dl>
+    <hr />
+    @foreach (var d in Model)
+    {
+<dl class="dl-horizontal">
+    <dt>
+        Total Biaya Masuk
+    </dt>
+    <dd>
+        Rp. @d.totalBM
+    </dd>
+
+    <dt>
+        Biaya Masuk Dibayarkan
+    </dt>
+    <dd>
+        Rp. @d.bayarBM
+    </dd>
+    <dt>
+        Bulan SPP
+    </dt>
+    <dd>
+        @d.bulanspp
+    </dd>
+    <dt>
+        Nominal SPP
+    </dt>
+    <dd>
+        Rp. @d.bayarspp
+    </dd>
+    
+    <dt>
+        Tipe Pembayaran
+    </dt>
+    <dd>
+        @d.tipebayar
+    </dd>
+    <dt>
+        Tanggal Bayar
+    </dt>
+    <dd>
+        @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", d.tglbayar))
+    </dd>
+
+</dl>
+    <hr />
+
+    }
+
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
-    @Html.ActionLink("Back to List", "Index", new { NamaSiswa =  System.Web.HttpContext.Current.Session["NamaSiswa"] })
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </p>
