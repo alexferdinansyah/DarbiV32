@@ -16,9 +16,9 @@
 			<th>No</th>
 			<th>No Sisda</th>
 			<th>Nama Siswa</th>
-			@*<th>Jenjang</th>
-			<th>Tingkat</th>
-			<th>Periode</th>
+			<th>Total BM</th>
+			<th>BM Yang dibayarkan</th>
+			@*<th>Periode</th>
 			<th>Tanggal History</th>*@
 		</tr>
 	</thead>
@@ -46,9 +46,9 @@
 				formdata = $('#Req').serializeArray()
 				aoData.push(
 					{ "name": "Nosisda", "value": $('#Nosisda').val() },
-					{ "name": "Namasiswa", "value": $('#Namasiswa').val() }
-					//{ "name": "Jenjang", "value": $('#Jenjang').val() },
-					//{ "name": "Tingkat", "value": $('#Tingkat').val() },
+					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
+					{ "name": "Jenjang", "value": $('#TotalBM').val() },
+					{ "name": "Tingkat", "value": $('#biayaBM').val() },
 					//{ "name": "periode", "value": $('#periode').val() },
 					//{ "name": "tanggalhistory", "value": $('#tanggalhistory').val()}
 
@@ -61,7 +61,9 @@
 					}
 				},
 				{ "sName": "Nosisda" },
-				{ "sName": "Namasiswa" },
+                { "sName": "Namasiswa" },
+                { "sName": "TotalBM" },
+                { "sName": "BiayaBM" },
 				
 			]
 		});

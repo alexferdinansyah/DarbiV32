@@ -120,7 +120,7 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Transaksi> dttrans = null;
             if (db.Transaksis.Count() != 0)
             {
-                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda)).OrderByDescending(x => x.tglbayar);
+                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
             Transaksi tr = new Transaksi();
@@ -153,7 +153,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     tr.Kelastingkat = d1.Kelas;
                 }
             }
-            return View(tr);
+            return View(dttrans);
         }
 
         //GET : Transaction/Transaction/Lakukan Transaksi
@@ -166,6 +166,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Tunai",Value="Tunai" },
                 new SelectListItem {Text="Transfer",Value="Transfer"},
             };
+
+            List<SelectListItem> listbln = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih Bulan",Value="0",Selected=true },
+                new SelectListItem {Text="Juli",Value="7" },
+                new SelectListItem {Text="Agustus",Value="8" },
+            };
+
             //info siswa
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
             string[] keltingkat = null;
@@ -174,6 +183,7 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 mod.Namasiswa = d.Fullname;
                 mod.periode = d.Periode;
+                mod.Kelastingkat = d.Kelas;
                 if(d.Kelas != null || d.Kelas != "")
                 {
                     keltingkat = d.Kelas.Split(' ');
@@ -212,10 +222,11 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             foreach(var t in dtts)
             {
-                mod.paidBM = t.bayarBM.ToString();
+                mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
             }
 
             ViewBag.OpTrans = OpTrans;
+            ViewBag.listbln = listbln;
             return View(mod);
         }
 
@@ -227,6 +238,11 @@ namespace App.Web.Areas.Transaction.Controllers
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
+                newmodel.Nosisda = model.Nosisda;
+                newmodel.Namasiswa = model.Namasiswa;
+                newmodel.Kelastingkat = model.Kelastingkat;
+                newmodel.periode = "2019-2020";
+                newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.totalBM = model.totalBM;
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
@@ -239,11 +255,13 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                 }
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                newmodel.bulanspp = model.bulanspp;
+                newmodel.tglbayar = DateTime.UtcNow.Date;
 
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
 
-                return RedirectToAction("Details");
+                return RedirectToAction("Details", new { nosisda = model.Nosisda });
             }
 
             return View(model);

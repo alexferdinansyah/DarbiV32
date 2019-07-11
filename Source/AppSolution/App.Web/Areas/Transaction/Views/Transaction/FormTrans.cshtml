@@ -12,13 +12,26 @@
 
     @Html.HiddenFor(model => model.Nosisda)
     @Html.HiddenFor(model => model.tipebayar)
-    @Html.HiddenFor(model => model.BankId)
+    @*@Html.HiddenFor(model => model.BankId)*@
+    @Html.HiddenFor(model => model.bulanspp)
 <div class="form-horizontal">
     <hr />
     <div class="form-group">
         @Html.LabelFor(model => model.Nosisda, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DisplayFor(model => model.Nosisda, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Nosisda, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Kelastingkat, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Kelastingkat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         </div>
     </div>
 
@@ -41,6 +54,20 @@
             @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("listbln")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+    <hr />
     <div class="form-group" id="tipebayar1">
         @Html.LabelFor(model => model.tipebayar, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -50,7 +77,7 @@
     <div class="form-group" id="tipebayar2">
         @Html.LabelFor(model => model.BankId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.BankId, Model.Bank(), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.BankId, Model.Bank(), "-- Please select --", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.BankId, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -58,12 +85,6 @@
         @Html.LabelFor(model => model.tgltransfer, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.tgltransfer, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         </div>
     </div>
     <div class="form-group">
@@ -88,6 +109,7 @@
         $('#tipebayar2').hide();
         $('#tipebayar3').hide();
         var Tipetrans = document.getElementById("tipebayar");
+        var bulanspp = document.getElementById("bulanspp");
         $('#OpTrans').change(function () {
             var e = document.getElementById("OpTrans");
             var strUser = e.options[e.selectedIndex].text;
@@ -101,7 +123,19 @@
             if (strUser == "Transfer") {
                 $('#tipebayar2').show();
                 $('#tipebayar3').show();
+                //alert(document.getElementById("BankId").value);
+                document.getElementById("BankId").change(function () {
+                    var e = document.getElementById("BankId");
+                    var strUser = e.options[e.selectedIndex].text;
+                    alert(strUser);
+                });
             }
+        });
+
+        $('#listbln').change(function () {
+            var e = document.getElementById("listbln");
+            var strUser = e.options[e.selectedIndex].text;
+            bulanspp.value = strUser;
         });
     });
 </script>

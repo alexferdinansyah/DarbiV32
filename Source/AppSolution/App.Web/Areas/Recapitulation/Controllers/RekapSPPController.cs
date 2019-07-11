@@ -9,87 +9,79 @@ using System.Web.Mvc;
 using App.Entities.DataAccessLayer;
 using App.Entities.Models;
 using App.Web.Models;
-using App.Web.Areas.Recapitulation.Models;
+using App.Web.Areas.Transaction.Models;
 using App.Entities;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
-
-    public class RekapBiayaMasukController : Controller
+    public class RekapSPPController : Controller
     {
         private DatabaseContext db = new DatabaseContext();
-
-        // GET: Recapitulation/RekapBiayaMasuk
-        public ActionResult Index(SearchRekapBiayaMasuk model = null)
+        // GET: Recapitulation/RekapSPP
+        public ActionResult Index(TransactionSearchFormVM model = null)
         {
             if (model == null)
             {
-                model = new SearchRekapBiayaMasuk();
+                model = new TransactionSearchFormVM();
             }
+            System.Web.HttpContext.Current.Session["NamaSiswa"] = model.NamaSiswa;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
+        public ActionResult AjaxSPP(JQueryDataTableParamModel param, TransactionSearchFormVM m)
         {
-            var QS = Request.QueryString;
-            string Namasiswa = m.Namasiswa;
 
-            List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
-            RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+            var QS = Request.QueryString;
+            var Fullname = System.Web.HttpContext.Current.Session["NamaSiswa"];
+            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
+
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "")
+            if (Convert.ToString(Fullname) == "" || Fullname == null)
             {
                 return Json(new
                 {
                     sEcho = param.sEcho,
                     iTotalRecords = 0,
                     iTotalDisplayRecords = 0,
-                    aaData = models,
+                    aaData = listResult,
                     error = errorMessage
                 },
             JsonRequestBehavior.AllowGet);
             }
             try
             {
-                IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                string Nosisda = "";
-                foreach (var d in datasiswa)
-                {
-                    model.Nosisda = d.Nosisda;
-                    model.Namasiswa = d.Fullname;
-                    models.Add(model);
-                }
+                IEnumerable<Siswa> Query = db.Siswas;
+                Query = Query.Where(x => x.Fullname.ToLower().Contains(Convert.ToString(Fullname.ToString().ToLower())));
 
-                foreach (var dd in models)
-                {
-                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
-                    foreach (var dt in t)
-                    {
-                        dd.totalbm = dt.totalBM;
-                        dd.biayaBM = dt.bayarBM.ToString();
-                    }
-                }
+                //Query = Query.Where(x => x.IsActive == IsActive);
+                //IEnumerable<Transaksi> Query = db.Transaksis;
+                //foreach(var d in Querys)
+                //{
+                //    Query.Where(x => x.Nosisda.Equals(d.Nosisda));
+                //}
 
-                int TotalRecord = models.Count();
+                int TotalRecord = Query.Count();
+
+                var OrderedQuery = Query.OrderBy(x => x.SiswaId);
 
                 int pageSize = param.iDisplayLength;
                 int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
-                var PagedQuery = models.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+                var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
 
                 int i = 0;
                 foreach (var data in PagedQuery)
                 {
+
                     i++;
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.Nosisda,
-                        data.Namasiswa,
-                        data.totalbm,
-                        data.biayaBM
+                        data.Fullname,
+                        data.Periode,
+                        data.Kelas + "-" + data.Kelas
                     });
                 }
                 return Json(new
