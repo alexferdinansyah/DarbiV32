@@ -1,0 +1,67 @@
+﻿@model App.Entities.Models.Transaksi
+@{
+    ViewBag.Title = "Kwitansi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input type="button" id="cmd" value="Print Kwitansi" class="btn btn-default" />
+
+<hr />
+@*<img src="~/Images/LogoDa.png"/>*@ <h4>Sekolah Islam Terpadu Darul Abidin</h4>
+<hr />
+
+<h3 align="center">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</h3>
+
+<hr />
+<div id="detail">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tglbayar)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tglbayar)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Namasiswa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Namasiswa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nosisda)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nosisda)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bayarBM)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bayarBM)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.bulanspp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bulanspp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.bayarspp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bayarspp)
+        </dd>
+    </dl>
+    <hr />
+    <p>Oleh Kasir</p>
+</div>
+
+
+<script>
+    $('#cmd').click(function () {
+        $("#detail").printThis();
+    });
+
+</script>

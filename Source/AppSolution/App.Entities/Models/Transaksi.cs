@@ -24,7 +24,7 @@ namespace App.Entities.Models
         public string totalBM { get; set; }
 
         [Display(Name = "Bayar Biaya Masuk")]
-        public int bayarBM { get; set; }
+        public int? bayarBM { get; set; }
 
         [Display(Name = "Periode")]
         public string periode { get; set; }
@@ -33,7 +33,7 @@ namespace App.Entities.Models
         public string bulanspp { get; set; }
 
         [Display(Name = "Bayar SPP")]
-        public int bayarspp { get; set; }
+        public int? bayarspp { get; set; }
 
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }

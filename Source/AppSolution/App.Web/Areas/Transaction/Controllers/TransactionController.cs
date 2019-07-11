@@ -184,7 +184,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod.Namasiswa = d.Fullname;
                 mod.periode = d.Periode;
                 mod.Kelastingkat = d.Kelas;
-                if(d.Kelas != null || d.Kelas != "")
+                if (d.Kelas != null || d.Kelas != "")
                 {
                     keltingkat = d.Kelas.Split(' ');
                     tkt = keltingkat[0];
@@ -194,7 +194,7 @@ namespace App.Web.Areas.Transaction.Controllers
             //info tingkat to get info biaya
             IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
             int idtingkat = 0;
-            foreach(var t in dtTingkat)
+            foreach (var t in dtTingkat)
             {
                 idtingkat = t.TingkatId;
             }
@@ -203,7 +203,7 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Biaya> dtb = db.Biayas;
             foreach (var dd in dtb)
             {
-                if(dd.TingkatId == idtingkat)
+                if (dd.TingkatId == idtingkat)
                 {
                     if (dd.KatBiaya == "Biaya Masuk")
                     {
@@ -215,12 +215,12 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
                 }
-                
+
             }
 
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            foreach(var t in dtts)
+            foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
             }
@@ -233,7 +233,7 @@ namespace App.Web.Areas.Transaction.Controllers
         //POST : Transaction/Transaction/Lakukan Transaksi
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FormTrans(TransactionFormCreateVM model,string status)
+        public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
             if (ModelState.IsValid)
             {
@@ -250,7 +250,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
-                } else
+                }
+                else
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                 }
@@ -260,11 +261,28 @@ namespace App.Web.Areas.Transaction.Controllers
 
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
+                int lastid = db.Transaksis.Max(x => x.TransId);
 
-                return RedirectToAction("Details", new { nosisda = model.Nosisda });
+                return RedirectToAction("Kwitansi", new { id = lastid });
             }
 
             return View(model);
+        }
+
+        //GET Kwitansi
+        public ActionResult Kwitansi(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Transaksi transaksi = db.Transaksis.Find(id);
+            if (transaksi == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(transaksi);
         }
     }
 }
