@@ -226,7 +226,6 @@
     <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapSPPController.cs" />
     <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
-    <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />

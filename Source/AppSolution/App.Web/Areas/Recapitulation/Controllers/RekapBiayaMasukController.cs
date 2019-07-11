@@ -34,7 +34,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
         {
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
-            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             RekapBiayaMasukVM model = new RekapBiayaMasukVM();
@@ -60,8 +59,20 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     model.Nosisda = d.Nosisda;
                     model.Namasiswa = d.Fullname;
+                    models.Add(model);
                 }
-                models.Add(model);
+
+                foreach (var dd in models)
+                {
+                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                    foreach (var dt in t)
+                    {
+                        dd.totalbm = dt.totalBM;
+                        dd.biayaBM = dt.bayarBM.ToString();
+                    }
+                }
+
                 int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
@@ -77,6 +88,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         i.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
+                        data.totalbm,
+                        data.biayaBM
                     });
                 }
                 return Json(new
