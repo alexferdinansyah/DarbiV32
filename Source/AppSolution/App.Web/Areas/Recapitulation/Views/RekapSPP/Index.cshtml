@@ -1,0 +1,74 @@
+﻿@model App.Web.Areas.Transaction.Models.TransactionSearchFormVM
+@{
+    ViewBag.Title = "Rekap SPP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("Search", Model)
+
+<table id="tableTS" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>No Sisda</th>
+            <th>Nama Lengkap</th>
+            <th>Periode</th>
+            <th>Kelas - Tingkat</th>
+            <th>Bulan SPP</th>
+            <th>Bayar SPP</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        var tableTS = $('#tableTS').dataTable({
+            "scrollX": true,
+            "processing": true,
+            "sProcessing": true,
+            "bLengthChange": true,
+            //"sLoadingRecords":true,
+            "scrollCollapse": true,
+            "searching": false,
+            "bServerSide": true,
+            "ordering": false,
+            "sAjaxSource": "/Recapitulation/RekapSPP/AjaxSPP?format=JSON",
+            "bProcessing": true,
+            oLanguage: { sProcessing: "<div id='loader'></div>" },
+            "fnServerParams": function (aoData) {
+                formdata = $('#Req').serializeArray()
+                aoData.push(
+                    { "name": "Nosisda", "value": $('#Nosisda').val() },
+                    { "name": "Fullname", "value": $('#Fullname').val() },
+                    { "name": "Periode", "value": $('#Periode').val() },
+                    { "name": "Kelas", "value": $('#Kelas').val() },
+                    { "name": "bulanspp", "value": $('#bulanspp').val() },
+                    { "name": "bayarspp", "value": $('#bayarspp').val() },
+                );
+            },
+            "aoColumns": [
+                {
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                { "sName": "Nosisda" },
+                { "sName": "Fullname" },
+                { "sName": "Periode" },
+                { "sName": "Kelas" },
+                { "sName": "bulanspp" },
+                { "sName": "bayarspp" }
+            ]
+        });
+
+        $('#btnsearch').click(function () {
+            tableTS.fnDraw(null);
+        });
+
+    });
+</script>
