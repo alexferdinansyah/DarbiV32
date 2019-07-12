@@ -79,8 +79,6 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
-
-
             var transaksis = new List<Transaksi>
             {
                 new Transaksi {Nosisda = "0011856", totalBM = "12000000", bayarBM = 10000000, periode = "2019-2020", bulanspp = "Juni", bayarspp = 500000, tipebayar = "tunai",

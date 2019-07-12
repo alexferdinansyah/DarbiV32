@@ -237,6 +237,7 @@
     <Compile Include="Areas\Register\RegisterAreaRegistration.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Transaction\Controllers\TransactionController.cs" />
+    <Compile Include="Areas\Transaction\Models\KwitansiFormVM.cs" />
     <Compile Include="Areas\Transaction\Models\TransactionFormCreateVM.cs" />
     <Compile Include="Areas\Transaction\Models\TransactionSearchFormVM.cs" />
     <Compile Include="Areas\Transaction\TransactionAreaRegistration.cs" />
@@ -423,6 +424,7 @@
     <Content Include="Areas\Transaction\Views\Transaction\FormTrans.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSPP\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSPP\Search.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Kwitansi.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -518,6 +520,7 @@
     <Folder Include="Areas\Report\Controllers\" />
     <Folder Include="Areas\Report\Models\" />
     <Folder Include="Areas\Report\Views\Shared\" />
+    <Folder Include="Areas\Transaction\Views\KwitansiFormVM\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
