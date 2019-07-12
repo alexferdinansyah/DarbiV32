@@ -12,5 +12,10 @@ namespace App.Web.Areas.Recapitulation.Models
     {
         [Display(Name = "Nama Siswa")]
         public string Namasiswa { get; set; }
+
+        [Display(Name = "Tanggal Pembayaran")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? tglpembayaran { get; set; }
     }
 }
