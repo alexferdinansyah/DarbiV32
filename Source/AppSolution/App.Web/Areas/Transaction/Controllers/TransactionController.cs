@@ -257,7 +257,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
-                newmodel.tglbayar = DateTime.UtcNow.Date;
+                newmodel.SSId = model.SSId;
+                newmodel.nominal = model.nominal;
 
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();

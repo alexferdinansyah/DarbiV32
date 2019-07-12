@@ -7,6 +7,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.NamaSiswa)
 
 <table id="tableTS" class="table" style="width:100%">
     <thead>
@@ -60,7 +61,7 @@
                 { "sName": "Nosisda" },
                 { "sName": "Fullname" },
                 { "sName": "Periode" },
-                { "sName": "Kelas" },
+                { "sName": "Kelastingkat" },
                 { "sName": "bulanspp" },
                 { "sName": "bayarspp" }
             ]

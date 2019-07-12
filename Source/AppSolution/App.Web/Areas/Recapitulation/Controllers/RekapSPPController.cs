@@ -32,7 +32,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
         public ActionResult AjaxSPP(JQueryDataTableParamModel param, TransactionSearchFormVM m)
         {
             var QS = Request.QueryString;
-            string NamaSiswa = m.NamaSiswa;
+            string NamaSiswa = "";
+            if(System.Web.HttpContext.Current.Session["NamaSiswa"] != null)
+            {
+                NamaSiswa = Convert.ToString(System.Web.HttpContext.Current.Session["NamaSiswa"]);
+            }
 
             List<TransactionFormCreateVM> models = new List<TransactionFormCreateVM>();
             List<string[]> listResult = new List<string[]>();
@@ -58,6 +62,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     TransactionFormCreateVM model = new TransactionFormCreateVM();
                     model.Nosisda = d.Nosisda;
                     model.Namasiswa = d.Fullname;
+                    model.periode = d.Periode;
                     model.Kelastingkat = d.Kelas;
                     models.Add(model);
                 }
@@ -88,9 +93,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         i.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
+                        data.periode,
                         data.Kelastingkat,
                         data.bulanspp,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.bayarspp) )
+                        data.bayarspp
                     });
                 }
                 return Json(new
