@@ -21,11 +21,17 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
         // GET: Recapitulation/RekapBiayaMasuk
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
+
         {
-            if (model == null)
+            List<SelectListItem> OpBM = new List<SelectListItem>()
+
             {
-                model = new SearchRekapBiayaMasuk();
-            }
+                new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
+                new SelectListItem {Text="Nama",Value="1"},
+                new SelectListItem {Text="Tanggal",Value="2"},
+            };
+
+            ViewBag.OpBM = OpBM;
             return View(model);
         }
 
@@ -36,7 +42,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
             string Namasiswa = m.Namasiswa;
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
-            RekapBiayaMasukVM model = new RekapBiayaMasukVM();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
             if (Namasiswa == "")
@@ -57,8 +62,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 string Nosisda = "";
                 foreach (var d in datasiswa)
                 {
+                    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                     model.Nosisda = d.Nosisda;
                     model.Namasiswa = d.Fullname;
+                    model.Kelastingkat = d.Kelas;
                     models.Add(model);
                 }
 
@@ -68,8 +75,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
                     foreach (var dt in t)
                     {
-                        dd.totalbm = dt.totalBM;
                         dd.biayaBM = dt.bayarBM.ToString();
+                        dd.tglbayar = dt.tglbayar.ToString();
                     }
                 }
 
@@ -88,8 +95,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         i.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
-                        data.totalbm,
-                        data.biayaBM
+                        data.Kelastingkat,
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        data.tglbayar
                     });
                 }
                 return Json(new

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace App.Web.Areas.Transaction.Models
 {
-    public class TransactionSearchFormVM
+    public class TransactionSearchFormVM : Controller
     {
         // GET: Transaction/TransactionSearchFormVM
         [Display(Name = "Nama Siswa")]

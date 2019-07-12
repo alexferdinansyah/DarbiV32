@@ -38,5 +38,6 @@ namespace App.Web.Areas.Recapitulation.Models
 
         [Display(Name = "Nama Bank")]
         public string namabank { get; set; }
+
     }
 }
