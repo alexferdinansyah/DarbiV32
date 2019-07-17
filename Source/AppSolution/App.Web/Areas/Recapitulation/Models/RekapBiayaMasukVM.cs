@@ -39,5 +39,13 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Nama Bank")]
         public string namabank { get; set; }
 
+        [Display(Name = "School Support")]
+        public string SSId { get; set; }
+
+        [Display(Name = "School Support")]
+        public string SSName { get; set; }
+
+        [Display(Name = "Nominal")]
+        public string nominal { get; set; }
     }
 }
