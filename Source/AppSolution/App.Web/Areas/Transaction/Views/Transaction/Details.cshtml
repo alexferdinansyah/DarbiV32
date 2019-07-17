@@ -86,12 +86,24 @@
     <dd>
         Rp. @d.bayarspp
     </dd>
-    
+
     <dt>
         Tipe Pembayaran
     </dt>
     <dd>
         @d.tipebayar
+    </dd>
+    <dt>
+        Nama Bank
+    </dt>
+    <dd>
+        @d.Banknm
+    </dd>
+    <dt>
+        Tanggal Transfer
+    </dt>
+    <dd>
+        @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", d.tgltransfer))
     </dd>
     <dt>
         Tanggal Bayar

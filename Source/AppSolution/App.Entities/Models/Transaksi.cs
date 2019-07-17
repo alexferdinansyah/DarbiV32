@@ -51,6 +51,8 @@ namespace App.Entities.Models
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
 
+        public string Banknm { get; set; }
+
         [Display(Name = "School Support")]
         public int? SSId { get; set; }
 
