@@ -31,7 +31,7 @@ namespace App.Web.Areas.Recapitulation.Models
         public string totalbm { get; set; }
 
         [Display(Name = "Tanggal Bayar")]
-        public string tglbayar { get; set; }
+        public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }

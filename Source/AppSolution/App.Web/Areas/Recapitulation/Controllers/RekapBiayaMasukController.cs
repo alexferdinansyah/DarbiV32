@@ -40,46 +40,106 @@ namespace App.Web.Areas.Recapitulation.Controllers
         {
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
+            DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "")
+            if (Namasiswa == "" || Namasiswa == null)
             {
-                return Json(new
+                if (tglbayar != null)
                 {
-                    sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
-                    aaData = models,
-                    error = errorMessage
-                },
+                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
+
+                    foreach (var dd in t)
+                    {
+                        if (dd.tglbayar == tglbayar)
+                        {
+                            if (dd.bayarBM.ToString() != "0" || dd.bayarBM == null)
+                            {
+                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.biayaBM = dd.bayarBM.ToString();
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
+                            
+                        }
+
+                        //model.biayaBM
+                        //IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        //t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        //foreach (var dt in t)
+                        //{
+                        //    dd.biayaBM = dt.bayarBM.ToString();
+                        //    dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                        //}
+                    }
+
+                    //IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Nosisda.Equals(model.Nosisda));
+                    //string Nosisda = "";
+                    //foreach (var d in datasiswa)
+                    //{
+                    //    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                    //    model.Nosisda = d.Nosisda;
+                    //    model.Namasiswa = d.Fullname;
+                    //    model.Kelastingkat = d.Kelas;
+                    //    models.Add(model);
+                    //}
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        sEcho = param.sEcho,
+                        iTotalRecords = 0,
+                        iTotalDisplayRecords = 0,
+                        aaData = models,
+                        error = errorMessage
+                    },
             JsonRequestBehavior.AllowGet);
+                }
+                
             }
+            else
+            {
+                try
+                {
+                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                    string Nosisda = "";
+                    foreach (var d in datasiswa)
+                    {
+                        RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                        model.Nosisda = d.Nosisda;
+                        model.Namasiswa = d.Fullname;
+                        model.Kelastingkat = d.Kelas;
+                        models.Add(model);
+                    }
+
+                    foreach (var dd in models)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        foreach (var dt in t)
+                        {
+                            dd.biayaBM = dt.bayarBM.ToString();
+                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
+            }
+            
+
             try
             {
-                IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                string Nosisda = "";
-                foreach (var d in datasiswa)
-                {
-                    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
-                    model.Nosisda = d.Nosisda;
-                    model.Namasiswa = d.Fullname;
-                    model.Kelastingkat = d.Kelas;
-                    models.Add(model);
-                }
-
-                foreach (var dd in models)
-                {
-                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
-                    foreach (var dt in t)
-                    {
-                        dd.biayaBM = dt.bayarBM.ToString();
-                        dd.tglbayar = dt.tglbayar.ToString();
-                    }
-                }
-
                 int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
@@ -97,7 +157,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Namasiswa,
                         data.Kelastingkat,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
-                        data.tglbayar
+                        data.tglbayar.ToString()
                     });
                 }
                 return Json(new
