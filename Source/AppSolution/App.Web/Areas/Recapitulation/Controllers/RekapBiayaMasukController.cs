@@ -47,6 +47,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             String errorMessage = "";
             if (Namasiswa == "" || Namasiswa == null)
             {
+                //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
@@ -55,7 +56,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.bayarBM.ToString() != "0" || dd.bayarBM == null)
+                            if (dd.bayarBM != 0)
                             {
                                 RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                                 model.Nosisda = dd.Nosisda;
@@ -65,32 +66,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
-                            
+
                         }
-
-                        //model.biayaBM
-                        //IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                        //t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
-                        //foreach (var dt in t)
-                        //{
-                        //    dd.biayaBM = dt.bayarBM.ToString();
-                        //    dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
-                        //}
                     }
-
-                    //IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Nosisda.Equals(model.Nosisda));
-                    //string Nosisda = "";
-                    //foreach (var d in datasiswa)
-                    //{
-                    //    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
-                    //    model.Nosisda = d.Nosisda;
-                    //    model.Namasiswa = d.Fullname;
-                    //    model.Kelastingkat = d.Kelas;
-                    //    models.Add(model);
-                    //}
                 }
                 else
                 {
+                    //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
                     return Json(new
                     {
                         sEcho = param.sEcho,
@@ -101,10 +83,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     },
             JsonRequestBehavior.AllowGet);
                 }
-                
+
             }
             else
             {
+                //jika pencarian berdasarkan nama siswa
                 try
                 {
                     IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
@@ -136,8 +119,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     errorMessage = ex.Message;
                 }
             }
-            
 
+            //Jika ada hasil pencarian baik berdasar nama maupun tglbayar
             try
             {
                 int TotalRecord = models.Count();
