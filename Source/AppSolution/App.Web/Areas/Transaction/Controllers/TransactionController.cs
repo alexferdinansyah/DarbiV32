@@ -123,36 +123,19 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
-            Transaksi tr = new Transaksi();
-            if (dttrans == null)
+            Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+            if (tr == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                foreach (var d in dttrans)
-                {
-                    tr.Nosisda = d.Nosisda;
-                    tr.totalBM = d.totalBM;
-                    tr.bayarBM = d.bayarBM;
-                    tr.periode = d.periode;
-                    tr.bulanspp = d.bulanspp;
-                    tr.bayarspp = d.bayarspp;
-                    tr.tipebayar = d.tipebayar;
-                    tr.tglbayar = d.tglbayar;
-                    if (d.tipebayar.ToLower() != "cash")
-                    {
-                        tr.tgltransfer = d.tgltransfer;
-                        tr.BankId = d.BankId;
-                    }
-                }
-                IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(tr.Nosisda));
-                foreach (var d1 in dts)
-                {
-                    tr.Namasiswa = d1.Fullname;
-                    tr.Kelastingkat = d1.Kelas;
-                }
+                
+                Bank infobank = db.Banks.Find(tr.BankId);
+                tr.Banknm = infobank.Bankname;
+                
             }
+
             return View(dttrans);
         }
 

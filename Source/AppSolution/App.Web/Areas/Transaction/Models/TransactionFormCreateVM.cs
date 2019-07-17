@@ -55,6 +55,8 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
 
+        public string Banknm { get; set; }
+
         public SelectList Bank()
         {
             DatabaseContext db = new DatabaseContext();

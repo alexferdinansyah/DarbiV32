@@ -201,7 +201,7 @@ namespace App.Web.Areas.MasterData.Controllers
 				Tingkat TingkatCek = db.Tingkats.Find(tingkat.TingkatId);
 				TingkatCek.Namatingkat = tingkat.Namatingkat;
 
-				db.Entry(TingkatCek).State = EntityState.Modified;
+                db.Entry(TingkatCek).State = EntityState.Modified;
 				db.SaveChanges();
 				return RedirectToAction("Index");
 			}
