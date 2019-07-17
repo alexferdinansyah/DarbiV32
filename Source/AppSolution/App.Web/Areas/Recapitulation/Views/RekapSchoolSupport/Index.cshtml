@@ -1,0 +1,80 @@
+﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
+
+@{
+    ViewBag.Title = "Rekap School Support";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.Namasiswa)
+
+<table id="tableRekapSS" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>No Sisda</th>
+            <th>Nama Siswa</th>
+            <th>Kelas</th>
+            <th>BM Yang dibayarkan</th>
+            <th>School Support</th>
+            <th>Nominal</th>
+            <th>Tanggal Bayar</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+
+
+		var tableRekapSS = $('#tableRekapSS').dataTable({
+			"scrollX": true,
+			"processing": true,
+			"sProcessing": true,
+			"bLengthChange": true,
+			//"sLoadingRecords":true,
+			"scrollCollapse": true,
+			"searching": false,
+			"bServerSide": true,
+			"ordering": false,
+			"sAjaxSource": "/Recapitulation/RekapSchoolSupport/AjaxRekapSchoolSupport?format=JSON",
+			"bProcessing": true,
+			oLanguage: { sProcessing: "<div id='loader'></div>" },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+				aoData.push(
+					{ "name": "Nosisda", "value": $('#Nosisda').val() },
+					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
+					{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+                    { "name": "Tingkat", "value": $('#biayaBM').val() },
+                    { "name": "schoolsupport", "value": $('#schoolsupport').val() },
+                    { "name": "nominal", "value": $('#nominal').val() },
+					{ "name": "tglbayar", "value": $('#tglbayar').val()}
+
+				);
+			},
+			"aoColumns": [
+				{
+					"render": function (data, type, row, meta) {
+						return data;
+					}
+				},
+				{ "sName": "Nosisda" },
+                { "sName": "Namasiswa" },
+                { "sName": "Kelastingkat" },
+                { "sName": "BiayaBM" },
+                { "sName": "schoolsupport" },
+                { "sName": "nominal" },
+				{ "sName": "tglbayar" },
+			]
+		});
+
+		$('#btnsearch').click(function () {
+			tableRekapSS.fnDraw(null);
+		});
+
+	});
+</script>
