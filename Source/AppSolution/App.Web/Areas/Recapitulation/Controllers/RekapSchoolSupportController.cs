@@ -40,51 +40,89 @@ namespace App.Web.Areas.Recapitulation.Controllers
         {
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
+            DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "")
+            if (Namasiswa == "" || Namasiswa == null)
             {
-                return Json(new
+                //jika tglbayar sebagai opsi pencarian
+                if (tglbayar != null)
                 {
-                    sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
-                    aaData = models,
-                    error = errorMessage
-                },
-            JsonRequestBehavior.AllowGet);
+                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
+
+                    foreach (var dd in t)
+                    {
+                        if (dd.tglbayar == tglbayar)
+                        {
+                            if (dd.SSId != 0)
+                            {
+                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                models.Add(model);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian
+
+                    return Json(new
+                    {
+                        sEcho = param.sEcho,
+                        iTotalRecords = 0,
+                        iTotalDisplayRecords = 0,
+                        aaData = models,
+                        error = errorMessage
+                    },
+                JsonRequestBehavior.AllowGet);
+                }
             }
+            else
+            {
+                //jika pencarian berdasarkan nama siswa
+                try
+                {
+                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                    string Nosisda = "";
+                    foreach (var d in datasiswa)
+                    {
+                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                        model.Nosisda = d.Nosisda;
+                        model.Namasiswa = d.Fullname;
+                        model.Kelastingkat = d.Kelas;
+                        models.Add(model);
+                    }
+
+                    foreach (var dd in models)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        foreach (var dt in t)
+                        {
+                            dd.biayaBM = dt.bayarBM.ToString();
+                            dd.SSId = dt.SSId.ToString();
+                            dd.nominal = dt.nominal;
+                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                        }
+                        SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
+                        dd.SSId = dtss.JenisSS;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
+            }
+
+            //Jika ada hasil pencarian baik berdasar nama maupun tglbayar
             try
             {
-                IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                string Nosisda = "";
-                foreach (var d in datasiswa)
-                {
-                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                    model.Nosisda = d.Nosisda;
-                    model.Namasiswa = d.Fullname;
-                    model.Kelastingkat = d.Kelas;
-                    models.Add(model);
-                }
-
-                foreach (var dd in models)
-                {
-                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
-                    foreach (var dt in t)
-                    {
-                        dd.biayaBM = dt.bayarBM.ToString();
-                        dd.SSId = dt.SSId.ToString();
-                        dd.nominal = dt.nominal;
-                        dd.tglbayar = dt.tglbayar.ToString();
-                    }
-                    SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
-                    dd.SSId = dtss.JenisSS;
-                }
-
-
                 int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
@@ -104,7 +142,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
                         data.SSId,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
-                        data.tglbayar
+                        data.tglbayar.ToString()
                     });
                 }
                 return Json(new

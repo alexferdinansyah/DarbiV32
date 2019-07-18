@@ -22,7 +22,7 @@ namespace App.Web.Areas.Recapitulation.Models
         public string biayaBM { get; set; }
 
         [Display(Name = "Tanggal Bayar")]
-        public string tglbayar { get; set; }
+        public DateTime? tglbayar { get; set; }
 
         [Display(Name = "School Support")]
         public string SSId { get; set; }
