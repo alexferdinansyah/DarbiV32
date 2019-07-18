@@ -17,5 +17,7 @@ namespace App.Web.Areas.Recapitulation.Models
         [DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
+
+        public string Opsi { get; set; }
     }
 }

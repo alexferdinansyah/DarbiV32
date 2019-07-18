@@ -23,6 +23,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
+            
             List<SelectListItem> OpBM = new List<SelectListItem>()
 
             {
@@ -30,7 +31,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
-
+            Session["Opsi"] = model.Opsi;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -38,6 +39,20 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            if (Session["Opsi"] != null)
+            {
+                m.Opsi = Session["Opsi"].ToString();
+                if (m.Opsi == "Nama")
+                {
+                    m.tglbayar = null;
+                }
+                else
+                {
+                    m.Namasiswa = null;
+                }
+            }
+
+
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
@@ -90,26 +105,40 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika pencarian berdasarkan nama siswa
                 try
                 {
-                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                    string Nosisda = "";
-                    foreach (var d in datasiswa)
+                    if (Namasiswa != null)
                     {
-                        RekapBiayaMasukVM model = new RekapBiayaMasukVM();
-                        model.Nosisda = d.Nosisda;
-                        model.Namasiswa = d.Fullname;
-                        model.Kelastingkat = d.Kelas;
-                        models.Add(model);
-                    }
+                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
 
-                    foreach (var dd in models)
-                    {
-                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
-                        foreach (var dt in t)
+                        foreach (var dd in t)
                         {
-                            dd.biayaBM = dt.bayarBM.ToString();
-                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                            if (dd.Namasiswa.Contains(Namasiswa)) ;
+                            {
+                                if (dd.bayarBM != 0)
+                                {
+                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.biayaBM = dd.bayarBM.ToString();
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
+
+                            }
                         }
+                    }
+                    else
+                    {
+                        //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = 0,
+                            iTotalDisplayRecords = 0,
+                            aaData = models,
+                            error = errorMessage
+                        },
+                JsonRequestBehavior.AllowGet);
                     }
 
 

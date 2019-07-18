@@ -1,5 +1,4 @@
-﻿@model App.Web.Areas.Transaction.Models.TransactionSearchFormVM
-
+﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
 
 @using (Html.BeginForm())
 {
@@ -8,13 +7,29 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.NamaSiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group" id="pencarian">
+            @Html.Label("Opsi pencarian", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NamaSiswa, new { htmlAttributes = new { @class = "form-control", AutoComplete = "Off" } })
-                @Html.ValidationMessageFor(model => model.NamaSiswa, "", new { @class = "text-danger" })
+                @Html.DropDownList("OpSrc")
             </div>
         </div>
+
+        @*untuk search*@
+        <div class="form-group" id="pencarian2">
+            @Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group" id="pencarian3">
+            @Html.LabelFor(model => model.tglbayar, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tglbayar, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -27,3 +42,33 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#pencarian2').hide();
+        $('#pencarian3').hide();
+        //var TipeBM = document.getElementById("Namasiswa");
+        $('#OpSrc').change(function () {
+            var e = document.getElementById("OpSrc");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            //TipeBM.value = strUser;
+            if (strUser == "Nama") {
+                //$('#Namasiswa').value = "";
+                $('#pencarian2').show();
+                $('#pencarian3').hide();
+            }
+
+            if (strUser == "Tanggal") {
+                $('#pencarian2').hide();
+                $('#pencarian3').show();
+                //alert(document.getElementById("BankId").value);
+                document.getElementById("SiswaId").change(function () {
+                    var e = document.getElementById("SiswaId");
+                    var strUser = e.options[e.selectedIndex].text;
+                    alert(strUser);
+                });
+            }
+        });
+    });
+</script>
