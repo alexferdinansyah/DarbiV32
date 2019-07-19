@@ -2,6 +2,7 @@
 
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(model => model.Opsi)
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -52,17 +53,17 @@
             var e = document.getElementById("OpBM");
             var strUser = e.options[e.selectedIndex].text;
             //alert(strUser);
-            //TipeBM.value = strUser;
+            document.getElementById("Opsi").value = strUser;
             if (strUser == "Nama") {
-                //$('#Namasiswa').value = "";
                 $('#pencarian2').show();
                 $('#pencarian3').hide();
+
             }
 
             if (strUser == "Tanggal") {
                 $('#pencarian2').hide();
                 $('#pencarian3').show();
-                //alert(document.getElementById("BankId").value);
+
                 document.getElementById("SiswaId").change(function () {
                     var e = document.getElementById("SiswaId");
                     var strUser = e.options[e.selectedIndex].text;

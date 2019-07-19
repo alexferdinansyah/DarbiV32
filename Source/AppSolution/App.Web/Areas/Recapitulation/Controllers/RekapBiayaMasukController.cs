@@ -115,15 +115,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 if (dd.bayarBM != 0)
                                 {
-                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.biayaBM = dd.bayarBM.ToString();
-                                model.tglbayar = dd.tglbayar;
-                                models.Add(model);
-                            }
-
+                                    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.biayaBM = dd.bayarBM.ToString();
+                                    model.tglbayar = dd.tglbayar;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }

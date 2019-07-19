@@ -55,6 +55,7 @@ namespace App.Entities.Models
 
         [Display(Name = "School Support")]
         public int? SSId { get; set; }
+        public string JenisSS { get; set; }
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
