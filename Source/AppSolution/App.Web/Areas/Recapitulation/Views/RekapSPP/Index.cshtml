@@ -7,6 +7,8 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.Namasiswa)
+@Html.HiddenFor(model => model.tglbayar)
 
 <table id="tableRekapSPP" class="table" style="width:100%">
     <thead>
