@@ -27,7 +27,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
-
+            Session["Opsi"] = model.Opsi;
             ViewBag.OpSrc = OpSrc;
             return View(model);
         }
@@ -35,6 +35,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxSPP(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            if (Session["Opsi"] != null)
+            {
+                m.Opsi = Session["Opsi"].ToString();
+                if (m.Opsi == "Nama")
+                {
+                    m.tglbayar = null;
+                }
+                else
+                {
+                    m.Namasiswa = null;
+                }
+            }
+
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
@@ -42,49 +55,86 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapSPPVM> models = new List<RekapSPPVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "")
+            if (Namasiswa == "" || Namasiswa == null)
             {
-                return Json(new
+                //jika tglbayar sebagai opsi pencarian
+                if (tglbayar != null)
                 {
-                    sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
-                    aaData = models,
-                    error = errorMessage
-                },
-            JsonRequestBehavior.AllowGet);
-            }
-            try
-            {
-                IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                string Nosisda = "";
-                foreach (var d in datasiswa)
-                {
-                    RekapSPPVM model = new RekapSPPVM();
-                    model.Nosisda = d.Nosisda;
-                    model.Namasiswa = d.Fullname;
-                    model.Kelastingkat = d.Kelas;
-                    models.Add(model);
-                }
-                for (int j = 0; j < models.Count(); j++) 
-                {
-                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                    t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
-                    foreach (var dt in t)
+                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
+
+                    foreach (var dd in t)
                     {
-                        if(dt.bulanspp != null)
+                        if (dd.tglbayar == tglbayar)
                         {
-                            RekapSPPVM mm = new RekapSPPVM();
-                            models[j].bulanspp = dt.bulanspp.ToString();
-                            models[j].bayarspp = dt.bayarspp.ToString();
-                            models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                            mm = models[j];
-                            models.Remove(models[j]);
-                            models.Insert(0, mm);
+                            if (dd.bulanspp != null)
+                            {
+                                RekapSPPVM model = new RekapSPPVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.bulanspp = dd.bulanspp.ToString();
+                                model.bayarspp = dd.bayarspp.ToString();
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
+
                         }
                     }
                 }
+                else
+                {
+                    return Json(new
+                    {
+                        sEcho = param.sEcho,
+                        iTotalRecords = 0,
+                        iTotalDisplayRecords = 0,
+                        aaData = models,
+                        error = errorMessage
+                    },
+        JsonRequestBehavior.AllowGet);
+                }
 
+            }
+            else
+            {
+                try
+                {
+                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                    string Nosisda = "";
+                    foreach (var d in datasiswa)
+                    {
+                        RekapSPPVM model = new RekapSPPVM();
+                        model.Nosisda = d.Nosisda;
+                        model.Namasiswa = d.Fullname;
+                        model.Kelastingkat = d.Kelas;
+                        models.Add(model);
+                    }
+                    for (int j = 0; j < models.Count(); j++)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
+                        foreach (var dt in t)
+                        {
+                            if (dt.bulanspp != null)
+                            {
+                                RekapSPPVM mm = new RekapSPPVM();
+                                models[j].bulanspp = dt.bulanspp.ToString();
+                                models[j].bayarspp = dt.bayarspp.ToString();
+                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                mm = models[j];
+                                models.Remove(models[j]);
+                                models.Insert(0, mm);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
+            }
+            try
+            {
                 int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
