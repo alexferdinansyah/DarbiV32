@@ -223,9 +223,12 @@
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
+    <Compile Include="Areas\Recapitulation\Controllers\RekapSchoolSupportController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapSPPController.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapSchoolSupportVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapSPPVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
     <Compile Include="Areas\Register\Controllers\RegSiswaController.cs" />
@@ -235,6 +238,7 @@
     <Compile Include="Areas\Register\RegisterAreaRegistration.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Transaction\Controllers\TransactionController.cs" />
+    <Compile Include="Areas\Transaction\Models\KwitansiFormVM.cs" />
     <Compile Include="Areas\Transaction\Models\TransactionFormCreateVM.cs" />
     <Compile Include="Areas\Transaction\Models\TransactionSearchFormVM.cs" />
     <Compile Include="Areas\Transaction\TransactionAreaRegistration.cs" />
@@ -421,6 +425,9 @@
     <Content Include="Areas\Transaction\Views\Transaction\FormTrans.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSPP\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSPP\Search.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Kwitansi.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Index.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Search.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
@@ -512,7 +519,7 @@
     <Folder Include="Areas\Invoice\Controllers\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
-    <Folder Include="Areas\Recapitulation\Views\RekapBiayaMasukVM\" />
+    <Folder Include="Areas\Recapitulation\Views\RekapSPPVM\" />
     <Folder Include="Areas\Report\Controllers\" />
     <Folder Include="Areas\Report\Models\" />
     <Folder Include="Areas\Report\Views\Shared\" />

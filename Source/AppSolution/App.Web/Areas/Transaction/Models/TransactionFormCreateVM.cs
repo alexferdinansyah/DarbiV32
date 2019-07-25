@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace App.Web.Areas.Transaction.Models
 {
-    public class TransactionFormCreateVM
+    public class TransactionFormCreateVM : Controller
     {
         [Display(Name = "Transaksi Id")]
         public int TransId { get; set; }
@@ -16,6 +16,7 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
         public string Namasiswa { get; set; }
+
         [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
@@ -54,11 +55,30 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
 
+        public string Banknm { get; set; }
+
         public SelectList Bank()
         {
             DatabaseContext db = new DatabaseContext();
             var banks = db.Banks;
             return new SelectList(banks.ToList(), "BankId", "Bankname", "0");
         }
+
+        [Display(Name = "School Support")]
+        public int? SSId { get; set; }
+        public int? JenisSS
+        {
+            get; set;
+        }
+        public SelectList SchoolSupport()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var SchoolSupports = db.SchoolSupports;
+
+            return new SelectList(SchoolSupports.ToList(), "SSId", "JenisSS", "0");
+        }
+
+        [Display(Name = "Nominal")]
+        public string nominal { get; set; }
     }
 }

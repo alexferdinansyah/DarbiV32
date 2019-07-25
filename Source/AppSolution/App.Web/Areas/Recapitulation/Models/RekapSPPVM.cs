@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace App.Web.Areas.Recapitulation.Models
 {
-    public class RekapBiayaMasukVM : Controller
+    public class RekapSPPVM
     {
         public string Nosisda { get; set; }
 
@@ -24,26 +24,23 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Jenjang")]
         public string jenjang { get; set; }
 
-        [Display(Name = "Biaya Masuk")]
-        public string biayaBM { get; set; }
+        [Display(Name = "Bulan SPP")]
+        public string bulanspp { get; set; }
 
-        [Display(Name = "Total Biaya Masuk")]
-        public string totalbm { get; set; }
+        [Display(Name = "Bayar SPP")]
+        public string bayarspp { get; set; }
 
         [Display(Name = "Tanggal Bayar")]
         public DateTime? tglbayar { get; set; }
+
+        [Display(Name = "Tanggal Transfer")]
+        public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
         [Display(Name = "Nama Bank")]
         public string namabank { get; set; }
-
-        [Display(Name = "School Support")]
-        public string SSId { get; set; }
-
-        [Display(Name = "School Support")]
-        public string SSName { get; set; }
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }

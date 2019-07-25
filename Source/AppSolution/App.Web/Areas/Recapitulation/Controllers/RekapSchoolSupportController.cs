@@ -15,15 +15,14 @@ using App.Entities;
 namespace App.Web.Areas.Recapitulation.Controllers
 {
 
-    public class RekapBiayaMasukController : Controller
+    public class RekapSchoolSupportController : Controller
     {
         private DatabaseContext db = new DatabaseContext();
 
-        // GET: Recapitulation/RekapBiayaMasuk
+        // GET: Recapitulation/RekapSchoolSupport
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
-            
             List<SelectListItem> OpBM = new List<SelectListItem>()
 
             {
@@ -31,33 +30,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
-            Session["Opsi"] = model.Opsi;
+
             ViewBag.OpBM = OpBM;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
+        public ActionResult AjaxRekapSchoolSupport(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
-            if (Session["Opsi"] != null)
-            {
-                m.Opsi = Session["Opsi"].ToString();
-                if (m.Opsi == "Nama")
-                {
-                    m.tglbayar = null;
-                }
-                else
-                {
-                    m.Namasiswa = null;
-                }
-            }
-
-
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
-            List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
+            List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
             if (Namasiswa == "" || Namasiswa == null)
@@ -71,23 +56,21 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.bayarBM != 0)
+                            if (dd.SSId != 0)
                             {
-                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
-                                model.biayaBM = dd.bayarBM.ToString();
-                                model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
-
                         }
                     }
                 }
                 else
                 {
-                    //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
+                    //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian
+
                     return Json(new
                     {
                         sEcho = param.sEcho,
@@ -96,50 +79,39 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         aaData = models,
                         error = errorMessage
                     },
-            JsonRequestBehavior.AllowGet);
+                JsonRequestBehavior.AllowGet);
                 }
-
             }
             else
             {
                 //jika pencarian berdasarkan nama siswa
                 try
                 {
-                    if (Namasiswa != null)
+                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                    string Nosisda = "";
+                    foreach (var d in datasiswa)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                        model.Nosisda = d.Nosisda;
+                        model.Namasiswa = d.Fullname;
+                        model.Kelastingkat = d.Kelas;
+                        models.Add(model);
+                    }
 
-                        foreach (var dd in t)
+                    foreach (var dd in models)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        foreach (var dt in t)
                         {
-                            if (dd.Namasiswa.Contains(Namasiswa)) ;
-                            {
-                                if (dd.bayarBM != 0)
-                                {
-                                    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
-                                    model.Nosisda = dd.Nosisda;
-                                    model.Namasiswa = dd.Namasiswa;
-                                    model.Kelastingkat = dd.Kelastingkat;
-                                    model.biayaBM = dd.bayarBM.ToString();
-                                    model.tglbayar = dd.tglbayar;
-                                    models.Add(model);
-                                }
-                            }
+                            dd.biayaBM = dt.bayarBM.ToString();
+                            dd.SSId = dt.SSId.ToString();
+                            dd.nominal = dt.nominal;
+                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
                         }
+                        SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
+                        dd.SSId = dtss.JenisSS;
                     }
-                    else
-                    {
-                        //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
-                        return Json(new
-                        {
-                            sEcho = param.sEcho,
-                            iTotalRecords = 0,
-                            iTotalDisplayRecords = 0,
-                            aaData = models,
-                            error = errorMessage
-                        },
-                JsonRequestBehavior.AllowGet);
-                    }
-
 
                 }
                 catch (Exception ex)
@@ -168,6 +140,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Namasiswa,
                         data.Kelastingkat,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        data.SSId,
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
                         data.tglbayar.ToString()
                     });
                 }

@@ -1,4 +1,4 @@
-﻿@model App.Web.Areas.Transaction.Models.TransactionSearchFormVM
+﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
 @{
     ViewBag.Title = "Rekap SPP";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,17 +7,19 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.Namasiswa)
+@Html.HiddenFor(model => model.tglbayar)
 
-<table id="tableTS" class="table" style="width:100%">
+<table id="tableRekapSPP" class="table" style="width:100%">
     <thead>
         <tr>
             <th>No</th>
             <th>No Sisda</th>
             <th>Nama Lengkap</th>
-            <th>Periode</th>
             <th>Kelas - Tingkat</th>
             <th>Bulan SPP</th>
             <th>Bayar SPP</th>
+            <th>Tanggal Bayar</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -27,7 +29,7 @@
     $(document).ready(function () {
 
 
-        var tableTS = $('#tableTS').dataTable({
+        var tableRekapSPP = $('#tableRekapSPP').dataTable({
             "scrollX": true,
             "processing": true,
             "sProcessing": true,
@@ -44,11 +46,11 @@
                 formdata = $('#Req').serializeArray()
                 aoData.push(
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
-                    { "name": "Fullname", "value": $('#Fullname').val() },
-                    { "name": "Periode", "value": $('#Periode').val() },
-                    { "name": "Kelas", "value": $('#Kelas').val() },
+                    { "name": "Namasiswa", "value": $('#Namasiswa').val() },
+                    { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
                     { "name": "bulanspp", "value": $('#bulanspp').val() },
                     { "name": "bayarspp", "value": $('#bayarspp').val() },
+                    { "name": "tglbayar", "value": $('#tglbayar').val() }
                 );
             },
             "aoColumns": [
@@ -58,16 +60,16 @@
                     }
                 },
                 { "sName": "Nosisda" },
-                { "sName": "Fullname" },
-                { "sName": "Periode" },
-                { "sName": "Kelas" },
+                { "sName": "Namasiswa" },
+                { "sName": "Kelastingkat" },
                 { "sName": "bulanspp" },
-                { "sName": "bayarspp" }
+                { "sName": "bayarspp" },
+                { "sName": "tglbayar" },
             ]
         });
 
         $('#btnsearch').click(function () {
-            tableTS.fnDraw(null);
+            tableRekapSPP.fnDraw(null);
         });
 
     });
