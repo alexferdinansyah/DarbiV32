@@ -172,6 +172,10 @@ namespace App.Web.Areas.Transaction.Controllers
                     keltingkat = d.Kelas.Split(' ');
                     tkt = keltingkat[0];
                 }
+                if (d.Kelas != "TK A")
+                {
+                    
+                }
             }
 
             //info tingkat to get info biaya

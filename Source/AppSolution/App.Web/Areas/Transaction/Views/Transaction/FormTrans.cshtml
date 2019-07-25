@@ -14,6 +14,7 @@
     @Html.HiddenFor(model => model.tipebayar)
     @*@Html.HiddenFor(model => model.BankId)*@
     @Html.HiddenFor(model => model.bulanspp)
+
 <div class="form-horizontal">
     <hr />
     <div class="form-group">
@@ -56,7 +57,25 @@
     </div>
 
     <hr />
-
+    <div class="form-group" id="du1">
+        @Html.LabelFor(model => model.daftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.daftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+    <div class="form-group" id="du2">
+        @Html.LabelFor(model => model.cicilDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.cicilDaftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+    <div class="form-group" id="du3">
+        @Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <hr id="du4"/>
     <div class="form-group">
         @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -131,6 +150,7 @@
         $('#tipebayar3').hide();
         var Tipetrans = document.getElementById("tipebayar");
         var bulanspp = document.getElementById("bulanspp");
+        var kelas = document.getElementById("Kelastingkat");
         $('#OpTrans').change(function () {
             var e = document.getElementById("OpTrans");
             var strUser = e.options[e.selectedIndex].text;
@@ -158,5 +178,13 @@
             var strUser = e.options[e.selectedIndex].text;
             bulanspp.value = strUser;
         });
+
+        if (kelas.value != "TK A") {
+            $('#du1').hide();
+            $('#du2').hide();
+            $('#du3').hide();
+            $('#du4').hide();
+        }
+        
     });
 </script>
