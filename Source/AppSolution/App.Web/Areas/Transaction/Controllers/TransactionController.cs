@@ -139,6 +139,32 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(dttrans);
         }
 
+        //GET : Transaction/Transaction/Delete
+        //public ActionResult Delete(String nosisda)
+        //{
+        //    if (nosisda == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //  }
+        //    IEnumerable<Transaksi> dttrans = null;
+        //    if (db.Transaksis.Count() != 0)
+        //    {
+        //        dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+        //    }
+
+        //    Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+        //    if (tr == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    else
+        //    {
+
+        //    }
+
+        //    return View(dttrans);
+        //}
+
         //GET : Transaction/Transaction/Lakukan Transaksi
         public ActionResult FormTrans(TransactionFormCreateVM mod)
         {
@@ -171,10 +197,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     keltingkat = d.Kelas.Split(' ');
                     tkt = keltingkat[0];
-                }
-                if (d.Kelas != "TK A")
-                {
-                    
                 }
             }
 
@@ -242,11 +264,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                 }
-                newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
-
+                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                {
+                    newmodel.daftarUlang = model.daftarUlang;
+                    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
+                }
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);

@@ -67,6 +67,15 @@ namespace App.Entities.Models
         [Display(Name = "Bayar Daftar Ulang")]
         public string bayarDaftarUlang { get; set; }
 
+        [Display(Name = "Canceled")]
+        public bool isCanceled { get; set; }
+        [Display(Name = "Canceled By")]
+        public string canceledBy { get; set; }
+        [Display(Name = "Canceled Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime? canceledDate { get; set; }
+
     }
 
 }
