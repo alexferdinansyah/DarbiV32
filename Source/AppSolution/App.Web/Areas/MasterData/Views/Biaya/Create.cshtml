@@ -111,6 +111,15 @@
                     $('#JenisBiaya12').hide();
                     $('#JenisBiaya3').show();
                 }
+
+                if (strUser == "Daftar Ulang") {
+                    $('#JenisBiaya12').show();
+                    kategori.value = "Daftar Ulang";
+                    JenisBiaya.value = "Daftar Ulang";
+                    $('#JenisBiaya3').hide();
+                    $("select[id$=JenisItem] > option").remove();
+                    $('#JenisItem').append($("<option></option>").attr("value", "Daftar Ulang").text("Daftar Ulang"));
+                }
             });
         });
 
