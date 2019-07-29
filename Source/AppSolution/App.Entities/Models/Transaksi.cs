@@ -62,6 +62,30 @@ namespace App.Entities.Models
 
         public string infospp { get; set; }
 
+        [Display(Name = "Total Biaya Daftar Ulang")]
+        public string daftarulang { get; set; }
+
+        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
+        public int? cicildaftarulang { get; set; }
+
+        [Display(Name = "Bayar Daftar Ulang")]
+        public int? bayardaftarulang { get; set; }
+
+        [Display(Name = "Total Daftar Ulang")]
+        public string daftarUlang { get; set; }
+        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
+        public string cicilDaftarUlang { get; set; }
+        [Display(Name = "Bayar Daftar Ulang")]
+        public string bayarDaftarUlang { get; set; }
+
+        [Display(Name = "Canceled")]
+        public bool isCanceled { get; set; }
+        [Display(Name = "Canceled By")]
+        public string canceledBy { get; set; }
+        [Display(Name = "Canceled Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime? canceledDate { get; set; }
     }
 
 }

@@ -147,21 +147,57 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
-            Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
-            if (tr == null)
+            if(dttrans.Count() == 0)
             {
                 return HttpNotFound();
             }
             else
             {
-                
-                Bank infobank = db.Banks.Find(tr.BankId);
-                tr.Banknm = infobank.Bankname;
-                
+                Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+                if (tr == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+
+                    if (tr.tipebayar != "Tunai")
+                    {
+                        Bank infobank = db.Banks.Find(tr.BankId);
+                        tr.Banknm = infobank.Bankname;
+                    }
+                }
             }
+            
 
             return View(dttrans);
         }
+
+        //GET : Transaction/Transaction/Delete
+        //public ActionResult Delete(String nosisda)
+        //{
+        //    if (nosisda == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //  }
+        //    IEnumerable<Transaksi> dttrans = null;
+        //    if (db.Transaksis.Count() != 0)
+        //    {
+        //        dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+        //    }
+
+        //    Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+        //    if (tr == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    else
+        //    {
+
+        //    }
+
+        //    return View(dttrans);
+        //}
 
         //GET : Transaction/Transaction/Lakukan Transaksi
         public ActionResult FormTrans(TransactionFormCreateVM mod)
@@ -221,11 +257,16 @@ namespace App.Web.Areas.Transaction.Controllers
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
                     }
+
                     //if (dd.KatBiaya == "School Support")
                     //{
                     //    mod.nominal = dd.NomBiaya;
                     //}
-                       
+
+                    if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarulang = dd.NomBiaya;
+                    }
                 }
 
             }
@@ -235,6 +276,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -267,11 +309,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                 }
-                newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
-
+                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                {
+                    newmodel.daftarUlang = model.daftarUlang;
+                    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
+                }
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);
