@@ -28,6 +28,30 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
+
+        public ActionResult FirstAjax(string input)
+        {
+            //2-9 Mekah : idSchoolSupport-kelastingkat
+            var inputarray = input.Split('-');
+            var kt = inputarray[1].Split(' ');
+            string tkt = "";
+            tkt = kt[0].ToString();
+            SchoolSupport ss =db.SchoolSupports.Find(Convert.ToInt32(inputarray[0]));
+            IEnumerable<Tingkat> ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
+            IEnumerable<Biaya> b = null;
+            foreach (var d in ts)
+            {
+                b = db.Biayas.Where(x => x.TingkatId == d.TingkatId);
+            }
+            b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+            string nb = "";
+            foreach (var d in b)
+            {
+                nb = d.NomBiaya;
+            }
+            return Json(nb, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult AjaxTrans(JQueryDataTableParamModel param, TransactionSearchFormVM m)
         {
@@ -123,18 +147,28 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
-            Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
-            if (tr == null)
+            if(dttrans.Count() == 0)
             {
                 return HttpNotFound();
             }
             else
             {
-                
-                Bank infobank = db.Banks.Find(tr.BankId);
-                tr.Banknm = infobank.Bankname;
-                
+                Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+                if (tr == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+
+                    if (tr.tipebayar != "Tunai")
+                    {
+                        Bank infobank = db.Banks.Find(tr.BankId);
+                        tr.Banknm = infobank.Bankname;
+                    }
+                }
             }
+            
 
             return View(dttrans);
         }
@@ -218,10 +252,20 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.totalBM = dd.NomBiaya;
                     }
-                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
+                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS") 
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
+                    }
+
+                    //if (dd.KatBiaya == "School Support")
+                    //{
+                    //    mod.nominal = dd.NomBiaya;
+                    //}
+
+                    if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarulang = dd.NomBiaya;
                     }
                 }
                 if (dd.TingkatId == (idtingkat + 1))
@@ -243,6 +287,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -296,18 +341,26 @@ namespace App.Web.Areas.Transaction.Controllers
         }
 
         //GET Kwitansi
-        public ActionResult Kwitansi(int? id)
+        public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
+            string bayarspp = byr.bayarspp;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaksi transaksi = db.Transaksis.Find(id);
+            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;
+            if (transaksi.bulanspp == null)
+            {
+                transaksi.infospp = "-";
+            }
+
             if (transaksi == null)
             {
                 return HttpNotFound();
-            }
-
+            } 
+            
             return View(transaksi);
         }
     }

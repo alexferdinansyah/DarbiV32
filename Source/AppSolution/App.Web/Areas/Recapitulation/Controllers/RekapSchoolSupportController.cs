@@ -30,7 +30,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
-
+            Session["Opsi"] = model.Opsi;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -38,6 +38,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapSchoolSupport(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            if (Session["Opsi"] != null)
+            {
+                m.Opsi = Session["Opsi"].ToString();
+                if (m.Opsi == "Nama")
+                {
+                    m.tglbayar = null;
+                }
+                else
+                {
+                    m.Namasiswa = null;
+                }
+            }
+
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
@@ -54,18 +67,32 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                     foreach (var dd in t)
                     {
+                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.SSId != 0)
+                            if (dd.SSId != null)
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
+                                model.SSId = dd.SSId.ToString();
+                                model.nominal = dd.nominal;
+                                model.tglbayar = dd.tglbayar;
+                                
+                            }
+                            if (model.SSId != null)
+                            {
+                                SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(model.SSId));
+                                model.SSName = dtss.JenisSS;
                                 models.Add(model);
+                            }
+                            else
+                            {
+                                //models.RemoveAt(i);
                             }
                         }
                     }
+                    
                 }
                 else
                 {
@@ -98,21 +125,47 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         models.Add(model);
                     }
 
-                    foreach (var dd in models)
+                    for(int i = 0; i < models.Count(); i++)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        t = t.Where(x => x.Nosisda.Equals(models[i].Nosisda));
                         foreach (var dt in t)
                         {
-                            dd.biayaBM = dt.bayarBM.ToString();
-                            dd.SSId = dt.SSId.ToString();
-                            dd.nominal = dt.nominal;
-                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                            if (dt.SSId != null)
+                            {
+                                models[i].SSId = dt.SSId.ToString();
+                                models[i].nominal = dt.nominal;
+                                models[i].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                            }
                         }
-                        SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
-                        dd.SSId = dtss.JenisSS;
+                        if(models[i].SSId != null)
+                        {
+                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[i].SSId));
+                            models[i].SSName = dtss.JenisSS;
+                        }
+                        else
+                        {
+                            models.RemoveAt(i);
+                        }
+                        
                     }
 
+                    //foreach (var dd in models)
+                    //{
+                    //    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                    //    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                    //    foreach (var dt in t)
+                    //    {
+                    //        if (dt.SSId != 0)
+                    //        {
+                    //            dd.SSId = dt.SSId.ToString();
+                    //            dd.nominal = dt.nominal;
+                    //            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                    //        }
+                    //    }
+                    //    SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
+                    //    dd.SSId = dtss.JenisSS;
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -139,8 +192,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
-                        data.SSId,
+                        data.SSName,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
                         data.tglbayar.ToString()
                     });

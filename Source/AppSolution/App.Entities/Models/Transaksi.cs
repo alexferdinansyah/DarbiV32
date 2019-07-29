@@ -54,11 +54,22 @@ namespace App.Entities.Models
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
-        public int? SSId { get; set; }
-        public string JenisSS { get; set; }
+        public int? SSId { get; set; } //id schoolsupport
+        public string JenisSS { get; set; } //jenis schoolsupport
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
+        public string infospp { get; set; }
+
+        [Display(Name = "Total Biaya Daftar Ulang")]
+        public string daftarulang { get; set; }
+
+        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
+        public int? cicildaftarulang { get; set; }
+
+        [Display(Name = "Bayar Daftar Ulang")]
+        public int? bayardaftarulang { get; set; }
 
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
@@ -75,7 +86,6 @@ namespace App.Entities.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? canceledDate { get; set; }
-
     }
 
 }

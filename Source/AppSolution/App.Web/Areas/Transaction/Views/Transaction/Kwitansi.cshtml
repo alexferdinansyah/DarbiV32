@@ -1,10 +1,204 @@
 ﻿@model App.Entities.Models.Transaksi
 @{
+
+	ViewBag.Title = "Kwitansi";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+    /**/
+
     ViewBag.Title = "Kwitansi";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 <input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />
+
+@Html.HiddenFor(model => model.Nosisda)
+
 <div id="detail" style="padding-left:50px">
+
+	<br />
+	<table width="100%" height="60%" style="border-top: 1px solid black">
+
+		<tr>
+			<td colspan="2">
+				<h5>Sekolah Islam Terpadu Darul Abidin</h5>
+				<h5 align="center">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</h5>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">
+				  <h5>Sekolah Islam Terpadu Darul Abidin</h5>
+				<h5 align="center">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</h5>
+			</td>
+		</tr>
+	</table>
+	<table width="100%" height="60%" style="border-top: 1px solid black">
+
+		<tr>
+			<td>Nomor Kwatansi</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.tglbayar) @Html.DisplayFor(model => model.tgltransfer)
+			</td>
+			<td></td>
+			<td></td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">Nomor Kwitansi</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.tglbayar) @Html.DisplayFor(model => model.tgltransfer)
+			</td>
+			<td> </td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>@Html.DisplayNameFor(model => model.tglbayar)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.tglbayar) @Html.DisplayFor(model => model.tgltransfer)
+			</td>
+			<td></td>
+			<td></td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">@Html.DisplayNameFor(model => model.tglbayar)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.tglbayar) @Html.DisplayFor(model => model.tgltransfer)
+			</td>
+			<td> </td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>@Html.DisplayNameFor(model => model.Namasiswa) || @Html.DisplayNameFor(model => model.Nosisda)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.Namasiswa)
+			</td>
+			<td> || </td>
+			<td>
+				@Html.DisplayFor(model => model.Nosisda)
+			</td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">@Html.DisplayNameFor(model => model.Namasiswa) || @Html.DisplayNameFor(model => model.Nosisda)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.Namasiswa)
+			</td>
+			<td> || </td>
+			<td>
+				@Html.DisplayFor(model => model.Nosisda)
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%" height="60%" style="border-top: 1px solid black">
+		<br />
+
+		<tr>
+			<td>Daftar Ulang</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.bayarBM)
+			</td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">Daftar Ulang</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.bayarBM)
+			</td>
+		</tr>
+
+		<tr>
+			<td>@Html.DisplayNameFor(model => model.bayarBM)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.bayarBM)
+			</td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarBM)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.bayarBM)
+			</td>
+		</tr>
+
+		<tr>
+
+			<td>@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp)</td>
+			<td> : </td>
+
+			@if (Model.infospp != null)
+			{
+
+				<td>
+					@Html.DisplayFor(model => model.infospp)
+				</td>
+
+			}
+			else
+			{
+				<td>
+					@Html.DisplayFor(model => model.bulanspp) ||
+					Rp.@Html.DisplayFor(model => model.bayarspp)
+				</td>
+			}
+
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp)</td>
+			<td> : </td>
+
+			@if (Model.infospp != null)
+			{
+
+				<td>
+					@Html.DisplayFor(model => model.infospp)
+				</td>
+
+			}
+			else
+			{
+				<td>
+					@Html.DisplayFor(model => model.bulanspp) ||
+					Rp.@Html.DisplayFor(model => model.bayarspp)
+				</td>
+			}
+
+		</tr>
+
+		<tr>
+
+			<td>@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.JenisSS) ||
+				Rp.@Html.DisplayFor(model => model.nominal)
+			</td>
+			<td colspan="2" style="padding-left:2px;border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal)</td>
+			<td> : </td>
+			<td>
+				@Html.DisplayFor(model => model.JenisSS) ||
+				Rp.@Html.DisplayFor(model => model.nominal)
+			</td>
+
+		</tr>
+
+		<tr></tr>
+	</table>
+	<br />
+	<table width="100%" height="60%" style="border-top: 1px solid black">
+		<tr>
+			<td colspan="2">
+				Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas
+				data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya.
+				Terima Kasih.
+			</td>
+			<td colspan="2" style="padding-left:2px ; border-left: 3px dotted black">
+				Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas
+				data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya.
+				Terima Kasih.
+			</td>
+		</tr>
+		<tr>
+			<td>Oleh Kasir</td>
+			<td>@HttpContext.Current.User.Identity.Name</td>
+			<td style="border-left: 3px dotted black">Oleh Kasir</td>
+			<td>@HttpContext.Current.User.Identity.Name</td>
+		</tr>
+	</table>
+
     <br />
     <table width="100%" height="60%" style="border-top: 1px solid black">
 
@@ -60,7 +254,7 @@
     </table>
 
     <table width="100%" height="60%" style="border-top: 1px solid black">
-    <br />
+        <br />
         <tr>
             <td>@Html.DisplayNameFor(model => model.bayarBM)</td>
             <td> : </td>
@@ -122,12 +316,17 @@
             <td>@HttpContext.Current.User.Identity.Name</td>
         </tr>
     </table>
-
 </div>
 
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+</div>
+
+
 <script>
-    $('#kwt').click(function () {
-        $("#detail").printThis();
-    });
+	$('#kwt').click(function () {
+		$("#detail").printThis();
+	});
 
 </script>
