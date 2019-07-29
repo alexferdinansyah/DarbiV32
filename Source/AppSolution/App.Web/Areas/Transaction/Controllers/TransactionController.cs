@@ -224,7 +224,18 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
                 }
-
+                if (dd.TingkatId == (idtingkat + 1))
+                {
+                    if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = dd.NomBiaya;
+                    }
+                }
+            }
+            IEnumerable<Transaksi> du = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            foreach (var t in du)
+            {
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
@@ -263,6 +274,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 else
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
+                    newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
@@ -271,7 +283,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
                 {
                     newmodel.daftarUlang = model.daftarUlang;
-                    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
+                    newmodel.cicilDaftarUlang = model.bayarDaftarUlang;
                 }
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();

@@ -112,7 +112,7 @@ namespace App.Entities.DataAccessLayer
                 new Siswa {Nosisda = "0011856", Fullname = "Aulia Raina", Nickname = "Aulia", Nisn = "0856", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "28 Desember 2004",
                 NamaAyah = "Abi", NamaIbu = "Umi", PekerjaanAyah = "Wirausaha", PekerjaanIbu= "Ibu Rumah Tangga", NoTelpAyah = "0812999666", NoTelpIbu = "0813444555",
                 EmailOrtu = "AbiUmi@gmail.com", Alamat = "Jl. Beji Timur", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16453", Negara = "Indonesia", Anakke = "2", DetailSaudara = "1",
-                Agama = "Islam", Suku = "Sunda", Kewarganegaraan = "Indonesia", TinggiBadan = "160 cm", BeratBadan = "55kg", Goldar = "O", Periode = "2019-2020", Kelas = "TK A",
+                Agama = "Islam", Suku = "Sunda", Kewarganegaraan = "Indonesia", TinggiBadan = "160 cm", BeratBadan = "55kg", Goldar = "O", Periode = "2019-2020", Kelas = "9 Makkah",
                 StatKat = "Umum", KontakSiswa = "0896777888", SekolahAsal = "SD Angkasa", StatSekolahAsal = "Swasta", JarakRumahSekolah = "5km", Tgldaftar = "9 Juli 2012", GelTest = "1"},
                 new Siswa {Nosisda = "0011857", Fullname = "Raditya", Nickname = "Radit", Nisn = "0857", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Desember 2004",
                 NamaAyah = "Papa", NamaIbu = "Mama", PekerjaanAyah = "Pegawai Negri", PekerjaanIbu= "Wirausaha", NoTelpAyah = "0816888777", NoTelpIbu = "0834777666",
