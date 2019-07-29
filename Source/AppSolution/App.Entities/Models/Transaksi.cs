@@ -54,11 +54,14 @@ namespace App.Entities.Models
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
-        public int? SSId { get; set; }
-        public string JenisSS { get; set; }
+        public int? SSId { get; set; } //id schoolsupport
+        public string JenisSS { get; set; } //jenis schoolsupport
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
+        public string infospp { get; set; }
+
     }
 
 }

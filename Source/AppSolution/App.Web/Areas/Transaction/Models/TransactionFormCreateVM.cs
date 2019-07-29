@@ -80,5 +80,16 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
+
+        //school support//
+        [Display(Name = "Nominal")]
+        public string NomBiaya { get; set; }
+        public SelectList Biaya()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Biayas = db.Biayas;
+            return new SelectList(Biayas.ToList(), "JenisBiaya", "NomBiaya", "0");
+        }
     }
 }
