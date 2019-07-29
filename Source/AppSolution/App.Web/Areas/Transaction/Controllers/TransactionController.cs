@@ -123,18 +123,28 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
-            Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
-            if (tr == null)
+            if(dttrans.Count() == 0)
             {
                 return HttpNotFound();
             }
             else
             {
-                
-                Bank infobank = db.Banks.Find(tr.BankId);
-                tr.Banknm = infobank.Bankname;
-                
+                Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+                if (tr == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+
+                    if (tr.tipebayar != "Tunai")
+                    {
+                        Bank infobank = db.Banks.Find(tr.BankId);
+                        tr.Banknm = infobank.Bankname;
+                    }
+                }
             }
+            
 
             return View(dttrans);
         }
@@ -197,6 +207,11 @@ namespace App.Web.Areas.Transaction.Controllers
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
                     }
+                    if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarulang = dd.NomBiaya;
+                    }
+                    
                 }
 
             }
@@ -206,6 +221,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
             }
 
             ViewBag.OpTrans = OpTrans;

@@ -1,9 +1,14 @@
 ﻿@model App.Entities.Models.Transaksi
 @{
+    /**/
+
     ViewBag.Title = "Kwitansi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />
+
+@Html.HiddenFor(model => model.Nosisda)
+
 <div id="detail" style="padding-left:50px">
     <br />
     <table width="100%" height="60%" style="border-top: 1px solid black">
@@ -60,7 +65,7 @@
     </table>
 
     <table width="100%" height="60%" style="border-top: 1px solid black">
-    <br />
+        <br />
         <tr>
             <td>@Html.DisplayNameFor(model => model.bayarBM)</td>
             <td> : </td>
@@ -122,8 +127,13 @@
             <td>@HttpContext.Current.User.Identity.Name</td>
         </tr>
     </table>
-
 </div>
+
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+</div>
+
 
 <script>
     $('#kwt').click(function () {
