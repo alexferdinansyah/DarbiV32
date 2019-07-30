@@ -28,6 +28,30 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
+
+        public ActionResult FirstAjax(string input)
+        {
+            //2-9 Mekah : idSchoolSupport-kelastingkat
+            var inputarray = input.Split('-');
+            var kt = inputarray[1].Split(' ');
+            string tkt = "";
+            tkt = kt[0].ToString();
+            SchoolSupport ss =db.SchoolSupports.Find(Convert.ToInt32(inputarray[0]));
+            IEnumerable<Tingkat> ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
+            IEnumerable<Biaya> b = null;
+            foreach (var d in ts)
+            {
+                b = db.Biayas.Where(x => x.TingkatId == d.TingkatId);
+            }
+            b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+            string nb = "";
+            foreach (var d in b)
+            {
+                nb = d.NomBiaya;
+            }
+            return Json(nb, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult AjaxTrans(JQueryDataTableParamModel param, TransactionSearchFormVM m)
         {
@@ -228,26 +252,26 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.totalBM = dd.NomBiaya;
                     }
-                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
+                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS") 
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
                     }
+                }
+                if (dd.TingkatId == (idtingkat + 1))
+                {
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
                     }
-                    
                 }
-
             }
-
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.bayarDaftarUlang));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -279,16 +303,17 @@ namespace App.Web.Areas.Transaction.Controllers
                 else
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
+                    newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
-                //if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
-                //{
-                //    newmodel.daftarUlang = model.daftarUlang;
-                //    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
-                //}
+                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                {
+                    newmodel.daftarUlang = model.daftarUlang;
+                    newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
+                }
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);
@@ -300,18 +325,26 @@ namespace App.Web.Areas.Transaction.Controllers
         }
 
         //GET Kwitansi
-        public ActionResult Kwitansi(int? id)
+        public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
+            string bayarspp = byr.bayarspp;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaksi transaksi = db.Transaksis.Find(id);
+            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;
+            if (transaksi.bulanspp == null)
+            {
+                transaksi.infospp = "-";
+            }
+
             if (transaksi == null)
             {
                 return HttpNotFound();
-            }
-
+            } 
+            
             return View(transaksi);
         }
     }

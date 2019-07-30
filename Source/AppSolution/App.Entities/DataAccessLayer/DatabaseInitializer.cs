@@ -85,8 +85,6 @@ namespace App.Entities.DataAccessLayer
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 1},
                 new Transaksi {Nosisda = "0011857", totalBM = "12000000", bayarBM = 5000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 2},
-                new Transaksi {Nosisda = "0011858", daftarUlang = "10000000", cicilDaftarUlang = "6000000", periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
-                tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 3}
             };
             transaksis.ForEach(s => context.Transaksis.Add(s));
             context.SaveChanges();
@@ -114,7 +112,7 @@ namespace App.Entities.DataAccessLayer
                 new Siswa {Nosisda = "0011856", Fullname = "Aulia Raina", Nickname = "Aulia", Nisn = "0856", IsActive = true, Sex = "Perempuan", Pob = "Depok", Dob = "28 Desember 2004",
                 NamaAyah = "Abi", NamaIbu = "Umi", PekerjaanAyah = "Wirausaha", PekerjaanIbu= "Ibu Rumah Tangga", NoTelpAyah = "0812999666", NoTelpIbu = "0813444555",
                 EmailOrtu = "AbiUmi@gmail.com", Alamat = "Jl. Beji Timur", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16453", Negara = "Indonesia", Anakke = "2", DetailSaudara = "1",
-                Agama = "Islam", Suku = "Sunda", Kewarganegaraan = "Indonesia", TinggiBadan = "160 cm", BeratBadan = "55kg", Goldar = "O", Periode = "2019-2020", Kelas = "TK A",
+                Agama = "Islam", Suku = "Sunda", Kewarganegaraan = "Indonesia", TinggiBadan = "160 cm", BeratBadan = "55kg", Goldar = "O", Periode = "2019-2020", Kelas = "9 Makkah",
                 StatKat = "Umum", KontakSiswa = "0896777888", SekolahAsal = "SD Angkasa", StatSekolahAsal = "Swasta", JarakRumahSekolah = "5km", Tgldaftar = "9 Juli 2012", GelTest = "1"},
                 new Siswa {Nosisda = "0011857", Fullname = "Raditya", Nickname = "Radit", Nisn = "0857", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Desember 2004",
                 NamaAyah = "Papa", NamaIbu = "Mama", PekerjaanAyah = "Pegawai Negri", PekerjaanIbu= "Wirausaha", NoTelpAyah = "0816888777", NoTelpIbu = "0834777666",
@@ -122,7 +120,7 @@ namespace App.Entities.DataAccessLayer
                 Agama = "Kristen", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "165 cm", BeratBadan = "60kg", Goldar = "AB", Periode = "2016-2019", Kelas = "9 Madinah",
                 StatKat = "Umum", KontakSiswa = "0896333444", SekolahAsal = "SD Tadika", StatSekolahAsal = "Negri", JarakRumahSekolah = "20km", Tgldaftar = "20 Juli 2012", GelTest = "1"},
 
-                new Siswa {Nosisda = "0011858", Fullname = "Hisyam Putra", Nickname = "Hisyam", Nisn = "0858", IsActive = true, Sex = "Laki-laki", Pob = "Bogor", Dob = "28 Oktober 2007",
+                new Siswa {Nosisda = "0011859", Fullname = "Hisyam Putra", Nickname = "Hisyam", Nisn = "0858", IsActive = true, Sex = "Laki-laki", Pob = "Bogor", Dob = "28 Oktober 2007",
                 NamaAyah = "Ayah", NamaIbu = "Ibu", PekerjaanAyah = "Wiraswasta", PekerjaanIbu= "Ibu Rumah Tangga", NoTelpAyah = "0816999000", NoTelpIbu = "0834111333",
                 EmailOrtu = "AyahIbu@gmail.com", Alamat = "Kp. Sidamukti", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16456", Negara = "Indonesia", Anakke = "2", DetailSaudara = "2",
                 Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "170 cm", BeratBadan = "68kg", Goldar = "O", Periode = "2016-2019", Kelas = "TK A",

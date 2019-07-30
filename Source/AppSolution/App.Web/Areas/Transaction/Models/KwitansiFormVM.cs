@@ -28,5 +28,8 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "Bayar SPP")]
         public string bayarspp { get; set; }
+
+        [Display(Name = "Bayar School Support")]
+        public string SSId { get; set; }
     }
 }
