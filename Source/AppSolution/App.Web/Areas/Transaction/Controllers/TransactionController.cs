@@ -235,7 +235,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
-                        mod.daftarulang = dd.NomBiaya;
+                        mod.daftarUlang = dd.NomBiaya;
                     }
                     
                 }
@@ -247,7 +247,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.bayarDaftarUlang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -284,11 +284,11 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bulanspp = model.bulanspp;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
-                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
-                {
-                    newmodel.daftarUlang = model.daftarUlang;
-                    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
-                }
+                //if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                //{
+                //    newmodel.daftarUlang = model.daftarUlang;
+                //    newmodel.bayarDaftarUlang = model.bayarDaftarUlang;
+                //}
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);

@@ -60,15 +60,6 @@ namespace App.Entities.Models
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
 
-        [Display(Name = "Total Biaya Daftar Ulang")]
-        public string daftarulang { get; set; }
-
-        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
-        public int? cicildaftarulang { get; set; }
-
-        [Display(Name = "Bayar Daftar Ulang")]
-        public int? bayardaftarulang { get; set; }
-
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
