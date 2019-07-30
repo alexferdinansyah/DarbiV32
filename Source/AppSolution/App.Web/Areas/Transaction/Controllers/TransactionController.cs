@@ -257,16 +257,6 @@ namespace App.Web.Areas.Transaction.Controllers
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
                     }
-
-                    //if (dd.KatBiaya == "School Support")
-                    //{
-                    //    mod.nominal = dd.NomBiaya;
-                    //}
-
-                    if (dd.KatBiaya == "Daftar Ulang")
-                    {
-                        mod.daftarulang = dd.NomBiaya;
-                    }
                 }
                 if (dd.TingkatId == (idtingkat + 1))
                 {
@@ -276,18 +266,12 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                 }
             }
-            IEnumerable<Transaksi> du = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            foreach (var t in du)
-            {
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-            }
-
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -328,7 +312,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
                 {
                     newmodel.daftarUlang = model.daftarUlang;
-                    newmodel.cicilDaftarUlang = model.bayarDaftarUlang;
+                    newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
                 }
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
