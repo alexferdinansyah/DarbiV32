@@ -164,6 +164,8 @@ namespace App.Entities.DataAccessLayer
 
             var jenjangs = new List<Jenjang>
             {
+                new Jenjang {JenjangName="Toddler"},
+                new Jenjang {JenjangName="PG"},
                 new Jenjang {JenjangName="TK A"},
                 new Jenjang {JenjangName="TK B"},
                 new Jenjang {JenjangName="SD"},

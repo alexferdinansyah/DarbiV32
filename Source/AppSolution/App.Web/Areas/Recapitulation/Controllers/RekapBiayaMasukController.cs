@@ -51,6 +51,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
             }
 
+
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;

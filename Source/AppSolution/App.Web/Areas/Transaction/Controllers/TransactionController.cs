@@ -36,7 +36,7 @@ namespace App.Web.Areas.Transaction.Controllers
             var kt = inputarray[1].Split(' ');
             string tkt = "";
             tkt = kt[0].ToString();
-            SchoolSupport ss =db.SchoolSupports.Find(Convert.ToInt32(inputarray[0]));
+            SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(inputarray[0]));
             IEnumerable<Tingkat> ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
             IEnumerable<Biaya> b = null;
             foreach (var d in ts)
@@ -147,7 +147,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
             }
 
-            if(dttrans.Count() == 0)
+            if (dttrans.Count() == 0)
             {
                 return HttpNotFound();
             }
@@ -168,36 +168,38 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                 }
             }
-            
+
 
             return View(dttrans);
         }
 
         //GET : Transaction/Transaction/Delete
-        //public ActionResult Delete(String nosisda)
-        //{
-        //    if (nosisda == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //  }
-        //    IEnumerable<Transaksi> dttrans = null;
-        //    if (db.Transaksis.Count() != 0)
-        //    {
-        //        dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
-        //    }
+        public ActionResult Delete(string nosisda)
+        {
+            IEnumerable<Transaksi> tran = null;
+            Transaksi model = null;
+            if (nosisda == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda)).OrderByDescending(x => x.TransId);
+            }
 
-        //    Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
-        //    if (tr == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    else
-        //    {
+            for (int i = 0; i < tran.Count(); i++)
+            {
+                model = tran.ToList()[i];
+                break;
+            }
 
-        //    }
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(dttrans);
-        //}
+            return View(model);
+        }
 
         //GET : Transaction/Transaction/Lakukan Transaksi
         public ActionResult FormTrans(TransactionFormCreateVM mod)
@@ -237,9 +239,11 @@ namespace App.Web.Areas.Transaction.Controllers
             //info tingkat to get info biaya
             IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
             int idtingkat = 0;
+            var nama = "";
             foreach (var t in dtTingkat)
             {
                 idtingkat = t.TingkatId;
+                nama = t.Namatingkat;
             }
 
             //info biaya
@@ -258,13 +262,6 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
                 }
-                //if (dd.TingkatId == (idtingkat + 1))
-                //{
-                    if (dd.KatBiaya == "Daftar Ulang")
-                    {
-                        mod.daftarUlang = dd.NomBiaya;
-                    }
-                //}
             }
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
@@ -272,6 +269,44 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
                 mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+            }
+
+            var idTingkatCounter = 0;
+            if (nama == "PG")
+            {
+                IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK A"));
+                for (int i = 0; i < t.Count(); i++)
+                {
+                    idTingkatCounter = t.ToList()[i].TingkatId;
+                    break;
+                }
+                IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
+                foreach (var m in b)
+                {
+                    if (m.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = m.NomBiaya;
+                        break;
+                    }
+                }
+            }
+            if (nama == "TK A")
+            {
+                IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK B"));
+                for (int i = 0; i < t.Count(); i++)
+                {
+                    idTingkatCounter = t.ToList()[i].TingkatId;
+                    break;
+                }
+                IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
+                foreach (var m in b)
+                {
+                    if (m.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = m.NomBiaya;
+                        break;
+                    }
+                }
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -319,6 +354,26 @@ namespace App.Web.Areas.Transaction.Controllers
                 int lastid = db.Transaksis.Max(x => x.TransId);
 
                 return RedirectToAction("Kwitansi", new { id = lastid });
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(TransactionFormCreateVM model, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                //Transaksi tran = db.Transaksis.Find(id);
+                Transaksi newmodel = new Transaksi();
+                newmodel.isCanceled = true;
+                newmodel.canceledDate = DateTime.UtcNow.Date;
+
+                db.Transaksis.Add(newmodel);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
             return View(model);
