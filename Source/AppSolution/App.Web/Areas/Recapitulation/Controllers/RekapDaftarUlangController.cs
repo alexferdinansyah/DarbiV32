@@ -53,13 +53,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.bayarDaftarUlang != null)
+                            if (dd.cicilDaftarUlang != null)
                             {
                                 RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
-                                model.bayarDaftarUlang = dd.bayarDaftarUlang;
+                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
@@ -95,13 +95,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.Namasiswa.Contains(Namasiswa)) ;
                             {
-                                if (dd.bayarDaftarUlang != null)
+                                if (dd.cicilDaftarUlang != null)
                                 {
                                     RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
-                                    model.bayarDaftarUlang = dd.bayarDaftarUlang;
+                                    model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
                                 }
@@ -149,7 +149,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.bayarDaftarUlang) ),
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
                         data.tglbayar.ToString()
                     });
                 }

@@ -13,7 +13,25 @@ namespace App.Web.Areas.Register.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Nama Lengkap Siswa")]
-        public string NamaSiswa { get; set; }
+        public string Fullname { get; set; }
+
+        [Display(Name = "Nickname")]
+        public string Nickname { get; set; }
+
+        [Display(Name = "NISN")]
+        public string Nisn { get; set; }
+
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Jenis Kelamin")]
+        public string Sex { get; set; }
+
+        [Display(Name = "Tempat Lahir")]
+        public string Pob { get; set; }
+
+        [Display(Name = "Tanggal Lahir")]
+        public string Dob { get; set; }
 
         [Display(Name = "Nama Ayah Siswa")]
         public string NamaAyah { get; set; }
@@ -21,14 +39,74 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Nama Ibu Siswa")]
         public string NamaIbu { get; set; }
 
-        [Display(Name = "Kontak Ayah Siswa")]
-        public string KontakAyah { get; set; }
+        [Display(Name = "Pekerjaan Ayah")]
+        public string PekerjaanAyah { get; set; }
 
-        [Display(Name = "Kontak Ibu Siswa")]
-        public string KontakIbu { get; set; }
+        [Display(Name = "Pekerjaan Ibu")]
+        public string PekerjaanIbu { get; set; }
+
+        [Display(Name = "Nomor Telpon Ayah")]
+        public string NoTelpAyah { get; set; }
+
+        [Display(Name = "Nomor Telpon Ibu")]
+        public string NoTelpIbu { get; set; }
+
+        [Display(Name = "Email Orangtua")]
+        public string EmailOrtu { get; set; }
 
         [Display(Name = "Asal Sekolah")]
-        public string AsalSekolah { get; set; }
+        public string SekolahAsal { get; set; }
+
+        [Display(Name = "Status Sekolah Asal")]
+        public string StatSekolahAsal { get; set; }
+
+        [Display(Name = "Alamat")]
+        public string Alamat { get; set; }
+
+        [Display(Name = "Kota")]
+        public string Kota { get; set; }
+
+        [Display(Name = "Provinsi")]
+        public string Provinsi { get; set; }
+
+        [Display(Name = "Kode Pos")]
+        public string KodePos { get; set; }
+
+        [Display(Name = "Negara")]
+        public string Negara { get; set; }
+
+        [Display(Name = "Anak ke")]
+        public string Anakke { get; set; }
+
+        [Display(Name = "Detail Saudara")]
+        public string DetailSaudara { get; set; }
+
+        [Display(Name = "Agama")]
+        public string Agama { get; set; }
+
+        [Display(Name = "Suku")]
+        public string Suku { get; set; }
+
+        [Display(Name = "Kewarganegaraan")]
+        public string Kewarganegaraan { get; set; }
+
+        [Display(Name = "Tinggi Badan")]
+        public string TinggiBadan { get; set; }
+
+        [Display(Name = "BeratBadan")]
+        public string BeratBadan { get; set; }
+
+        [Display(Name = "Golongan Darah")]
+        public string Goldar { get; set; }
+
+        [Display(Name = "Kelas")]
+        public string Kelas { get; set; }
+
+        [Display(Name = "Kontak Siswa")]
+        public string KontakSiswa { get; set; }
+
+        [Display(Name = "Jarak Rumah Ke Sekolah")]
+        public string JarakRumahSekolah { get; set; }
 
         [Display(Name = "Kategori Spp")]
         public string KatSpp { get; set; }
@@ -74,7 +152,7 @@ namespace App.Web.Areas.Register.Models
 
         [Display(Name = "Tanggal Daftar")]
         [DataType(DataType.Date)]
-        public DateTime TglDaftar { get; set; }
+        public DateTime? TglDaftar { get; set; }
 
         public SelectList Tingkats()
         {

@@ -104,7 +104,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         i.ToString(),
                         data.Nosisda,
                         data.Fullname,
-                        data.Periode,
+                        data.PerDaftar,
                         data.Kelas + "-" + data.Kelas,
                         data.Nosisda.ToString()
                     });
@@ -225,7 +225,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var d in dts)
             {
                 mod.Namasiswa = d.Fullname;
-                mod.periode = d.Periode;
+                mod.periode = d.PerDaftar;
                 mod.Kelastingkat = d.Kelas;
                 if (d.Kelas != null || d.Kelas != "")
                 {
@@ -258,13 +258,13 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
                 }
-                if (dd.TingkatId == (idtingkat + 1))
-                {
+                //if (dd.TingkatId == (idtingkat + 1))
+                //{
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
                     }
-                }
+                //}
             }
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
@@ -335,7 +335,7 @@ namespace App.Web.Areas.Transaction.Controllers
             Transaksi transaksi = db.Transaksis.Find(id);
             SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
             transaksi.JenisSS = ss.JenisSS;
-            if (transaksi.bulanspp == null)
+            if (transaksi.bulanspp == null) 
             {
                 transaksi.infospp = "-";
             }
