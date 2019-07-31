@@ -54,18 +54,19 @@ namespace App.Entities.Models
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
-        public int? SSId { get; set; }
-        public string JenisSS { get; set; }
+        public int? SSId { get; set; } //id schoolsupport
+        public string JenisSS { get; set; } //jenis schoolsupport
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
 
+        public string infospp { get; set; }
+
+        //Daftar Ulang
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
-        public string cicilDaftarUlang { get; set; }
-        [Display(Name = "Bayar Daftar Ulang")]
-        public string bayarDaftarUlang { get; set; }
+        public int? cicilDaftarUlang { get; set; }
 
         [Display(Name = "Canceled")]
         public bool isCanceled { get; set; }

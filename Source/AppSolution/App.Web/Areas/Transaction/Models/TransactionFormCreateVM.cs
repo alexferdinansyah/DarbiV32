@@ -77,9 +77,15 @@ namespace App.Web.Areas.Transaction.Models
 
             return new SelectList(SchoolSupports.ToList(), "SSId", "JenisSS", "0");
         }
-
+        //school support//
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+        public SelectList Biaya()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Biayas = db.Biayas;
+            return new SelectList(Biayas.ToList(), "JenisBiaya", "NomBiaya", "0");
+        }
 
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
@@ -87,5 +93,6 @@ namespace App.Web.Areas.Transaction.Models
         public string cicilDaftarUlang { get; set; }
         [Display(Name = "Bayar Daftar Ulang")]
         public string bayarDaftarUlang { get; set; }
+
     }
 }

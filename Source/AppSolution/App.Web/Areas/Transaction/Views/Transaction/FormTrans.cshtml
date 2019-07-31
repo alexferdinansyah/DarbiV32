@@ -16,6 +16,7 @@
     @Html.HiddenFor(model => model.bulanspp)
 
 <div class="form-horizontal">
+
     <hr />
     <div class="form-group">
         @Html.LabelFor(model => model.Nosisda, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -36,6 +37,7 @@
         </div>
     </div>
 
+    @*Biaya Masuk*@
     <hr />
     <div class="form-group">
         @Html.LabelFor(model => model.totalBM, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,6 +59,24 @@
     </div>
 
     <hr />
+
+    @*Bayar Spp*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("listbln")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+
+    <hr />
+    
+    @*Daftar Ulang*@
     <div class="form-group" id="du1">
         @Html.LabelFor(model => model.daftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -75,30 +95,16 @@
             @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
-    <hr id="du4"/>
-    <div class="form-group">
-        @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("listbln")
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-        </div>
-    </div>
+    <hr id="du4" />
 
-    <hr />
-
+    @*school support*@
     <div class="form-group">
         @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })
             @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -145,7 +151,30 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+	function sschange() {
+		//$('#nominal').value = "";
+		//alert("coba");
+		$.ajax({
+                type: "POST",
+                url: "/Transaction/Transaction/FirstAjax",
+                data:  { input: $('#SSId').val()+ "-" +$('#Kelastingkat').val()},
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+	}
+	function successFunc(data, status) {     
+		//alert(data);
+		document.getElementById("nominal").value = data;
+            }
+
+            function errorFunc() {
+                alert('error');
+	}
+
+	$(document).ready(function () {
+		//$('#nominal').value = "";
         $('#tipebayar2').hide();
         $('#tipebayar3').hide();
         var Tipetrans = document.getElementById("tipebayar");

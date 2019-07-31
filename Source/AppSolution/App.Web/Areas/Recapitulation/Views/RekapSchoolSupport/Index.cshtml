@@ -9,7 +9,6 @@
 
 @Html.Partial("Search", Model)
 @Html.HiddenFor(model => model.Namasiswa)
-@Html.HiddenFor(model => model.tglbayar)
 
 <table id="tableRekapSS" class="table" style="width:100%">
     <thead>
@@ -18,6 +17,7 @@
             <th>No Sisda</th>
             <th>Nama Siswa</th>
             <th>Kelas</th>
+            <th>BM Yang dibayarkan</th>
             <th>School Support</th>
             <th>Nominal</th>
             <th>Tanggal Bayar</th>
@@ -27,52 +27,54 @@
 </table>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+	$(document).ready(function () {
 
 
-        var tableRekapSS = $('#tableRekapSS').dataTable({
-            "scrollX": true,
-            "processing": true,
-            "sProcessing": true,
-            "bLengthChange": true,
-            //"sLoadingRecords":true,
-            "scrollCollapse": true,
-            "searching": false,
-            "bServerSide": true,
-            "ordering": false,
-            "sAjaxSource": "/Recapitulation/RekapSchoolSupport/AjaxRekapSchoolSupport?format=JSON",
-            "bProcessing": true,
-            oLanguage: { sProcessing: "<div id='loader'></div>" },
-            "fnServerParams": function (aoData) {
-                formdata = $('#Req').serializeArray()
-                aoData.push(
-                    { "name": "Nosisda", "value": $('#Nosisda').val() },
-                    { "name": "Namasiswa", "value": $('#Namasiswa').val() },
-                    { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
-                    { "name": "SSName", "value": $('#SSName').val() },
+		var tableRekapSS = $('#tableRekapSS').dataTable({
+			"scrollX": true,
+			"processing": true,
+			"sProcessing": true,
+			"bLengthChange": true,
+			//"sLoadingRecords":true,
+			"scrollCollapse": true,
+			"searching": false,
+			"bServerSide": true,
+			"ordering": false,
+			"sAjaxSource": "/Recapitulation/RekapSchoolSupport/AjaxRekapSchoolSupport?format=JSON",
+			"bProcessing": true,
+			oLanguage: { sProcessing: "<div id='loader'></div>" },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+				aoData.push(
+					{ "name": "Nosisda", "value": $('#Nosisda').val() },
+					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
+					{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+                    { "name": "BiayaBM", "value": $('#biayaBM').val() },
+                    { "name": "JenisSS", "value": $('#JenisSS').val() },
                     { "name": "nominal", "value": $('#nominal').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() }
+					{ "name": "tglbayar", "value": $('#tglbayar').val()}
 
-                );
-            },
-            "aoColumns": [
-                {
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                { "sName": "Nosisda" },
+				);
+			},
+			"aoColumns": [
+				{
+					"render": function (data, type, row, meta) {
+						return data;
+					}
+				},
+				{ "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
                 { "sName": "Kelastingkat" },
+                { "sName": "BiayaBM" },
                 { "sName": "SSName" },
                 { "sName": "nominal" },
-                { "sName": "tglbayar" },
-            ]
-        });
+				{ "sName": "tglbayar" },
+			]
+		});
 
-        $('#btnsearch').click(function () {
-            tableRekapSS.fnDraw(null);
-        });
+		$('#btnsearch').click(function () {
+			tableRekapSS.fnDraw(null);
+		});
 
-    });
+	});
 </script>
