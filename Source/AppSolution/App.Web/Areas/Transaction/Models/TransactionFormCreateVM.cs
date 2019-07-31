@@ -77,14 +77,9 @@ namespace App.Web.Areas.Transaction.Models
 
             return new SelectList(SchoolSupports.ToList(), "SSId", "JenisSS", "0");
         }
-
-        [Display(Name = "Nominal")]
-        public string nominal { get; set; }
-
-
         //school support//
         [Display(Name = "Nominal")]
-        public string NomBiaya { get; set; }
+        public string nominal { get; set; }
         public SelectList Biaya()
         {
             DatabaseContext db = new DatabaseContext();

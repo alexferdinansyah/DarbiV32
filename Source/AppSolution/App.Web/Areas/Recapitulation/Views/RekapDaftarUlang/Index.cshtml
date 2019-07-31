@@ -1,7 +1,7 @@
 ﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
 
 @{
-    ViewBag.Title = "Rekap Biaya Masuk";
+    ViewBag.Title = "Rekap Daftar Ulang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,17 +11,15 @@
 @Html.HiddenFor(model => model.Namasiswa)
 @Html.HiddenFor(model => model.tglbayar)
 
-
-<table id="tableRekapBiayaMasuk" class="table" style="width:100%">
+<table id="tableRekapDU" class="table" style="width:100%">
     <thead>
         <tr>
             <th>No</th>
             <th>No Sisda</th>
             <th>Nama Siswa</th>
             <th>Kelas</th>
-            <th>BM Yang dibayarkan</th>
+            <th>Daftar Ulang</th>
             <th>Tanggal Bayar</th>
-            @*<th>Tanggal History</th>*@
         </tr>
     </thead>
     <tbody></tbody>
@@ -31,7 +29,7 @@
     $(document).ready(function () {
 
 
-        var tableRekapBiayaMasuk = $('#tableRekapBiayaMasuk').dataTable({
+        var tableRekapDU = $('#tableRekapDU').dataTable({
             "scrollX": true,
             "processing": true,
             "sProcessing": true,
@@ -41,7 +39,7 @@
             "searching": false,
             "bServerSide": true,
             "ordering": false,
-            "sAjaxSource": "/Recapitulation/RekapBiayaMasuk/AjaxRekapBiayaMasuk?format=JSON",
+            "sAjaxSource": "/Recapitulation/RekapDaftarUlang/AjaxRekapDU?format=JSON",
             "bProcessing": true,
             oLanguage: { sProcessing: "<div id='loader'></div>" },
             "fnServerParams": function (aoData) {
@@ -50,7 +48,7 @@
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
                     { "name": "Namasiswa", "value": $('#Namasiswa').val() },
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
-                    { "name": "Tingkat", "value": $('#biayaBM').val() },
+                    { "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
                     { "name": "tglbayar", "value": $('#tglbayar').val() }
 
                 );
@@ -64,13 +62,13 @@
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
                 { "sName": "Kelastingkat" },
-                { "sName": "BiayaBM" },
+                { "sName": "cicilDaftarUlang" },
                 { "sName": "tglbayar" },
             ]
         });
 
         $('#btnsearch').click(function () {
-            tableRekapBiayaMasuk.fnDraw(null);
+            tableRekapDU.fnDraw(null);
         });
 
     });

@@ -304,15 +304,14 @@ namespace App.Web.Areas.MasterData.Controllers
                 SiswaCek.TinggiBadan = siswa.TinggiBadan;
                 SiswaCek.BeratBadan = siswa.BeratBadan;
                 SiswaCek.Goldar = siswa.Goldar;
-                SiswaCek.Periode = siswa.Periode;
+                SiswaCek.PerDaftar = siswa.PerDaftar;
                 SiswaCek.Kelas = siswa.Kelas;
-                SiswaCek.StatKat = siswa.StatKat;
+                SiswaCek.KatSpp = siswa.KatSpp;
                 SiswaCek.KontakSiswa = siswa.KontakSiswa;
                 SiswaCek.SekolahAsal = siswa.SekolahAsal;
                 SiswaCek.StatSekolahAsal = siswa.StatSekolahAsal;
                 SiswaCek.JarakRumahSekolah = siswa.JarakRumahSekolah;
-                SiswaCek.Tgldaftar = siswa.Tgldaftar;
-                SiswaCek.GelTest = siswa.GelTest;
+                SiswaCek.TglDaftar = DateTime.UtcNow.Date;
 
                 db.Entry(SiswaCek).State = EntityState.Modified;
                 db.SaveChanges();

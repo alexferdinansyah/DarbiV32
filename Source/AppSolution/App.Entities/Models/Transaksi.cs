@@ -17,7 +17,9 @@ namespace App.Entities.Models
 
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
+        [Display(Name = "Nama")]
         public string Namasiswa { get; set; }
+        [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
         [Display(Name = "Total Biaya Masuk")]
@@ -50,7 +52,7 @@ namespace App.Entities.Models
 
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
-
+        [Display(Name = "Nama Bank")]
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
@@ -63,12 +65,11 @@ namespace App.Entities.Models
         public string infospp { get; set; }
         public string infoschoolsupport { get; set; }
 
+        //Daftar Ulang
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
-        public string cicilDaftarUlang { get; set; }
-        [Display(Name = "Bayar Daftar Ulang")]
-        public string bayarDaftarUlang { get; set; }
+        public int? cicilDaftarUlang { get; set; }
 
         [Display(Name = "Canceled")]
         public bool isCanceled { get; set; }

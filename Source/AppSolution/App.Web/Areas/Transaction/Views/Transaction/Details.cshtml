@@ -6,9 +6,8 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
-<h4>Transaksi Biaya</h4>
-<div id="detail" style="padding-left:50px">
+<div>
+    <h4>Transaksi Biaya</h4>
     <hr />
 
     @{
@@ -89,19 +88,6 @@
     </dd>
 
     <dt>
-        School Support
-    </dt>
-    <dd>
-        @d.SSId
-    </dd>
-    <dt>
-        Nominal School Support
-    </dt>
-    <dd>
-        @d.nominal
-    </dd>
-
-    <dt>
         Tipe Pembayaran
     </dt>
     <dd>
@@ -127,19 +113,12 @@
     </dd>
 
 </dl>
-        <hr />
+    <hr />
 
     }
 
 </div>
 <p>
-    <input type="button" id="kwt" value="Print All" class="btn btn-default" /> |
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
     @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </p>
-<script>
-    $('#kwt').click(function () {
-        $("#detail").printThis();
-    });
-
-</script>
