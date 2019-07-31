@@ -79,13 +79,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 IEnumerable<Siswa> Query = db.Siswas;
                 Query = Query.Where(x => x.Fullname.ToLower().Contains(Convert.ToString(Fullname.ToString().ToLower())));
 
-                //Query = Query.Where(x => x.IsActive == IsActive);
-                //IEnumerable<Transaksi> Query = db.Transaksis;
-                //foreach(var d in Querys)
-                //{
-                //    Query.Where(x => x.Nosisda.Equals(d.Nosisda));
-                //}
-
                 int TotalRecord = Query.Count();
 
                 var OrderedQuery = Query.OrderBy(x => x.SiswaId);
@@ -171,33 +164,7 @@ namespace App.Web.Areas.Transaction.Controllers
             
 
             return View(dttrans);
-        }
-
-        //GET : Transaction/Transaction/Delete
-        //public ActionResult Delete(String nosisda)
-        //{
-        //    if (nosisda == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //  }
-        //    IEnumerable<Transaksi> dttrans = null;
-        //    if (db.Transaksis.Count() != 0)
-        //    {
-        //        dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
-        //    }
-
-        //    Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
-        //    if (tr == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    else
-        //    {
-
-        //    }
-
-        //    return View(dttrans);
-        //}
+        }       
 
         //GET : Transaction/Transaction/Lakukan Transaksi
         public ActionResult FormTrans(TransactionFormCreateVM mod)
@@ -258,14 +225,9 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
 
-                    //if (dd.KatBiaya == "School Support")
-                    //{
-                    //    mod.nominal = dd.NomBiaya;
-                    //}
-
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
-                        mod.daftarulang = dd.NomBiaya;
+                        mod.daftarUlang = dd.NomBiaya;
                     }
                 }
 
@@ -276,7 +238,7 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicildaftarulang = Convert.ToString(Convert.ToInt32(mod.cicildaftarulang) + Convert.ToInt32(t.bayardaftarulang));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.bayarDaftarUlang));
             }
 
             ViewBag.OpTrans = OpTrans;
@@ -328,20 +290,45 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
-        //GET Kwitansi
+        //GET Kwitansi 
         public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
+
             string bayarspp = byr.bayarspp;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;
+            /*SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;*/
+            if (transaksi.SSId != null)
+            {
+                SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+                transaksi.JenisSS = ss.JenisSS;
+            }
+
+            //spp
             if (transaksi.bulanspp == null)
             {
                 transaksi.infospp = "-";
+            }
+
+            //string no kwitansi
+            string nosisda = transaksi.Nosisda;
+            string randomnosisda = frandom(nosisda);
+            string randomalfanum = frandom("");
+            string time = DateTime.Now.ToString("HHmmss");
+            transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;
+
+            //infosiswa
+            IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
+            for (int i = 0; i < siswas.Count(); i++)
+            {
+                transaksi.Namasiswa = siswas.ToList()[i].Fullname;
+                break;
             }
 
             if (transaksi == null)
@@ -350,6 +337,26 @@ namespace App.Web.Areas.Transaction.Controllers
             } 
             
             return View(transaksi);
+        }
+
+        //nomor kwitansi
+        private static Random random = new Random();
+        public static string frandom(string input)
+        {
+            string result = "";
+            if (input == "" || input == null)
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                //get 5 char from alfanumeric
+                result = new string(Enumerable.Repeat(chars, chars.Length).Select(s => s[random.Next(s.Length)]).ToArray());
+                result = result.Substring(0, 5);
+            }
+            else
+            {
+                //random nosisda
+                result = new string(Enumerable.Repeat(input, input.Length).Select(s => s[random.Next(s.Length)]).ToArray());
+            }
+            return result;
         }
     }
 }

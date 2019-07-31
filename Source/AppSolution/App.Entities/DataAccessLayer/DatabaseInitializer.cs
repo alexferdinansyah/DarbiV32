@@ -85,7 +85,7 @@ namespace App.Entities.DataAccessLayer
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 1},
                 new Transaksi {Nosisda = "0011857", totalBM = "12000000", bayarBM = 5000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 2},
-                new Transaksi {Nosisda = "0011858", daftarulang = "10000000", cicildaftarulang = 6000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
+                new Transaksi {Nosisda = "0011858", daftarUlang = "10000000", cicilDaftarUlang = "6000000", periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 3}
             };
             transaksis.ForEach(s => context.Transaksis.Add(s));
@@ -126,7 +126,7 @@ namespace App.Entities.DataAccessLayer
                 NamaAyah = "Ayah", NamaIbu = "Ibu", PekerjaanAyah = "Wiraswasta", PekerjaanIbu= "Ibu Rumah Tangga", NoTelpAyah = "0816999000", NoTelpIbu = "0834111333",
                 EmailOrtu = "AyahIbu@gmail.com", Alamat = "Kp. Sidamukti", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16456", Negara = "Indonesia", Anakke = "2", DetailSaudara = "2",
                 Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "170 cm", BeratBadan = "68kg", Goldar = "O", Periode = "2016-2019", Kelas = "TK A",
-                StatKat = "Umum", KontakSiswa = "089544433", SekolahAsal = "TK Darbi", StatSekolahAsal = "Darbi", JarakRumahSekolah = "5km", Tgldaftar = "20 Juli 2017", GelTest = "1"}
+                StatKat = "Umum", KontakSiswa = "089544433", SekolahAsal = "TK Darbi", StatSekolahAsal = "Darbi", JarakRumahSekolah = "5km", Tgldaftar = "20 Juli 2017", GelTest = "1"},
 
                 new Siswa {Nosisda = "0011858", Fullname = "Awal Ahmad", Nickname = "Awal", Nisn = "0858", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Juli 2004",
                 NamaAyah = "Papa", NamaIbu = "Mama", PekerjaanAyah = "Pegawai Negri", PekerjaanIbu= "Wirausaha", NoTelpAyah = "0816888777", NoTelpIbu = "0834777666",
