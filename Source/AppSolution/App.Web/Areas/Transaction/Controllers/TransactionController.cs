@@ -256,7 +256,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.totalBM = dd.NomBiaya;
                     }
-                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
+                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS") 
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
@@ -398,8 +398,8 @@ namespace App.Web.Areas.Transaction.Controllers
             if (transaksi == null)
             {
                 return HttpNotFound();
-            }
-
+            } 
+            
             return View(transaksi);
         }
     }
