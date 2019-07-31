@@ -17,7 +17,9 @@ namespace App.Entities.Models
 
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
+        [Display(Name = "Nama")]
         public string Namasiswa { get; set; }
+        [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
         [Display(Name = "Total Biaya Masuk")]
@@ -50,7 +52,7 @@ namespace App.Entities.Models
 
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
-
+        [Display(Name = "Nama Bank")]
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]

@@ -5,83 +5,146 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
 
-<h4>Transaksi Biaya</h4>
+    @Html.HiddenFor(model => model.TransId);
 
-<h3>Batalkan Transaksi ?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nosisda)
-        </dt>
+    <h2>@ViewBag.Title</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nosisda)
-        </dd>
+    <h4>Transaksi Biaya</h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Namasiswa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Namasiswa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Kelastingkat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Kelastingkat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.periode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.periode)
-        </dd>
+    <h3>Batalkan Transaksi ?</h3>
+    <div>
         <hr />
-        <dt>
-            @Html.DisplayNameFor(model => model.totalBM)
-        </dt>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nosisda)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.totalBM)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Nosisda)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.bayarBM)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Namasiswa)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.bayarBM)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Namasiswa)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.bulanspp)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kelastingkat)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.bulanspp)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Kelastingkat)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.bayarspp)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.periode)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.bayarspp)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.periode)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.totalBM)
+            </dt>
 
-    </dl>
-</div>
-<p>
-    <div class="form-actions no-color">
-        <input type="submit" value="Batalkan" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+            <dd>
+                @Html.DisplayFor(model => model.totalBM)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bayarBM)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bayarBM)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bulanspp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bulanspp)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bayarspp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bayarspp)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.daftarUlang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.daftarUlang)
+            </dd>
+            <dt>
+                Pembayaran Terakhir
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.cicilDaftarUlang)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.tipebayar)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tipebayar)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Banknm)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Banknm)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tgltransfer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tgltransfer)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tglbayar)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tglbayar)
+            </dd>
+
+        </dl>
     </div>
-</p>
+    <p>
+        <div class="form-actions no-color">
+            <input type="submit" value="Batalkan" class="btn btn-default" id="open-popup" /> |
+            @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+        </div>
+    </p>
+}
+
+<script>
+    $("#open-popup").click(function () {
+        //alert("Yakin ?");
+        var res = confirm("Yakin Hapus ?");
+        return !!res;
+    });
+</script>
+

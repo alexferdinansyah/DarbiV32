@@ -184,7 +184,7 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             else
             {
-                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda)).OrderByDescending(x => x.TransId);
+                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
             }
 
             for (int i = 0; i < tran.Count(); i++)
@@ -361,22 +361,23 @@ namespace App.Web.Areas.Transaction.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(TransactionFormCreateVM model, int id)
+        public ActionResult Delete(Transaksi model, int? id)
         {
+            Transaksi mod = null;
             if (ModelState.IsValid)
             {
-                //Transaksi tran = db.Transaksis.Find(id);
-                Transaksi newmodel = new Transaksi();
-                newmodel.isCanceled = true;
-                newmodel.canceledDate = DateTime.UtcNow.Date;
-
-                db.Transaksis.Add(newmodel);
+                mod = db.Transaksis.Find(model.TransId);
+                mod.isCanceled = true;
+                mod.canceledBy = HttpContext.User.Identity.Name;
+                mod.canceledDate = DateTime.UtcNow.Date;
+                
+                db.Entry(mod).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", System.Web.HttpContext.Current.Session["NamaSiswa"]);
             }
 
-            return View(model);
+            return View(mod);
         }
 
         //GET Kwitansi
