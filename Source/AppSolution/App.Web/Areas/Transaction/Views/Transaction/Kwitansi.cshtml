@@ -5,27 +5,16 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
 	/**/
+    /**/
+
+    ViewBag.Title = "Kwitansi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
-
-<input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" Text="Print"  />
-
+<input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />
 
 @Html.HiddenFor(model => model.Nosisda)
 
-<style>
-
-	/*div.a{
-		font-size :1px;
-	}*/
-
-	div.b {
-		font-size: 10px;
-	}
-
-	div.c {
-		font-size: 7px;
-	}
-</style>
 <div id="detail" style="padding-left:50px">
 
 	<div width="90%" height="30%" style="padding-left:50px">
@@ -129,17 +118,16 @@
 			</tr>
 		</table>
 	</div>
-</div>
-<hr />
-<br />
 
+<br />
 <div>
-	@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </div>
 
 
 <script>
-		$('#kwt').click(function () {
-			$("#detail").printThis();
-		});
-	</script>
+	$('#kwt').click(function () {
+		$("#detail").printThis();
+	});
+
+</script>
