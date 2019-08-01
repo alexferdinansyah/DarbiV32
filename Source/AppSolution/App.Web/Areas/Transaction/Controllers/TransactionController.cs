@@ -144,7 +144,7 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Transaksi> dttrans = null;
             if (db.Transaksis.Count() != 0)
             {
-                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false) ;
             }
 
             if (dttrans.Count() == 0)
@@ -172,40 +172,40 @@ namespace App.Web.Areas.Transaction.Controllers
 
             return View(dttrans);
         }
-    }
 
-    //GET : Transaction/Transaction/Delete
-    public ActionResult Delete(string nosisda)
-    {
-        IEnumerable<Transaksi> tran = null;
-        Transaksi model = null;
-        if (nosisda == null)
+
+        //GET : Transaction/Transaction/Delete
+        public ActionResult Delete(string nosisda)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            IEnumerable<Transaksi> tran = null;
+            Transaksi model = null;
+            if (nosisda == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
+            }
+
+            for (int i = 0; i < tran.Count(); i++)
+            {
+                model = tran.ToList()[i];
+                break;
+            }
+
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
         }
-        else
+
+        //GET : Transaction/Transaction/Lakukan Transaksi
+        public ActionResult FormTrans(TransactionFormCreateVM mod)
         {
-            tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
-        }
-
-        for (int i = 0; i < tran.Count(); i++)
-        {
-            model = tran.ToList()[i];
-            break;
-        }
-
-        if (model == null)
-        {
-            return HttpNotFound();
-        }
-
-        return View(model);
-    }
-
-    //GET : Transaction/Transaction/Lakukan Transaksi
-    public ActionResult FormTrans(TransactionFormCreateVM mod)
-    {
-        List<SelectListItem> OpTrans = new List<SelectListItem>()
+            List<SelectListItem> OpTrans = new List<SelectListItem>()
 
             {
                 new SelectListItem {Text="Pilih Cara Transaksi",Value="0",Selected=true },
@@ -213,7 +213,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Transfer",Value="Transfer"},
             };
 
-        List<SelectListItem> listbln = new List<SelectListItem>()
+            List<SelectListItem> listbln = new List<SelectListItem>()
 
             {
                 new SelectListItem {Text="Pilih Bulan",Value="0",Selected=true },
@@ -221,57 +221,57 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Agustus",Value="8" },
             };
 
-        //info siswa
-        IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
-        string[] keltingkat = null;
-        string tkt = "";
-        foreach (var d in dts)
-        {
-            mod.Namasiswa = d.Fullname;
-            mod.periode = d.PerDaftar;
-            mod.Kelastingkat = d.Kelas;
-            if (d.Kelas != null || d.Kelas != "")
+            //info siswa
+            IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            string[] keltingkat = null;
+            string tkt = "";
+            foreach (var d in dts)
             {
-                keltingkat = d.Kelas.Split(' ');
-                tkt = keltingkat[0];
+                mod.Namasiswa = d.Fullname;
+                mod.periode = d.PerDaftar;
+                mod.Kelastingkat = d.Kelas;
+                if (d.Kelas != null || d.Kelas != "")
+                {
+                    keltingkat = d.Kelas.Split(' ');
+                    tkt = keltingkat[0];
+                }
             }
-        }
 
-        //info tingkat to get info biaya
-        IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
-        int idtingkat = 0;
-        var nama = "";
-        foreach (var t in dtTingkat)
-        {
-            idtingkat = t.TingkatId;
-            nama = t.Namatingkat;
-        }
-
-        //info biaya
-        IEnumerable<Biaya> dtb = db.Biayas;
-        foreach (var dd in dtb)
-        {
-            if (dd.TingkatId == idtingkat)
+            //info tingkat to get info biaya
+            IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
+            int idtingkat = 0;
+            var nama = "";
+            foreach (var t in dtTingkat)
             {
-                if (dd.KatBiaya == "Biaya Masuk")
+                idtingkat = t.TingkatId;
+                nama = t.Namatingkat;
+            }
+
+            //info biaya
+            IEnumerable<Biaya> dtb = db.Biayas;
+            foreach (var dd in dtb)
+            {
+                if (dd.TingkatId == idtingkat)
                 {
-                    mod.totalBM = dd.NomBiaya;
-                }
-                if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
-                {
-                    int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
-                    mod.bayarspp = totalSPP.ToString();
-                }
+                    if (dd.KatBiaya == "Biaya Masuk")
+                    {
+                        mod.totalBM = dd.NomBiaya;
+                    }
+                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
+                    {
+                        int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
+                        mod.bayarspp = totalSPP.ToString();
+                    }
 
                     //if (dd.KatBiaya == "School Support")
                     //{
                     //    mod.nominal = dd.NomBiaya;
                     //}
 
-                    if (dd.KatBiaya == "Daftar Ulang")
+                    /*if (dd.KatBiaya == "Daftar Ulang")
                     {
-                        mod.daftarulang = dd.NomBiaya;
-                    }
+                        mod.daftarUlang = dd.NomBiaya;
+                    }*/
                 }
 
             }
@@ -284,184 +284,185 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
-        var idTingkatCounter = 0;
-        if (nama == "PG")
-        {
-            IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK A"));
-            for (int i = 0; i < t.Count(); i++)
+            var idTingkatCounter = 0;
+            if (nama == "PG")
             {
-                idTingkatCounter = t.ToList()[i].TingkatId;
-                break;
-            }
-            IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
-            foreach (var m in b)
-            {
-                if (m.KatBiaya == "Daftar Ulang")
+                IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK A"));
+                for (int i = 0; i < t.Count(); i++)
                 {
-                    mod.daftarUlang = m.NomBiaya;
+                    idTingkatCounter = t.ToList()[i].TingkatId;
                     break;
                 }
-            }
-        }
-        if (nama == "TK A")
-        {
-            IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK B"));
-            for (int i = 0; i < t.Count(); i++)
-            {
-                idTingkatCounter = t.ToList()[i].TingkatId;
-                break;
-            }
-            IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
-            foreach (var m in b)
-            {
-                if (m.KatBiaya == "Daftar Ulang")
+                IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
+                foreach (var m in b)
                 {
-                    mod.daftarUlang = m.NomBiaya;
-                    break;
+                    if (m.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = m.NomBiaya;
+                        break;
+                    }
                 }
             }
+            if (nama == "TK A")
+            {
+                IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK B"));
+                for (int i = 0; i < t.Count(); i++)
+                {
+                    idTingkatCounter = t.ToList()[i].TingkatId;
+                    break;
+                }
+                IEnumerable<Biaya> b = db.Biayas.Where(x => x.TingkatId == idTingkatCounter);
+                foreach (var m in b)
+                {
+                    if (m.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = m.NomBiaya;
+                        break;
+                    }
+                }
+            }
+
+            ViewBag.OpTrans = OpTrans;
+            ViewBag.listbln = listbln;
+            return View(mod);
         }
 
-        ViewBag.OpTrans = OpTrans;
-        ViewBag.listbln = listbln;
-        return View(mod);
-    }
-
-    //POST : Transaction/Transaction/Lakukan Transaksi
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult FormTrans(TransactionFormCreateVM model, string status)
-    {
-        if (ModelState.IsValid)
+        //POST : Transaction/Transaction/Lakukan Transaksi
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
-            Transaksi newmodel = new Transaksi();
-            newmodel.Nosisda = model.Nosisda;
-            newmodel.Namasiswa = model.Namasiswa;
-            newmodel.Kelastingkat = model.Kelastingkat;
-            newmodel.periode = "2019-2020";
-            newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
-            newmodel.totalBM = model.totalBM;
-            newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
-            newmodel.tipebayar = model.tipebayar;
-            newmodel.BankId = model.BankId;
-            if (model.tipebayar == "Tunai")
+            if (ModelState.IsValid)
             {
-                newmodel.tglbayar = DateTime.UtcNow.Date;
+                Transaksi newmodel = new Transaksi();
+                newmodel.Nosisda = model.Nosisda;
+                newmodel.Namasiswa = model.Namasiswa;
+                newmodel.Kelastingkat = model.Kelastingkat;
+                newmodel.periode = "2019-2020";
+                newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                newmodel.totalBM = model.totalBM;
+                newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
+                newmodel.tipebayar = model.tipebayar;
+                newmodel.BankId = model.BankId;
+                if (model.tipebayar == "Tunai")
+                {
+                    newmodel.tglbayar = DateTime.UtcNow.Date;
+                }
+                else
+                {
+                    newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
+                    newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
+                }
+                //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                newmodel.bulanspp = model.bulanspp;
+                newmodel.SSId = model.SSId;
+                newmodel.nominal = model.nominal;
+                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                {
+                    newmodel.daftarUlang = model.daftarUlang;
+                    newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
+                }
+                db.Transaksis.Add(newmodel);
+                db.SaveChanges();
+                int lastid = db.Transaksis.Max(x => x.TransId);
+
+                return RedirectToAction("Kwitansi", new { id = lastid });
+            }
+
+            return View(model);
+        }
+
+        //GET Kwitansi 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Transaksi model, int? id)
+        {
+            Transaksi mod = null;
+            if (ModelState.IsValid)
+            {
+                mod = db.Transaksis.Find(model.TransId);
+                mod.isCanceled = true;
+                mod.canceledBy = HttpContext.User.Identity.Name;
+                mod.canceledDate = DateTime.UtcNow.Date;
+
+                db.Entry(mod).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Index", System.Web.HttpContext.Current.Session["NamaSiswa"]);
+            }
+
+            return View(mod);
+        }
+
+        //GET Kwitansi
+        public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
+        {
+
+            string bayarspp = byr.bayarspp;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //SchoolSupport
+            Transaksi transaksi = db.Transaksis.Find(id);
+            /*SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;*/
+            if (transaksi.SSId != null)
+            {
+                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); // Ini juga error
+                transaksi.JenisSS = s.JenisSS;
+            }
+
+            //spp
+            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;
+            if (transaksi.bulanspp == null)
+            {
+                transaksi.infospp = "-";
+            }
+
+            //string no kwitansi
+            string nosisda = transaksi.Nosisda;
+            string randomnosisda = frandom(nosisda);
+            string randomalfanum = frandom("");
+            string time = DateTime.Now.ToString("HHmmss");
+            //transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;   // Yang ini ERROR
+
+            //infosiswa
+            IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
+            for (int i = 0; i < siswas.Count(); i++)
+            {
+                transaksi.Namasiswa = siswas.ToList()[i].Fullname;
+                break;
+            }
+
+            if (transaksi == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(transaksi);
+        }
+
+        //nomor kwitansi
+        private static Random random = new Random();
+        public static string frandom(string input)
+        {
+            string result = "";
+            if (input == "" || input == null)
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                //get 5 char from alfanumeric
+                result = new string(Enumerable.Repeat(chars, chars.Length).Select(s => s[random.Next(s.Length)]).ToArray());
+                result = result.Substring(0, 5);
             }
             else
             {
-                newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
-                newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
+                //random nosisda
+                result = new string(Enumerable.Repeat(input, input.Length).Select(s => s[random.Next(s.Length)]).ToArray());
             }
-            //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
-            newmodel.bulanspp = model.bulanspp;
-            newmodel.SSId = model.SSId;
-            newmodel.nominal = model.nominal;
-            if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
-            {
-                newmodel.daftarUlang = model.daftarUlang;
-                newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
-            }
-            db.Transaksis.Add(newmodel);
-            db.SaveChanges();
-            int lastid = db.Transaksis.Max(x => x.TransId);
-
-            return RedirectToAction("Kwitansi", new { id = lastid });
+            return result;
         }
-
-        return View(model);
-    }
-
-    //GET Kwitansi 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(Transaksi model, int? id)
-    {
-        Transaksi mod = null;
-        if (ModelState.IsValid)
-        {
-            mod = db.Transaksis.Find(model.TransId);
-            mod.isCanceled = true;
-            mod.canceledBy = HttpContext.User.Identity.Name;
-            mod.canceledDate = DateTime.UtcNow.Date;
-
-            db.Entry(mod).State = EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index", System.Web.HttpContext.Current.Session["NamaSiswa"]);
-        }
-
-        return View(mod);
-    }
-
-    //GET Kwitansi
-    public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
-    {
-
-        string bayarspp = byr.bayarspp;
-        if (id == null)
-        {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-
-        //SchoolSupport
-        Transaksi transaksi = db.Transaksis.Find(id);
-        /*SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-        transaksi.JenisSS = ss.JenisSS;*/
-        if (transaksi.SSId != null)
-        {
-            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;
-        }
-
-        //spp
-        SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-        transaksi.JenisSS = ss.JenisSS;
-        if (transaksi.bulanspp == null)
-        {
-            transaksi.infospp = "-";
-        }
-
-        //string no kwitansi
-        string nosisda = transaksi.Nosisda;
-        string randomnosisda = frandom(nosisda);
-        string randomalfanum = frandom("");
-        string time = DateTime.Now.ToString("HHmmss");
-        transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;
-
-        //infosiswa
-        IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
-        for (int i = 0; i < siswas.Count(); i++)
-        {
-            transaksi.Namasiswa = siswas.ToList()[i].Fullname;
-            break;
-        }
-
-        if (transaksi == null)
-        {
-            return HttpNotFound();
-        }
-
-        return View(transaksi);
-    }
-
-    //nomor kwitansi
-    private static Random random = new Random();
-    public static string frandom(string input)
-    {
-        string result = "";
-        if (input == "" || input == null)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            //get 5 char from alfanumeric
-            result = new string(Enumerable.Repeat(chars, chars.Length).Select(s => s[random.Next(s.Length)]).ToArray());
-            result = result.Substring(0, 5);
-        }
-        else
-        {
-            //random nosisda
-            result = new string(Enumerable.Repeat(input, input.Length).Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-        return result;
     }
 }
