@@ -5,10 +5,10 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
 	/**/
-    /**/
+	/**/
 
-    ViewBag.Title = "Kwitansi";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Kwitansi";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 <input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />
@@ -32,16 +32,16 @@
 				<td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
 			</tr>
 			<tr height="10px">
-				<td colspan="3"><font size="1px">No Kwitansi : 998989089889089 | 2019-09-09 09:09:09</font></td>
-				<td colspan="3" Ali><font size="1px" style="border-left: 3px dotted black">No Kwitansi : 998989089889089 | 2019-09-09 09:09:09</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) </font></td>
+				<td colspan="3" style="border-left: 3px dotted black"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi)</font></td>
 			</tr>
 			<tr height="10px">
-				<td colspan="3"><font size="1px">Nama : Syadiyah</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">Nama : Syadiyah</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
 			</tr>
 			<tr height="10px">
-				<td colspan="3"><font size="1px">&nbsp;nosisda | 9 Mekkah</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">&nbsp;nosisda | 9 Mekkah</font></td>
+				<td colspan="3"><font size="1px">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
 			</tr>
 			<tr height="10px">
 				<td colspan="3">&nbsp;</td>
@@ -49,8 +49,8 @@
 			</tr>
 
 			<tr height="10px">
-				<td colspan="3"><font size="1px">SPP : Rp.9.0000,- || February</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">SPP : Rp.9.0000,- || February</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.bayarspp) || @Html.DisplayNameFor(model => model.bulanspp) : @Html.DisplayFor(model => model.bayarspp) || @Html.DisplayFor(model => model.bulanspp)</font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarspp) || @Html.DisplayNameFor(model => model.bulanspp) : @Html.DisplayFor(model => model.bayarspp) || @Html.DisplayFor(model => model.bulanspp)</font></td>
 			</tr>
 			<tr height="10px">
 				<td colspan="3"><font size="1px">KS : Rp.10.000,- || February</font></td>
@@ -58,8 +58,8 @@
 			</tr>
 
 			<tr height="10px">
-				<td colspan="3"><font size="1px">School Support : catering = Rp. 200.000,- || Antar Jemput = Rp.500.000-, || [ket:]</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">School Support : catering = Rp. 200.000,- || Antar Jemput = Rp.500.000-, || [ket:]</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.SSId) || @Html.DisplayFor(model => model.nominal)</font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.SSId) || @Html.DisplayFor(model => model.nominal)</font></td>
 			</tr>
 
 			<tr height="10px">
@@ -118,16 +118,16 @@
 			</tr>
 		</table>
 	</div>
-
-<br />
-<div>
-    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </div>
+	<br />
+	<div>
+		@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+	</div>
 
 
-<script>
-	$('#kwt').click(function () {
-		$("#detail").printThis();
-	});
+	<script>
+		$('#kwt').click(function () {
+			$("#detail").printThis();
+		});
 
-</script>
+	</script>
