@@ -128,9 +128,11 @@ namespace App.Entities.Models
 
         public string Tingkat { get; set; }
 
+        //Bulan
         [Display(Name = "Periode Daftar")]
         public string PerDaftar { get; set; }
 
+        //Tahunnya
         [Display(Name = "Tahun")]
         public string Year { get; set; }
 
