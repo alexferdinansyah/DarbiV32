@@ -45,7 +45,7 @@ namespace App.Entities.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? tgltransfer { get; set; }
 
-        [Display(Name = "Tanggal Pembayaran")]
+        [Display(Name = "Tanggal Bayar")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
@@ -63,6 +63,7 @@ namespace App.Entities.Models
         public string nominal { get; set; }
 
         public string infospp { get; set; }
+        public string infoschoolsupport { get; set; }
 
         //Daftar Ulang
         [Display(Name = "Total Daftar Ulang")]
@@ -78,6 +79,8 @@ namespace App.Entities.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? canceledDate { get; set; }
+
+        public string Nokwitansi { get; set; }
     }
 
 }

@@ -430,6 +430,7 @@
     <Content Include="Areas\Transaction\Views\Transaction\Kwitansi.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Search.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapSPP\History.cshtml" />
     <Content Include="Areas\Transaction\Views\Transaction\Delete.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Search.cshtml" />
