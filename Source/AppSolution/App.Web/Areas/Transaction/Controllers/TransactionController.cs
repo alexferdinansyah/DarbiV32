@@ -79,6 +79,13 @@ namespace App.Web.Areas.Transaction.Controllers
                 IEnumerable<Siswa> Query = db.Siswas;
                 Query = Query.Where(x => x.Fullname.ToLower().Contains(Convert.ToString(Fullname.ToString().ToLower())));
 
+                //Query = Query.Where(x => x.IsActive == IsActive);
+                //IEnumerable<Transaksi> Query = db.Transaksis;
+                //foreach(var d in Querys)
+                //{
+                //    Query.Where(x => x.Nosisda.Equals(d.Nosisda));
+                //}
+
                 int TotalRecord = Query.Count();
 
                 var OrderedQuery = Query.OrderBy(x => x.SiswaId);
@@ -256,11 +263,19 @@ namespace App.Web.Areas.Transaction.Controllers
                     mod.bayarspp = totalSPP.ToString();
                 }
 
-                if (dd.KatBiaya == "Daftar Ulang")
-                {
-                    mod.daftarUlang = dd.NomBiaya;
+                    //if (dd.KatBiaya == "School Support")
+                    //{
+                    //    mod.nominal = dd.NomBiaya;
+                    //}
+
+                    if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarulang = dd.NomBiaya;
+                    }
                 }
+
             }
+
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
             foreach (var t in dtts)
