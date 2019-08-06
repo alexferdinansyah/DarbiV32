@@ -40,6 +40,9 @@ namespace App.Entities.Models
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
+        [Display(Name = "Komite Sekolah")]
+        public string komiteSekolah { get; set; }
+
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

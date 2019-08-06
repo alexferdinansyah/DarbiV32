@@ -344,6 +344,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
+                newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
@@ -410,13 +411,11 @@ namespace App.Web.Areas.Transaction.Controllers
             transaksi.JenisSS = ss.JenisSS;*/
             if (transaksi.SSId != null)
             {
-                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); // Ini juga error
-                transaksi.JenisSS = s.JenisSS;
+                SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+                transaksi.JenisSS = ss.JenisSS;
             }
 
             //spp
-            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;
             if (transaksi.bulanspp == null)
             {
                 transaksi.infospp = "-";

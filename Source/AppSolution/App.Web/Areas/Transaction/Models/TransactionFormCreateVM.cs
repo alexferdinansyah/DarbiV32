@@ -42,6 +42,9 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
+        [Display(Name = "Komite Sekolah")]
+        public string komiteSekolah { get; set; }
+
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
