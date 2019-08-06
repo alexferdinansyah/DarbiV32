@@ -263,26 +263,33 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
 
-                    //if (dd.KatBiaya == "School Support")
-                    //{
-                    //    mod.nominal = dd.NomBiaya;
-                    //}
+                //if (dd.KatBiaya == "School Support")
+                //{
+                //    mod.nominal = dd.NomBiaya;
+                //}
+
+
+                if (dd.KatBiaya == "Daftar Ulang")
+                {
+                    mod.daftarulang = dd.NomBiaya;
 
                     /*if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
                     }*/
+
                 }
-
             }
 
-            //info paid BM (BM yang sudah dibayarkan/cicilan BM)
-            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
-            foreach (var t in dtts)
-            {
-                mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-            }
+        }
+
+        //info paid BM (BM yang sudah dibayarkan/cicilan BM)
+        IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
+        foreach (var t in dtts)
+        {
+            mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+            mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+        }
 
             var idTingkatCounter = 0;
             if (nama == "PG")
