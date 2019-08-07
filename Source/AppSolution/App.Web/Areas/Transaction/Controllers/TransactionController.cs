@@ -154,7 +154,10 @@ namespace App.Web.Areas.Transaction.Controllers
                 dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false) ;
             }
 
-            if (dttrans.Count() == 0)
+            /*
+             * iMa : if dttrans doest have any record, it will be null, and null cannot use Count!
+             */
+            if (dttrans == null)
             {
                 return RedirectToAction("TransaksiKosong");
             }
@@ -263,10 +266,20 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.totalBM = dd.NomBiaya;
                     }
-                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
+
+                    //iMa
+                    /*
+                     * Separation between SPP and KS due to another field in form
+                     */
+                    if (dd.JenisBiaya == "SPP")
+                    //if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
+                    }
+                    if(dd.JenisBiaya == "KS")
+                    {
+                        mod.komiteSekolah = dd.NomBiaya;
                     }
 
                 //if (dd.KatBiaya == "School Support")
