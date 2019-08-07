@@ -31,6 +31,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
 
+
+            /*
+            * iMa : Refresh filtering option
+            */
             Session["Opsi"] = model.Opsi;
             ViewBag.OpBM = OpBM;
             return View(model);
@@ -41,6 +45,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
         {
             if (Session["Opsi"] != null)
             {
+
+                /*
+                 * iMa : refresh filtering option
+                 */
                 m.Opsi = Session["Opsi"].ToString();
                 if (m.Opsi == "Nama")
                 {
@@ -65,6 +73,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     //IEnumerable<Transaksi> t = db.Transaksis.ToList();
+
+                    /*
+                     * iMa : filtering
+                     */
 
                     int? isDel = null;
                     for (int j = 0; j < models.Count(); j++)
@@ -140,6 +152,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         models.Add(model);
                     }
 
+                    /*
+                     * iMa : filtering
+                     */
                     int? isDel = null;
                     for (int j = 0; j < models.Count(); j++)
                     {
@@ -152,7 +167,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
                         if (t.Count() == 0)
                         {
-                            if(j == models.Count() - 1)
+                            if (j == models.Count() - 1)
                             {
                                 models.Remove(models[j]);
                             }
