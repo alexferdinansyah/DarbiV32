@@ -31,6 +31,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
 
+            Session["Opsi"] = model.Opsi;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -38,6 +39,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapSchoolSupport(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            if (Session["Opsi"] != null)
+            {
+                m.Opsi = Session["Opsi"].ToString();
+                if (m.Opsi == "Nama")
+                {
+                    m.tglbayar = null;
+                }
+                else
+                {
+                    m.Namasiswa = null;
+                }
+            }
+
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
@@ -50,19 +64,47 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
                 {
-                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                    //IEnumerable<Transaksi> t = db.Transaksis.ToList();
 
-                    foreach (var dd in t)
+                    int? isDel = null;
+                    for (int j = 0; j < models.Count(); j++)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (isDel != null)
                         {
-                            if (dd.SSId != 0)
+                            j = models.Count() - 2;
+                            models.Remove(models[Convert.ToInt32(isDel)]);
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
+                        if (t.Count() == 0)
+                        {
+                            if (j == models.Count() - 1)
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                models.Add(model);
+                                models.Remove(models[j]);
+                            }
+                            else
+                            {
+                                isDel = j;
+                            }
+                        }
+                        foreach (var dt in t)
+                        {
+                            if (dt.SSId != null)
+                            {
+                                //RekapSPPVM mm = new RekapSPPVM();
+                                models[j].biayaBM = dt.bayarBM.ToString();
+                                models[j].SSId = dt.SSId.ToString();
+                                models[j].nominal = dt.nominal;
+                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                //mm = models[j];
+
+                                //models.Insert(0, mm);
+                                SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
+                                models[j].SSName = dtss.JenisSS;
+                            }
+                            else
+                            {
+                                isDel = j;
                             }
                         }
                     }
@@ -98,20 +140,63 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         models.Add(model);
                     }
 
-                    foreach (var dd in models)
+                    int? isDel = null;
+                    for (int j = 0; j < models.Count(); j++)
                     {
+                        if (isDel != null)
+                        {
+                            j = models.Count() - 2;
+                            models.Remove(models[Convert.ToInt32(isDel)]);
+                        }
                         IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                        t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                        t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
+                        if (t.Count() == 0)
+                        {
+                            if(j == models.Count() - 1)
+                            {
+                                models.Remove(models[j]);
+                            }
+                            else
+                            {
+                                isDel = j;
+                            }
+                        }
                         foreach (var dt in t)
                         {
-                            dd.biayaBM = dt.bayarBM.ToString();
-                            dd.SSId = dt.SSId.ToString();
-                            dd.nominal = dt.nominal;
-                            dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                            if (dt.SSId != null)
+                            {
+                                //RekapSPPVM mm = new RekapSPPVM();
+                                models[j].biayaBM = dt.bayarBM.ToString();
+                                models[j].SSId = dt.SSId.ToString();
+                                models[j].nominal = dt.nominal;
+                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                //mm = models[j];
+
+                                //models.Insert(0, mm);
+                                SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
+                                models[j].SSName = dtss.JenisSS;
+                            }
+                            else
+                            {
+                                isDel = j;
+                            }
                         }
-                        SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
-                        dd.SSId = dtss.JenisSS;
                     }
+
+                    //foreach (var dd in models)
+                    //{
+                    //    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                    //    t = t.Where(x => x.Nosisda.Equals(dd.Nosisda));
+                    //    foreach (var dt in t)
+                    //    {
+                    //        dd.biayaBM = dt.bayarBM.ToString();
+                    //        dd.SSId = dt.SSId.ToString();
+                    //        dd.nominal = dt.nominal;
+                    //        dd.tglbayar = Convert.ToDateTime(dt.tglbayar);
+                    //    }
+                    //    SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(dd.SSId));
+                    //    dd.SSId = dtss.JenisSS;
+                    //}
 
                 }
                 catch (Exception ex)

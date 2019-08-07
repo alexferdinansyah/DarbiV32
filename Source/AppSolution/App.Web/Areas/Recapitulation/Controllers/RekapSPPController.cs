@@ -113,17 +113,25 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
                         t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
+                        if(t.Count() == 0)
+                        {
+                            models.Remove(models[j]);
+                        }
                         foreach (var dt in t)
                         {
                             if (dt.bulanspp != null)
                             {
-                                RekapSPPVM mm = new RekapSPPVM();
+                                //RekapSPPVM mm = new RekapSPPVM();
                                 models[j].bulanspp = dt.bulanspp.ToString();
                                 models[j].bayarspp = dt.bayarspp.ToString();
                                 models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                mm = models[j];
-                                models.Remove(models[j]);
-                                models.Insert(0, mm);
+                                //mm = models[j];
+                                
+                                //models.Insert(0, mm);
+                            }
+                            else
+                            {
+                                //models.Remove(models[j]);
                             }
                         }
                     }
