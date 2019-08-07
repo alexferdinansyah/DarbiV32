@@ -144,7 +144,7 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Transaksi> dttrans = null;
             if (db.Transaksis.Count() != 0)
             {
-                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false) ;
             }
 
             if (dttrans.Count() == 0)
@@ -173,6 +173,7 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(dttrans);
         }
 
+
         //GET : Transaction/Transaction/Delete
         public ActionResult Delete(string nosisda)
         {
@@ -184,7 +185,7 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             else
             {
-                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda)).OrderByDescending(x => x.TransId);
+                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
             }
 
             for (int i = 0; i < tran.Count(); i++)
@@ -256,15 +257,27 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.totalBM = dd.NomBiaya;
                     }
-                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS") 
+                    if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
                     }
+
+                    //if (dd.KatBiaya == "School Support")
+                    //{
+                    //    mod.nominal = dd.NomBiaya;
+                    //}
+
+                    /*if (dd.KatBiaya == "Daftar Ulang")
+                    {
+                        mod.daftarUlang = dd.NomBiaya;
+                    }*/
                 }
+
             }
+
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
-            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
@@ -359,48 +372,97 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
+        //GET Kwitansi 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(TransactionFormCreateVM model, int id)
+        public ActionResult Delete(Transaksi model, int? id)
         {
+            Transaksi mod = null;
             if (ModelState.IsValid)
             {
-                //Transaksi tran = db.Transaksis.Find(id);
-                Transaksi newmodel = new Transaksi();
-                newmodel.isCanceled = true;
-                newmodel.canceledDate = DateTime.UtcNow.Date;
+                mod = db.Transaksis.Find(model.TransId);
+                mod.isCanceled = true;
+                mod.canceledBy = HttpContext.User.Identity.Name;
+                mod.canceledDate = DateTime.UtcNow.Date;
 
-                db.Transaksis.Add(newmodel);
+                db.Entry(mod).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", System.Web.HttpContext.Current.Session["NamaSiswa"]);
             }
 
-            return View(model);
+            return View(mod);
         }
 
         //GET Kwitansi
         public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
+
             string bayarspp = byr.bayarspp;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
+            /*SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+            transaksi.JenisSS = ss.JenisSS;*/
+            if (transaksi.SSId != null)
+            {
+                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); // Ini juga error
+                transaksi.JenisSS = s.JenisSS;
+            }
+
+            //spp
             SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
             transaksi.JenisSS = ss.JenisSS;
-            if (transaksi.bulanspp == null) 
+            if (transaksi.bulanspp == null)
             {
                 transaksi.infospp = "-";
+            }
+
+            //string no kwitansi
+            string nosisda = transaksi.Nosisda;
+            string randomnosisda = frandom(nosisda);
+            string randomalfanum = frandom("");
+            string time = DateTime.Now.ToString("HHmmss");
+            //transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;   // Yang ini ERROR
+
+            //infosiswa
+            IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
+            for (int i = 0; i < siswas.Count(); i++)
+            {
+                transaksi.Namasiswa = siswas.ToList()[i].Fullname;
+                break;
             }
 
             if (transaksi == null)
             {
                 return HttpNotFound();
-            } 
-            
+            }
+
             return View(transaksi);
+        }
+
+        //nomor kwitansi
+        private static Random random = new Random();
+        public static string frandom(string input)
+        {
+            string result = "";
+            if (input == "" || input == null)
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                //get 5 char from alfanumeric
+                result = new string(Enumerable.Repeat(chars, chars.Length).Select(s => s[random.Next(s.Length)]).ToArray());
+                result = result.Substring(0, 5);
+            }
+            else
+            {
+                //random nosisda
+                result = new string(Enumerable.Repeat(input, input.Length).Select(s => s[random.Next(s.Length)]).ToArray());
+            }
+            return result;
         }
     }
 }
