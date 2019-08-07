@@ -31,14 +31,17 @@
 				<td colspan="3" align="center"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
 				<td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
 			</tr>
+			@*No kwitansi*@
 			<tr height="10px">
 				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) </font></td>
 				<td colspan="3" style="border-left: 3px dotted black"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi)</font></td>
 			</tr>
+			@*nama siswa*@
 			<tr height="10px">
 				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
 				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
 			</tr>
+			@*no sisda*@
 			<tr height="10px">
 				<td colspan="3"><font size="1px">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
 				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
@@ -47,35 +50,79 @@
 				<td colspan="3">&nbsp;</td>
 				<td colspan="3" style="border-left: 3px dotted black">&nbsp;</td>
 			</tr>
-
+			@*Biaya Masuk*@
 			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.bayarspp) || @Html.DisplayNameFor(model => model.bulanspp) : @Html.DisplayFor(model => model.bayarspp) || @Html.DisplayFor(model => model.bulanspp)</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarspp) || @Html.DisplayNameFor(model => model.bulanspp) : @Html.DisplayFor(model => model.bayarspp) || @Html.DisplayFor(model => model.bulanspp)</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM) </font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM)</font></td>
 			</tr>
+
+			@*spp*@
+			<tr height="10px">
+				<td colspan="2"> <font size="1px" >@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+
+
+				@if (Model.infospp != null)
+				{
+
+					<td >
+						@Html.DisplayFor(model => model.infospp)
+					</td>
+
+				}
+				else
+				{
+					<td align="center">
+						<font size="1px" >
+							@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
+						</font>
+					</td>
+				}
+
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+
+
+				@if (Model.infospp != null)
+				{
+
+					<td>
+						@Html.DisplayFor(model => model.infospp)
+					</td>
+
+				}
+				else
+				{
+					<td>
+						<font size="1px">
+							@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
+						</font>
+					</td>
+				}
+			</tr>
+
+			@*KS*@
 			<tr height="10px">
 				<td colspan="3"><font size="1px">KS : Rp.10.000,- || February</font></td>
 				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">KS : Rp.10.000,- || February</font></td>
 			</tr>
-
+			@*school support*@
 			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.SSId) || @Html.DisplayFor(model => model.nominal)</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.SSId) || @Html.DisplayFor(model => model.nominal)</font></td>
+				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
+				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
 			</tr>
-
 			<tr height="10px">
 				<td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
 				<td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
 			</tr>
-
+			@*total*@
 			<tr height="30px">
-				<td width="30%"><font size="1px">Total Yang Harus Bayar : Rp.1.000.000,-</font></td>
+				<td width="30%"><font size="1px">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)</font></td>
 				<td><font size="1px"> Oleh </font></td>
 				<td><font size="1px">Kasir</font></td>
-				<td width="30%"><font size="1px" style="border-left: 3px dotted black">Total Yang Harus Bayar : Rp.1.000.000,-	</font></td>
+				<td width="30%"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)	</font></td>
 				<td><font size="1px"> Oleh </font></td>
 				<td><font size="1px">Kasir</font></td>
 			</tr>
-
+			@*uang bayar*@
 			<tr height="10px">
 				<td width="30%"><font size="1px">Uang Bayar : Rp.1.000.000,-</font></td>
 				<td><font size="1px">  </font></td>
@@ -84,7 +131,7 @@
 				<td><font size="1px"> </font></td>
 				<td><font size="1px"></font></td>
 			</tr>
-
+			@*kembalian*@
 			<tr height="10px">
 				<td width="30%"><font size="1px">Kembalian :</font></td>
 				<td><font size="1px">  </font></td>
@@ -93,8 +140,6 @@
 				<td><font size="1px"> </font></td>
 				<td><font size="1px"></font></td>
 			</tr>
-
-
 			<tr height="10px">
 				<td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
 				<td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
@@ -116,18 +161,20 @@
 					</font>
 				</td>
 			</tr>
+
 		</table>
 	</div>
 </div>
-	<br />
-	<div>
-		@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
-	</div>
+
+<br />
+<div>
+	@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+</div>
 
 
-	<script>
-		$('#kwt').click(function () {
-			$("#detail").printThis();
-		});
+<script>
+	$('#kwt').click(function () {
+		$("#detail").printThis();
+	});
 
-	</script>
+</script>

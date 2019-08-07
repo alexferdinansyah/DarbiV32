@@ -58,10 +58,12 @@ namespace App.Entities.Models
         [Display(Name = "School Support")]
         public int? SSId { get; set; } //id schoolsupport
         public string JenisSS { get; set; } //jenis schoolsupport
-
         public string Nokwitansi { get; set; } //NO KWITANSI
 
-       [Display(Name = "Nominal")]
+        [Display(Name = "Total Yang Harus Bayar")] 
+        public string totalkeseluruhan { get; set; } //Untuk menambahkan seluruh total yg ada di kwitansi
+
+        [Display(Name = "Nominal")]
         public string nominal { get; set; }
 
         public string infospp { get; set; }
@@ -72,6 +74,7 @@ namespace App.Entities.Models
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
         public int? cicilDaftarUlang { get; set; }
 
+        //batal
         [Display(Name = "Canceled")]
         public bool isCanceled { get; set; }
         [Display(Name = "Canceled By")]
@@ -80,6 +83,7 @@ namespace App.Entities.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? canceledDate { get; set; }
+
     }
 
 }

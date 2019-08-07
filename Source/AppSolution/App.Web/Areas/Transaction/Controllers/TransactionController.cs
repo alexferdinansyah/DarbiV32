@@ -271,7 +271,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
                 if (dd.KatBiaya == "Daftar Ulang")
                 {
-                    mod.daftarulang = dd.NomBiaya;
+                    mod.daftarUlang = dd.NomBiaya;
 
                     /*if (dd.KatBiaya == "Daftar Ulang")
                     {
@@ -325,6 +325,14 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         mod.daftarUlang = m.NomBiaya;
                         break;
+                    }
+                }
+                IEnumerable<Transaksi> totalsemua = db.Transaksis.Where(x => x.bayarspp == idtingkat);
+                foreach (var semuatotal in totalsemua)
+                {
+                    if(semuatotal.totalkeseluruhan == "total Semua")
+                    {
+                        mod.bayarspp = semuatotal.nominal;
                     }
                 }
             }
@@ -406,6 +414,7 @@ namespace App.Web.Areas.Transaction.Controllers
         {
 
             string bayarspp = byr.bayarspp;
+            string nominal = byr.nominal;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -413,17 +422,17 @@ namespace App.Web.Areas.Transaction.Controllers
 
             //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            /*SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;*/
             if (transaksi.SSId != null)
             {
-                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); // Ini juga error
+                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); 
                 transaksi.JenisSS = s.JenisSS;
+                //info bayar keseluruhan
+                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bayarspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
+                transaksi.totalkeseluruhan = totalbayar.ToString();
             }
 
             //spp
-            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;
             if (transaksi.bulanspp == null)
             {
                 transaksi.infospp = "-";
@@ -434,7 +443,7 @@ namespace App.Web.Areas.Transaction.Controllers
             string randomnosisda = frandom(nosisda);
             string randomalfanum = frandom("");
             string time = DateTime.Now.ToString("HHmmss");
-            //transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;   // Yang ini ERROR
+            transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;
 
             //infosiswa
             IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
@@ -471,5 +480,9 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             return result;
         }
+
+        //totalbayar
+
+        
     }
 }
