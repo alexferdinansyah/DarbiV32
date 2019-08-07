@@ -1,0 +1,75 @@
+﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Opsi)
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" id="pencarian">
+            @Html.Label("Opsi pencarian", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("OpBM")
+            </div>
+        </div>
+
+        @*untuk search*@
+        <div class="form-group" id="pencarian2">
+            @Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group" id="pencarian3">
+            @Html.LabelFor(model => model.tglbayar, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tglbayar, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#pencarian2').hide();
+        $('#pencarian3').hide();
+        //var TipeBM = document.getElementById("Namasiswa");
+        $('#OpBM').change(function () {
+            var e = document.getElementById("OpBM");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            document.getElementById("Opsi").value = strUser;
+            if (strUser == "Nama") {
+                $('#pencarian2').show();
+                $('#pencarian3').hide();
+
+            }
+
+            if (strUser == "Tanggal") {
+                $('#pencarian2').hide();
+                $('#pencarian3').show();
+
+                document.getElementById("SiswaId").change(function () {
+                    var e = document.getElementById("SiswaId");
+                    var strUser = e.options[e.selectedIndex].text;
+                    alert(strUser);
+                });
+            }
+        });
+    });
+</script>

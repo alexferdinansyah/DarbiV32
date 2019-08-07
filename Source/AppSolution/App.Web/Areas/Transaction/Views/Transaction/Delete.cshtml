@@ -1,0 +1,146 @@
+﻿@model App.Entities.Models.Transaksi
+
+@{
+    ViewBag.Title = "Batal Transaksi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+
+    @Html.HiddenFor(model => model.TransId);
+
+    <h2>@ViewBag.Title</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nosisda)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nosisda)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Namasiswa)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Namasiswa)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Kelastingkat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Kelastingkat)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.totalBM)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.totalBM)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bayarBM)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bayarBM)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bulanspp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bulanspp)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.bayarspp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bayarspp)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.komiteSekolah)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.komiteSekolah)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.daftarUlang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.daftarUlang)
+            </dd>
+            <dt>
+                Pembayaran Terakhir
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.cicilDaftarUlang)
+            </dd>
+            <hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.tipebayar)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tipebayar)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Banknm)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Banknm)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tgltransfer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tgltransfer)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tglbayar)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tglbayar)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <div class="form-actions no-color">
+            <input type="submit" value="Batalkan" class="btn btn-default" id="open-popup" /> |
+            @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+        </div>
+    </p>
+}
+
+<script>
+    $("#open-popup").click(function () {
+        //alert("Yakin ?");
+        var res = confirm("Yakin Hapus ?");
+        return !!res;
+    });
+</script>
+

@@ -17,7 +17,9 @@ namespace App.Entities.Models
 
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
+        [Display(Name = "Nama")]
         public string Namasiswa { get; set; }
+        [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
         [Display(Name = "Total Biaya Masuk")]
@@ -38,6 +40,9 @@ namespace App.Entities.Models
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
+        [Display(Name = "Komite Sekolah")]
+        public string komiteSekolah { get; set; }
+
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -50,23 +55,29 @@ namespace App.Entities.Models
 
         [Display(Name = "Bank")]
         public int? BankId { get; set; }
-
+        [Display(Name = "Nama Bank")]
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
-        public int? SSId { get; set; }
-        public string JenisSS { get; set; }
+        public int? SSId { get; set; } //id schoolsupport
+        public string JenisSS { get; set; } //jenis schoolsupport
+        public string Nokwitansi { get; set; } //NO KWITANSI
+
+        [Display(Name = "Total Yang Harus Bayar")] 
+        public string totalkeseluruhan { get; set; } //Untuk menambahkan seluruh total yg ada di kwitansi
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
 
+        public string infospp { get; set; }
+
+         //Daftar Ulang
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }
         [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
-        public string cicilDaftarUlang { get; set; }
-        [Display(Name = "Bayar Daftar Ulang")]
-        public string bayarDaftarUlang { get; set; }
+        public int? cicilDaftarUlang { get; set; }
 
+        //batal
         [Display(Name = "Canceled")]
         public bool isCanceled { get; set; }
         [Display(Name = "Canceled By")]

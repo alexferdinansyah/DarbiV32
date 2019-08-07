@@ -14,12 +14,10 @@ using App.Entities;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
-
-    public class RekapBiayaMasukController : Controller
+    public class RekapDaftarUlangController : Controller
     {
         private DatabaseContext db = new DatabaseContext();
-
-        // GET: Recapitulation/RekapBiayaMasuk
+        // GET: Recapitulation/RekapDaftarUlang
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
@@ -30,33 +28,18 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
-            Session["Opsi"] = model.Opsi;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
+        public ActionResult AjaxRekapDU(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
-            if (Session["Opsi"] != null)
-            {
-                m.Opsi = Session["Opsi"].ToString();
-                if (m.Opsi == "Nama")
-                {
-                    m.tglbayar = null;
-                }
-                else
-                {
-                    m.Namasiswa = null;
-                }
-            }
-
-
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
-            List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
+            List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
             if (Namasiswa == "" || Namasiswa == null)
@@ -70,17 +53,16 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.bayarBM != 0)
+                            if (dd.cicilDaftarUlang != null)
                             {
-                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
-                                model.biayaBM = dd.bayarBM.ToString();
+                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
-
                         }
                     }
                 }
@@ -110,15 +92,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa.Contains(Namasiswa))
+                            if (dd.Namasiswa == Namasiswa)
                             {
-                                if (dd.bayarBM != 0)
+                                if (dd.cicilDaftarUlang != null)
                                 {
-                                    RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                    RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
-                                    model.biayaBM = dd.bayarBM.ToString();
+                                    model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
                                 }
@@ -138,8 +120,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         },
                 JsonRequestBehavior.AllowGet);
                     }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -166,7 +146,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
                         data.tglbayar.ToString()
                     });
                 }

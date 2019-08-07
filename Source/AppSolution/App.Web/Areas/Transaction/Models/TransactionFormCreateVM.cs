@@ -42,6 +42,16 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
+        [Display(Name = "Komite Sekolah")]
+        public string komiteSekolah { get; set; }
+
+        [Display(Name = "Total Daftar Ulang")]
+        public string daftarUlang { get; set; }
+        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
+        public string cicilDaftarUlang { get; set; }
+        [Display(Name = "Bayar Daftar Ulang")]
+        public string bayarDaftarUlang { get; set; }
+
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -77,15 +87,14 @@ namespace App.Web.Areas.Transaction.Models
 
             return new SelectList(SchoolSupports.ToList(), "SSId", "JenisSS", "0");
         }
-
+        //school support//
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
-
-        [Display(Name = "Total Daftar Ulang")]
-        public string daftarUlang { get; set; }
-        [Display(Name = "Daftar Ulang Yang Telah Dibayar")]
-        public string cicilDaftarUlang { get; set; }
-        [Display(Name = "Bayar Daftar Ulang")]
-        public string bayarDaftarUlang { get; set; }
+        public SelectList Biaya()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Biayas = db.Biayas;
+            return new SelectList(Biayas.ToList(), "JenisBiaya", "NomBiaya", "0");
+        }
     }
 }

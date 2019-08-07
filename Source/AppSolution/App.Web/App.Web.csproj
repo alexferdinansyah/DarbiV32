@@ -87,12 +87,23 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -191,6 +202,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\AccessManagement\Controllers\RequestForgotPasswordController.cs" />
     <Compile Include="Areas\AccessManagement\Models\UpdateUserPasswordFormVM.cs" />
     <Compile Include="Areas\AccessManagement\Models\CreateRoleFormVM.cs" />
@@ -223,11 +235,15 @@
     <Compile Include="Areas\MasterData\Models\SearchKelas.cs" />
     <Compile Include="Areas\MasterData\Models\SiswaSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\TingkatSearchFormVM.cs" />
+    <Compile Include="Areas\Recapitulation\Controllers\RekapDaftarUlangController.cs" />
+    <Compile Include="Areas\Recapitulation\Controllers\RekapPrintController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapSchoolSupportController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapBiayaMasukController.cs" />
     <Compile Include="Areas\Recapitulation\Controllers\RekapSPPController.cs" />
-    <Compile Include="Areas\Recapitulation\Models\RekapSchoolSupportVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\RekapBiayaMasukVM.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapDaftarUlangVM.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapPrintVM.cs" />
+    <Compile Include="Areas\Recapitulation\Models\RekapSchoolSupportVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\RekapSPPVM.cs" />
     <Compile Include="Areas\Recapitulation\Models\SearchRekapBiayaMasuk.cs" />
     <Compile Include="Areas\Recapitulation\RecapitulationAreaRegistration.cs" />
@@ -428,6 +444,13 @@
     <Content Include="Areas\Transaction\Views\Transaction\Kwitansi.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Search.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapSPP\History.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\Delete.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Index.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Search.cshtml" />
+    <Content Include="Areas\Transaction\Views\Transaction\TransaksiKosong.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapPrint\Index.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapPrint\Search.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\DataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />

@@ -24,7 +24,7 @@
                 nm = d1.Fullname;
                 kelas = d1.Kelas;
                 nosisda = d1.Nosisda;
-                periode = d1.Periode;
+                //periode = d1.Periode;
                 break;
             }
             break;
@@ -49,12 +49,6 @@
         </dt>
         <dd>
             @kelas
-        </dd>
-        <dt>
-            Periode
-        </dt>
-        <dd>
-            @periode
         </dd>
     </dl>
     <hr />
@@ -86,7 +80,20 @@
     <dd>
         Rp. @d.bayarspp
     </dd>
-
+    <hr />
+    <dt>
+        Total Daftar Ulang
+    </dt>
+    <dd>
+        @d.daftarUlang
+    </dd>
+    <dt>
+        Pendaftaran Terakhir
+    </dt>
+    <dd>
+        @d.cicilDaftarUlang
+    </dd>
+    <hr/>
     <dt>
         Tipe Pembayaran
     </dt>
