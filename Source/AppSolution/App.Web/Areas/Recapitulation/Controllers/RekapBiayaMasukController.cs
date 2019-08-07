@@ -110,7 +110,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa.Contains(Namasiswa)) ;
+                            if (dd.Namasiswa.Contains(Namasiswa))
                             {
                                 if (dd.bayarBM != 0)
                                 {

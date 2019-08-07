@@ -14,10 +14,10 @@ using App.Entities;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
-    public class RekapDaftarUlangController : Controller
+    public class RekapPrintController : Controller
     {
         private DatabaseContext db = new DatabaseContext();
-        // GET: Recapitulation/RekapDaftarUlang
+        // GET: Recapitulation/RekapPrint
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
@@ -33,13 +33,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxRekapDU(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
+        public ActionResult AjaxRekapPrint(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
-            List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
+            List<RekapPrintVM> models = new List<RekapPrintVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
             if (Namasiswa == "" || Namasiswa == null)
@@ -55,11 +55,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.cicilDaftarUlang != null)
                             {
-                                RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                                RekapPrintVM model = new RekapPrintVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                model.biayaBM = dd.bayarBM.ToString();
+                                /*model.bulanspp = dd.bulanspp.ToString();
+                                model.bayarspp = dd.bayarspp.ToString();*/
+
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
@@ -96,11 +100,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 if (dd.cicilDaftarUlang != null)
                                 {
-                                    RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                                    RekapPrintVM model = new RekapPrintVM();
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                    model.biayaBM = dd.bayarBM.ToString();
+                                    /*model.bulanspp = dd.bulanspp.ToString();
+                                    model.bayarspp = dd.bayarspp.ToString();*/
+
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
                                 }
@@ -147,6 +155,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Namasiswa,
                         data.Kelastingkat,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        /*data.bulanspp,
+                        data.bayarspp,*/
+                        /*data.SSId,
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),*/
                         data.tglbayar.ToString()
                     });
                 }

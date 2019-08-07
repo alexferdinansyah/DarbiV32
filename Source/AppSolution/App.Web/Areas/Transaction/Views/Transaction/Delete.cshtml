@@ -1,7 +1,7 @@
 ﻿@model App.Entities.Models.Transaksi
 
 @{
-    ViewBag.Title = "Detail Transaksi Terakhir";
+    ViewBag.Title = "Batal Transaksi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,9 +13,6 @@
 
     <h2>@ViewBag.Title</h2>
 
-    <h4>Transaksi Biaya</h4>
-
-    <h3>Batalkan Transaksi ?</h3>
     <div>
         <hr />
         <dl class="dl-horizontal">
@@ -73,6 +70,13 @@
 
             <dd>
                 @Html.DisplayFor(model => model.bayarspp)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.komiteSekolah)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.komiteSekolah)
             </dd>
             <hr />
             <dt>

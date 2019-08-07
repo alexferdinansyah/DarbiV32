@@ -99,12 +99,14 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
 
                     i++;
+                    int Year = Convert.ToInt32(data.Year);
+                    var Periode = Year.ToString() + "-" + (Year + 1);
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.Nosisda,
                         data.Fullname,
-                        data.PerDaftar,
+                        Periode,
                         data.Kelas + "-" + data.Kelas,
                         data.Nosisda.ToString()
                     });
@@ -134,8 +136,13 @@ namespace App.Web.Areas.Transaction.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
-        //GET : Transaction/Transaction/Detail Transaksi
-        public ActionResult Details(string nosisda)
+        public ActionResult TransaksiKosong(string nosisda)
+        {
+            return View();
+        }
+
+            //GET : Transaction/Transaction/Detail Transaksi
+            public ActionResult Details(string nosisda)
         {
             if (nosisda == null)
             {
@@ -149,7 +156,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             if (dttrans.Count() == 0)
             {
-                return HttpNotFound();
+                return RedirectToAction("TransaksiKosong");
             }
             else
             {
@@ -168,7 +175,6 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                 }
             }
-
 
             return View(dttrans);
         }
@@ -196,7 +202,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             if (model == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("TransaksiKosong");
             }
 
             return View(model);
@@ -359,6 +365,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
+                newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
@@ -424,12 +431,14 @@ namespace App.Web.Areas.Transaction.Controllers
             Transaksi transaksi = db.Transaksis.Find(id);
             if (transaksi.SSId != null)
             {
+
                 SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); 
                 transaksi.JenisSS = s.JenisSS;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
                     (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bayarspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
                 transaksi.totalkeseluruhan = totalbayar.ToString();
+
             }
 
             //spp

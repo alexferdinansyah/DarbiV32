@@ -1,0 +1,14 @@
+﻿@model App.Entities.Models.Transaksi
+@{
+    ViewBag.Title = "Transaksi Kosong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>@ViewBag.Title</h3>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Nosisda);
+}
+<hr />
+<h4 style="text-align:center;">Siswa ini belum melakukan transaksi apapun</h4>
+
+@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
