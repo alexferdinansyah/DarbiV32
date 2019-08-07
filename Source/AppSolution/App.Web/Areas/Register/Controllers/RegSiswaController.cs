@@ -247,6 +247,8 @@ namespace App.Web.Areas.Register.Controllers
                     newmodel.TypeDiscAdm = model.TypeDiscAdm;
                     newmodel.NomDiscAdm = model.NomDiscAdm;
                     newmodel.TglDaftar = DateTime.UtcNow.Date;
+                    newmodel.IsActive = true;
+
 
                     //nosisda generator
                     var totalsiswa = db.Siswas.ToList().Count() + 1;

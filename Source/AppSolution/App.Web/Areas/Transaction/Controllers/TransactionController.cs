@@ -99,12 +99,14 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
 
                     i++;
+                    int Year = Convert.ToInt32(data.Year);
+                    var Periode = Year.ToString() + "-" + (Year + 1);
                     listResult.Add(new string[]
                     {
                         i.ToString(),
                         data.Nosisda,
                         data.Fullname,
-                        data.PerDaftar,
+                        Periode,
                         data.Kelas + "-" + data.Kelas,
                         data.Nosisda.ToString()
                     });
@@ -134,8 +136,13 @@ namespace App.Web.Areas.Transaction.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
-        //GET : Transaction/Transaction/Detail Transaksi
-        public ActionResult Details(string nosisda)
+        public ActionResult TransaksiKosong(string nosisda)
+        {
+            return View();
+        }
+
+            //GET : Transaction/Transaction/Detail Transaksi
+            public ActionResult Details(string nosisda)
         {
             if (nosisda == null)
             {
@@ -149,7 +156,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             if (dttrans.Count() == 0)
             {
-                return HttpNotFound();
+                return RedirectToAction("TransaksiKosong");
             }
             else
             {
@@ -168,7 +175,6 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                 }
             }
-
 
             return View(dttrans);
         }
@@ -196,7 +202,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             if (model == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("TransaksiKosong");
             }
 
             return View(model);
@@ -415,8 +421,6 @@ namespace App.Web.Areas.Transaction.Controllers
             }
 
             //spp
-            SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
-            transaksi.JenisSS = ss.JenisSS;
             if (transaksi.bulanspp == null)
             {
                 transaksi.infospp = "-";
