@@ -269,26 +269,33 @@ namespace App.Web.Areas.Transaction.Controllers
                         mod.bayarspp = totalSPP.ToString();
                     }
 
-                    //if (dd.KatBiaya == "School Support")
-                    //{
-                    //    mod.nominal = dd.NomBiaya;
-                    //}
+                //if (dd.KatBiaya == "School Support")
+                //{
+                //    mod.nominal = dd.NomBiaya;
+                //}
+
+
+                if (dd.KatBiaya == "Daftar Ulang")
+                {
+                    mod.daftarulang = dd.NomBiaya;
 
                     /*if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
                     }*/
+
                 }
-
             }
 
-            //info paid BM (BM yang sudah dibayarkan/cicilan BM)
-            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
-            foreach (var t in dtts)
-            {
-                mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-            }
+        }
+
+        //info paid BM (BM yang sudah dibayarkan/cicilan BM)
+        IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
+        foreach (var t in dtts)
+        {
+            mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+            mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+        }
 
             var idTingkatCounter = 0;
             if (nama == "PG")
@@ -350,6 +357,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
+                newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
@@ -416,8 +424,8 @@ namespace App.Web.Areas.Transaction.Controllers
             transaksi.JenisSS = ss.JenisSS;*/
             if (transaksi.SSId != null)
             {
-                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); // Ini juga error
-                transaksi.JenisSS = s.JenisSS;
+                SchoolSupport ss = db.SchoolSupports.Find(transaksi.SSId);
+                transaksi.JenisSS = ss.JenisSS;
             }
 
             //spp

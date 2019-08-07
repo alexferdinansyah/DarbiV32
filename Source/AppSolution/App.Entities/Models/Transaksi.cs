@@ -40,6 +40,9 @@ namespace App.Entities.Models
         [Display(Name = "Tipe Bayar")]
         public string tipebayar { get; set; }
 
+        [Display(Name = "Komite Sekolah")]
+        public string komiteSekolah { get; set; }
+
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -59,7 +62,9 @@ namespace App.Entities.Models
         public int? SSId { get; set; } //id schoolsupport
         public string JenisSS { get; set; } //jenis schoolsupport
 
-        [Display(Name = "Nominal")]
+        public string Nokwitansi { get; set; } //NO KWITANSI
+
+       [Display(Name = "Nominal")]
         public string nominal { get; set; }
 
         public string infospp { get; set; }
