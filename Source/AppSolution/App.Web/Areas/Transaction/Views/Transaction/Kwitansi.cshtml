@@ -1,180 +1,320 @@
 ﻿@model App.Entities.Models.Transaksi
 @{
 
-	ViewBag.Title = "Kwitansi";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-
-	/**/
-	/**/
-
-	ViewBag.Title = "Kwitansi";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-
+    ViewBag.Title = "Kwitansi";
+    Layout = "~/Views/Shared/_printlayout.cshtml";
 }
-<input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />
+@*<input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />*@
 
 @Html.HiddenFor(model => model.Nosisda)
+<head>
 
-<div id="detail" style="padding-left:50px">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+    <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+    <title>CodePen - POS Receipt Template Html Css</title>
 
-	<div width="90%" height="30%" style="padding-left:50px">
-		<table width="100%" height="30%" style="border-top: 1px solid black" border=0>
-			<tr>
-				<td colspan="3" height="10px" style="border-bottom:1px solid black">
-					<font size="1px"> Sekolah Islam Terpadu Darul Abidin</font>
-				</td>
-				<td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black">
-					<font size="1px"> Sekolah Islam Terpadu Darul Abidin</font>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3" align="center"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
-				<td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
-			</tr>
-			@*No kwitansi*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) </font></td>
-				<td colspan="3" style="border-left: 3px dotted black"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi)</font></td>
-			</tr>
-			@*nama siswa*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
-			</tr>
-			@*no sisda*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
-			</tr>
-			<tr height="10px">
-				<td colspan="3">&nbsp;</td>
-				<td colspan="3" style="border-left: 3px dotted black">&nbsp;</td>
-			</tr>
-			@*Biaya Masuk*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM) </font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM)</font></td>
-			</tr>
+    <style>
+        @@media print {
+            .page-break {
+                display: block;
+                page-break-before: always;
+            }
+        }
 
-			@*spp*@
-			<tr height="10px">
-				<td colspan="2"> <font size="1px" >@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+        #invoice-POS {
+            box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+            padding: 2mm;
+            margin: 0 auto;
+            width: 300mm;
+            background: #FFF;
+        }
+
+            #invoice-POS ::selection {
+                background: #f31544;
+                color: #FFF;
+            }
+
+            #invoice-POS ::moz-selection {
+                background: #f31544;
+                color: #FFF;
+            }
+
+            #invoice-POS h1 {
+                font-size: 1.5em;
+                color: #222;
+            }
+
+            #invoice-POS h2 {
+                font-size: .9em;
+            }
+
+            #invoice-POS h3 {
+                font-size: 1.2em;
+                font-weight: 300;
+                line-height: 2em;
+            }
+
+            #invoice-POS p {
+                font-size: .7em;
+                color: #666;
+                line-height: 1.2em;
+            }
+
+            #invoice-POS #top, #invoice-POS #mid, #invoice-POS #bot {
+                /* Targets all id with 'col-' */
+                border-bottom: 1px solid #EEE;
+            }
+
+            #invoice-POS #top {
+                min-height: 100px;
+            }
+
+            #invoice-POS #mid {
+                min-height: 80px;
+            }
+
+            #invoice-POS #bot {
+                min-height: 50px;
+            }
+
+            #invoice-POS .info {
+                display: block;
+                margin-left: 0;
+            }
+
+            #invoice-POS .title {
+                float: right;
+            }
+
+                #invoice-POS .title p {
+                    text-align: right;
+                }
+
+            #invoice-POS table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            #invoice-POS .tabletitle {
+                font-size: .5em;
+                background: #EEE;
+            }
+
+            #invoice-POS .service {
+                border-bottom: 1px solid #EEE;
+            }
+
+            #invoice-POS .item {
+                width: 24mm;
+            }
+
+            #invoice-POS .itemtext {
+                font-size: .5em;
+            }
+
+            #invoice-POS #legalcopy {
+                margin-top: 5mm;
+            }
+    </style>
+
+    <script>
+        window.console = window.console || function (t) { };
+    </script>
 
 
-				@if (Model.infospp != null)
-				{
 
-					<td >
-						@Html.DisplayFor(model => model.infospp)
-					</td>
-
-				}
-				else
-				{
-					<td align="center">
-						<font size="1px" >
-							@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
-						</font>
-					</td>
-				}
-
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
 
 
-				@if (Model.infospp != null)
-				{
+</head>
 
-					<td>
-						@Html.DisplayFor(model => model.infospp)
-					</td>
+<body translate="no">
 
-				}
-				else
-				{
-					<td>
-						<font size="1px">
-							@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
-						</font>
-					</td>
-				}
-			</tr>
 
-			@*KS*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">KS : Rp.10.000,- || February</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">KS : Rp.10.000,- || February</font></td>
-			</tr>
-			@*school support*@
-			<tr height="10px">
-				<td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
-				<td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
-			</tr>
-			<tr height="10px">
-				<td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
-				<td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
-			</tr>
-			@*total*@
-			<tr height="30px">
-				<td width="30%"><font size="1px">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)</font></td>
-				<td><font size="1px"> Oleh </font></td>
-				<td><font size="1px">Kasir</font></td>
-				<td width="30%"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)	</font></td>
-				<td><font size="1px"> Oleh </font></td>
-				<td><font size="1px">Kasir</font></td>
-			</tr>
-			@*uang bayar*@
-			<tr height="10px">
-				<td width="30%"><font size="1px">Uang Bayar : Rp.1.000.000,-</font></td>
-				<td><font size="1px">  </font></td>
-				<td><font size="1px"></font></td>
-				<td width="30%"><font size="1px" style="solid black;border-left: 3px dotted black">Uang Bayar : Rp.1.000.000,-	</font></td>
-				<td><font size="1px"> </font></td>
-				<td><font size="1px"></font></td>
-			</tr>
-			@*kembalian*@
-			<tr height="10px">
-				<td width="30%"><font size="1px">Kembalian :</font></td>
-				<td><font size="1px">  </font></td>
-				<td><font size="1px"></font></td>
-				<td width="30%"><font size="1px" style="border-left: 3px dotted black">Kembalian : </font></td>
-				<td><font size="1px"> </font></td>
-				<td><font size="1px"></font></td>
-			</tr>
-			<tr height="10px">
-				<td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
-				<td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
-			</tr>
+    <div id="invoice-POS">
 
-			<tr height="10px">
-				<td colspan="3">
-					<font size="1px">
-						Dengan ditandatanganinya kwitansi ini,
-						maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas.
-						Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.
-					</font>
-				</td>
-				<td colspan="3">
-					<font size="1px" style="border-left: 3px dotted black">
-						Dengan ditandatanganinya kwitansi ini,
-						maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas.
-						Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.
-					</font>
-				</td>
-			</tr>
+        @*<center id="top">
+                <div class="logo"></div>
+                <div class="info">
+                    <h2>SBISTechs Inc</h2>
+                </div><!--End Info-->
+            </center><!--End InvoiceTop-->
 
-		</table>
-	</div>
-</div>
+            <div id="mid">
+                <div class="info">
+                    <h2>Contact Info</h2>
+                    <p>
+                        Address : street city, state 0000</br>
+                        Email   : JohnDoe@gmail.com</br>
+                        Phone   : 555-555-5555</br>
+                    </p>
+                </div>
+            </div><!--End Invoice Mid-->*@
 
-<br />
-<div>
-	@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
-</div>
+        <div id="bot">
 
+            <div id="table">
+                <table align="center" width="100%" height="20%" style="border-top: 1px solid black" border=0>
+                    <tr>
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black">
+                            <font size="1px"> Sekolah Islam Terpadu Darul Abidin</font>
+                        </td>
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black">
+                            <font size="1px"> Sekolah Islam Terpadu Darul Abidin</font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
+                        <td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
+                    </tr>
+                    @*No kwitansi*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) </font></td>
+                        <td colspan="3" style="border-left: 3px dotted black"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi)</font></td>
+                    </tr>
+                    @*nama siswa*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
+                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.Namasiswa) : @Html.DisplayFor(model => model.Namasiswa) </font></td>
+                    </tr>
+                    @*no sisda*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
+                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">&nbsp;@Html.DisplayNameFor(model => model.Nosisda) : @Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</font></td>
+                    </tr>
+                    <tr height="10px">
+                        <td colspan="3">&nbsp;</td>
+                        <td colspan="3" style="border-left: 3px dotted black">&nbsp;</td>
+                    </tr>
+                    @*Biaya Masuk*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM) </font></td>
+                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bayarBM): Rp.@Html.DisplayFor(model => model.bayarBM)</font></td>
+                    </tr>
+
+                    @*spp*@
+                    <tr height="10px">
+                        <td colspan="2"> <font size="1px">@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+
+
+                        @if (Model.infospp != null)
+                        {
+
+                            <td>
+                                @Html.DisplayFor(model => model.infospp)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td align="center">
+                                <font size="1px">
+                                    @Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
+                                </font>
+                            </td>
+                        }
+
+                        <td colspan="2"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.bulanspp) || @Html.DisplayNameFor(model => model.bayarspp) : </font></td>
+
+
+                        @if (Model.infospp != null)
+                        {
+
+                            <td>
+                                @Html.DisplayFor(model => model.infospp)
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                <font size="1px">
+                                    @Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
+                                </font>
+                            </td>
+                        }
+                    </tr>
+
+                    @*KS*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">KS : Rp.10.000,- || February</font></td>
+                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">KS : Rp.10.000,- || February</font></td>
+                    </tr>
+                    @*school support*@
+                    <tr height="10px">
+                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
+                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
+                    </tr>
+                    <tr height="10px">
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
+                    </tr>
+                    @*total*@
+                    <tr height="30px">
+                        <td width="30%"><font size="1px">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)</font></td>
+                        <td><font size="1px"> Oleh </font></td>
+                        <td><font size="1px">Kasir</font></td>
+                        <td width="30%"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.totalkeseluruhan) : Rp.@Html.DisplayFor(model => model.totalkeseluruhan)	</font></td>
+                        <td><font size="1px"> Oleh </font></td>
+                        <td><font size="1px">Kasir</font></td>
+                    </tr>
+                    @*uang bayar*@
+                    <tr height="10px">
+                        <td width="30%"><font size="1px">Uang Bayar : Rp.1.000.000,-</font></td>
+                        <td><font size="1px">  </font></td>
+                        <td><font size="1px"></font></td>
+                        <td width="30%"><font size="1px" style="solid black;border-left: 3px dotted black">Uang Bayar : Rp.1.000.000,-	</font></td>
+                        <td><font size="1px"> </font></td>
+                        <td><font size="1px"></font></td>
+                    </tr>
+                    @*kembalian*@
+                    <tr height="10px">
+                        <td width="30%"><font size="1px">Kembalian :</font></td>
+                        <td><font size="1px">  </font></td>
+                        <td><font size="1px"></font></td>
+                        <td width="30%"><font size="1px" style="border-left: 3px dotted black">Kembalian : </font></td>
+                        <td><font size="1px"> </font></td>
+                        <td><font size="1px"></font></td>
+                    </tr>
+                    <tr height="10px">
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black; "></td>
+                        <td colspan="3" height="10px" style="border-bottom:1px solid black;border-left: 3px dotted black"></td>
+                    </tr>
+
+                    <tr height="10px">
+                        <td colspan="3">
+                            <font size="1px">
+                                Dengan ditandatanganinya kwitansi ini,
+                                maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas.
+                                Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.
+                            </font>
+                        </td>
+                        <td colspan="3">
+                            <font size="1px" style="border-left: 3px dotted black">
+                                Dengan ditandatanganinya kwitansi ini,
+                                maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas.
+                                Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.
+                            </font>
+                        </td>
+                    </tr>
+
+                </table>
+            </div><!--End Table-->
+        </div><!--End InvoiceBot-->
+    </div><!--End Invoice-->
+
+</body>
+
+</html>
 
 <script>
-	$('#kwt').click(function () {
-		$("#detail").printThis();
-	});
+    $('#kwt').click(function () {
+        $("#invoice-POS").printThis();
+    });
 
 </script>

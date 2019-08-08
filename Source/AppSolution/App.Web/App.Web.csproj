@@ -202,7 +202,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\AccessManagement\Controllers\RequestForgotPasswordController.cs" />
     <Compile Include="Areas\AccessManagement\Models\UpdateUserPasswordFormVM.cs" />
     <Compile Include="Areas\AccessManagement\Models\CreateRoleFormVM.cs" />
@@ -534,6 +533,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Unauthorized\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutNoMenu.cshtml" />
+    <Content Include="Views\Shared\_printlayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
