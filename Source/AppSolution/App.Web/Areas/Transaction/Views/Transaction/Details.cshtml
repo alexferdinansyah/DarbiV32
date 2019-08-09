@@ -1,131 +1,76 @@
 ﻿@model IEnumerable<App.Entities.Models.Transaksi>
 
 @{
-    ViewBag.Title = "Detail Transaksi Terakhir";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Detail Transaksi Terakhir";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
+
 <div>
-    <h4>Transaksi Biaya</h4>
-    <hr />
+	<table>
+		
+		<tr>
 
-    @{
-        App.Entities.DataAccessLayer.DatabaseContext db = new App.Entities.DataAccessLayer.DatabaseContext();
-        var nm = "";
-        var kelas = "";
-        var nosisda = "";
-        var periode = "";
-        foreach (var d in Model)
-        {
-            IEnumerable<App.Entities.Models.Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(d.Nosisda));
-            foreach (var d1 in dts)
-            {
-                nm = d1.Fullname;
-                kelas = d1.Kelas;
-                nosisda = d1.Nosisda;
-                //periode = d1.Periode;
-                break;
-            }
-            break;
-        }
-    }
+			<th>No Sisda</th>
+			<th>Nama Lengkap Siswa</th>
+			<th>Total Biaya Masuk</th>
+			<th>Biaya Masuk Dibayarkan</th>
+			<th>Bulan SPP</th>
+			<th>Nominal SPP</th>
+			<th>Total Daftar Ulang</th>
+			<th>Pendaftaran Terakhir</th>
+			<th>Tipe Pembayaran</th>
+			<th>Nama Bank</th>
+			<th>Tanggal Transfer</th>
+			<th>Tanggal Bayar</th>
 
-    <dl class="dl-horizontal">
-        <dt>
-            No Sisda
-        </dt>
-        <dd>
-            @nosisda
-        </dd>
-        <dt>
-            Nama Siswa
-        </dt>
-        <dd>
-            @nm
-        </dd>
-        <dt>
-            Kelas
-        </dt>
-        <dd>
-            @kelas
-        </dd>
-    </dl>
-    <hr />
-    @foreach (var d in Model)
-    {
-<dl class="dl-horizontal">
-    <dt>
-        Total Biaya Masuk
-    </dt>
-    <dd>
-        Rp. @d.totalBM
-    </dd>
-
-    <dt>
-        Biaya Masuk Dibayarkan
-    </dt>
-    <dd>
-        Rp. @d.bayarBM
-    </dd>
-    <dt>
-        Bulan SPP
-    </dt>
-    <dd>
-        @d.bulanspp
-    </dd>
-    <dt>
-        Nominal SPP
-    </dt>
-    <dd>
-        Rp. @d.bayarspp
-    </dd>
-    <hr />
-    <dt>
-        Total Daftar Ulang
-    </dt>
-    <dd>
-        @d.daftarUlang
-    </dd>
-    <dt>
-        Pendaftaran Terakhir
-    </dt>
-    <dd>
-        @d.cicilDaftarUlang
-    </dd>
-    <hr/>
-    <dt>
-        Tipe Pembayaran
-    </dt>
-    <dd>
-        @d.tipebayar
-    </dd>
-    <dt>
-        Nama Bank
-    </dt>
-    <dd>
-        @d.Banknm
-    </dd>
-    <dt>
-        Tanggal Transfer
-    </dt>
-    <dd>
-        @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", d.tgltransfer))
-    </dd>
-    <dt>
-        Tanggal Bayar
-    </dt>
-    <dd>
-        @Convert.ToString(string.Format("{0:dd, MMMM yyyy}", d.tglbayar))
-    </dd>
-
-</dl>
-    <hr />
-
-    }
-
+		</tr>
+		<hr align="right">
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Nosisda)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Namasiswa)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.totalBM)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.bayarBM)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.bulanspp)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.bayarspp)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.daftarUlang)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.cicilDaftarUlang)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.tipebayar)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Banknm)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.tgltransfer)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.tglbayar)
+				</td>
+			</tr>
+		}
+	</table>
 </div>
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
-    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+	@*@Html.ActionLink("Edit", "Edit", new { id = Model.BiayaId }) |*@
+	@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </p>

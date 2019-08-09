@@ -157,7 +157,7 @@ namespace App.Web.Areas.Transaction.Controllers
             /*
              * iMa : if dttrans doest have any record, it will be null, and null cannot use Count!
              */
-            if (dttrans == null)
+            if (dttrans == null || dttrans.Count() == 0)
             {
                 return RedirectToAction("TransaksiKosong");
             }
@@ -166,7 +166,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
                 if (tr == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("TransaksiKosong");
                 }
                 else
                 {
@@ -374,6 +374,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.Kelastingkat = model.Kelastingkat;
                 newmodel.periode = "2019-2020";
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
+                newmodel.komiteSekolah = model.komiteSekolah;
                 newmodel.totalBM = model.totalBM;
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
@@ -444,18 +445,20 @@ namespace App.Web.Areas.Transaction.Controllers
             Transaksi transaksi = db.Transaksis.Find(id);
             if (transaksi.SSId != null)
             {
-
                 SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId); 
                 transaksi.JenisSS = s.JenisSS;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bayarspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
                 transaksi.totalkeseluruhan = totalbayar.ToString();
-
             }
 
             //spp
             if (transaksi.bulanspp == null)
+            {
+                transaksi.infospp = "-";
+            }
+            if (transaksi.komiteSekolah == null)
             {
                 transaksi.infospp = "-";
             }

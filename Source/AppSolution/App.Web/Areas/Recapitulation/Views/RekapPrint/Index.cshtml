@@ -20,6 +20,10 @@
             <th>Kelas</th>
             <th>Daftar Ulang</th>
             <th>Bayar BM</th>
+            <th>Bulan Pembayaran SPP</th>
+            <th>Bayar SPP</th>
+            @*<th>School Support</th>*@
+            <th>Bayar School Support</th>
             <th>Tanggal Bayar</th>
         </tr>
     </thead>
@@ -51,8 +55,10 @@
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
                     { "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
                     { "name": "biayaBM", "value": $('#biayaBM').val() },
-                    /*{ "name": "bulanspp", "value": $('#bulanspp').val() },
-                    { "name": "bayarspp", "value": $('#bulanspp').val() },*/
+                    { "name": "bulanspp", "value": $('#bulanspp').val() },
+                    { "name": "bayarspp", "value": $('#bayarspp').val() },
+                    //{ "name": "SSId", "value": $('#SSId').val() },
+                    { "name": "nominal", "value": $('#nominal').val() },
                     { "name": "tglbayar", "value": $('#tglbayar').val() },
 
                 );
@@ -68,8 +74,10 @@
                 { "sName": "Kelastingkat" },
                 { "sName": "cicilDaftarUlang" },
                 { "sName": "biayaBM" },
-                /*{ "sName": "bulanspp" },
-                { "sName": "bayarspp" },*/
+                { "sName": "bulanspp" },
+                { "sName": "bayarspp" },
+                //{ "sName": "SSId" },
+                { "sName": "nominal" },
                 { "sName": "tglbayar" },
             ]
         });
