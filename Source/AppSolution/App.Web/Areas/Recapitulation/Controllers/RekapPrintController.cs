@@ -42,6 +42,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapPrintVM> models = new List<RekapPrintVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
+
             if (Namasiswa == "" || Namasiswa == null)
             {
                 //jika tglbayar sebagai opsi pencarian
@@ -53,20 +54,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.cicilDaftarUlang != null)
-                            {
-                                RekapPrintVM model = new RekapPrintVM();
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                model.biayaBM = dd.bayarBM.ToString();
-                                /*model.bulanspp = dd.bulanspp.ToString();
-                                model.bayarspp = dd.bayarspp.ToString();*/
+                            RekapPrintVM model = new RekapPrintVM();
+                            model.Nosisda = dd.Nosisda;
+                            model.Namasiswa = dd.Namasiswa;
+                            model.Kelastingkat = dd.Kelastingkat;
+                            model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                            model.biayaBM = dd.bayarBM.ToString();
+                            model.bulanspp = dd.bulanspp.ToString();
+                            model.bayarspp = dd.bayarspp.ToString();
+                            //model.SSId = dd.SSId.ToString();
+                            model.nominal = dd.nominal.ToString();
+                            model.tglbayar = dd.tglbayar;
+                            models.Add(model);
 
-                                model.tglbayar = dd.tglbayar;
-                                models.Add(model);
-                            }
                         }
                     }
                 }
@@ -96,22 +96,21 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa == Namasiswa)
+                            if (dd.Namasiswa.Contains(Namasiswa))
                             {
-                                if (dd.cicilDaftarUlang != null)
-                                {
-                                    RekapPrintVM model = new RekapPrintVM();
-                                    model.Nosisda = dd.Nosisda;
-                                    model.Namasiswa = dd.Namasiswa;
-                                    model.Kelastingkat = dd.Kelastingkat;
-                                    model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                    model.biayaBM = dd.bayarBM.ToString();
-                                    /*model.bulanspp = dd.bulanspp.ToString();
-                                    model.bayarspp = dd.bayarspp.ToString();*/
+                                RekapPrintVM model = new RekapPrintVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                model.biayaBM = dd.bayarBM.ToString();
+                                model.bulanspp = dd.bulanspp.ToString();
+                                model.bayarspp = dd.bayarspp.ToString();
+                                //model.SSId = dd.SSId.ToString();
+                                model.nominal = dd.nominal.ToString();
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
 
-                                    model.tglbayar = dd.tglbayar;
-                                    models.Add(model);
-                                }
                             }
                         }
                     }
@@ -133,12 +132,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     errorMessage = ex.Message;
                 }
-            }
 
-            //Jika ada hasil pencarian baik berdasar nama maupun tglbayar
-            try
-            {
-                int TotalRecord = models.Count();
+            }
+            try { 
+            int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
                 int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
@@ -154,12 +151,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
-                        /*data.bulanspp,
-                        data.bayarspp,*/
-                        /*data.SSId,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),*/
+                        string.Format( "{0:#,#.00}", (data.cicilDaftarUlang == "" ? 0 : Convert.ToInt32(data.cicilDaftarUlang)) ),
+                        string.Format( "{0:#,#.00}", (data.biayaBM == "" ? 0 : Convert.ToInt32(data.biayaBM)) ),
+                        string.Format( "{0:#,#.00}", (data.bayarspp == "" ? 0 : Convert.ToInt32(data.bayarspp)) ),
+                        data.bulanspp,
+                        /*data.SSId,*/
+                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
                         data.tglbayar.ToString()
                     });
                 }
