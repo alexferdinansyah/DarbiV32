@@ -212,7 +212,7 @@
                         }
                         else
                         {
-                            <td align="center">
+                            <td>
                                 <font size="1px">
                                     @Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
                                 </font>
@@ -241,10 +241,46 @@
                     </tr>
 
                     @*KS*@
-                    <tr height="10px">
-                        <td colspan="3"><font size="1px">KS : Rp.10.000,- || February</font></td>
-                        <td colspan="3"><font size="1px" style="border-left: 3px dotted black">KS : Rp.10.000,- || February</font></td>
-                    </tr>
+				<tr height="10px">
+					<td colspan="2"><font size="1px">@Html.DisplayNameFor(model => model.komiteSekolah) : </font></td>
+					
+					@if (Model.infospp != null)
+					{
+
+						<td>
+							@Html.DisplayFor(model => model.infospp)
+						</td>
+
+					}
+					else
+					{
+						<td>
+							<font size="1px">
+								@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.komiteSekolah)
+							</font>
+						</td>
+					}
+
+					<td colspan="2"><font size="1px" style="border-left: 3px dotted black">@Html.DisplayNameFor(model => model.komiteSekolah) :</font></td>
+					
+					@if (Model.infospp != null)
+					{
+
+						<td>
+							@Html.DisplayFor(model => model.infospp)
+						</td>
+
+					}
+					else
+					{
+						<td>
+							<font size="1px">
+								@Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.komiteSekolah)
+							</font>
+						</td>
+					}
+
+				</tr>
                     @*school support*@
                     <tr height="10px">
                         <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.SSId) || @Html.DisplayNameFor(model => model.nominal) : @Html.DisplayFor(model => model.JenisSS) || @Html.DisplayFor(model => model.nominal)</font></td>
