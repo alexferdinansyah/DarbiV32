@@ -64,6 +64,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
+
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -72,12 +73,28 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
                 {
-                    //IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
+
+                    foreach (var dd in t)
+                    {
+                        if (dd.tglbayar == tglbayar)
+                        {
+                            if (dd.SSId != null)
+                            {
+                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
+
+                        }
+                    }
 
                     /*
                      * iMa : filtering
                      */
-
                     int? isDel = null;
                     for (int j = 0; j < models.Count(); j++)
                     {
@@ -86,7 +103,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             j = models.Count() - 2;
                             models.Remove(models[Convert.ToInt32(isDel)]);
                         }
-                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = db.Transaksis.OrderBy(x => x.TransId);
                         t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
                         if (t.Count() == 0)
                         {
@@ -99,25 +116,23 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 isDel = j;
                             }
                         }
-                        foreach (var dt in t)
+                        else
                         {
-                            if (dt.SSId != null)
+                            int eachsiswa = 0;
+                            foreach (var dt in t)
                             {
-                                //RekapSPPVM mm = new RekapSPPVM();
-                                models[j].biayaBM = dt.bayarBM.ToString();
-                                models[j].SSId = dt.SSId.ToString();
-                                models[j].nominal = dt.nominal;
-                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                //mm = models[j];
-
-                                //models.Insert(0, mm);
-                                SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
-                                models[j].SSName = dtss.JenisSS;
+                                if (dt.SSId != null)
+                                {
+                                    //RekapSPPVM mm = new RekapSPPVM();
+                                    models[j].biayaBM = dt.bayarBM.ToString();
+                                    models[j].SSId = dt.SSId.ToString();
+                                    models[j].nominal = dt.nominal;
+                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                    eachsiswa++;
+                                }
                             }
-                            else
-                            {
-                                isDel = j;
-                            }
+                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
+                            models[j].SSName = dtss.JenisSS;
                         }
                     }
                 }
@@ -176,25 +191,23 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 isDel = j;
                             }
                         }
-                        foreach (var dt in t)
+                        else
                         {
-                            if (dt.SSId != null)
+                            int eachsiswa = 0;
+                            foreach (var dt in t)
                             {
-                                //RekapSPPVM mm = new RekapSPPVM();
-                                models[j].biayaBM = dt.bayarBM.ToString();
-                                models[j].SSId = dt.SSId.ToString();
-                                models[j].nominal = dt.nominal;
-                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                //mm = models[j];
-
-                                //models.Insert(0, mm);
-                                SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
-                                models[j].SSName = dtss.JenisSS;
+                                if (dt.SSId != null)
+                                {
+                                    //RekapSPPVM mm = new RekapSPPVM();
+                                    models[j].biayaBM = dt.bayarBM.ToString();
+                                    models[j].SSId = dt.SSId.ToString();
+                                    models[j].nominal = dt.nominal;
+                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                    eachsiswa++;
+                                }
                             }
-                            else
-                            {
-                                isDel = j;
-                            }
+                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
+                            models[j].SSName = dtss.JenisSS;
                         }
                     }
 
