@@ -157,7 +157,7 @@ namespace App.Web.Areas.Transaction.Controllers
             /*
              * iMa : if dttrans doest have any record, it will be null, and null cannot use Count!
              */
-            if (dttrans == null)
+            if (dttrans == null || dttrans.Count() == 0)
             {
                 return RedirectToAction("TransaksiKosong");
             }
@@ -166,7 +166,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
                 if (tr == null)
                 {
-                    return HttpNotFound();
+                    return RedirectToAction("TransaksiKosong");
                 }
                 else
                 {
