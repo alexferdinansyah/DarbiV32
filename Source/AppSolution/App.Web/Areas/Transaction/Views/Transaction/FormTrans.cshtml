@@ -228,17 +228,6 @@
             $(".total").val(total);
         });
 
-        $("#open-popup").click(function () {
-           
-            var val1 = document.getElementById("uang").value;
-            var val2 = document.getElementById("total").value;
-            var tot = '';
-            tot = Number(val1) - Number(val2);
-            var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
-            return !!res;
-            
-        });
-
         //$('#nominal').value = "";
         $('#tipebayar2').hide();
         $('#tipebayar3').hide();
@@ -267,6 +256,22 @@
                     alert(strUser);
                 });
             }
+        });
+
+        //konfirmasi popup dan tampilkan kembalian jika pembayaran tunai
+        $("#open-popup").click(function () {
+            var e = document.getElementById("OpTrans");
+            var strUser = e.options[e.selectedIndex].text;
+
+            var val1 = document.getElementById("uang").value;
+            var val2 = document.getElementById("total").value;
+            var tot = '';
+            if (strUser == "Tunai") {
+                tot = Number(val1) - Number(val2);
+                var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
+            } else var res = confirm("Lakukan Transaksi ?");
+            return !!res;
+
         });
 
         $('#listbln').change(function () {
