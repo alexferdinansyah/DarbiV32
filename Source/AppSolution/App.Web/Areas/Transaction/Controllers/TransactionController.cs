@@ -230,6 +230,17 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Agustus",Value="8" },
             };
 
+            List<SelectListItem> listperiode = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih periode",Value="0",Selected=true },
+                new SelectListItem {Text="2015-2016",Value="2015-2016" },
+                new SelectListItem {Text="2016-2017",Value="2016-2017" },
+                new SelectListItem {Text="2017-2018",Value="2017-2018" },
+                new SelectListItem {Text="2018-2019",Value="2018-2019" },
+                new SelectListItem {Text="2019-2020",Value="2019-2020" },
+            };
+
             //info siswa
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
             string[] keltingkat = null;
@@ -358,6 +369,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             ViewBag.OpTrans = OpTrans;
             ViewBag.listbln = listbln;
+            ViewBag.listperiode = listperiode;
             return View(mod);
         }
 
@@ -372,7 +384,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.Nosisda = model.Nosisda;
                 newmodel.Namasiswa = model.Namasiswa;
                 newmodel.Kelastingkat = model.Kelastingkat;
-                newmodel.periode = "2019-2020";
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.komiteSekolah = model.komiteSekolah;
                 newmodel.totalBM = model.totalBM;
@@ -389,8 +400,10 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                     newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
                 }
+                //pilihperiode
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
+                newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
