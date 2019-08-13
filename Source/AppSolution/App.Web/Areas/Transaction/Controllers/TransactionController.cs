@@ -186,29 +186,42 @@ namespace App.Web.Areas.Transaction.Controllers
         //GET : Transaction/Transaction/Delete
         public ActionResult Delete(string nosisda)
         {
-            IEnumerable<Transaksi> tran = null;
-            Transaksi model = null;
             if (nosisda == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            IEnumerable<Transaksi> dttrans = null;
+            if (db.Transaksis.Count() != 0)
             {
-                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
+                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false);
             }
 
-            for (int i = 0; i < tran.Count(); i++)
-            {
-                model = tran.ToList()[i];
-                break;
-            }
-
-            if (model == null)
+            /*
+             * iMa : if dttrans doest have any record, it will be null, and null cannot use Count!
+             */
+            if (dttrans == null || dttrans.Count() == 0)
             {
                 return RedirectToAction("TransaksiKosong");
             }
+            else
+            {
+                Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+                if (tr == null)
+                {
+                    return RedirectToAction("TransaksiKosong");
+                }
+                else
+                {
 
-            return View(model);
+                    if (tr.tipebayar != "Tunai")
+                    {
+                        Bank infobank = db.Banks.Find(tr.BankId);
+                        tr.Banknm = infobank.Bankname;
+                    }
+                }
+            }
+
+            return View(dttrans);
         }
 
         //GET : Transaction/Transaction/Lakukan Transaksi
