@@ -30,6 +30,9 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Bayar Biaya Masuk")]
         public string bayarBM { get; set; }
 
+        [Display(Name = "Sisa Tagihan")]
+        public string sisaTagihanBM { get; set; }
+
         [Display(Name = "Periode")]
         public string periode { get; set; }
 
@@ -51,6 +54,8 @@ namespace App.Web.Areas.Transaction.Models
         public string cicilDaftarUlang { get; set; }
         [Display(Name = "Bayar Daftar Ulang")]
         public string bayarDaftarUlang { get; set; }
+        [Display(Name = "Sisa Tagihan")]
+        public string sisaTagihanDU { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.Date)]
@@ -90,11 +95,17 @@ namespace App.Web.Areas.Transaction.Models
         //school support//
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
         public SelectList Biaya()
         {
             DatabaseContext db = new DatabaseContext();
             var Biayas = db.Biayas;
             return new SelectList(Biayas.ToList(), "JenisBiaya", "NomBiaya", "0");
         }
+        [Display(Name = "Uang Bayar")]
+        public string uang { get; set; }
+
+        [Display(Name = "Total Keseluruhan")]
+        public string total { get; set; }
     }
 }

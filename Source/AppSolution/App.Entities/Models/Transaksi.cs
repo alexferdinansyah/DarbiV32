@@ -61,8 +61,11 @@ namespace App.Entities.Models
         [Display(Name = "School Support")]
         public int? SSId { get; set; } //id schoolsupport
         public string JenisSS { get; set; } //jenis schoolsupport
+
+        [Display(Name = "No Kwitansi")]
         public string Nokwitansi { get; set; } //NO KWITANSI
 
+        
         [Display(Name = "Total Yang Harus Bayar")] 
         public string totalkeseluruhan { get; set; } //Untuk menambahkan seluruh total yg ada di kwitansi
 
