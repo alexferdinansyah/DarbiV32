@@ -22,9 +22,11 @@ namespace App.Entities.Models
         [Display(Name = "Kelas")]
         public string Kelastingkat { get; set; }
 
+        [Display(Name = "Jenjang")]
+        public string Jenjang { get; set; }
+
         [Display(Name = "Total Biaya Masuk")]
         public string totalBM { get; set; }
-
         [Display(Name = "Bayar Biaya Masuk")]
         public int? bayarBM { get; set; }
 
@@ -66,7 +68,7 @@ namespace App.Entities.Models
         public string Nokwitansi { get; set; } //NO KWITANSI
 
         
-        [Display(Name = "Total Yang Harus Bayar")] 
+        [Display(Name = "Total Bayar")] 
         public string totalkeseluruhan { get; set; } //Untuk menambahkan seluruh total yg ada di kwitansi
 
         [Display(Name = "Nominal")]

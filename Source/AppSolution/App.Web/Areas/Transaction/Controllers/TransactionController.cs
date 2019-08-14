@@ -234,11 +234,11 @@ namespace App.Web.Areas.Transaction.Controllers
 
             {
                 new SelectListItem {Text="Pilih periode",Value="0",Selected=true },
-                new SelectListItem {Text="2015-2016",Value="2015-2016" },
-                new SelectListItem {Text="2016-2017",Value="2016-2017" },
-                new SelectListItem {Text="2017-2018",Value="2017-2018" },
-                new SelectListItem {Text="2018-2019",Value="2018-2019" },
-                new SelectListItem {Text="2019-2020",Value="2019-2020" },
+                new SelectListItem {Text="2015-2016",Value="15" },
+                new SelectListItem {Text="2016-2017",Value="16" },
+                new SelectListItem {Text="2017-2018",Value="17" },
+                new SelectListItem {Text="2018-2019",Value="18" },
+                new SelectListItem {Text="2019-2020",Value="19" }
             };
 
             //info siswa
@@ -407,7 +407,6 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
                     newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
                 }
-                //pilihperiode
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
                 newmodel.periode = model.periode;
@@ -468,8 +467,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId);
                 transaksi.JenisSS = s.JenisSS;
                 //info bayar keseluruhan
-                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
+                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) ;
                 transaksi.totalkeseluruhan = totalbayar.ToString();
             }
 

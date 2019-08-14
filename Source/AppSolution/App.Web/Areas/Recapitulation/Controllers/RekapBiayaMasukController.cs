@@ -27,7 +27,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             {
                 new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-                new SelectListItem {Text="Nama",Value="1"},
+                new SelectListItem {Text="Jenjang",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
             Session["Opsi"] = model.Opsi;
@@ -41,25 +41,25 @@ namespace App.Web.Areas.Recapitulation.Controllers
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
-                if (m.Opsi == "Nama")
+                if (m.Opsi == "Jenjang")
                 {
                     m.tglbayar = null;
                 }
                 else
                 {
-                    m.Namasiswa = null;
+                    m.Jenjang = null;
                 }
             }
 
 
             var QS = Request.QueryString;
-            string Namasiswa = m.Namasiswa;
+            string Jenjang = Convert.ToString(m.Jenjang);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "" || Namasiswa == null)
+            if (Jenjang == "" || Jenjang == null)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -76,6 +76,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
                                 model.biayaBM = dd.bayarBM.ToString();
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
@@ -104,13 +105,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika pencarian berdasarkan nama siswa
                 try
                 {
-                    if (Namasiswa != null)
+                    if (Jenjang != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa.Contains(Namasiswa))
+                            if (dd.Jenjang == Jenjang)
                             {
                                 if (dd.bayarBM != 0)
                                 {
@@ -118,6 +119,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
                                     model.biayaBM = dd.bayarBM.ToString();
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
@@ -166,6 +168,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
+                        data.Jenjang,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
                         data.tglbayar.ToString()
                     });
