@@ -272,7 +272,7 @@ namespace App.Web.Areas.MasterData.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include =
-            "SiswaId,Nosisda,Nisn,Fullname,Nickname,Sex,Pob,Dob,NamaAyah,NamaIbu,PekerjaanAyah,PekerjaanIbu,NoTelpAyah,NoTelpIbu,EmailOrtu,Alamat,Kota,Provinsi,KodePos,Negara,Anakke,Agama,Suku,Kewarganegaraan,TinggiBadan,BeratBadan,Goldar,Periode,Kelas,StatKat,KontakSiswa,SekolahAsal,StatSekolahAsal,JarakRumahSekolah,Tgldaftar,Geltest")]
+            "SiswaId,Nosisda,Nisn,Fullname,Nickname,Sex,Pob,Dob,NamaAyah,NamaIbu,PekerjaanAyah,PekerjaanIbu,NoTelpAyah,NoTelpIbu,EmailOrtu,Alamat,Kota,Provinsi,KodePos,Negara,Anakke,Agama,Suku,Kewarganegaraan,TinggiBadan,BeratBadan,Goldar,PerDaftar,Kelas,Katspp,KontakSiswa,SekolahAsal,StatSekolahAsal,JarakRumahSekolah,TglDaftar")]
          Siswa siswa)
         {
             siswa.DetailSaudara = "";

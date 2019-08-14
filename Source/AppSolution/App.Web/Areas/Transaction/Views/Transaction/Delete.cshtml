@@ -34,6 +34,7 @@
             }
 
             <tr>
+                <th>Nomor Kwitansi</th>
                 <th>Total Biaya Masuk</th>
                 <th>Biaya Masuk Dibayarkan</th>
                 <th>Bulan SPP</th>
@@ -50,6 +51,9 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nokwitansi)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.totalBM)
                     </td>
@@ -103,7 +107,7 @@
     });
     function myFunction() {
         var txt;
-        var r = confirm("Press a button!\nEither OK or Cancel.");
+        var r = confirm("Anda Yakin Ingin Membatalkan Transaksi Ini ?");
         if (r == true) {
             txt = "You pressed OK!";
         } else {
