@@ -11,6 +11,9 @@
 @Html.HiddenFor(model => model.Namasiswa)
 @Html.HiddenFor(model => model.tglbayar)
 
+<input type="button" id="print" value="Print Halaman" class="btn btn-default" />
+
+<div id="details">
 <table id="tableRekapPrint" class="table" style="width:100%">
     <thead>
         <tr>
@@ -86,5 +89,12 @@
             tableRekapPrint.fnDraw(null);
         });
 
+    });
+</script>
+    </div>
+
+<script>
+    $('#print'.click(function () {
+        $("#details").printThis();
     });
 </script>
