@@ -21,16 +21,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
         // GET: Recapitulation/RekapBiayaMasuk
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
-
         {
             List<SelectListItem> OpBM = new List<SelectListItem>()
-
             {
                 new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
                 new SelectListItem {Text="Jenjang",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
             Session["Opsi"] = model.Opsi;
+            Session["valOpsi"] = model.Jenjang;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -51,15 +50,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
             }
 
-
             var QS = Request.QueryString;
-            string Jenjang = Convert.ToString(m.Jenjang);
+            var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Jenjang == "" || Jenjang == null)
+            if (Jid == 0 || Jid == null)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -102,16 +100,25 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
             else
             {
-                //jika pencarian berdasarkan nama siswa
+                //jika pencarian berdasarkan Nama Jenjang
                 try
                 {
-                    if (Jenjang != null)
+                    if (Jid != null)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        //Search for jenjangName in Jenjang
+                        IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == Jid);
+                        var jName = "";
+                        foreach(var i in infoJ)
+                        {
+                            jName = i.JenjangName;
+                            break;
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+
 
                         foreach (var dd in t)
                         {
-                            if (dd.Jenjang == Jenjang)
+                            if (dd.Jenjang.Contains(jName))
                             {
                                 if (dd.bayarBM != 0)
                                 {

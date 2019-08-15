@@ -22,10 +22,8 @@ namespace App.Web.Areas.Recapitulation.Models
 
         [Display(Name = "Jenjang")]
         public int? JenjangId { get; set; }
-        public int? Jenjang
-        {
-            get; set;
-        }
+        public int? Jenjang {get; set;}
+
         public SelectList Jenjangs()
         {
             DatabaseContext db = new DatabaseContext();

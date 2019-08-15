@@ -67,7 +67,6 @@ namespace App.Entities.Models
         [Display(Name = "No Kwitansi")]
         public string Nokwitansi { get; set; } //NO KWITANSI
 
-        
         [Display(Name = "Total Bayar")] 
         public string totalkeseluruhan { get; set; } //Untuk menambahkan seluruh total yg ada di kwitansi
 

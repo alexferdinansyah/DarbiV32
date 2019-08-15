@@ -30,6 +30,8 @@ namespace App.Web.Areas.MasterData.Controllers
             return View(model);
         }
 
+
+
         //GET : MasterData/Tingkat/Create
         public ActionResult Create()
         {
@@ -79,7 +81,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 }
                 //if (Jenjang != null)
                 //{
-                //    Query = Query.Where(x => x.Jenjang.Contains(Jenjang));
+                //    Query = Query.Where(x => m.Jenjang.Contains(Jenjang));
                 //}
 
 
@@ -192,6 +194,7 @@ namespace App.Web.Areas.MasterData.Controllers
 		// POST: AccessManagement/User/Edit/5
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult Edit([Bind(Include = "TingkatId,Namatingkat,JenjangName")] Tingkat tingkat)

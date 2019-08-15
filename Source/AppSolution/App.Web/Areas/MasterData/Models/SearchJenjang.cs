@@ -12,5 +12,7 @@ namespace App.Web.Areas.MasterData.Models
 	{
 		[Display(Name = "Name")]
 		public string Name { get; set; }
-	}
+
+        public string Jenjang { get; set; }
+    }
 }
