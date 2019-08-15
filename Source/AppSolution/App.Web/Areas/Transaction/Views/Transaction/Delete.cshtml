@@ -7,50 +7,55 @@
 
 <h2>@ViewBag.Title</h2>
 <hr />
-@using (Html.BeginForm("Delete", "Transaction", FormMethod.Post, new { id = "myForm" }))
-{
-    @Html.AntiForgeryToken()
-    <div>
-        <table style="border-top: 0px solid black">
+
+
+<div>
+    <table style="border-top: 0px solid black">
+        @foreach (var item in Model)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    Nama Siswa
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Namasiswa)
+                </dd>
+                <dt>
+                    No Sisda
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Nosisda)
+                </dd>
+            </dl>
+            break;
+        }
+
+        <tr>
+            <th>Nomor Kwitansi</th>
+            <th>Total Biaya Masuk</th>
+            <th>Biaya Masuk Dibayarkan</th>
+            <th>Bulan SPP</th>
+            <th>Nominal SPP</th>
+            <th>Total Daftar Ulang</th>
+            <th>Pendaftaran Terakhir</th>
+            <th>Tipe Pembayaran</th>
+            <th>Nama Bank</th>
+            <th>Tanggal Transfer</th>
+            <th>Tanggal Bayar</th>
+            <th>Action</th>
+
+            <hr align="right">
             @foreach (var item in Model)
             {
-                <dl class="dl-horizontal">
-                    <dt>
-                        Nama Siswa
-                    </dt>
 
-                    <dd>
-                        @Html.DisplayFor(modelItem => item.Namasiswa)
-                    </dd>
-                    <dt>
-                        No Sisda
-                    </dt>
 
-                    <dd>
-                        @Html.DisplayFor(modelItem => item.Nosisda)
-                    </dd>
-                </dl>
-                break;
-            }
+                using (Html.BeginForm())
 
-            <tr>
-                <th>Nomor Kwitansi</th>
-                <th>Total Biaya Masuk</th>
-                <th>Biaya Masuk Dibayarkan</th>
-                <th>Bulan SPP</th>
-                <th>Nominal SPP</th>
-                <th>Total Daftar Ulang</th>
-                <th>Pendaftaran Terakhir</th>
-                <th>Tipe Pembayaran</th>
-                <th>Nama Bank</th>
-                <th>Tanggal Transfer</th>
-                <th>Tanggal Bayar</th>
-                <th>Action</th>
-
-                <hr align="right">
-                @foreach (var item in Model)
                 {
                 <tr>
+                    @Html.AntiForgeryToken()
                     <td>
                         @Html.DisplayFor(modelItem => item.Nokwitansi)
                     </td>
@@ -85,35 +90,39 @@
                         @Html.DisplayFor(modelItem => item.tglbayar)
                     <td>
                         <input type="submit" name="Batal" value="Batal" onclick="return myFunction()" />
-                        <input type="hidden" name="TransId" value="@item.TransId" />
+                        <input type="hidden" name="TransId" id="TransId" value="@item.TransId" /><input type="hidden" id="id" name="id" value="@item.TransId" />
                         @*@Html.DisplayFor(modelItem => item.TransId)*@
+
                     </td>
                 </tr>
             }
-            </table>
-        </div>
-    }
-<p>
-    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
-</p>
+
+            }
+        </table>
+    </div>
+
+    <p>
+        @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+    </p>
 
 
-<script>
+    <script>
 
-    $("#open-popup").click(function () {
-        //alert("Yakin ?");
-        var res = confirm("Yakin Hapus ?");
-        return !!res;
-    });
-    function myFunction() {
-        var txt;
-        var r = confirm("Anda Yakin Ingin Membatalkan Transaksi Ini ?");
-        if (r == true) {
-            txt = "You pressed OK!";
-        } else {
-            /*txt = "You pressed Cancel!";*/
-            return false;
+        $("#open-popup").click(function () {
+            //alert("Yakin ?");
+            var res = confirm("Yakin Hapus ?");
+            return !!res;
+        });
+        function myFunction() {
+            alert(document.getElementById("TransId").value());
+            var txt;
+            var r = confirm("Anda Yakin Ingin Membatalkan Transaksi Ini ?");
+            if (r == true) {
+                txt = "You pressed OK!";
+                document.getElementById("id").value = document.getElementById("TransId").value;
+            } else {
+                /*txt = "You pressed Cancel!";*/
+                return false;
+            }
         }
-    }
-</script>
-
+    </script>

@@ -326,12 +326,13 @@ namespace App.Web.Areas.Transaction.Controllers
 
             }
 
+            mod.sisaTagihanBM = mod.totalBM;
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(mod.paidBM) - Convert.ToInt32(t.totalBM));
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
                 //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
             //info sisa tagihan BM & Daftar Ulang
