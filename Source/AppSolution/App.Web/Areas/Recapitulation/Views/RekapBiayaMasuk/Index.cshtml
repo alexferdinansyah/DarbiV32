@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
-@Html.HiddenFor(model => model.Namasiswa)
+@Html.HiddenFor(model => model.Jenjang)
 @Html.HiddenFor(model => model.tglbayar)
 
 
@@ -19,6 +19,7 @@
             <th>No Sisda</th>
             <th>Nama Siswa</th>
             <th>Kelas</th>
+			<th>Jenjang</th>
             <th>BM Yang dibayarkan</th>
             <th>Tanggal Bayar</th>
             @*<th>Tanggal History</th>*@
@@ -29,7 +30,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
 
         var tableRekapBiayaMasuk = $('#tableRekapBiayaMasuk').dataTable({
             "scrollX": true,
@@ -44,15 +44,15 @@
             "sAjaxSource": "/Recapitulation/RekapBiayaMasuk/AjaxRekapBiayaMasuk?format=JSON",
             "bProcessing": true,
             oLanguage: { sProcessing: "<div id='loader'></div>" },
-            "fnServerParams": function (aoData) {
-                formdata = $('#Req').serializeArray()
-                aoData.push(
-                    { "name": "Nosisda", "value": $('#Nosisda').val() },
-                    { "name": "Namasiswa", "value": $('#Namasiswa').val() },
-                    { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+			"fnServerParams": function (aoData) {
+				formdata = $('#Req').serializeArray()
+				aoData.push(
+					{ "name": "Nosisda", "value": $('#Nosisda').val() },
+					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
+					{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+					{ "name": "Jenjang", "value": $('Jenjang').val() },
                     { "name": "Tingkat", "value": $('#biayaBM').val() },
                     { "name": "tglbayar", "value": $('#tglbayar').val() }
-
                 );
             },
             "aoColumns": [
@@ -63,7 +63,8 @@
                 },
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
-                { "sName": "Kelastingkat" },
+				{ "sName": "Kelastingkat" },
+				{ "sName": "Jenjang"},
                 { "sName": "BiayaBM" },
                 { "sName": "tglbayar" },
             ]

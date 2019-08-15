@@ -19,5 +19,17 @@ namespace App.Web.Areas.Recapitulation.Models
         public DateTime? tglbayar { get; set; }
 
         public string Opsi { get; set; }
+
+        [Display(Name = "Jenjang")]
+        public int? JenjangId { get; set; }
+        public int? Jenjang {get; set;}
+
+        public SelectList Jenjangs()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Jenjangs = db.Jenjangs;
+
+            return new SelectList(Jenjangs.ToList(), "JenjangId", "JenjangName", "0");
+        }
     }
 }

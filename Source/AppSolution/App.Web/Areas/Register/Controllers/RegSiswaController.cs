@@ -251,10 +251,13 @@ namespace App.Web.Areas.Register.Controllers
 
 
                     //nosisda generator
-                    var totalsiswa = db.Siswas.ToList().Count() + 1;
-                    var newtotalsiswa = totalsiswa.ToString().PadLeft(6, '0');
+                    Siswa LastSiswa = db.Siswas.OrderByDescending(m => m.SiswaId).First();
+                    var lastnosisda = Convert.ToInt32(LastSiswa.Nosisda) + 1;
+                    //var newtotalsiswa = totalsiswa.ToString().PadLeft(6, '0');
                     var gnosisda = DateTime.UtcNow.Year;
-                    newmodel.Nosisda = gnosisda + newtotalsiswa;
+                    //var query = select distinct(max(SiswaId)) from Siswa;
+
+                    newmodel.Nosisda =  lastnosisda.ToString();
                     
                     db.Siswas.Add(newmodel);
                     try

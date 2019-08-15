@@ -186,29 +186,42 @@ namespace App.Web.Areas.Transaction.Controllers
         //GET : Transaction/Transaction/Delete
         public ActionResult Delete(string nosisda)
         {
-            IEnumerable<Transaksi> tran = null;
-            Transaksi model = null;
             if (nosisda == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            else
+            IEnumerable<Transaksi> dttrans = null;
+            if (db.Transaksis.Count() != 0)
             {
-                tran = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false).OrderByDescending(x => x.TransId);
+                dttrans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda) && x.isCanceled == false);
             }
 
-            for (int i = 0; i < tran.Count(); i++)
-            {
-                model = tran.ToList()[i];
-                break;
-            }
-
-            if (model == null)
+            /*
+             * iMa : if dttrans doest have any record, it will be null, and null cannot use Count!
+             */
+            if (dttrans == null || dttrans.Count() == 0)
             {
                 return RedirectToAction("TransaksiKosong");
             }
+            else
+            {
+                Transaksi tr = dttrans.OrderByDescending(x => x.TransId).First();
+                if (tr == null)
+                {
+                    return RedirectToAction("TransaksiKosong");
+                }
+                else
+                {
 
-            return View(model);
+                    if (tr.tipebayar != "Tunai")
+                    {
+                        Bank infobank = db.Banks.Find(tr.BankId);
+                        tr.Banknm = infobank.Bankname;
+                    }
+                }
+            }
+
+            return View(dttrans);
         }
 
         //GET : Transaction/Transaction/Lakukan Transaksi
@@ -228,6 +241,17 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Pilih Bulan",Value="0",Selected=true },
                 new SelectListItem {Text="Juli",Value="7" },
                 new SelectListItem {Text="Agustus",Value="8" },
+            };
+
+            List<SelectListItem> listperiode = new List<SelectListItem>()
+
+            {
+                new SelectListItem {Text="Pilih periode",Value="0",Selected=true },
+                new SelectListItem {Text="2015-2016",Value="15" },
+                new SelectListItem {Text="2016-2017",Value="16" },
+                new SelectListItem {Text="2017-2018",Value="17" },
+                new SelectListItem {Text="2018-2019",Value="18" },
+                new SelectListItem {Text="2019-2020",Value="19" }
             };
 
             //info siswa
@@ -302,19 +326,14 @@ namespace App.Web.Areas.Transaction.Controllers
 
             }
 
+            mod.sisaTagihanBM = mod.totalBM;
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-            }
-            //info sisa tagihan BM & Daftar Ulang
-            IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            foreach (var t in sisa)
-            {
-                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
-                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
+                //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             var idTingkatCounter = 0;
@@ -365,6 +384,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             ViewBag.OpTrans = OpTrans;
             ViewBag.listbln = listbln;
+            ViewBag.listperiode = listperiode;
             return View(mod);
         }
 
@@ -379,13 +399,13 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.Nosisda = model.Nosisda;
                 newmodel.Namasiswa = model.Namasiswa;
                 newmodel.Kelastingkat = model.Kelastingkat;
-                newmodel.periode = "2019-2020";
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.komiteSekolah = model.komiteSekolah;
                 newmodel.totalBM = model.totalBM;
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
+                newmodel.Nokwitansi = model.Nokwitansi;
                 newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
@@ -398,6 +418,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 newmodel.bulanspp = model.bulanspp;
+                newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
@@ -415,7 +436,7 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
-        //GET Kwitansi 
+       //Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Transaksi model, int? id)
@@ -424,6 +445,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (ModelState.IsValid)
             {
                 mod = db.Transaksis.Find(model.TransId);
+
                 mod.isCanceled = true;
                 mod.canceledBy = HttpContext.User.Identity.Name;
                 mod.canceledDate = DateTime.UtcNow.Date;
@@ -440,9 +462,9 @@ namespace App.Web.Areas.Transaction.Controllers
         //GET Kwitansi
         public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
-
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -455,8 +477,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId);
                 transaksi.JenisSS = s.JenisSS;
                 //info bayar keseluruhan
-                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp));
+                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) ;
                 transaksi.totalkeseluruhan = totalbayar.ToString();
             }
 
@@ -476,6 +498,13 @@ namespace App.Web.Areas.Transaction.Controllers
             string randomalfanum = frandom("");
             string time = DateTime.Now.ToString("HHmmss");
             transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;
+
+            Transaksi kwitansiupdate = db.Transaksis.Find(transaksi.TransId);
+            kwitansiupdate.Nokwitansi = transaksi.Nokwitansi;
+
+            db.Entry(kwitansiupdate).State = EntityState.Modified;
+            db.SaveChanges();
+
 
             //infosiswa
             IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
@@ -512,9 +541,5 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             return result;
         }
-
-        //totalbayar
-
-
     }
 }

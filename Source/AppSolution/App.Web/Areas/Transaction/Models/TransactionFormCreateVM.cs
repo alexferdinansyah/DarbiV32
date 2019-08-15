@@ -95,6 +95,7 @@ namespace App.Web.Areas.Transaction.Models
         //school support//
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
         public SelectList Biaya()
         {
             DatabaseContext db = new DatabaseContext();
@@ -106,5 +107,8 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "Total Keseluruhan")]
         public string total { get; set; }
+
+        [Display(Name = "No Kwitansi")]
+        public string Nokwitansi { get; set; }
     }
 }

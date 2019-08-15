@@ -1,8 +1,8 @@
 ﻿@model App.Entities.Models.Transaksi
 @{
 
-    ViewBag.Title = "Kwitansi";
-    Layout = "~/Views/Shared/_printlayout.cshtml";
+	ViewBag.Title = "Kwitansi";
+	Layout = "~/Views/Shared/_printlayout.cshtml";
 }
 @*<input type="button" id="kwt" value="Print Kwitansi" class="btn btn-default" />*@
 
@@ -169,12 +169,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" align="center"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
-                        <td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN SPP DAN ADMINISTRASI</font></td>
+                        <td colspan="3" align="center"><font size="1px">KWITANSI PEMBAYARAN ADMINISTRASI</font></td>
+                        <td colspan="3" align="center" style="border-left: 3px dotted black"><font size="1px">KWITANSI PEMBAYARAN ADMINISTRASI</font></td>
                     </tr>
                     @*No kwitansi*@
                     <tr height="10px">
-                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) </font></td>
+                        <td colspan="3"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi) || </font></td>
                         <td colspan="3" style="border-left: 3px dotted black"><font size="1px">@Html.DisplayNameFor(model => model.Nokwitansi) : @Html.DisplayFor(model => model.Nokwitansi)</font></td>
                     </tr>
                     @*nama siswa*@
@@ -214,7 +214,7 @@
                         {
                             <td>
                                 <font size="1px">
-                                    @Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp)
+                                    @Html.DisplayFor(model => model.bulanspp) || Rp.@Html.DisplayFor(model => model.bayarspp) 
                                 </font>
                             </td>
                         }
@@ -308,12 +308,12 @@
                         <td><font size="1px"> </font></td>
                         <td><font size="1px"></font></td>
                     </tr>
-                    @*kembalian*@
+                    @*kembali*@
                     <tr height="10px">
-                        <td width="30%"><font size="1px">Kembalian :</font></td>
+                        <td width="30%"><font size="1px">Kembali :</font></td>
                         <td><font size="1px">  </font></td>
                         <td><font size="1px"></font></td>
-                        <td width="30%"><font size="1px" style="border-left: 3px dotted black">Kembalian : </font></td>
+                        <td width="30%"><font size="1px" style="border-left: 3px dotted black">Kembali : </font></td>
                         <td><font size="1px"> </font></td>
                         <td><font size="1px"></font></td>
                     </tr>
@@ -353,4 +353,10 @@
         $("#invoice-POS").printThis();
     });
 
+</script>
+
+<script type="text/javascript">
+	$(function () {
+		$('.datetimepicker.').datetimepicker();
+	});
 </script>
