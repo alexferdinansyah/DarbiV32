@@ -107,5 +107,8 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "Total Keseluruhan")]
         public string total { get; set; }
+
+        [Display(Name = "No Kwitansi")]
+        public string Nokwitansi { get; set; }
     }
 }

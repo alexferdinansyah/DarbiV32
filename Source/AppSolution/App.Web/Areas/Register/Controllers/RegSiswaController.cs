@@ -256,7 +256,7 @@ namespace App.Web.Areas.Register.Controllers
                     var gnosisda = DateTime.UtcNow.Year;
                     //var query = select distinct(max(SiswaId)) from Siswa;
 
-                    newmodel.Nosisda = gnosisda + query;
+                    newmodel.Nosisda = gnosisda + newtotalsiswa;
                     
                     db.Siswas.Add(newmodel);
                     try

@@ -332,15 +332,7 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
                 mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(mod.paidBM) - Convert.ToInt32(t.totalBM));
-                //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
-            //info sisa tagihan BM & Daftar Ulang
-            //IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            //foreach (var t in sisa)
-            //{
-            //    //mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
-            //    //mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
-            //}
 
             var idTingkatCounter = 0;
             if (nama == "PG")
@@ -411,6 +403,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bayarBM = Convert.ToInt32(model.bayarBM);
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
+                newmodel.Nokwitansi = model.Nokwitansi;
                 newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
@@ -441,7 +434,7 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
-        //GET Kwitansi 
+       //Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Transaksi model, int? id)
@@ -450,6 +443,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (ModelState.IsValid)
             {
                 mod = db.Transaksis.Find(model.TransId);
+
                 mod.isCanceled = true;
                 mod.canceledBy = HttpContext.User.Identity.Name;
                 mod.canceledDate = DateTime.UtcNow.Date;
@@ -466,9 +460,9 @@ namespace App.Web.Areas.Transaction.Controllers
         //GET Kwitansi
         public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
         {
-
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -502,6 +496,13 @@ namespace App.Web.Areas.Transaction.Controllers
             string randomalfanum = frandom("");
             string time = DateTime.Now.ToString("HHmmss");
             transaksi.Nokwitansi = randomnosisda + "-" + time + "-" + randomalfanum;
+
+            Transaksi kwitansiupdate = db.Transaksis.Find(transaksi.TransId);
+            kwitansiupdate.Nokwitansi = transaksi.Nokwitansi;
+
+            db.Entry(kwitansiupdate).State = EntityState.Modified;
+            db.SaveChanges();
+
 
             //infosiswa
             IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
@@ -538,9 +539,5 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             return result;
         }
-
-        //totalbayar
-
-
     }
 }
