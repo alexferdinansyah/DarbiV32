@@ -349,6 +349,13 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
                 mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
             }
+            //info sisa tagihan BM & Daftar Ulang
+            IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            foreach (var t in sisa)
+            {
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+            }
 
             var idTingkatCounter = 0;
             if (nama == "PG")

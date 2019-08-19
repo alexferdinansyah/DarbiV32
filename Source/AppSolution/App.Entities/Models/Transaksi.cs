@@ -91,6 +91,12 @@ namespace App.Entities.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? canceledDate { get; set; }
 
+        //uangbayar & total
+        //[Display(Name = "Uang Bayar")]
+        //public string uang { get; set; }
+
+        //[Display(Name = "Total Keseluruhan")]
+        //public string total { get; set; }
     }
 
 }
