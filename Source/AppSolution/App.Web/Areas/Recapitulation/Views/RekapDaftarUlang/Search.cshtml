@@ -16,12 +16,13 @@
         </div>
 
         @*untuk search*@
-        <div class="form-group" id="pencarian2">
-            @Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group" id="pencarian2">
+        @Html.LabelFor(model => model.Jenjang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Jenjang, Model.Jenjangs(), "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Jenjang, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         <div class="form-group" id="pencarian3">
             @Html.LabelFor(model => model.tglbayar, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,7 +55,7 @@
             var strUser = e.options[e.selectedIndex].text;
             //alert(strUser);
             document.getElementById("Opsi").value = strUser;
-            if (strUser == "Nama") {
+            if (strUser == "Jenjang") {
                 $('#pencarian2').show();
                 $('#pencarian3').hide();
 
