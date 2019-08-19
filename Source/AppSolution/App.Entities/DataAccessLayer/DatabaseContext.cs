@@ -27,7 +27,8 @@ namespace App.Entities.DataAccessLayer
 		public DbSet<RequestForgotPassword> RequestForgotPasswords { get; set; }
 
 		public DbSet<Bank> Banks { get; set; }
-		public DbSet<Jenjang> Jenjangs { get; set; }
+        public DbSet<Bulan> Bulans { get; set; }
+        public DbSet<Jenjang> Jenjangs { get; set; }
         public DbSet<Tingkat> Tingkats { get; set; }
         public DbSet<Siswa> Siswas { get; set; }
 		public DbSet<Kelas> Kelass { get; set; }

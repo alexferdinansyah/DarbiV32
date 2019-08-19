@@ -235,13 +235,13 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Transfer",Value="Transfer"},
             };
 
-            List<SelectListItem> listbln = new List<SelectListItem>()
+            /*List<SelectListItem> listbln = new List<SelectListItem>()
 
             {
                 new SelectListItem {Text="Pilih Bulan",Value="0",Selected=true },
                 new SelectListItem {Text="Juli",Value="7" },
                 new SelectListItem {Text="Agustus",Value="8" },
-            };
+            };*/
 
             List<SelectListItem> listperiode = new List<SelectListItem>()
 
@@ -253,6 +253,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="2018-2019",Value="18" },
                 new SelectListItem {Text="2019-2020",Value="19" }
             };
+
+
+            /*var categories = db.Bulans.Select(c => new
+            {
+                CategoryID = c.BulanId,
+                CategoryName = c.namaBulan
+            }).ToList();*/
+
+            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, Bulan = s.namaBulan }).ToList();
 
             //info siswa
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
@@ -326,14 +335,19 @@ namespace App.Web.Areas.Transaction.Controllers
 
             }
 
-            mod.sisaTagihanBM = mod.totalBM;
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
             IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
             foreach (var t in dtts)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
-                //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+            }
+            //info sisa tagihan BM & Daftar Ulang
+            IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            foreach (var t in sisa)
+            {
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             var idTingkatCounter = 0;
@@ -383,7 +397,6 @@ namespace App.Web.Areas.Transaction.Controllers
             }
 
             ViewBag.OpTrans = OpTrans;
-            ViewBag.listbln = listbln;
             ViewBag.listperiode = listperiode;
             return View(mod);
         }
@@ -393,6 +406,7 @@ namespace App.Web.Areas.Transaction.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
+            var a = String.Join(", ", model.getBulan);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
@@ -417,7 +431,8 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
-                newmodel.bulanspp = model.bulanspp;
+                /*newmodel.bulanspp = model.getBulan;*/
+                newmodel.bulanspp = a;
                 newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
