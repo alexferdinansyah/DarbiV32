@@ -79,7 +79,7 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
-            var transaksis = new List<Transaksi>
+            /*var transaksis = new List<Transaksi>
             {
                 new Transaksi {Nosisda = "0011856", totalBM = "12000000", bayarBM = 10000000, periode = "2019-2020", bulanspp = "Juni", bayarspp = 500000, tipebayar = "tunai",
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 1},
@@ -99,7 +99,7 @@ namespace App.Entities.DataAccessLayer
                 TingkatHB = 2, NomHisBiaya = 12000000}
             };
             historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             /*var rekapbiayamasuks = new List<RekapBiayaMasuk>
             {
@@ -147,14 +147,14 @@ namespace App.Entities.DataAccessLayer
             siswas.ForEach(s => context.Siswas.Add(s));
             context.SaveChanges();
 
-            var banks = new List<Bank>
+            /*var banks = new List<Bank>
             {
                 new Bank {Bankname = "bank BCA"},
                 new Bank {Bankname = "bank Mandiri"},
                 new Bank {Bankname = "bank BRI"}
             };
             banks.ForEach(s => context.Banks.Add(s));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var modules = new List<Module>
             {
@@ -182,6 +182,24 @@ namespace App.Entities.DataAccessLayer
                 new Jenjang {JenjangName="SMP"}
             };
             jenjangs.ForEach(s => context.Jenjangs.Add(s));
+            context.SaveChanges();
+
+            var bulan = new List<Bulan>
+            {
+                new Bulan {namaBulan="Januari"},
+                new Bulan {namaBulan="Februari"},
+                new Bulan {namaBulan="Maret"},
+                new Bulan {namaBulan="April"},
+                new Bulan {namaBulan="Mei"},
+                new Bulan {namaBulan="Juni"},
+                new Bulan {namaBulan="Juli"},
+                new Bulan {namaBulan="Agustus"},
+                new Bulan {namaBulan="September"},
+                new Bulan {namaBulan="Oktober"},
+                new Bulan {namaBulan="November"},
+                new Bulan {namaBulan="Desember"},
+            };
+            bulan.ForEach(s => context.Bulans.Add(s));
             context.SaveChanges();
 
             base.Seed(context);

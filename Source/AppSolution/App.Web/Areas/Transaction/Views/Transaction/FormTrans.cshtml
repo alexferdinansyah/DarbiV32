@@ -1,135 +1,139 @@
 ﻿@model App.Web.Areas.Transaction.Models.TransactionFormCreateVM
 @{
-	ViewBag.Title = "Form Transaksi";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Form Transaksi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chosen/1.1.0/chosen.css" />
+<script src="//cdn.jsdelivr.net/chosen/1.1.0/chosen.jquery.js"></script>
 
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 
 {
-	@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-	@Html.HiddenFor(model => model.Nosisda)
-	@Html.HiddenFor(model => model.tipebayar)
-	@*@Html.HiddenFor(model => model.BankId)*@
-	@Html.HiddenFor(model => model.bulanspp)
-	@Html.HiddenFor(model => model.periode)
+    @Html.HiddenFor(model => model.Nosisda)
+    @Html.HiddenFor(model => model.tipebayar)
+    @*@Html.HiddenFor(model => model.BankId)*@
+    @Html.HiddenFor(model => model.bulanspp)
+    @Html.HiddenFor(model => model.periode)
 
-<div class="form-horizontal">
-	@*KETERANGAN SISWA*@
-	<hr />
-	<div class="form-group">
-		@Html.LabelFor(model => model.Nosisda, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.Nosisda, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.Kelastingkat, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.Kelastingkat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	@*Biaya Masuk*@
-	<hr />
-	<div class="form-group">
-		@Html.LabelFor(model => model.totalBM, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.totalBM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.sisaTagihanBM, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.sisaTagihanBM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.bayarBM, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter", id = "txt1" } })
-		</div>
-	</div>
-	<hr />
-	@*Bayar Spp*@
-	<div class="form-group">
-		@Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.DropDownList("listbln")
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.periode, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.DropDownList("listperiode")
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.komiteSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter", id = "txt2" } })
-		</div>
-	</div>
+    <div class="form-horizontal">
+        @*KETERANGAN SISWA*@
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nosisda, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nosisda, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kelastingkat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kelastingkat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        @*Biaya Masuk*@
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.totalBM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.totalBM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.sisaTagihanBM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sisaTagihanBM, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bayarBM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter", id = "txt1" } })
+            </div>
+        </div>
+        <hr />
+        @*Bayar Spp*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.getBulan, Model.Categories.Select
+                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.periode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("listperiode")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.komiteSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter", id = "txt2" } })
+            </div>
+        </div>
 
-	<hr />
+        <hr />
 
-	@*Daftar Ulang*@
-	<div class="form-group" id="du1">
-		@Html.LabelFor(model => model.daftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.daftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	<div class="form-group" id="du2">
-		@Html.LabelFor(model => model.cicilDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.cicilDaftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
-	@*<div class="form-group" id="du2">
-		@Html.LabelFor(model => model.sisaTagihanDU, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.sisaTagihanDU, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>*@
-	<div class="form-group" id="du3">
-		@Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", id = "txt3" } })
-		</div>
-	</div>
-	<hr id="du4" />
+        @*Daftar Ulang*@
+        <div class="form-group" id="du1">
+            @Html.LabelFor(model => model.daftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.daftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>@*
+            <div class="form-group" id="du2">
+                @Html.LabelFor(model => model.cicilDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.cicilDaftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>*@
+        <div class="form-group" id="du2">
+            @Html.LabelFor(model => model.sisaTagihanDU, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sisaTagihanDU, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group" id="du3">
+            @Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", id = "txt3" } })
+            </div>
+        </div>
+        <hr id="du4" />
 
-	@*school support*@
-	<div class="form-group">
-		@Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })
-			@Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
-		</div>
-	</div>
-	<div class="form-group">
-		@Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
-		<div class="col-md-10">
-			@Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-		</div>
-	</div>
+        @*school support*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })
+                @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
 
-	<hr />
+        <hr />
 
 	<div class="form-group" id="tipebayar1">
 		@Html.LabelFor(model => model.tipebayar, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -172,127 +176,118 @@
 }
 
 <div>
-	@Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
 </div>
 
 @section Scripts {
-	@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
 
 <script type="text/javascript">
-	function sschange() {
-		//$('#nominal').value = "";
-		//alert("coba");
-		$.ajax({
-			type: "POST",
-			url: "/Transaction/Transaction/FirstAjax",
-			data: { input: $('#SSId').val() + "-" + $('#Kelastingkat').val() },
-			//contentType: "application/json; charset=utf-8",
-			//dataType: "json",
-			success: successFunc,
-			error: errorFunc
-		});
-	}
-	function successFunc(data, status) {
-		//alert(data);
-		document.getElementById("nominal").value = data;
-	}
+    function sschange() {
+        //$('#nominal').value = "";
+        //alert("coba");
+        $.ajax({
+            type: "POST",
+            url: "/Transaction/Transaction/FirstAjax",
+            data: { input: $('#SSId').val() + "-" + $('#Kelastingkat').val() },
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+    }
+    function successFunc(data, status) {
+        //alert(data);
+        document.getElementById("nominal").value = data;
+    }
 
-	function errorFunc() {
-		alert('error');
-	}
+    function errorFunc() {
+        alert('error');
+    }
 
-	/*    function findtotal() {
-			//alert("work");
-				var arr = document.getElementsByName("txt");
-				var tot = 0;
-				for (var i = 0; i < arr.length; i++) {
-					if (parseInt(arr[i].value))
-						tot += parseInt(arr[i].value);
-				}
-				document.getElementById("total").value = tot;
-			}*/
+    $(document).ready(function () {
+        $(".chosen-select").chosen();
 
-	$(document).ready(function () {
-		$(".parameter").on("input", function () {
-			var total = 0;
-			$(".parameter").each(function () {
-				if (!isNaN(parseInt($(this).val()))) {
-					total += parseInt($(this).val());
-				}
-			});
-			$(".total").val(total);
-		});
+        $(".parameter").on("input", function () {
+            var total = 0;
+            $(".parameter").each(function () {
+                if (!isNaN(parseInt($(this).val()))) {
+                    total += parseInt($(this).val());
+                }
+            });
+            $(".total").val(total);
+        });
 
-		//$('#nominal').value = "";
-		$('#tipebayar2').hide();
-		$('#tipebayar3').hide();
-		var Tipetrans = document.getElementById("tipebayar");
-		var bulanspp = document.getElementById("bulanspp");
-		var periode = document.getElementById("periode");
-		var kelas = document.getElementById("Kelastingkat");
-		$('#OpTrans').change(function () {
-			var e = document.getElementById("OpTrans");
-			var strUser = e.options[e.selectedIndex].text;
-			//alert(strUser);
-			Tipetrans.value = strUser;
-			if (strUser == "Tunai") {
-				$('#tipebayar2').hide();
-				$('#tipebayar3').hide();
-				$('#tipebayar4').show();
-			}
+        //$('#nominal').value = "";
+        $('#tipebayar2').hide();
+        $('#tipebayar3').hide();
+        var Tipetrans = document.getElementById("tipebayar");
+        var bulanspp = document.getElementById("bulanspp");
+        var periode = document.getElementById("periode");
+        var kelas = document.getElementById("Kelastingkat");
+        $('#OpTrans').change(function () {
+            var e = document.getElementById("OpTrans");
+            var strUser = e.options[e.selectedIndex].text;
+            //alert(strUser);
+            Tipetrans.value = strUser;
+            if (strUser == "Tunai") {
+                $('#tipebayar2').hide();
+                $('#tipebayar3').hide();
+                $('#tipebayar4').show();
+            }
 
-			if (strUser == "Transfer") {
-				$('#tipebayar2').show();
-				$('#tipebayar3').show();
-				$('#tipebayar4').hide();
-				//alert(document.getElementById("BankId").value);
-				document.getElementById("BankId").change(function () {
-					var e = document.getElementById("BankId");
-					var strUser = e.options[e.selectedIndex].text;
-					alert(strUser);
-				});
-			}
-		});
+            if (strUser == "Transfer") {
+                $('#tipebayar2').show();
+                $('#tipebayar3').show();
+                $('#tipebayar4').hide();
+                //alert(document.getElementById("BankId").value);
+                document.getElementById("BankId").change(function () {
+                    var e = document.getElementById("BankId");
+                    var strUser = e.options[e.selectedIndex].text;
+                    alert(strUser);
+                });
+            }
+        });
 
 
-		//konfirmasi popup dan tampilkan kembalian jika pembayaran tunai
-		$("#open-popup").click(function () {
-			var e = document.getElementById("OpTrans");
-			var strUser = e.options[e.selectedIndex].text;
+        //konfirmasi popup dan tampilkan kembalian jika pembayaran tunai
+        $("#open-popup").click(function () {
+            var e = document.getElementById("OpTrans");
+            var strUser = e.options[e.selectedIndex].text;
 
-			var val1 = document.getElementById("uang").value;
-			var val2 = document.getElementById("total").value;
-			var tot = '';
-			if (strUser == "Tunai") {
-				tot = Number(val1) - Number(val2);
-				var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
-			} else var res = confirm("Lakukan Transaksi ?");
-			return !!res;
+            var val1 = document.getElementById("uang").value;
+            var val2 = document.getElementById("total").value;
+            var tot = '';
+            if (strUser == "Tunai") {
+                tot = Number(val1) - Number(val2);
+                var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
+            } else var res = confirm("Lakukan Transaksi ?");
+            return !!res;
 
-		});
+        });
 
-		$('#listbln').change(function () {
-			var e = document.getElementById("listbln");
-			var strUser = e.options[e.selectedIndex].text;
-			bulanspp.value = strUser;
-		});
+        $('#listbln').change(function () {
+            var e = document.getElementById("listbln");
+            var strUser = e.options[e.selectedIndex].text;
+            bulanspp.value = strUser;
+        });
 
-		$('#listperiode').change(function () {
-			var e = document.getElementById("listperiode");
-			var strUser = e.options[e.selectedIndex].text;
-			periode.value = strUser;
-			//alert(strUser);
-		});
+        $('#listperiode').change(function () {
+            var e = document.getElementById("listperiode");
+            var strUser = e.options[e.selectedIndex].text;
+            periode.value = strUser;
+            //alert(strUser);
+        });
 
-		if (kelas.value != "TK A" && kelas.value != "PG") {
-			$('#du1').hide();
-			$('#du2').hide();
-			$('#du3').hide();
-			$('#du4').hide();
-			$('#du5').hide();
-		}
+        if (kelas.value != "TK A" && kelas.value != "PG") {
+            $('#du1').hide();
+            $('#du2').hide();
+            $('#du3').hide();
+            $('#du4').hide();
+            $('#du5').hide();
+        }
 
-	});
+    });
 </script>

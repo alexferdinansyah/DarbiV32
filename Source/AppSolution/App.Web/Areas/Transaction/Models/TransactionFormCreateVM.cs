@@ -72,6 +72,11 @@ namespace App.Web.Areas.Transaction.Models
 
         public string Banknm { get; set; }
 
+        public int Id { get; set; }
+        public string Bulan { get; set; }
+        public List<TransactionFormCreateVM> Categories { get; set; }
+        public string[] getBulan { get; set; }
+
         public SelectList Bank()
         {
             DatabaseContext db = new DatabaseContext();
