@@ -63,6 +63,7 @@ namespace App.Entities.Models
         [Display(Name = "School Support")]
         public int? SSId { get; set; } //id schoolsupport
         public string JenisSS { get; set; } //jenis schoolsupport
+        public string bulanSS { get; set; }
 
         [Display(Name = "No Kwitansi")]
         public string Nokwitansi { get; set; } //NO KWITANSI

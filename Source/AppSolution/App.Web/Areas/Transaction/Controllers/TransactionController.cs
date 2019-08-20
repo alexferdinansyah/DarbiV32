@@ -410,6 +410,7 @@ namespace App.Web.Areas.Transaction.Controllers
         public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
             var a = String.Join(", ", model.getBulan);
+            var b = String.Join(", ", model.getBulanss);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
@@ -436,6 +437,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 /*newmodel.bulanspp = model.getBulan;*/
                 newmodel.bulanspp = a;
+                newmodel.bulanSS = b;
                 newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;
