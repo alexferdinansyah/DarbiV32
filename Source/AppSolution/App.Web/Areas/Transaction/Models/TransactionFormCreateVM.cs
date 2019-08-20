@@ -90,6 +90,10 @@ namespace App.Web.Areas.Transaction.Models
         {
             get; set;
         }
+        [Display(Name = "Bulan SS")]
+        public string bulanss { get; set; }
+
+        public string[] getBulanss { get; set; }
         public SelectList SchoolSupport()
         {
             DatabaseContext db = new DatabaseContext();
