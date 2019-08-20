@@ -238,6 +238,7 @@ namespace App.Web.Areas.Register.Controllers
                     newmodel.KatSpp = model.KatSpp;
                     newmodel.TypeDisc = model.TypeDisc;
                     newmodel.NomDisc = model.NomDisc;
+                    newmodel.totaldisc = model.totaldisc;
                     newmodel.TingkatId = model.TingkatId;
                     newmodel.PerDaftar = model.PerDaftar;
                     newmodel.Year = model.Year;
@@ -249,7 +250,9 @@ namespace App.Web.Areas.Register.Controllers
                     newmodel.TglDaftar = DateTime.UtcNow.Date;
                     newmodel.IsActive = true;
 
+                    
 
+                   
                     //nosisda generator
                     Siswa LastSiswa = db.Siswas.OrderByDescending(m => m.SiswaId).First();
                     var lastnosisda = Convert.ToInt32(LastSiswa.Nosisda) + 1;
@@ -258,7 +261,7 @@ namespace App.Web.Areas.Register.Controllers
                     //var query = select distinct(max(SiswaId)) from Siswa;
 
                     newmodel.Nosisda =  lastnosisda.ToString();
-                    
+                      
                     db.Siswas.Add(newmodel);
                     try
                     {
