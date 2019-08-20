@@ -92,11 +92,11 @@ namespace App.Entities.Models
         public DateTime? canceledDate { get; set; }
 
         //uangbayar & total
-        //[Display(Name = "Uang Bayar")]
-        //public string uang { get; set; }
+        [Display(Name = "Uang Bayar")]
+        public string uang { get; set; }
 
-        //[Display(Name = "Total Keseluruhan")]
-        //public string total { get; set; }
+        [Display(Name = "Total Keseluruhan")]
+        public string total { get; set; }
     }
 
 }

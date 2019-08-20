@@ -267,6 +267,10 @@ namespace App.Web.Areas.Transaction.Controllers
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
             string[] keltingkat = null;
             string tkt = "";
+            string disc = "";
+            string discspp = "";
+            int diskonbm = 0;
+            int diskonspp = 0;
             foreach (var d in dts)
             {
                 mod.Namasiswa = d.Fullname;
@@ -277,7 +281,13 @@ namespace App.Web.Areas.Transaction.Controllers
                     keltingkat = d.Kelas.Split(' ');
                     tkt = keltingkat[0];
                 }
+                disc = d.TypeDiscAdm;
+                discspp = d.TypeDisc;
+                diskonbm = Convert.ToInt32(d.NomDiscAdm);
+                diskonspp = Convert.ToInt32(d.NomDisc);
+
             }
+
 
             //info tingkat to get info biaya
             IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
@@ -295,9 +305,22 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 if (dd.TingkatId == idtingkat)
                 {
+
                     if (dd.KatBiaya == "Biaya Masuk")
                     {
-                        mod.totalBM = dd.NomBiaya;
+
+                        if (disc == "Rp")
+                        {
+                            mod.totalBM = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (diskonbm));
+                        }
+                        if (disc == "%")
+                        {
+                            mod.totalBM = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (Convert.ToInt32(dd.NomBiaya) * (diskonbm) / 100));
+                        }
+                        else
+                        {
+                            mod.totalBM = dd.NomBiaya;
+                        }
                     }
 
                     //iMa
@@ -305,15 +328,26 @@ namespace App.Web.Areas.Transaction.Controllers
                      * Separation between SPP and KS due to another field in form
                      */
                     if (dd.JenisBiaya == "SPP")
-                    //if (dd.KatBiaya == "SPP" || dd.KatBiaya == "KS")
                     {
-                        int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
-                        mod.bayarspp = totalSPP.ToString();
+                        //int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
+                        //mod.bayarspp = totalSPP.ToString();
+
+                        if (discspp == "Rp")
+                        {
+                            mod.bayarspp = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (diskonspp));
+                        }
+                        if (discspp == "%")
+                        {
+                            mod.bayarspp = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (Convert.ToInt32(dd.NomBiaya) * (diskonspp) / 100));
+                        }
+                        
                     }
+
                     if (dd.JenisBiaya == "KS")
                     {
                         mod.komiteSekolah = dd.NomBiaya;
                     }
+
 
                     //if (dd.KatBiaya == "School Support")
                     //{
@@ -345,6 +379,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
                 //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
+
             //info sisa tagihan BM & Daftar Ulang
             IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             foreach (var t in sisa)
@@ -454,7 +489,7 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
-       //Delete
+        //Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Transaksi model, int? id)
@@ -482,7 +517,7 @@ namespace App.Web.Areas.Transaction.Controllers
         {
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
-            
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -496,7 +531,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 transaksi.JenisSS = s.JenisSS;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang)) ;
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
                 transaksi.totalkeseluruhan = totalbayar.ToString();
             }
 

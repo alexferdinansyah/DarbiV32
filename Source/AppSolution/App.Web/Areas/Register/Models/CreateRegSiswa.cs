@@ -117,6 +117,9 @@ namespace App.Web.Areas.Register.Models
         [Display(Name = "Nominal Discount")]
         public string NomDisc { get; set; }
 
+        [Display(Name = "Total Discount")]
+        public string totaldisc { get; set; }
+
         [Required]
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
