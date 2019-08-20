@@ -22,7 +22,7 @@ namespace App.Web.Areas.Recapitulation.Models
         public string tingkat { get; set; }
 
         [Display(Name = "Jenjang")]
-        public string jenjang { get; set; }
+        public string Jenjang { get; set; }
 
         [Display(Name = "Total Daftar Ulang")]
         public string daftarUlang { get; set; }

@@ -25,9 +25,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             {
                 new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-                new SelectListItem {Text="Nama",Value="1"},
+                new SelectListItem {Text="Jenjang",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
+            Session["Opsi"] = model.Opsi;
+            Session["valOpsi"] = model.Jenjang;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -35,14 +37,26 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapDU(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            if (Session["Opsi"] != null)
+            {
+                m.Opsi = Session["Opsi"].ToString();
+                if (m.Opsi == "Jenjang")
+                {
+                    m.tglbayar = null;
+                }
+                else
+                {
+                    m.Jenjang = null;
+                }
+            }
             var QS = Request.QueryString;
-            string Namasiswa = m.Namasiswa;
+            var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "" || Namasiswa == null)
+            if (Jid == 0 || Jid == null)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -59,6 +73,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
                                 model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
@@ -83,23 +98,33 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
             else
             {
-                //jika pencarian berdasarkan nama siswa
+                //jika pencarian berdasarkan jenjang
                 try
                 {
-                    if (Namasiswa != null)
+                    if (Jid != null)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        //Search for jenjangName in Jenjang
+                        IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == Jid);
+                        var jName = "";
+                        foreach (var i in infoJ)
+                        {
+                            jName = i.JenjangName;
+                            break;
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A"))).ToList();
+
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa == Namasiswa)
+                            if (dd.Jenjang.Contains(jName))
                             {
-                                if (dd.cicilDaftarUlang != null)
+                                if (dd.cicilDaftarUlang != 0)
                                 {
                                     RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
                                     model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
@@ -146,6 +171,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
+                        data.Jenjang,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
                         data.tglbayar.ToString()
                     });

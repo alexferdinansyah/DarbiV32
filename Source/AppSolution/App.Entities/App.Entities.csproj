@@ -144,6 +144,7 @@
     <Compile Include="DataAccessLayer\DatabaseContext.cs" />
     <Compile Include="DataAccessLayer\DatabaseInitializer.cs" />
     <Compile Include="Models\Biaya.cs" />
+    <Compile Include="Models\Bulan.cs" />
     <Compile Include="Models\HistoryBiaya.cs" />
     <Compile Include="Models\Jenjang.cs" />
     <Compile Include="Models\DetailSaudara.cs" />
