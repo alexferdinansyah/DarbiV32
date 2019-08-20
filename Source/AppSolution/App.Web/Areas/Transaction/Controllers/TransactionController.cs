@@ -444,8 +444,12 @@ namespace App.Web.Areas.Transaction.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
-            var a = String.Join(", ", model.getBulan);
-            var b = String.Join(", ", model.getBulanss);
+            var a = "";
+            var b = "";
+            if (model.getBulan == null) a = "-"; else a = String.Join(", ", model.getBulan);
+            if (model.getBulanss == null) b = "-"; else b = String.Join(", ", model.getBulanss);
+            /*var a = String.Join(", ", model.getBulan);
+            var b = String.Join(", ", model.getBulanss);*/
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
