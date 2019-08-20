@@ -98,7 +98,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
             else
             {
-                //jika pencarian berdasarkan nama siswa
+                //jika pencarian berdasarkan jenjang
                 try
                 {
                     if (Jid != null)
@@ -111,7 +111,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             jName = i.JenjangName;
                             break;
                         }
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A"))).ToList();
 
 
                         foreach (var dd in t)
