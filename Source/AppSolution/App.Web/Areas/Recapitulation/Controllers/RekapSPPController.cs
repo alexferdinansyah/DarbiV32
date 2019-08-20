@@ -24,10 +24,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             {
                 new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-                new SelectListItem {Text="Nama",Value="1"},
+                new SelectListItem {Text="Jenjang",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
             Session["Opsi"] = model.Opsi;
+            Session["valOpsi"] = model.Jenjang;
             ViewBag.OpSrc = OpSrc;
             return View(model);
         }
@@ -38,24 +39,25 @@ namespace App.Web.Areas.Recapitulation.Controllers
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
-                if (m.Opsi == "Nama")
+                if (m.Opsi == "Jenjang")
                 {
                     m.tglbayar = null;
                 }
                 else
                 {
-                    m.Namasiswa = null;
+                    m.Jenjang = null;
                 }
             }
 
             var QS = Request.QueryString;
-            string Namasiswa = m.Namasiswa;
+            //string Namasiswa = m.Namasiswa;
+            var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "" || Namasiswa == null)
+            if (Jid == 0 || Jid == null)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -72,6 +74,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.tglbayar = dd.tglbayar;
@@ -99,42 +102,52 @@ namespace App.Web.Areas.Recapitulation.Controllers
             {
                 try
                 {
-                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                    string Nosisda = "";
-                    foreach (var d in datasiswa)
+                    if (Jid != null)
                     {
-                        RekapSPPVM model = new RekapSPPVM();
-                        model.Nosisda = d.Nosisda;
-                        model.Namasiswa = d.Fullname;
-                        model.Kelastingkat = d.Kelas;
-                        models.Add(model);
-                    }
-                    for (int j = 0; j < models.Count(); j++)
-                    {
-                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                        t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
-                        if(t.Count() == 0)
+                        IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == Jid);
+                        var jName = "";
+                        foreach (var i in infoJ)
                         {
-                            models.Remove(models[j]);
+                            jName = i.JenjangName;
+                            break;
                         }
-                        foreach (var dt in t)
+
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+
+
+                        foreach (var dd in t)
                         {
-                            if (dt.bulanspp != null)
+                            if (dd.Jenjang.Contains(jName))
                             {
-                                //RekapSPPVM mm = new RekapSPPVM();
-                                models[j].bulanspp = dt.bulanspp.ToString();
-                                models[j].bayarspp = dt.bayarspp.ToString();
-                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                //mm = models[j];
-                                
-                                //models.Insert(0, mm);
-                            }
-                            else
-                            {
-                                //models.Remove(models[j]);
+                                if (dd.bulanspp != null)
+                                {
+                                    RekapSPPVM model = new RekapSPPVM();
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.bulanspp = dd.bulanspp.ToString();
+                                    model.bayarspp = dd.bayarspp.ToString();
+                                    model.tglbayar = dd.tglbayar;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
+                    else
+                    {
+                        //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = 0,
+                            iTotalDisplayRecords = 0,
+                            aaData = models,
+                            error = errorMessage
+                        },
+                JsonRequestBehavior.AllowGet);
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -159,6 +172,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
+                        data.Jenjang,
                         data.bulanspp,
                         data.bayarspp,
                         data.tglbayar.ToString()

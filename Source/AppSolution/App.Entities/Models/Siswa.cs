@@ -123,6 +123,9 @@ namespace App.Entities.Models
         [Display(Name = "Nominal Discount")]
         public string NomDisc { get; set; }
 
+        [Display(Name = "Total Discount")]
+        public string totaldisc { get; set; }
+
         [Display(Name = "Tingkat")]
         public int? TingkatId { get; set; }
 
