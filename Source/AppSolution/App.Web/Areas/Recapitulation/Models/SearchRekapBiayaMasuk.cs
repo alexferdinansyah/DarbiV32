@@ -24,6 +24,9 @@ namespace App.Web.Areas.Recapitulation.Models
         public int? JenjangId { get; set; }
         public int? Jenjang {get; set;}
 
+        [Display(Name = "School Support")]
+        public string JenisSS { get; set; }
+
         public SelectList Jenjangs()
         {
             DatabaseContext db = new DatabaseContext();

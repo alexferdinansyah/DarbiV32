@@ -329,8 +329,8 @@ namespace App.Web.Areas.Transaction.Controllers
                      */
                     if (dd.JenisBiaya == "SPP")
                     {
-                        //int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
-                        //mod.bayarspp = totalSPP.ToString();
+                        int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
+                        mod.bayarspp = totalSPP.ToString();
 
                         if (discspp == "Rp")
                         {
