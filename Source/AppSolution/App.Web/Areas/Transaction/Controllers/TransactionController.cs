@@ -375,7 +375,6 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
                 mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-                //mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
                 mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
                 //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
@@ -444,11 +443,30 @@ namespace App.Web.Areas.Transaction.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
-            var a = String.Join(", ", model.getBulan);
+            var a = "";
+            var b = "";
+            if (model.getBulan == null) a = "-"; else a = String.Join(", ", model.getBulan);
+            if (model.getBulanss == null) b = "-"; else b = String.Join(", ", model.getBulanss);
+            /*var a = String.Join(", ", model.getBulan);
+            var b = String.Join(", ", model.getBulanss);*/
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
                 newmodel.Nosisda = model.Nosisda;
+
+                IEnumerable<Siswa> siswa = db.Siswas.Where(s => s.Nosisda.Equals(newmodel.Nosisda));
+                var jId = 0;
+                var tId = 0;
+                foreach (var sis in siswa)
+                {
+                    tId = Convert.ToInt32(sis.TingkatId);
+                    break;
+                }
+                Tingkat tinfo = db.Tingkats.Find(tId);
+                jId = Convert.ToInt32(tinfo.JenjangId);
+
+                Jenjang jinfo = db.Jenjangs.Find(jId);
+                newmodel.Jenjang = jinfo.JenjangName;
                 newmodel.Namasiswa = model.Namasiswa;
                 newmodel.Kelastingkat = model.Kelastingkat;
                 newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
@@ -458,7 +476,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
                 newmodel.Nokwitansi = model.Nokwitansi;
-                newmodel.komiteSekolah = model.komiteSekolah;
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
@@ -471,6 +488,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 /*newmodel.bulanspp = model.getBulan;*/
                 newmodel.bulanspp = a;
+                newmodel.bulanSS = b;
                 newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;

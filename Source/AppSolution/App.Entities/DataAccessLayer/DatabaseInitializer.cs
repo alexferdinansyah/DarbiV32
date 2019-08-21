@@ -79,27 +79,25 @@ namespace App.Entities.DataAccessLayer
             //modules.ForEach(s => context.Modules.Add(s));
             //context.SaveChanges();
 
-            /*var transaksis = new List<Transaksi>
+            var transaksis = new List<Transaksi>
             {
-                new Transaksi {Nosisda = "0011856", totalBM = "12000000", bayarBM = 10000000, periode = "2019-2020", bulanspp = "Juni", bayarspp = 500000, tipebayar = "tunai",
-                tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 1},
-                new Transaksi {Nosisda = "0011857", totalBM = "12000000", bayarBM = 5000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
+                new Transaksi {Nosisda = "2019000001", Namasiswa = "Aulia Raina", Kelastingkat = "9 Makkah", Jenjang = "SMP", totalBM = "12000000", bayarBM = 10000000, periode = "2019-2020", bulanspp = "Juni", bayarspp = 500000, tipebayar = "tunai",
+                tglbayar = DateTime.UtcNow.Date},
+                new Transaksi {Nosisda = "2019000002", Namasiswa = "Awal Ahmad", Kelastingkat = "PG", Jenjang = "PG", totalBM = "12000000", bayarBM = 5000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
                 tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 2},
-                new Transaksi {Nosisda = "0011858", daftarUlang = "10000000", cicilDaftarUlang = 6000000, periode = "2019-2020", bulanspp = "Januari", bayarspp = 450000, tipebayar = "transfer",
-                tgltransfer = DateTime.UtcNow.Date, tglbayar = DateTime.UtcNow.Date, BankId = 3}
             };
             transaksis.ForEach(s => context.Transaksis.Add(s));
             context.SaveChanges();
 
-            var historybiayas = new List<HistoryBiaya>
-            {
-                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "SPP", JenisHB = "SPP",
-                TingkatHB = 2, NomHisBiaya = 500000},
-                new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "Biaya Masuk", JenisHB = "Biaya Masuk",
-                TingkatHB = 2, NomHisBiaya = 12000000}
-            };
-            historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
-            context.SaveChanges();*/
+            //var historybiayas = new List<HistoryBiaya>
+            //{
+            //    new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "SPP", JenisHB = "SPP",
+            //    TingkatHB = 2, NomHisBiaya = 500000},
+            //    new HistoryBiaya {PeriodeHB = "2018-2019", KategoriHB = "Biaya Masuk", JenisHB = "Biaya Masuk",
+            //    TingkatHB = 2, NomHisBiaya = 12000000}
+            //};
+            //historybiayas.ForEach(s => context.HistoryBiayas.Add(s));
+            //context.SaveChanges();
 
             /*var rekapbiayamasuks = new List<RekapBiayaMasuk>
             {
@@ -136,11 +134,11 @@ namespace App.Entities.DataAccessLayer
                 //PerDaftar = "2019-2020", Year = "2019", Tahapsatu = DateTime.Now, Tahapdua = DateTime.Now, KatAdm = "Umum", TypeDiscAdm = "%",
                 //NomDiscAdm = "20", TglDaftar = DateTime.Now},
 
-                new Siswa {Nosisda = "2019000003", Fullname = "Awal Ahmad", Nickname = "Awal", Nisn = "0858", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Juli 2004",
+                new Siswa {Nosisda = "2019000002", Fullname = "Awal Ahmad", Nickname = "Awal", Nisn = "0858", IsActive = true, Sex = "Laki-laki", Pob = "Lamongan", Dob = "30 Juli 2004",
                 NamaAyah = "Papa", NamaIbu = "Mama", PekerjaanAyah = "Pegawai Negri", PekerjaanIbu= "Wirausaha", NoTelpAyah = "0816888777", NoTelpIbu = "0834777666",
                 EmailOrtu = "PapaMama@gmail.com", Alamat = "Kp. Sukamaju", Kota = "Depok", Provinsi = "Jawa Barat", KodePos = "16455", Negara = "Indonesia", Anakke = "1", DetailSaudara = "1",
                 Agama = "Islam", Suku = "Betawi", Kewarganegaraan = "Indonesia", TinggiBadan = "165 cm", BeratBadan = "60kg", Goldar = "AB", Kelas = "PG",
-                KontakSiswa = "0896333444", SekolahAsal = "SD Tadika", StatSekolahAsal = "Negri", JarakRumahSekolah = "20km", KatSpp = "Umum", TypeDisc = "Rp", NomDisc = "85000", TingkatId = 2,
+                KontakSiswa = "0896333444", SekolahAsal = "PG", StatSekolahAsal = "Negri", JarakRumahSekolah = "20km", KatSpp = "Umum", TypeDisc = "Rp", NomDisc = "85000", TingkatId = 2,
                 PerDaftar = "2019-2020", Year = "2019", Tahapsatu = DateTime.Now, Tahapdua = DateTime.Now, KatAdm = "Umum", TypeDiscAdm = "%",
                 NomDiscAdm = "30", TglDaftar = DateTime.Now}
             };

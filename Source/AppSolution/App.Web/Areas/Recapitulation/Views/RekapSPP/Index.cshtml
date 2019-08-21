@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
-@Html.HiddenFor(model => model.Namasiswa)
+@Html.HiddenFor(model => model.Jenjang)
 @Html.HiddenFor(model => model.tglbayar)
 
 <table id="tableRekapSPP" class="table" style="width:100%">
@@ -17,6 +17,7 @@
             <th>No Sisda</th>
             <th>Nama Lengkap</th>
             <th>Kelas - Tingkat</th>
+            <th>Jenjang</th>
             <th>Bulan SPP</th>
             <th>Bayar SPP</th>
             <th>Tanggal Bayar</th>
@@ -48,6 +49,7 @@
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
                     { "name": "Namasiswa", "value": $('#Namasiswa').val() },
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+                    { "name": "Jenjang", "value": $('#Jenjang').val() },
                     { "name": "bulanspp", "value": $('#bulanspp').val() },
                     { "name": "bayarspp", "value": $('#bayarspp').val() },
                     { "name": "tglbayar", "value": $('#tglbayar').val() }
@@ -62,6 +64,7 @@
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
                 { "sName": "Kelastingkat" },
+                { "sName": "Jenjang" },
                 { "sName": "bulanspp" },
                 { "sName": "bayarspp" },
                 { "sName": "tglbayar" },

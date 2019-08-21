@@ -37,20 +37,23 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapDU(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            var Jid = 0;
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
                 if (m.Opsi == "Jenjang")
                 {
                     m.tglbayar = null;
+                    Jid = Convert.ToInt32(Session["valOpsi"]);
                 }
                 else
                 {
                     m.Jenjang = null;
                 }
             }
+
             var QS = Request.QueryString;
-            var Jid = Convert.ToInt32(Session["valOpsi"]);
+            //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
@@ -111,8 +114,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             jName = i.JenjangName;
                             break;
                         }
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A"))).ToList();
-
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A")) && M.cicilDaftarUlang != null).ToList();
 
                         foreach (var dd in t)
                         {
