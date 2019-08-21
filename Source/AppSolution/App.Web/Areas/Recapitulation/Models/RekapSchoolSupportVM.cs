@@ -18,6 +18,9 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Kelas Tingkat")]
         public string Kelastingkat { get; set; }
 
+        [Display(Name = "Jenjang")]
+        public string Jenjang { get; set; }
+
         [Display(Name = "Biaya Masuk")]
         public string biayaBM { get; set; }
 
