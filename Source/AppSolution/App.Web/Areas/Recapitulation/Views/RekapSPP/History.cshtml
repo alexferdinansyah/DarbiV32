@@ -1,0 +1,79 @@
+﻿@model IEnumerable<App.Entities.Models.Transaksi>
+
+@{
+    ViewBag.Title = "History Administrasi SPP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div>
+    @foreach (var item in Model)
+    {
+        <dl class="dl-horizontal">
+            <dt>
+                Nama Siswa
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(modelItem => item.Namasiswa)
+            </dd>
+            <dt>
+                No Sisda
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(modelItem => item.Nosisda)
+            </dd>
+        </dl>
+        break;
+    }
+
+    <table style="border-top: 1px solid black" border="1">
+        <tr>
+            <th>Bulan SPP</th>
+            <th>Nominal SPP</th>
+            <th>Tipe Pembayaran</th>
+            <th>Nama Bank</th>
+            <th>Tanggal Transfer</th>
+            <th>Tanggal Bayar</th>
+
+            <hr align="right">
+            @foreach (var item in Model)
+            {
+
+
+                using (Html.BeginForm())
+
+                {
+                <tr>
+                    @Html.AntiForgeryToken()
+                    <td>
+                        @Html.DisplayFor(modelItem => item.bulanspp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.bayarspp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipebayar)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Banknm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tgltransfer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tglbayar)
+                    </td>
+                </tr>
+            }
+
+        }
+        </table>
+    </div>
+
+    <p>
+        @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+    </p>
