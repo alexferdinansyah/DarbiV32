@@ -452,9 +452,11 @@ namespace App.Web.Areas.Transaction.Controllers
             var spp = ""; //bulanspp
             var ca = ""; //bulan catering
             var aj = ""; //bulan antarjemput
+            var ss = "";
             if (model.getBulan == null) spp = "-"; else spp = String.Join(", ", model.getBulan);
             if (model.bulanCA == null) ca = "-"; else ca = String.Join(", ", model.bulanCA);
             if (model.bulanAJ == null) aj = "-"; else aj = String.Join(", ", model.bulanAJ);
+            if (model.getSS == null) ss = "-"; else ss = String.Join(",", model.getSS);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
@@ -497,7 +499,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bulanCA = ca;
                 newmodel.bulanAJ = aj;
                 newmodel.periode = model.periode;
-                newmodel.SSId = model.SSId;
+                newmodel.SSId = ss;
                 newmodel.nominal = model.nominal;
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
                 {
@@ -507,8 +509,9 @@ namespace App.Web.Areas.Transaction.Controllers
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);
+                var test = ss;
 
-                return RedirectToAction("Kwitansi", new { id = lastid });
+                return RedirectToAction("Kwitansi", new { id = lastid, ssid = test });
             }
 
             return View(model);
@@ -538,10 +541,11 @@ namespace App.Web.Areas.Transaction.Controllers
         }
 
         //GET Kwitansi
-        public ActionResult Kwitansi(int? id, KwitansiFormVM byr)
+        public ActionResult Kwitansi(int? id, string ssid, KwitansiFormVM byr)
         {
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
+            var ss = ssid.Split(',');
 
             if (id == null)
             {
@@ -552,8 +556,14 @@ namespace App.Web.Areas.Transaction.Controllers
             Transaksi transaksi = db.Transaksis.Find(id);
             if (transaksi.SSId != null)
             {
-                SchoolSupport s = db.SchoolSupports.Find(transaksi.SSId);
-                transaksi.JenisSS = s.JenisSS;
+                string[] jss = new string[ss.Count()];
+                for (int i=0; i<ss.Count(); i++)
+                {
+                    SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
+                    jss[i] = s.JenisSS;
+                }
+                var tss = String.Join(", ", jss);
+                transaksi.JenisSS = tss;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
                     (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));

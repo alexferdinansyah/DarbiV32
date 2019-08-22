@@ -61,7 +61,7 @@ namespace App.Entities.Models
         public string Banknm { get; set; }
 
         [Display(Name = "School Support")]
-        public int? SSId { get; set; } //id schoolsupport
+        public string SSId { get; set; } //id schoolsupport
         public string JenisSS { get; set; } //jenis schoolsupport
         public string bulanCA { get; set; } //catering
         public string bulanAJ { get; set; } //antar jemput
