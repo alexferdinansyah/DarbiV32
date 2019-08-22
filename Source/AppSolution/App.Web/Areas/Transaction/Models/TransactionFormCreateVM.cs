@@ -86,14 +86,19 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "School Support")]
         public int? SSId { get; set; }
-        public int? JenisSS
+        public string JenisSS
         {
             get; set;
         }
-        [Display(Name = "Bulan SS")]
-        public string bulanss { get; set; }
+        public List<TransactionFormCreateVM> SS { get; set; }
+        [Display(Name = "Bulan CA")]
+        public string[] bulanCA { get; set; }
+        [Display(Name = "Bulan AJ")]
+        public string[] bulanAJ { get; set; }
 
-        public string[] getBulanss { get; set; }
+        /*public string[] getBulanCA { get; set; }
+        public string[] getBulanAJ { get; set; }*/
+        public string[] getSS { get; set; }
         public SelectList SchoolSupport()
         {
             DatabaseContext db = new DatabaseContext();
