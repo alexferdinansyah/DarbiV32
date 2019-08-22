@@ -116,8 +116,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-
-
                         foreach (var dd in t)
                         {
                             if (dd.Jenjang.Contains(jName))
