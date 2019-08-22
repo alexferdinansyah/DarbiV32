@@ -34,22 +34,36 @@ namespace App.Web.Areas.Transaction.Controllers
             //2-9 Mekah : idSchoolSupport-kelastingkat
             var inputarray = input.Split('-');
             var kt = inputarray[1].Split(' ');
+            var ssid = inputarray[0].Split(',');
             string tkt = "";
             tkt = kt[0].ToString();
-            SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(inputarray[0]));
-            IEnumerable<Tingkat> ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
+
+            
+            Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
             IEnumerable<Biaya> b = null;
-            foreach (var d in ts)
+            
+            //b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
+            Biaya by = null;
+            /*foreach (var d in ts)
             {
-                b = db.Biayas.Where(x => x.TingkatId == d.TingkatId);
+                
+            }*/
+
+            var total = 0;
+            if (inputarray[0] != "null")
+            { 
+                for (int i=0; i<ssid.Count(); i++)
+                {
+                    b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
+                    SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(ssid[i]));
+                    b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+                    by = b.FirstOrDefault();
+                    total = total + Convert.ToInt32(by.NomBiaya);
+
+                }
             }
-            b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
-            string nb = "";
-            foreach (var d in b)
-            {
-                nb = d.NomBiaya;
-            }
-            return Json(nb, JsonRequestBehavior.AllowGet);
+
+            return Json(total, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -235,14 +249,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="Transfer",Value="Transfer"},
             };
 
-            /*List<SelectListItem> listbln = new List<SelectListItem>()
-
-            {
-                new SelectListItem {Text="Pilih Bulan",Value="0",Selected=true },
-                new SelectListItem {Text="Juli",Value="7" },
-                new SelectListItem {Text="Agustus",Value="8" },
-            };*/
-
             List<SelectListItem> listperiode = new List<SelectListItem>()
 
             {
@@ -254,14 +260,13 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="2019-2020",Value="19" }
             };
 
-
-            /*var categories = db.Bulans.Select(c => new
-            {
-                CategoryID = c.BulanId,
-                CategoryName = c.namaBulan
-            }).ToList();*/
-
+            //list bulan catering for multiselect
             mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, Bulan = s.namaBulan }).ToList();
+
+            //list bulan antarjemput for multiselect
+
+            //list SS for multiselect
+            mod.SS = db.SchoolSupports.Select(s => new TransactionFormCreateVM { SSId = s.SsId, JenisSS = s.JenisSS }).ToList();
 
             //info siswa
             IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(mod.Nosisda));
@@ -444,12 +449,13 @@ namespace App.Web.Areas.Transaction.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FormTrans(TransactionFormCreateVM model, string status)
         {
-            var a = "";
-            var b = "";
-            if (model.getBulan == null) a = "-"; else a = String.Join(", ", model.getBulan);
-            if (model.getBulanss == null) b = "-"; else b = String.Join(", ", model.getBulanss);
-            /*var a = String.Join(", ", model.getBulan);
-            var b = String.Join(", ", model.getBulanss);*/
+            //SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(model.getSS.ToList()));
+            var spp = ""; //bulanspp
+            var ca = ""; //bulan catering
+            var aj = ""; //bulan antarjemput
+            if (model.getBulan == null) spp = "-"; else spp = String.Join(", ", model.getBulan);
+            if (model.bulanCA == null) ca = "-"; else ca = String.Join(", ", model.bulanCA);
+            if (model.bulanAJ == null) aj = "-"; else aj = String.Join(", ", model.bulanAJ);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
@@ -475,8 +481,9 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 /*newmodel.bulanspp = model.getBulan;*/
-                newmodel.bulanspp = a;
-                newmodel.bulanSS = b;
+                newmodel.bulanspp = spp;
+                newmodel.bulanCA = ca;
+                newmodel.bulanAJ = aj;
                 newmodel.periode = model.periode;
                 newmodel.SSId = model.SSId;
                 newmodel.nominal = model.nominal;

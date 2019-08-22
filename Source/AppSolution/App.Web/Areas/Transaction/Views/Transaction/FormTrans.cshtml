@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/chosen/1.1.0/chosen.css" />
-<script src="//cdn.jsdelivr.net/chosen/1.1.0/chosen.jquery.js"></script>
+<link rel="stylesheet" href="~/Content/chosen.css" />
+<script src="~/Scripts/chosen.jquery.min.js"></script>
 
 <h2>@ViewBag.Title</h2>
 
@@ -79,13 +79,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control parameter", @readonly = "readonly" } })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.komiteSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter", id = "txt2" } })
+                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter" } })
             </div>
         </div>
 
@@ -122,21 +122,30 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })
+                @Html.DropDownListFor(model => model.getSS, Model.SS.Select
+                                     (x => new SelectListItem { Text = x.JenisSS, Value = x.SSId.ToString() }), new { @class = "form-control chosen-select", @multiple = "true", @onchange = "sschange()" })
+                @*@Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })*@
                 @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group" id="bulan">
-            @Html.LabelFor(model => model.bulanss, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group" id="bulanca">
+            @Html.LabelFor(model => model.bulanCA, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.getBulanss, Model.Categories.Select
+                @Html.DropDownListFor(model => model.bulanCA, Model.Categories.Select
+                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+            </div>
+        </div>
+        <div class="form-group" id="bulanaj">
+            @Html.LabelFor(model => model.bulanAJ, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.bulanAJ, Model.Categories.Select
                                      (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control parameter", @readonly = "readonly" } })
             </div>
         </div>
 
@@ -151,7 +160,7 @@
         <div class="form-group" id="tipebayar4">
             @Html.LabelFor(model => model.uang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control", id = "uang" } })
+                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         <div class="form-group" id="tipebayar2">
@@ -170,7 +179,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.total, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly", id = "total" } })
+                @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control total", @readonly = "readonly" } })
             </div>
         </div>
         <div class="form-group">
@@ -193,28 +202,28 @@
 
 <script type="text/javascript">
     function sschange() {
-        var ss = document.getElementById("SSId");
-        var strUser = ss.options[ss.selectedIndex].text;
-        if (strUser != "Catering" && strUser != "Antar Jemput") {
-            $('#bulan').hide();
-        }
-        else
-            $('#bulan').show();
-        //$('#nominal').value = "";
-        //alert("coba");
         $.ajax({
             type: "POST",
             url: "/Transaction/Transaction/FirstAjax",
-            data: { input: $('#SSId').val() + "-" + $('#Kelastingkat').val() },
+            data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() },
             //contentType: "application/json; charset=utf-8",
             //dataType: "json",
             success: successFunc,
             error: errorFunc
         });
     }
+
     function successFunc(data, status) {
         //alert(data);
         document.getElementById("nominal").value = data;
+        data += total;
+        var total = 0;
+            $(".parameter").each(function () {
+                if (!isNaN(parseInt($(this).val()))) {
+                    total += parseInt($(this).val());
+                }
+            });
+            $(".total").val(total);
     }
 
     function errorFunc() {
@@ -223,7 +232,6 @@
 
     $(document).ready(function () {
         $(".chosen-select").chosen();
-
         $(".parameter").on("input", function () {
             var total = 0;
             $(".parameter").each(function () {
@@ -233,15 +241,17 @@
             });
             $(".total").val(total);
         });
-
         //$('#nominal').value = "";
-        $('#bulan').hide();
+        
+        $('#bulanca').hide();
+        $('#bulanaj').hide();
         $('#tipebayar2').hide();
         $('#tipebayar3').hide();
         var Tipetrans = document.getElementById("tipebayar");
         var bulanspp = document.getElementById("bulanspp");
         var periode = document.getElementById("periode");
         var kelas = document.getElementById("Kelastingkat");
+
         $('#OpTrans').change(function () {
             var e = document.getElementById("OpTrans");
             var strUser = e.options[e.selectedIndex].text;
@@ -265,7 +275,6 @@
                 });
             }
         });
-
 
         //konfirmasi popup dan tampilkan kembalian jika pembayaran tunai
         $("#open-popup").click(function () {
