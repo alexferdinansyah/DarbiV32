@@ -33,15 +33,37 @@ namespace App.Web.Areas.Recapitulation.Controllers
             return View(model);
         }
 
+        //info History Biaya SPP per periode
+        public ActionResult History(string nosisda)
+        {
+            if (nosisda == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            IEnumerable<Transaksi> trans = null;
+            if (db.Transaksis.Count() != 0)
+            {
+                trans = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+            }
+            if (trans == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trans);
+        }
+
+        //Data Table SPP
         [HttpGet]
         public ActionResult AjaxSPP(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            var Jid = 0;
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
                 if (m.Opsi == "Jenjang")
                 {
                     m.tglbayar = null;
+                    Jid = Convert.ToInt32(Session["valOpsi"]);
                 }
                 else
                 {
@@ -51,7 +73,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             var QS = Request.QueryString;
             //string Namasiswa = m.Namasiswa;
-            var Jid = Convert.ToInt32(Session["valOpsi"]);
+            
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
@@ -71,13 +93,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.bulanspp != null)
                             {
                                 RekapSPPVM model = new RekapSPPVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
-                                model.tglbayar = dd.tglbayar;
                                 models.Add(model);
                             }
 
@@ -122,13 +144,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 if (dd.bulanspp != null)
                                 {
                                     RekapSPPVM model = new RekapSPPVM();
+                                    model.tglbayar = dd.tglbayar;
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.Jenjang = dd.Jenjang;
                                     model.bulanspp = dd.bulanspp.ToString();
                                     model.bayarspp = dd.bayarspp.ToString();
-                                    model.tglbayar = dd.tglbayar;
                                     models.Add(model);
                                 }
                             }
@@ -169,13 +191,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
+                        data.tglbayar.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
                         data.Jenjang,
                         data.bulanspp,
                         data.bayarspp,
-                        data.tglbayar.ToString()
+                        data.Nosisda,
                     });
                 }
                 return Json(new

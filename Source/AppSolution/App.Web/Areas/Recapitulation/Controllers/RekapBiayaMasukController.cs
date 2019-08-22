@@ -37,12 +37,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            var Jid = 0;
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
                 if (m.Opsi == "Jenjang")
                 {
                     m.tglbayar = null;
+                    Jid = Convert.ToInt32(Session["valOpsi"]);
                 }
                 else
                 {
@@ -51,7 +53,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
 
             var QS = Request.QueryString;
-            var Jid = Convert.ToInt32(Session["valOpsi"]);
+            //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();

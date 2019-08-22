@@ -27,8 +27,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             {
                 new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-                new SelectListItem {Text="Nama",Value="1"},
+                new SelectListItem {Text="School Support",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
+                new SelectListItem {Text="Jenjang",Value="3"},
             };
 
 
@@ -36,6 +37,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
             * iMa : Refresh filtering option
             */
             Session["Opsi"] = model.Opsi;
+            Session["Opsiss"] = model.JenisSS;
+            Session["Opsij"] = model.Jenjang;
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -50,25 +53,27 @@ namespace App.Web.Areas.Recapitulation.Controllers
                  * iMa : refresh filtering option
                  */
                 m.Opsi = Session["Opsi"].ToString();
-                if (m.Opsi == "Nama")
+                if (m.Opsi == "School Support")
                 {
                     m.tglbayar = null;
                 }
                 else
                 {
-                    m.Namasiswa = null;
+                    m.JenisSS = null;
                 }
+                
             }
 
             var QS = Request.QueryString;
-            string Namasiswa = m.Namasiswa;
+            var jss = Session["Opsiss"];
+            //string JenisSs = m.JenisSS;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
 
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Namasiswa == "" || Namasiswa == null)
+            if (jss == "" || jss == null)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -79,13 +84,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            if (dd.SSId != null)
+                            if (dd.JenisSS != null)
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
                                 model.tglbayar = dd.tglbayar;
+                                model.SSId = dd.SSId.ToString();
                                 models.Add(model);
                             }
 
@@ -121,11 +128,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             int eachsiswa = 0;
                             foreach (var dt in t)
                             {
-                                if (dt.SSId != null)
+                                if (dt.JenisSS != null)
                                 {
                                     //RekapSPPVM mm = new RekapSPPVM();
-                                    models[j].biayaBM = dt.bayarBM.ToString();
-                                    models[j].SSId = dt.SSId.ToString();
+                                    //models[j].biayaBM = dt.bayarBM.ToString();
+                                    models[j].SSId = dt.JenisSS;
                                     models[j].nominal = dt.nominal;
                                     models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
                                     eachsiswa++;
@@ -156,15 +163,45 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika pencarian berdasarkan nama siswa
                 try
                 {
-                    IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
-                    string Nosisda = "";
-                    foreach (var d in datasiswa)
+                    //IEnumerable<Siswa> datasiswa = db.Siswas.Where(x => x.Fullname.ToLower().Contains(Namasiswa.ToLower()));
+                    //string Nosisda = "";
+                    //foreach (var d in datasiswa)
+                    //{
+                    //    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                    //    model.Nosisda = d.Nosisda;
+                    //    model.Namasiswa = d.Fullname;
+                    //    model.Kelastingkat = d.Kelas;
+                    //    models.Add(model);
+                    //}
+
+                    if(jss!= null)
                     {
-                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                        model.Nosisda = d.Nosisda;
-                        model.Namasiswa = d.Fullname;
-                        model.Kelastingkat = d.Kelas;
-                        models.Add(model);
+                        IEnumerable<SchoolSupport> infoss = db.SchoolSupports.Where(ss => ss.JenisSS == jss);
+                        var jName = "";
+                        foreach (var ss in infoss)
+                        {
+                            jName = ss.JenisSS;
+                            break;
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
+                        foreach (var dd in t)
+                        {
+                            if (dd.JenisSS.Contains(jName))
+                            {
+                                if (dd.JenisSS != "0")
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSId = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tglbayar = dd.tglbayar;
+                                    models.Add(model);
+                                }
+                            }
+                        }
                     }
 
                     /*
@@ -199,15 +236,16 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 if (dt.SSId != null)
                                 {
                                     //RekapSPPVM mm = new RekapSPPVM();
-                                    models[j].biayaBM = dt.bayarBM.ToString();
+                                    //models[j].biayaBM = dt.bayarBM.ToString();
                                     models[j].SSId = dt.SSId.ToString();
+                                    models[j].SSName = dt.JenisSS;
                                     models[j].nominal = dt.nominal;
                                     models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
                                     eachsiswa++;
                                 }
                             }
-                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
-                            models[j].SSName = dtss.JenisSS;
+                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSName));
+                            models[j].SSId = dtss.JenisSS;
                         }
                     }
 
@@ -233,7 +271,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
             }
 
-            //Jika ada hasil pencarian baik berdasar nama maupun tglbayar
+            //Jika ada hasil pencarian baik berdasar SS,Jenjang maupun tglbayar
             try
             {
                 int TotalRecord = models.Count();
@@ -252,8 +290,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
-                        data.SSId,
+                        data.Jenjang,
+                        //string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        data.SSName,
                         string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
                         data.tglbayar.ToString()
                     });

@@ -446,13 +446,13 @@
     <Content Include="Areas\Transaction\Views\Transaction\Kwitansi.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapSchoolSupport\Search.cshtml" />
-    <Content Include="Areas\Recapitulation\Views\RekapSPP\History.cshtml" />
     <Content Include="Areas\Transaction\Views\Transaction\Delete.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapDaftarUlang\Search.cshtml" />
     <Content Include="Areas\Transaction\Views\Transaction\TransaksiKosong.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapPrint\Index.cshtml" />
     <Content Include="Areas\Recapitulation\Views\RekapPrint\Search.cshtml" />
+    <Content Include="Areas\Recapitulation\Views\RekapSPP\History.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />

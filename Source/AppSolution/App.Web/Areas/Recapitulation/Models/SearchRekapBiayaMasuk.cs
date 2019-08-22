@@ -13,6 +13,8 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Nama Siswa")]
         public string Namasiswa { get; set; }
 
+        public string Nosisda { get; set; }
+
         [Display(Name = "Tanggal Pembayaran")]
         [DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -23,6 +25,9 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Jenjang")]
         public int? JenjangId { get; set; }
         public int? Jenjang {get; set;}
+
+        [Display(Name = "School Support")]
+        public string JenisSS { get; set; }
 
         public SelectList Jenjangs()
         {
