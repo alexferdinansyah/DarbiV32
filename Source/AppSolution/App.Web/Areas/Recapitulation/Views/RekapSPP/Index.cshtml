@@ -7,6 +7,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Html.Partial("Search", Model)
+@Html.HiddenFor(model => model.Nosisda)
 @Html.HiddenFor(model => model.Jenjang)
 @Html.HiddenFor(model => model.tglbayar)
 
@@ -14,13 +15,14 @@
     <thead>
         <tr>
             <th>No</th>
+            <th>Tanggal Bayar</th>
             <th>No Sisda</th>
             <th>Nama Lengkap</th>
             <th>Kelas - Tingkat</th>
             <th>Jenjang</th>
             <th>Bulan SPP</th>
             <th>Bayar SPP</th>
-            <th>Tanggal Bayar</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody></tbody>
@@ -46,13 +48,13 @@
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
                 aoData.push(
+                    { "name": "tglbayar", "value": $('#tglbayar').val() },
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
                     { "name": "Namasiswa", "value": $('#Namasiswa').val() },
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
                     { "name": "Jenjang", "value": $('#Jenjang').val() },
                     { "name": "bulanspp", "value": $('#bulanspp').val() },
-                    { "name": "bayarspp", "value": $('#bayarspp').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() }
+                    { "name": "bayarspp", "value": $('#bayarspp').val() }
                 );
             },
             "aoColumns": [
@@ -61,13 +63,22 @@
                         return data;
                     }
                 },
+                { "sName": "tglbayar" },
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
                 { "sName": "Kelastingkat" },
                 { "sName": "Jenjang" },
                 { "sName": "bulanspp" },
                 { "sName": "bayarspp" },
-                { "sName": "tglbayar" },
+                {
+                    "render": function (data, type, row, meta) {
+                        if (type === 'display') {
+                            var x = '<a href="/Recapitulation/RekapSPP/History?nosisda=' + data + '">History</a> ';
+                        }
+
+                        return x;
+                    }
+                }
             ]
         });
 
