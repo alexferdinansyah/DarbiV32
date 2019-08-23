@@ -62,8 +62,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             model.biayaBM = dd.bayarBM.ToString();
                             model.bulanspp = dd.bulanspp.ToString();
                             model.bayarspp = dd.bayarspp.ToString();
-                            //model.SSId = dd.SSId.ToString();
-                            //model.nominal = dd.nominal.ToString();
+                            model.SSName = dd.JenisSS;
+                            model.nominal = dd.nominal;
                             model.tglbayar = dd.tglbayar;
                             models.Add(model);
 
@@ -106,8 +106,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.biayaBM = dd.bayarBM.ToString();
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
-                                //model.SSId = dd.SSId.ToString();
-                                //model.nominal = dd.nominal.ToString();
+                                model.SSName = dd.JenisSS;
+                                model.nominal = dd.nominal;
                                 model.tglbayar = dd.tglbayar;
                                 models.Add(model);
 
@@ -155,8 +155,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         string.Format( "{0:#,#.00}", (data.biayaBM == "" ? 0 : Convert.ToInt32(data.biayaBM)) ),
                         string.Format( "{0:#,#.00}", (data.bayarspp == "" ? 0 : Convert.ToInt32(data.bayarspp)) ),
                         data.bulanspp,
-                        /*data.SSId,*/
-                        //string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
+                        data.SSName,
+                        data.nominal,
                         data.tglbayar.ToString()
                     });
                 }

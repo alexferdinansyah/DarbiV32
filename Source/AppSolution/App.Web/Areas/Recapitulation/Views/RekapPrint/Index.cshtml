@@ -14,87 +14,87 @@
 <input type="button" id="print" value="Print Halaman" class="btn btn-default" />
 
 <div id="details">
-<table id="tableRekapPrint" class="table" style="width:100%">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>No Sisda</th>
-            <th>Nama Siswa</th>
-            <th>Kelas</th>
-            <th>Daftar Ulang</th>
-            <th>Bayar BM</th>
-            <th>Bayar SPP</th>
-            <th>Bulan Bayar SPP</th>
-            @*<th>School Support</th>*@
-            @*<th>Bayar School Support</th>*@
-            <th>Tanggal Bayar</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+    <table id="tableRekapPrint" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Sisda</th>
+                <th>Nama</th>
+                <th>Kelas</th>
+                <th>DU</th>
+                <th>Bayar BM</th>
+                <th>Bayar SPP</th>
+                <th>Bulan SPP</th>
+                <th>SS</th>
+                <th>Bayar SS</th>
+                <th>Tgl Bayar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var tableRekapPrint = $('#tableRekapPrint').dataTable({
+                "scrollX": true,
+                "processing": true,
+                "sProcessing": true,
+                "bLengthChange": true,
+                //"sLoadingRecords":true,
+                "scrollCollapse": true,
+                "searching": false,
+                "bServerSide": true,
+                "ordering": false,
+                "sAjaxSource": "/Recapitulation/RekapPrint/AjaxRekapPrint?format=JSON",
+                "bProcessing": true,
+                oLanguage: { sProcessing: "<div id='loader'></div>" },
+                "fnServerParams": function (aoData) {
+                    formdata = $('#Req').serializeArray()
+                    aoData.push(
+                        { "name": "Nosisda", "value": $('#Nosisda').val() },
+                        { "name": "Namasiswa", "value": $('#Namasiswa').val() },
+                        { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+                        { "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
+                        { "name": "biayaBM", "value": $('#biayaBM').val() },
+                        { "name": "bulanspp", "value": $('#bulanspp').val() },
+                        { "name": "bayarspp", "value": $('#bayarspp').val() },
+                        { "name": "SSName", "value": $('#SSName').val() },
+                        { "name": "nominal", "value": $('#nominal').val() },
+                        { "name": "tglbayar", "value": $('#tglbayar').val() },
+
+                    );
+                },
+                "aoColumns": [
+                    {
+                        "render": function (data, type, row, meta) {
+                            return data;
+                        }
+                    },
+                    { "sName": "Nosisda" },
+                    { "sName": "Namasiswa" },
+                    { "sName": "Kelastingkat" },
+                    { "sName": "cicilDaftarUlang" },
+                    { "sName": "biayaBM" },
+                    { "sName": "bulanspp" },
+                    { "sName": "bayarspp" },
+                    { "sName": "SSName" },
+                    { "sName": "nominal" },
+                    { "sName": "tglbayar" },
+                ]
+            });
+
+            $('#btnsearch').click(function () {
+                tableRekapPrint.fnDraw(null);
+            });
+
+        });
+    </script>
+</div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-
-
-        var tableRekapPrint = $('#tableRekapPrint').dataTable({
-            "scrollX": true,
-            "processing": true,
-            "sProcessing": true,
-            "bLengthChange": true,
-            //"sLoadingRecords":true,
-            "scrollCollapse": true,
-            "searching": false,
-            "bServerSide": true,
-            "ordering": false,
-            "sAjaxSource": "/Recapitulation/RekapPrint/AjaxRekapPrint?format=JSON",
-            "bProcessing": true,
-            oLanguage: { sProcessing: "<div id='loader'></div>" },
-            "fnServerParams": function (aoData) {
-                formdata = $('#Req').serializeArray()
-                aoData.push(
-                    { "name": "Nosisda", "value": $('#Nosisda').val() },
-                    { "name": "Namasiswa", "value": $('#Namasiswa').val() },
-                    { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
-                    { "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
-                    { "name": "biayaBM", "value": $('#biayaBM').val() },
-                    { "name": "bulanspp", "value": $('#bulanspp').val() },
-                    { "name": "bayarspp", "value": $('#bayarspp').val() },
-                    //{ "name": "SSId", "value": $('#SSId').val() },
-                    //{ "name": "nominal", "value": $('#nominal').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() },
-
-                );
-            },
-            "aoColumns": [
-                {
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                { "sName": "Nosisda" },
-                { "sName": "Namasiswa" },
-                { "sName": "Kelastingkat" },
-                { "sName": "cicilDaftarUlang" },
-                { "sName": "biayaBM" },
-                { "sName": "bulanspp" },
-                { "sName": "bayarspp" },
-                //{ "sName": "SSId" },
-                //{ "sName": "nominal" },
-                { "sName": "tglbayar" },
-            ]
-        });
-
-        $('#btnsearch').click(function () {
-            tableRekapPrint.fnDraw(null);
-        });
-
-    });
-</script>
-    </div>
-
-<script>
     $('#print'.click(function () {
-        $("#details").printThis();
+        $("#tableRekapPrint").printThis();
     });
 </script>
