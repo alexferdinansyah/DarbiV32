@@ -345,7 +345,10 @@
     </div><!--End Invoice-->
 
 </body>
-
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+</div>
 </html>
 
 <script>

@@ -99,7 +99,7 @@ namespace App.Entities.Models
         [Display(Name = "Golongan Darah")]
         public string Goldar { get; set; }
 
-        [Display(Name = "Kelas")]
+        [Display(Name = "Tingkat - Kelas")]
         public string Kelas { get; set; }
 
         [Display(Name = "Kontak Siswa")]
