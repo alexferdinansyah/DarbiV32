@@ -35,13 +35,15 @@ namespace App.Web.Areas.Transaction.Controllers
             var inputarray = input.Split('-');
             var kt = inputarray[1].Split(' ');
             var ssid = inputarray[0].Split(',');
+            var ca = inputarray[2].Split(',');
+            var aj = inputarray[3].Split(',');
             string tkt = "";
             tkt = kt[0].ToString();
 
-            
+
             Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
             IEnumerable<Biaya> b = null;
-            
+
             //b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
             Biaya by = null;
             /*foreach (var d in ts)
@@ -50,20 +52,38 @@ namespace App.Web.Areas.Transaction.Controllers
             }*/
 
             var total = 0;
+            var totalca = 0;
+            var totalaj = 0;
             if (inputarray[0] != "null")
-            { 
-                for (int i=0; i<ssid.Count(); i++)
+            {
+                for (int i = 0; i < ssid.Count(); i++)
                 {
                     b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
                     SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(ssid[i]));
-                    b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
-                    by = b.FirstOrDefault();
-                    total = total + Convert.ToInt32(by.NomBiaya);
-
+                    if (ss.SsId.Equals(10))
+                    {
+                        b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+                        by = b.FirstOrDefault();
+                        totalca = Convert.ToInt32(by.NomBiaya);
+                        totalca *= ca.Count();
+                    }
+                    else if (ss.SsId.Equals(11))
+                    {
+                        b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+                        by = b.FirstOrDefault();
+                        totalaj = Convert.ToInt32(by.NomBiaya);
+                        totalaj *= aj.Count();
+                    }
+                    else
+                    {
+                        b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
+                        by = b.FirstOrDefault();
+                        total = total + Convert.ToInt32(by.NomBiaya);
+                    }
                 }
             }
 
-            return Json(total, JsonRequestBehavior.AllowGet);
+            return Json(total + totalca + totalaj, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -345,7 +365,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         {
                             mod.bayarspp = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (Convert.ToInt32(dd.NomBiaya) * (diskonspp) / 100));
                         }
-                        
+
                     }
 
                     if (dd.JenisBiaya == "KS")
@@ -557,7 +577,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (transaksi.SSId != null)
             {
                 string[] jss = new string[ss.Count()];
-                for (int i=0; i<ss.Count(); i++)
+                for (int i = 0; i < ss.Count(); i++)
                 {
                     SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
                     jss[i] = s.JenisSS;
