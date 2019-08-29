@@ -283,8 +283,6 @@ namespace App.Web.Areas.Transaction.Controllers
             //list bulan catering for multiselect
             mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, Bulan = s.namaBulan }).ToList();
 
-            //list bulan antarjemput for multiselect
-
             //list SS for multiselect
             mod.SS = db.SchoolSupports.Select(s => new TransactionFormCreateVM { SSId = s.SsId, JenisSS = s.JenisSS }).ToList();
 
