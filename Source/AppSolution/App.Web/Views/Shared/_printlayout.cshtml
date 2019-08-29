@@ -1,21 +1,66 @@
 ﻿@using App.Web.Common;
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/buttons.dataTables.css" />
-    <script type="text/javascript" src="~/Scripts/DataTables/datatables.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/DataTables/buttons.print.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/printThis.js"></script>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <script type="text/javascript" src="~/Scripts/DataTables/buttons.print.min.js"></script>
+        <script type="text/javascript" src="~/Scripts/printThis.js"></script>
 
-</head>
-<body  style="width: 250mm;padding:0; height: 50mm; overflow: hidden;" onload="window.print()">
+        <!-- Normalize or reset CSS with your favorite library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+
+        <!-- Load paper.css for happy printing -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+
+        <!-- Set page size here: A5, A4 or A3 -->
+        <!-- Set also "landscape" if you need -->
+        <style>
+            @@page {
+                size: A4
+            }
+
+            body {
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                font-size: 10px;
+            }
+
+            span {
+                font-weight: 600;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Create two equal columns that floats next to each other */
+            .column {
+                float: left;
+                width: 50%;
+                padding: 4px;
+            }
+
+                .column:nth-child(1) {
+                    border-right: 1px dashed black;
+                }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            table {
+                /* table-layout: fixed; */
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            table, th, td {
+                border: 0px solid black;
+            }
+        </style>
+    </head>
+<body onload="window.print()">
     @RenderBody()
 </body>

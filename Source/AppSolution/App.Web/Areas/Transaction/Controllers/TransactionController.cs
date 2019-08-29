@@ -520,6 +520,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bulanAJ = aj;
                 newmodel.periode = model.periode;
                 newmodel.SSId = ss;
+                newmodel.uang = model.uang;
+                newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
                 newmodel.nominal = model.nominal;
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
                 {
@@ -574,7 +576,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            if (transaksi.SSId != null)
+            if (transaksi.SSId != "-")
             {
                 string[] jss = new string[ss.Count()];
                 for (int i = 0; i < ss.Count(); i++)
@@ -589,9 +591,17 @@ namespace App.Web.Areas.Transaction.Controllers
                     (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
                 transaksi.totalkeseluruhan = totalbayar.ToString();
             }
+            else
+            {
+                transaksi.JenisSS = "-";
+
+                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
+                transaksi.totalkeseluruhan = totalbayar.ToString();
+            }
 
             //spp
-            if (transaksi.bulanspp == null)
+            if (transaksi.bulanspp == "-")
             {
                 transaksi.infospp = "-";
             }
