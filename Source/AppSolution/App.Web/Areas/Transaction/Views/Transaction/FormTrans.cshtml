@@ -201,35 +201,6 @@
 
 
 <script type="text/javascript">
-    /*    function sschange() {
-            $.ajax({
-                type: "POST",
-                url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() },
-                //contentType: "application/json; charset=utf-8",
-                //dataType: "json",
-                success: successFunc,
-                error: errorFunc
-            });
-        }
-
-        function successFunc(data, status) {
-            //alert(data);
-            document.getElementById("nominal").value = data;
-            data += total;
-            var total = 0;
-            $(".parameter").each(function () {
-                if (!isNaN(parseInt($(this).val()))) {
-                    total += parseInt($(this).val());
-                }
-            });
-            $(".total").val(total);
-        }
-
-        function errorFunc() {
-            alert('error');
-        }*/
-
     $(document).ready(function () {
         $(".chosen-select").chosen();
 
@@ -239,7 +210,63 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+            function successFunc(data, status) {
+                //alert(data);
+                document.getElementById("nominal").value = data;
+                data += total;
+                var total = 0;
+                $(".parameter").each(function () {
+                    if (!isNaN(parseInt($(this).val()))) {
+                        total += parseInt($(this).val());
+                    }
+                });
+                $(".total").val(total);
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+
+        $("#bulanca").change(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Transaction/Transaction/FirstAjax",
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+            function successFunc(data, status) {
+                //alert(data);
+                document.getElementById("nominal").value = data;
+                data += total;
+                var total = 0;
+                $(".parameter").each(function () {
+                    if (!isNaN(parseInt($(this).val()))) {
+                        total += parseInt($(this).val());
+                    }
+                });
+                $(".total").val(total);
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+
+        $("#bulanaj").change(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Transaction/Transaction/FirstAjax",
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
