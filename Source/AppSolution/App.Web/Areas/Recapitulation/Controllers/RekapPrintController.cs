@@ -28,6 +28,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 new SelectListItem {Text="Nama",Value="1"},
                 new SelectListItem {Text="Tanggal",Value="2"},
             };
+
             ViewBag.OpBM = OpBM;
             return View(model);
         }
@@ -54,19 +55,21 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar == tglbayar)
                         {
-                            RekapPrintVM model = new RekapPrintVM();
-                            model.Nosisda = dd.Nosisda;
-                            model.Namasiswa = dd.Namasiswa;
-                            model.Kelastingkat = dd.Kelastingkat;
-                            model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                            model.biayaBM = dd.bayarBM.ToString();
-                            model.bulanspp = dd.bulanspp.ToString();
-                            model.bayarspp = dd.bayarspp.ToString();
-                            model.SSName = dd.JenisSS;
-                            model.nominal = dd.nominal;
-                            model.tglbayar = dd.tglbayar;
-                            models.Add(model);
-
+                            if (tglbayar == dd.tglbayar)
+                            {
+                                RekapPrintVM model = new RekapPrintVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                model.biayaBM = dd.bayarBM.ToString();
+                                model.bulanspp = dd.bulanspp.ToString();
+                                model.bayarspp = dd.bayarspp.ToString();
+                                model.SSName = dd.JenisSS;
+                                model.nominal = dd.nominal;
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
                         }
                     }
                 }
@@ -116,7 +119,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     }
                     else
                     {
-                        //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
+                        //jika nama pada tbl transaksi tidak ada yang sesuai dengan nama pada pencarian 
                         return Json(new
                         {
                             sEcho = param.sEcho,
@@ -134,8 +137,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
 
             }
-            try { 
-            int TotalRecord = models.Count();
+            try {
+                int TotalRecord = models.Count();
 
                 int pageSize = param.iDisplayLength;
                 int pageNumber = param.iDisplayStart == 0 ? 1 : (param.iDisplayStart / param.iDisplayLength) + 1; ;
@@ -159,6 +162,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.nominal,
                         data.tglbayar.ToString()
                     });
+        
                 }
                 return Json(new
                 {
@@ -172,6 +176,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             catch (Exception ex)
             {
                 errorMessage = ex.Message;
+
             }
 
             return Json(new
@@ -183,6 +188,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 error = errorMessage
             },
             JsonRequestBehavior.AllowGet);
+
+        }
+        
+        public ActionResult Print(RekapPrintVM m)
+        {
+            return View();
         }
     }
 }
