@@ -67,7 +67,7 @@
             @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.getBulan, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                                     (x => new SelectListItem { Text = x.blnSPP, Value = x.blnSPP }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">
@@ -131,15 +131,15 @@
         <div class="form-group box" id="bulanca">
             @Html.LabelFor(model => model.bulanCA, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanCA, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                @Html.DropDownListFor(model => model.bulanCA, Model.BulanAJCA.Select
+                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group" id="bulanaj">
             @Html.LabelFor(model => model.bulanAJ, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanAJ, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                @Html.DropDownListFor(model => model.bulanAJ, Model.BulanAJCA.Select
+                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">

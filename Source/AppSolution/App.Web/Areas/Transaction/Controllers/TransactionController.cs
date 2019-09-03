@@ -280,8 +280,32 @@ namespace App.Web.Areas.Transaction.Controllers
                 new SelectListItem {Text="2019-2020",Value="19" }
             };
 
-            //list bulan catering for multiselect
-            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, Bulan = s.namaBulan }).ToList();
+            //list bulan yang sudah dibayarkan
+            IEnumerable<Transaksi> spp = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            string[] vv = new string[spp.Count()];
+            var bln = "";
+            for (int i=0; i < spp.Count(); i++)
+            {
+                if (spp.ToList()[i].bulanspp != "-")
+                {
+                    vv[i] = spp.ToList()[i].bulanspp;
+                    //break;
+                }
+            }
+            if (vv != null)
+            {
+                bln = String.Join(",", vv);
+            }
+
+            var bulanBayar = bln.Split(',');
+
+            List<string> blnBayar = new List<string> ( bulanBayar );
+
+            //list bulanspp for multiselect
+            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, blnSPP = s.namaBulan }).Where(s => !blnBayar.Contains(s.blnSPP)).ToList();
+
+            //list bulan for multiselect
+            mod.BulanAJCA = db.Bulans.Select(s => new TransactionFormCreateVM { BulanId = s.BulanId, namaBulan = s.namaBulan }).ToList();
 
             //list SS for multiselect
             mod.SS = db.SchoolSupports.Select(s => new TransactionFormCreateVM { SSId = s.SsId, JenisSS = s.JenisSS }).ToList();
@@ -471,9 +495,9 @@ namespace App.Web.Areas.Transaction.Controllers
             var ca = ""; //bulan catering
             var aj = ""; //bulan antarjemput
             var ss = "";
-            if (model.getBulan == null) spp = "-"; else spp = String.Join(", ", model.getBulan);
-            if (model.bulanCA == null) ca = "-"; else ca = String.Join(", ", model.bulanCA);
-            if (model.bulanAJ == null) aj = "-"; else aj = String.Join(", ", model.bulanAJ);
+            if (model.getBulan == null) spp = "-"; else spp = String.Join(",", model.getBulan);
+            if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
+            if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
             if (model.getSS == null) ss = "-"; else ss = String.Join(",", model.getSS);
             if (ModelState.IsValid)
             {
@@ -582,7 +606,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
                     jss[i] = s.JenisSS;
                 }
-                var tss = String.Join(", ", jss);
+                var tss = String.Join(",", jss);
                 transaksi.JenisSS = tss;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
