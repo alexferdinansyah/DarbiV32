@@ -30,5 +30,8 @@ namespace App.Entities.Models
 
         public virtual Jenjang Jenjangs { get; set; }
 
+        [Display(Name = "School Support")]
+        public int? SsId { get; set; }
+        public string JenisSS { get; set; }
     }
 }

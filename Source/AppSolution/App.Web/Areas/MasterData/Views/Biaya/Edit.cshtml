@@ -105,7 +105,8 @@
                     kategori.value = "School Support";
                     //JenisBiaya.value = "Biaya Masuk";
                     $('#JenisBiaya12').hide();
-                    $('#JenisBiaya3').show();
+					$('#JenisBiaya3').show();
+					$("select[id$=JenisItem] > option").remove();
                 }
             });
         });

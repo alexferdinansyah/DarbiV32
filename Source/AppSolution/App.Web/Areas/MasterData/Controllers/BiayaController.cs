@@ -222,8 +222,8 @@ namespace App.Web.Areas.MasterData.Controllers
             {
                 return HttpNotFound();
             }
-            EditBiayaFormVM model = new EditBiayaFormVM();
 
+            EditBiayaFormVM model = new EditBiayaFormVM();
             model.BiayaId = biaya.BiayaId;
             model.KatBiaya = biaya.KatBiaya;
             model.JenisBiaya = biaya.JenisBiaya;
@@ -251,10 +251,11 @@ namespace App.Web.Areas.MasterData.Controllers
         //POST : Masterdata/Biaya/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya")] Biaya biaya)
+        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya,JenisSS")] Biaya biaya)
         {
             if (ModelState.IsValid)
             {
+                
                 Biaya BiayaCek = db.Biayas.Find(biaya.BiayaId);
                 BiayaCek.KatBiaya = biaya.KatBiaya;
                 BiayaCek.JenisBiaya = biaya.JenisBiaya;

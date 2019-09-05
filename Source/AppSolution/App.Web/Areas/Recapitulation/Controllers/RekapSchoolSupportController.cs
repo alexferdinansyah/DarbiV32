@@ -143,13 +143,17 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 if (dt.JenisSS != null)
                                 {
-                                    //RekapSPPVM mm = new RekapSPPVM();
-                                    //models[j].biayaBM = dt.bayarBM.ToString();
-                                    models[j].SSId = dt.JenisSS;
-                                    models[j].SSName = dt.JenisSS;
-                                    models[j].nominal = dt.nominal;
-                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                    eachsiswa++;
+                                    if (tglbayar == dt.tglbayar)
+                                    {
+                                        //RekapSPPVM mm = new RekapSPPVM();
+                                        //models[j].biayaBM = dt.bayarBM.ToString();
+                                        models[j].SSId = dt.JenisSS;
+                                        models[j].SSName = dt.JenisSS;
+                                        models[j].nominal = dt.nominal;
+                                        models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                        eachsiswa++;
+                                    }
+                                        
                                 }
                             }
                         }
