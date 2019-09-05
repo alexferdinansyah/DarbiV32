@@ -79,7 +79,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.bayarspp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control bayar", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.bayarspp, new { htmlAttributes = new { @class = "form-control parameter", @readonly = "readonly" } })
             </div>
         </div>
         <div class="form-group">
@@ -97,13 +97,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.daftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             </div>
-        </div>@*
-            <div class="form-group" id="du2">
-                @Html.LabelFor(model => model.cicilDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.cicilDaftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                </div>
-            </div>*@
+        </div>
         <div class="form-group" id="du2">
             @Html.LabelFor(model => model.sisaTagihanDU, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -204,16 +198,49 @@
     $(document).ready(function () {
         $(".chosen-select").chosen();
 
-        /*$("#getBulan").change(function () {
-            var tot = document.getElementById("total").value;
-            $(".bayar").each(function () {
-                if (!isNaN(parseInt($(this).val()))) {
-                    total += parseInt($(this).val());
-                }
+        /*$('#listperiode').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Transaction/Transaction/FormTrans",
+                data: { input: $('#listperiode').val() + "." + $('#Nosisda').val() },
+                success: successFunc,
+                error: errorFunc
             });
-            total += parseInt(tot);
-            $(".total").val(total);
+            function successFunc(data, status) {
+
+            }
+            function errorFunc() {
+
+            }
         });*/
+
+        $("#getBulan").change(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Transaction/Transaction/SPPAjax",
+                data: { input: $('#getBulan').val() + "-" + $('#Kelastingkat').val() + "-" + $('#Nosisda').val() },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+            function successFunc(data, status) {
+                //alert(data);
+                document.getElementById("bayarspp").value = data;
+                var total = 0;
+                $(".parameter").each(function () {
+                    if (!isNaN(parseInt($(this).val()))) {
+                        total += parseInt($(this).val());
+                    }
+                });
+                $(".total").val(total);
+                /*$(".total").val(data);*/
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
 
         $("#getSS").change(function () {
             $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
@@ -221,7 +248,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -230,7 +257,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -249,7 +275,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -258,7 +284,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -277,7 +302,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -286,7 +311,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -301,8 +325,6 @@
             }
         });
 
-        //$("#getSS").change();
-
         $(".parameter").on("input", function () {
             var total = 0;
             $(".parameter").each(function () {
@@ -312,7 +334,6 @@
             });
             $(".total").val(total);
         });
-        //$('#nominal').value = "";
 
         $('#bulanca').hide();
         $('#bulanaj').hide();
@@ -359,6 +380,7 @@
                 tot = Number(val1) - Number(val2);
                 var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
             } else var res = confirm("Lakukan Transaksi ?");
+
             return !!res;
 
         });
