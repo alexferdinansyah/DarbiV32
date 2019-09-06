@@ -73,8 +73,12 @@ namespace App.Web.Areas.Transaction.Models
         public string Banknm { get; set; }
 
         public int Id { get; set; }
-        public string Bulan { get; set; }
+        public string blnSPP { get; set; }
+        public int BulanId { get; set; }
+        public string namaBulan { get; set; }
         public List<TransactionFormCreateVM> Categories { get; set; }
+        public List<TransactionFormCreateVM> BulanAJCA { get; set; }
+
         public string[] getBulan { get; set; }
 
         public SelectList Bank()
@@ -95,6 +99,7 @@ namespace App.Web.Areas.Transaction.Models
         public string[] bulanCA { get; set; }
         [Display(Name = "Bulan AJ")]
         public string[] bulanAJ { get; set; }
+
 
         /*public string[] getBulanCA { get; set; }
         public string[] getBulanAJ { get; set; }*/

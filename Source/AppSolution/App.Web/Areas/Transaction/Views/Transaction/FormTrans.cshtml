@@ -67,7 +67,7 @@
             @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.getBulan, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                                     (x => new SelectListItem { Text = x.blnSPP, Value = x.blnSPP }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">
@@ -97,13 +97,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.daftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             </div>
-        </div>@*
-            <div class="form-group" id="du2">
-                @Html.LabelFor(model => model.cicilDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.cicilDaftarUlang, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                </div>
-            </div>*@
+        </div>
         <div class="form-group" id="du2">
             @Html.LabelFor(model => model.sisaTagihanDU, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -131,15 +125,15 @@
         <div class="form-group box" id="bulanca">
             @Html.LabelFor(model => model.bulanCA, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanCA, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                @Html.DropDownListFor(model => model.bulanCA, Model.BulanAJCA.Select
+                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group" id="bulanaj">
             @Html.LabelFor(model => model.bulanAJ, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanAJ, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.Bulan, Value = x.Bulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                @Html.DropDownListFor(model => model.bulanAJ, Model.BulanAJCA.Select
+                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">
@@ -204,13 +198,57 @@
     $(document).ready(function () {
         $(".chosen-select").chosen();
 
+        /*$('#listperiode').change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Transaction/Transaction/FormTrans",
+                data: { input: $('#listperiode').val() + "." + $('#Nosisda').val() },
+                success: successFunc,
+                error: errorFunc
+            });
+            function successFunc(data, status) {
+
+            }
+            function errorFunc() {
+
+            }
+        });*/
+
+        $("#getBulan").change(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Transaction/Transaction/SPPAjax",
+                data: { input: $('#getBulan').val() + "-" + $('#Kelastingkat').val() + "-" + $('#Nosisda').val() },
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+            function successFunc(data, status) {
+                //alert(data);
+                document.getElementById("bayarspp").value = data;
+                var total = 0;
+                $(".parameter").each(function () {
+                    if (!isNaN(parseInt($(this).val()))) {
+                        total += parseInt($(this).val());
+                    }
+                });
+                $(".total").val(total);
+                /*$(".total").val(data);*/
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+
         $("#getSS").change(function () {
             $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
             $("#bulanaj").fadeIn("fast")[$.inArray('11', $(this).val()) >= 0 ? 'show' : 'hide']();
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -219,7 +257,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -238,7 +275,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -247,7 +284,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -266,7 +302,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() },
+                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
                 //contentType: "application/json; charset=utf-8",
                 //dataType: "json",
                 success: successFunc,
@@ -275,7 +311,6 @@
             function successFunc(data, status) {
                 //alert(data);
                 document.getElementById("nominal").value = data;
-                data += total;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -290,8 +325,6 @@
             }
         });
 
-        //$("#getSS").change();
-
         $(".parameter").on("input", function () {
             var total = 0;
             $(".parameter").each(function () {
@@ -301,7 +334,6 @@
             });
             $(".total").val(total);
         });
-        //$('#nominal').value = "";
 
         $('#bulanca').hide();
         $('#bulanaj').hide();
@@ -348,6 +380,7 @@
                 tot = Number(val1) - Number(val2);
                 var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
             } else var res = confirm("Lakukan Transaksi ?");
+
             return !!res;
 
         });

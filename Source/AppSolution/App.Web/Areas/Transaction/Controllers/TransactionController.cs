@@ -28,7 +28,6 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
-
         public ActionResult FirstAjax(string input)
         {
             //2-9 Mekah : idSchoolSupport-kelastingkat
@@ -40,16 +39,10 @@ namespace App.Web.Areas.Transaction.Controllers
             string tkt = "";
             tkt = kt[0].ToString();
 
-
             Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
             IEnumerable<Biaya> b = null;
 
-            //b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
             Biaya by = null;
-            /*foreach (var d in ts)
-            {
-                
-            }*/
 
             var total = 0;
             var totalca = 0;
@@ -60,6 +53,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
                     SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(ssid[i]));
+                    //jika ssid catering
                     if (ss.SsId.Equals(10))
                     {
                         b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
@@ -67,6 +61,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         totalca = Convert.ToInt32(by.NomBiaya);
                         totalca *= ca.Count();
                     }
+                    //jika ssid antarjemput
                     else if (ss.SsId.Equals(11))
                     {
                         b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
@@ -78,12 +73,61 @@ namespace App.Web.Areas.Transaction.Controllers
                     {
                         b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
                         by = b.FirstOrDefault();
-                        total = total + Convert.ToInt32(by.NomBiaya);
+                        total += Convert.ToInt32(by.NomBiaya);
                     }
                 }
             }
-
             return Json(total + totalca + totalaj, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SPPAjax(string input)
+        {
+            var inputarray = input.Split('-');
+            var blnspp = inputarray[0].Split(',');
+            var kt = inputarray[1].Split(' ');
+            var nosisda = inputarray[2];
+            string tkt = "";
+            tkt = kt[0].ToString();
+
+            Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
+            IEnumerable<Biaya> b = null;
+
+            IEnumerable<Siswa> dts = db.Siswas.Where(x => x.Nosisda.Equals(nosisda));
+            string disc = "";
+            string discspp = "";
+            int diskonbm = 0;
+            int diskonspp = 0;
+            foreach (var d in dts)
+            {
+                disc = d.TypeDiscAdm;
+                discspp = d.TypeDisc;
+                diskonbm = Convert.ToInt32(d.NomDiscAdm);
+                diskonspp = Convert.ToInt32(d.NomDisc);
+            }
+
+            Biaya by = null;
+
+            var test = 0;
+            var total = 0;
+            if (inputarray[0] != "null")
+            {
+                b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
+                b = b.Where(x => x.JenisBiaya.ToLower().Equals("spp") && x.KatBiaya.ToLower().Equals("spp"));
+                by = b.FirstOrDefault();
+
+                if (discspp == "Rp")
+                {
+                    test = Convert.ToInt32(by.NomBiaya) - (diskonspp);
+                }
+                if (discspp == "%")
+                {
+                    test = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
+                }
+
+                total += (test * blnspp.Count());
+            }
+
+            return Json(total, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -216,7 +260,6 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(dttrans);
         }
 
-
         //GET : Transaction/Transaction/Delete
         public ActionResult Delete(string nosisda)
         {
@@ -273,17 +316,38 @@ namespace App.Web.Areas.Transaction.Controllers
 
             {
                 new SelectListItem {Text="Pilih periode",Value="0",Selected=true },
-                new SelectListItem {Text="2015-2016",Value="15" },
-                new SelectListItem {Text="2016-2017",Value="16" },
-                new SelectListItem {Text="2017-2018",Value="17" },
-                new SelectListItem {Text="2018-2019",Value="18" },
-                new SelectListItem {Text="2019-2020",Value="19" }
+                new SelectListItem {Text="2015-2016",Value="2015-2016" },
+                new SelectListItem {Text="2016-2017",Value="2016-2017" },
+                new SelectListItem {Text="2017-2018",Value="2017-2018" },
+                new SelectListItem {Text="2018-2019",Value="2018-2017" },
+                new SelectListItem {Text="2019-2020",Value="2019-2020" }
             };
 
-            //list bulan catering for multiselect
-            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, Bulan = s.namaBulan }).ToList();
+            //list bulan yang sudah dibayarkan
+            IEnumerable<Transaksi> spp = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            string[] vv = new string[spp.Count()];
+            var bln = "";
+            for (int i = 0; i < spp.Count(); i++)
+            {
+                if (spp.ToList()[i].bulanspp != "-")
+                {
+                    vv[i] = spp.ToList()[i].bulanspp;
+                    //break;
+                }
+            }
+            if (vv != null)
+            {
+                bln = String.Join(",", vv);
+            }
 
-            //list bulan antarjemput for multiselect
+            var bulanBayar = bln.Split(',');
+            List<string> blnBayar = new List<string>(bulanBayar);
+
+            //list bulanspp for multiselect
+            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, blnSPP = s.namaBulan }).Where(s => !blnBayar.Contains(s.blnSPP)).ToList();
+
+            //list bulan for multiselect
+            mod.BulanAJCA = db.Bulans.Select(s => new TransactionFormCreateVM { BulanId = s.BulanId, namaBulan = s.namaBulan }).ToList();
 
             //list SS for multiselect
             mod.SS = db.SchoolSupports.Select(s => new TransactionFormCreateVM { SSId = s.SsId, JenisSS = s.JenisSS }).ToList();
@@ -312,7 +376,6 @@ namespace App.Web.Areas.Transaction.Controllers
                 diskonspp = Convert.ToInt32(d.NomDisc);
 
             }
-
 
             //info tingkat to get info biaya
             IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
@@ -352,7 +415,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     /*
                      * Separation between SPP and KS due to another field in form
                      */
-                    if (dd.JenisBiaya == "SPP")
+                    /*if (dd.JenisBiaya == "SPP")
                     {
                         int totalSPP = Convert.ToInt32(mod.bayarspp) + Convert.ToInt32(dd.NomBiaya);
                         mod.bayarspp = totalSPP.ToString();
@@ -366,7 +429,7 @@ namespace App.Web.Areas.Transaction.Controllers
                             mod.bayarspp = Convert.ToString(Convert.ToInt32(dd.NomBiaya) - (Convert.ToInt32(dd.NomBiaya) * (diskonspp) / 100));
                         }
 
-                    }
+                    }*/
 
                     if (dd.JenisBiaya == "KS")
                     {
@@ -473,9 +536,9 @@ namespace App.Web.Areas.Transaction.Controllers
             var ca = ""; //bulan catering
             var aj = ""; //bulan antarjemput
             var ss = "";
-            if (model.getBulan == null) spp = "-"; else spp = String.Join(", ", model.getBulan);
-            if (model.bulanCA == null) ca = "-"; else ca = String.Join(", ", model.bulanCA);
-            if (model.bulanAJ == null) aj = "-"; else aj = String.Join(", ", model.bulanAJ);
+            if (model.getBulan == null) spp = "-"; else spp = String.Join(",", model.getBulan);
+            if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
+            if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
             if (model.getSS == null) ss = "-"; else ss = String.Join(",", model.getSS);
             if (ModelState.IsValid)
             {
@@ -584,7 +647,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
                     jss[i] = s.JenisSS;
                 }
-                var tss = String.Join(", ", jss);
+                var tss = String.Join(",", jss);
                 transaksi.JenisSS = tss;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
