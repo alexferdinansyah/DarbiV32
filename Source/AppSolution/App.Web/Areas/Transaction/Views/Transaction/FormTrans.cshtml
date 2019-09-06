@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.bayarBM, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter" } })
+                @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter",  AutoComplete = "off" } })
             </div>
         </div>
         <hr />
@@ -85,7 +85,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.komiteSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter" } })
+                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter",  AutoComplete = "off"} })
             </div>
         </div>
 
@@ -160,7 +160,7 @@
         <div class="form-group" id="tipebayar4">
             @Html.LabelFor(model => model.uang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control",  AutoComplete = "off" } })
             </div>
         </div>
         <div class="form-group" id="tipebayar2">

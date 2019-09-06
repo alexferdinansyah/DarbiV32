@@ -17,7 +17,11 @@ namespace App.Web.Areas.MasterData.Models
 		[Display(Name = "Tingkat")]
 		public int? TingkatId { get; set; }
 
-		public int JenjangId { get; set; }
+        public string Tingkat { get; set; }
+
+        public string Jenjang { get; set; }
+
+        public int JenjangId { get; set; }
 
 		[Display(Name = "Jenjang")]
 		public string JenjangName { get; set; }
@@ -29,5 +33,12 @@ namespace App.Web.Areas.MasterData.Models
 
 			return new SelectList(Namatingkat.ToList(), "TingkatId", "Namatingkat", "0");
 		}
-	}
+        public SelectList Jenjangs()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Jenjangs = db.Jenjangs;
+
+            return new SelectList(Jenjangs.ToList(), "JenjangId", "JenjangName", "0");
+        }
+    }
 }

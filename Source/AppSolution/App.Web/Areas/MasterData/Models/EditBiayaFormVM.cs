@@ -33,6 +33,8 @@ namespace App.Web.Areas.MasterData.Models
         [Display(Name = "School Support")]
         public int? SsId { get; set; }
 
+        public int? JenisSS { get; set; }
+
         public SelectList Tingkats()
         {
             DatabaseContext db = new DatabaseContext();
