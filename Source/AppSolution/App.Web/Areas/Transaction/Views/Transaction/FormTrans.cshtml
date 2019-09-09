@@ -225,7 +225,7 @@
             function successFunc(data, status) {
                 $('#getBulan').empty();
                 $.each(data, function (index, row) {
-                    $('#getBulan').append("<option value='"+ row.BulanId +"'>"+ row.namaBulan +"</option>").trigger("chosen:updated");
+                    $('#getBulan').append("<option value='"+ row.namaBulan +"'>"+ row.namaBulan +"</option>").trigger("chosen:updated");
                 })
             }
             function errorFunc() {
@@ -264,6 +264,12 @@
         $("#getSS").change(function () {
             $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
             $("#bulanaj").fadeIn("fast")[$.inArray('11', $(this).val()) >= 0 ? 'show' : 'hide']();
+            if ($('#getSS').selectedIndex != 10) {
+                $('#bulanCA').val(null);
+            }
+            if ($('#getSS').selectedIndex != 11) {
+                $('#bulanAJ').val(null);
+            }
             $.ajax({
                 type: "POST",
                 url: "/Transaction/Transaction/FirstAjax",
