@@ -66,8 +66,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.bulanspp, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.getBulan, Model.Categories.Select
-                                     (x => new SelectListItem { Text = x.blnSPP, Value = x.blnSPP }), new { @class = "form-control chosen-select", @multiple = "true" })
+                @Html.DropDownListFor(model => model.getBulan, new SelectList(" "), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
         </div>
         <div class="form-group">
@@ -197,22 +196,42 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".chosen-select").chosen();
+        /*$.ajax({
+            type: "GET",
+            url: "/Transaction/Transaction/PeriodeAjax",
+            data: { input: $('#listperiode').val() + "." + $('#Nosisda').val() },
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data, status) {
+            var s = '<option value="-1">Pilih Bulan</option>';
+            for (var i = 0; i < data.length; i++) {
+                s += '<option value="' + data[i].BulanID + '">' + data[i].BulanName + '</option>';
+            }
+            $("#bulanSPP").append(s);
+        }
+        function errorFunc() {
+            alert('error');
+        }*/
 
-        /*$('#listperiode').change(function () {
+        $('#listperiode').change(function () {
             $.ajax({
                 type: "GET",
-                url: "/Transaction/Transaction/FormTrans",
+                url: "/Transaction/Transaction/PeriodeAjax",
                 data: { input: $('#listperiode').val() + "." + $('#Nosisda').val() },
                 success: successFunc,
                 error: errorFunc
             });
             function successFunc(data, status) {
-
+                $('#getBulan').empty();
+                $.each(data, function (index, row) {
+                    $('#getBulan').append("<option value='"+ row.BulanId +"'>"+ row.namaBulan +"</option>").trigger("chosen:updated");
+                })
             }
             function errorFunc() {
-
+                alert('error');
             }
-        });*/
+        });
 
         $("#getBulan").change(function () {
             $.ajax({

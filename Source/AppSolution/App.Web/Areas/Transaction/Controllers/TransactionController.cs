@@ -28,6 +28,37 @@ namespace App.Web.Areas.Transaction.Controllers
             return View(model);
         }
 
+        public ActionResult PeriodeAjax(string input)
+        {
+            var inputarray = input.Split('.');
+            var periode = inputarray[0];
+            var nosisda = inputarray[1];
+
+            IEnumerable<Transaksi> spp = db.Transaksis.Where(x => x.Nosisda.Equals(nosisda));
+            string[] vv = new string[spp.Count()];
+            var bln = "";
+            for (int i = 0; i < spp.Count(); i++)
+            {
+                if ((spp.ToList()[i].bulanspp != "-" || spp.ToList()[i].bulanspp != null) && spp.ToList()[i].periode == periode)
+                {
+                    vv[i] = spp.ToList()[i].bulanspp;
+                    //break;
+                }
+            }
+            if (vv != null)
+            {
+                bln = String.Join(",", vv);
+            }
+
+            var bulanBayar = bln.Split(',');
+            List<string> blnBayar = new List<string>(bulanBayar);
+
+            //list bulanspp for multiselect
+            List<Bulan> bulans = db.Bulans.Where(s => !blnBayar.Contains(s.namaBulan)).ToList();
+
+            return Json(bulans, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult FirstAjax(string input)
         {
             //2-9 Mekah : idSchoolSupport-kelastingkat
@@ -315,16 +346,16 @@ namespace App.Web.Areas.Transaction.Controllers
             List<SelectListItem> listperiode = new List<SelectListItem>()
 
             {
-                new SelectListItem {Text="Pilih periode",Value="0",Selected=true },
+                new SelectListItem {Text="Pilih periode",Value="0"},
                 new SelectListItem {Text="2015-2016",Value="2015-2016" },
                 new SelectListItem {Text="2016-2017",Value="2016-2017" },
                 new SelectListItem {Text="2017-2018",Value="2017-2018" },
                 new SelectListItem {Text="2018-2019",Value="2018-2017" },
-                new SelectListItem {Text="2019-2020",Value="2019-2020" }
+                new SelectListItem {Text="2019-2020",Value="2019-2020", Selected=true }
             };
 
             //list bulan yang sudah dibayarkan
-            IEnumerable<Transaksi> spp = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            /*IEnumerable<Transaksi> spp = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
             string[] vv = new string[spp.Count()];
             var bln = "";
             for (int i = 0; i < spp.Count(); i++)
@@ -344,7 +375,7 @@ namespace App.Web.Areas.Transaction.Controllers
             List<string> blnBayar = new List<string>(bulanBayar);
 
             //list bulanspp for multiselect
-            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, blnSPP = s.namaBulan }).Where(s => !blnBayar.Contains(s.blnSPP)).ToList();
+            mod.Categories = db.Bulans.Select(s => new TransactionFormCreateVM { Id = s.BulanId, blnSPP = s.namaBulan }).Where(s => !blnBayar.Contains(s.blnSPP)).ToList();*/
 
             //list bulan for multiselect
             mod.BulanAJCA = db.Bulans.Select(s => new TransactionFormCreateVM { BulanId = s.BulanId, namaBulan = s.namaBulan }).ToList();
