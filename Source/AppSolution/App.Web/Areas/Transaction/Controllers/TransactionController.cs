@@ -346,12 +346,12 @@ namespace App.Web.Areas.Transaction.Controllers
             List<SelectListItem> listperiode = new List<SelectListItem>()
 
             {
-                new SelectListItem {Text="Pilih periode",Value="0"},
+                new SelectListItem {Text="Pilih periode",Value="0", Selected=true },
                 new SelectListItem {Text="2015-2016",Value="2015-2016" },
                 new SelectListItem {Text="2016-2017",Value="2016-2017" },
                 new SelectListItem {Text="2017-2018",Value="2017-2018" },
                 new SelectListItem {Text="2018-2019",Value="2018-2017" },
-                new SelectListItem {Text="2019-2020",Value="2019-2020", Selected=true }
+                new SelectListItem {Text="2019-2020",Value="2019-2020" }
             };
 
             //list bulan yang sudah dibayarkan
