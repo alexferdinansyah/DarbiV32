@@ -211,7 +211,7 @@ namespace App.Web.Areas.MasterData.Controllers
         }
 
         //GET : MasterData/Biaya/Edit
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id )
         {
             if (id == null)
             {
@@ -222,11 +222,19 @@ namespace App.Web.Areas.MasterData.Controllers
             {
                 return HttpNotFound();
             }
-
             EditBiayaFormVM model = new EditBiayaFormVM();
             model.BiayaId = biaya.BiayaId;
             model.KatBiaya = biaya.KatBiaya;
-            model.JenisBiaya = biaya.JenisBiaya;
+
+            if (model.KatBiaya == "School Support")
+            {
+                model.JenisBiaya = biaya.JenisSS;
+            }
+            else
+            {
+                model.JenisBiaya = biaya.JenisBiaya;
+            }
+            //model.JenisBiaya = biaya.JenisBiaya;
             model.NomBiaya = biaya.NomBiaya;
             model.TingkatId = biaya.TingkatId;
             List<SelectListItem> ObjItem = new List<SelectListItem>()
@@ -251,14 +259,23 @@ namespace App.Web.Areas.MasterData.Controllers
         //POST : Masterdata/Biaya/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya,JenisSS")] Biaya biaya)
+        public ActionResult Edit([Bind(Include = "BiayaId,KatBiaya,JenisBiaya,TingkatId,NomBiaya")] Biaya biaya)
         {
             if (ModelState.IsValid)
             {
-                
+
                 Biaya BiayaCek = db.Biayas.Find(biaya.BiayaId);
                 BiayaCek.KatBiaya = biaya.KatBiaya;
-                BiayaCek.JenisBiaya = biaya.JenisBiaya;
+
+                if (BiayaCek.KatBiaya == "School Support")
+                {
+                    BiayaCek.JenisBiaya = biaya.JenisSS;
+                }
+                else
+                {
+                    BiayaCek.JenisBiaya = biaya.JenisBiaya;
+                }
+                //BiayaCek.JenisBiaya = biaya.JenisBiaya;
                 BiayaCek.TingkatId = biaya.TingkatId;
                 BiayaCek.NomBiaya = biaya.NomBiaya;
 

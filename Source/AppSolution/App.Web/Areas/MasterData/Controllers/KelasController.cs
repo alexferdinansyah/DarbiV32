@@ -46,8 +46,7 @@ namespace App.Web.Areas.MasterData.Controllers
 			{
 				Kelas newmodel = new Kelas();
 				newmodel.KelasName = model.KelasName;
-				newmodel.TingkatId = model.TingkatId;
-
+                newmodel.TingkatId = model.TingkatId;
 				db.Kelass.Add(newmodel);
 				db.SaveChanges();
 				return RedirectToAction("Index");
@@ -60,7 +59,7 @@ namespace App.Web.Areas.MasterData.Controllers
 		{
 			var QS = Request.QueryString;
 			String KelasName = QS["KelasName"];
-			//String Namatingkat = QS["Namatingkat"];
+            String Namatingkat = QS["Namatingkat"];
 			
 			//Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
@@ -74,15 +73,12 @@ namespace App.Web.Areas.MasterData.Controllers
 				{
 					Query = Query.Where(x => x.KelasName.Contains(KelasName));
 				}
-				//if (Namatingkat != "")
-				//{
-				//	//int? j = int.Parse(TingkatId);
-				//	Query = Query.Where(x => x.Namatingkat(j));
-				//}
+                if (Namatingkat != "")
+                {
+                    Query = Query.Where(x => x.Namatingkat.Equals(Namatingkat));
+                }
 
-				//Query = Query.Where(x => x.IsActive == IsActive);
-
-				int TotalRecord = Query.Count();
+                int TotalRecord = Query.Count();
 
 				var OrderedQuery = Query.OrderBy(x => x.KelasId);
 
@@ -140,7 +136,6 @@ namespace App.Web.Areas.MasterData.Controllers
 				return HttpNotFound();
 			}
 
-
 			return View(kelas);
 		}
 
@@ -180,7 +175,8 @@ namespace App.Web.Areas.MasterData.Controllers
 			EditKelasFormVM editmodel = new EditKelasFormVM();
 			editmodel.KelasId = kelas.KelasId;
 			editmodel.KelasName = kelas.KelasName;
-			editmodel.TingkatId = kelas.TingkatId;
+            editmodel.TingkatId = kelas.TingkatId;
+            editmodel.Tingkat = kelas.Tingkat;
 			//editmodel. = tingkat.Jenjangs;
 
 			return View(editmodel);
@@ -191,12 +187,13 @@ namespace App.Web.Areas.MasterData.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "KelasId,KelasName")] Kelas kelas)
+		public ActionResult Edit([Bind(Include = "KelasId,KelasName,TingkatId,Tingkat")] Kelas kelas)
 		{
 			if (ModelState.IsValid)
 			{
 				Kelas KelasCek = db.Kelass.Find(kelas.KelasId);
 				KelasCek.KelasName = kelas.KelasName;
+                KelasCek.TingkatId = kelas.TingkatId;
 
 				db.Entry(KelasCek).State = EntityState.Modified;
 				db.SaveChanges();

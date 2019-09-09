@@ -8,8 +8,10 @@
 <h2>@ViewBag.Title</h2>
 
 <div>
-	<h4>Jenjang</h4>
+	<h4>Kelas</h4>
 	<hr />
+	
+
 	<dl class="dl-horizontal">
 		<dt>
 			@Html.DisplayNameFor(model => model.KelasName)
@@ -17,25 +19,15 @@
 		<dd>
 			@Html.DisplayFor(model => model.KelasName)
 		</dd>
-
 		<dt>
-			@Html.DisplayNameFor(model => model.TingkatId)
+			@Html.DisplayNameFor(model => model.Tingkat)
 		</dt>
 		<dd>
-			@Html.DisplayFor(model => model.TingkatId)
+			@Html.DisplayFor(model => model.Tingkat)
 		</dd>
-
-		<dt>
-			@Html.DisplayNameFor(model => model.JenjangId)
-		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.JenjangId)
-		</dd>
-
-
 	</dl>
 </div>
 <p>
-	@Html.ActionLink("Edit", "Edit", new { id = Model.JenjangId }) |
+	@Html.ActionLink("Edit", "Edit", new { id = Model.KelasId }) |
 	@Html.ActionLink("Back to List", "Index")
 </p>

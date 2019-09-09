@@ -16,15 +16,19 @@ namespace App.Entities.Models
 
 		[Required]
 		[DataType(DataType.Text)]
-		[Display(Name = "Kelas Name")]
+		[Display(Name = "Nama Kelas")]
 		public string KelasName { get; set; }
 
 		//[Required]
 		[Display(Name = "Tingkat Id")]
 		public int? TingkatId { get; set; }
 
+        public string Tingkat { get; set; }
+
 		[Display(Name = "Nama Tingkat")]
 		public virtual Tingkat Namatingkat { get; set; }
+
+        //public string Jenjang { get; set; }
 
 		[Display(Name = "Jenjang Id")]
 		public int JenjangId { get; set; }
