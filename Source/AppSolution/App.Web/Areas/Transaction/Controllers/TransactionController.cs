@@ -69,7 +69,7 @@ namespace App.Web.Areas.Transaction.Controllers
             var aj = inputarray[3].Split(',');
             string tkt = "";
             tkt = kt[0].ToString();
-
+            
             Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
             IEnumerable<Biaya> b = null;
 
@@ -90,7 +90,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
                         by = b.FirstOrDefault();
                         totalca = Convert.ToInt32(by.NomBiaya);
-                        totalca *= ca.Count();
+                        if (ca[0] == "null") totalca *= 0; else totalca *= ca.Count();
                     }
                     //jika ssid antarjemput
                     else if (ss.SsId.Equals(11))
@@ -98,7 +98,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         b = b.Where(x => x.JenisBiaya.ToLower().Equals(ss.JenisSS.ToLower()) && x.KatBiaya.ToLower().Equals("school support"));
                         by = b.FirstOrDefault();
                         totalaj = Convert.ToInt32(by.NomBiaya);
-                        totalaj *= aj.Count();
+                        if (aj[0] == "null") totalaj *= 0; else totalaj *= aj.Count();
                     }
                     else
                     {
