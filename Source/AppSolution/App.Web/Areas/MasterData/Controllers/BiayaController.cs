@@ -244,6 +244,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 new SelectListItem {Text="Biaya Masuk",Value="1" },
                 new SelectListItem {Text="SPP",Value="2"},
                 new SelectListItem {Text="School Support",Value="3"},
+                new SelectListItem {Text="Daftar Ulang",Value="4"},
             };
 
             List<SelectListItem> ObjJenis = new List<SelectListItem>()

@@ -106,7 +106,7 @@
         <div class="form-group" id="du3">
             @Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", id = "txt3" } })
+                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", id = "txt3", AutoComplete="off" } })
             </div>
         </div>
         <hr id="du4" />
@@ -400,9 +400,8 @@
             if (strUser == "Tunai") {
                 tot = Number(val1) - Number(val2);
                 var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
-            } else var res = confirm("Lakukan Transaksi ?");
-
-            return !!res;
+			} else var res = confirm("Lakukan Transaksi ?");
+			return !!res; 
 
         });
 

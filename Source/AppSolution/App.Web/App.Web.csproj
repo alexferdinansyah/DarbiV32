@@ -226,6 +226,7 @@
     <Compile Include="Areas\MasterData\Models\EditBiayaFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\EditKelasFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateKelas.cs" />
+    <Compile Include="Areas\MasterData\Models\EditSiswaFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\EditTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateTingkatFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\SchoollSupportSearchFormVM.cs" />

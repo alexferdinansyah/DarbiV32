@@ -123,6 +123,50 @@ namespace App.Web.Areas.MasterData.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            List<string> Tahunmasuk = new List<string>();
+
+            DateTime startYear = DateTime.Now;
+            while (startYear.Year <= DateTime.Now.AddYears(3).Year)
+            {
+                Tahunmasuk.Add(startYear.Year.ToString());
+                startYear = startYear.AddYears(1);
+            }
+            List<SelectListItem> Years = new List<SelectListItem>()
+            {
+                new SelectListItem {Text="Pilih Tahun",Value=""}
+
+            };
+            foreach (var i in Tahunmasuk)
+            {
+                Years.Add(new SelectListItem()
+                {
+                    Text = i,
+                    Value = i,
+                    Selected = (i == siswa.Year ? true : false)
+                });
+            }
+
+            List<SelectListItem> ObjDaftar = new List<SelectListItem>()
+            {
+                new SelectListItem {Text="Juli",Value="Juli"},
+                new SelectListItem {Text="Agustus",Value="Agustus" },
+                new SelectListItem {Text="September",Value="September"},
+                new SelectListItem {Text="Oktober",Value="Oktober"},
+                new SelectListItem {Text="November",Value="November"},
+                new SelectListItem {Text="Desember",Value="Desember"},
+                new SelectListItem {Text="Januari",Value="Januari"},
+                new SelectListItem {Text="Februari",Value="Februari"},
+                new SelectListItem {Text="Maret",Value="Maret"},
+                new SelectListItem {Text="April",Value="April"},
+                new SelectListItem {Text="Mei",Value="Mei"},
+                new SelectListItem {Text="Juni",Value="Juni"},
+            };
+
+            
+            ViewBag.Years = Years;
+            ViewBag.MonthItem = ObjDaftar;
             return View(siswa);
         }
 
@@ -271,8 +315,9 @@ namespace App.Web.Areas.MasterData.Controllers
         // POST: MasterData/Siswa/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include =
-            "SiswaId,Nosisda,Nisn,Fullname,Nickname,Sex,Pob,Dob,NamaAyah,NamaIbu,PekerjaanAyah,PekerjaanIbu,NoTelpAyah,NoTelpIbu,EmailOrtu,Alamat,Kota,Provinsi,KodePos,Negara,Anakke,Agama,Suku,Kewarganegaraan,TinggiBadan,BeratBadan,Goldar,PerDaftar,Kelas,Katspp,KontakSiswa,SekolahAsal,StatSekolahAsal,JarakRumahSekolah,TglDaftar")]
+        public ActionResult Edit([Bind(Include = "SiswaId,Nosisda,Nisn,Fullname,Nickname,Sex,Pob,Dob,NamaAyah,NamaIbu,PekerjaanAyah,PekerjaanIbu," +
+            "NoTelpAyah,NoTelpIbu,EmailOrtu,Alamat,Kota,Provinsi,KodePos,Negara,Anakke,Agama,Suku,Kewarganegaraan,TinggiBadan," +
+            "BeratBadan,Goldar,PerDaftar,Year,Kelas,Katspp,KontakSiswa,SekolahAsal,StatSekolahAsal,JarakRumahSekolah,TglDaftar")]
          Siswa siswa)
         {
             siswa.DetailSaudara = "";
@@ -305,6 +350,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 SiswaCek.BeratBadan = siswa.BeratBadan;
                 SiswaCek.Goldar = siswa.Goldar;
                 SiswaCek.PerDaftar = siswa.PerDaftar;
+                SiswaCek.Year = siswa.Year;
                 SiswaCek.Kelas = siswa.Kelas;
                 SiswaCek.KatSpp = siswa.KatSpp;
                 SiswaCek.KontakSiswa = siswa.KontakSiswa;

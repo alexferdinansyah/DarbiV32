@@ -615,7 +615,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.periode = model.periode;
                 newmodel.SSId = ss;
                 newmodel.uang = model.uang;
-                newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
+                if(model.uang == "0" || model.uang == null)
+                {
+                    model.uang = model.total;
+                    newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
+                } else
+                {
+                    newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
+                }
+
                 newmodel.nominal = model.nominal;
                 if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
                 {

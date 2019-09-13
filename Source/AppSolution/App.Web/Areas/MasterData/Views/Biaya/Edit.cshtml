@@ -102,6 +102,14 @@
                     $('#JenisItem').append($("<option></option>").attr("value", 'KS').text("KS"));
 				}
 
+				if (strUser == "Daftar Ulang") {
+                    $('#JenisBiaya12').show();
+                    kategori.value = "Daftar Ulang";
+                    JenisBiaya.value = "Daftar Ulang";
+                    $('#JenisBiaya3').hide();
+                    $("select[id$=JenisItem] > option").remove();
+                    $('#JenisItem').append($("<option></option>").attr("value", "Daftar Ulang").text("Daftar Ulang"));
+                }
 				//if (strUser == "School Support") {
     //                kategori.value = "School Support";
     //                $('#JenisBiaya12').show();
