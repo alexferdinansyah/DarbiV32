@@ -77,6 +77,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
 
             var QS = Request.QueryString;
+            string Namasiswa = QS["Namasiswa"];
             //var jss = Session["Opsiss"];
             var jj = Session["Opsij"];
             //string JenisSs = m.JenisSS;
@@ -92,7 +93,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-
+                    if ((tglbayar != null) && (Namasiswa != null))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.tglbayar == tglbayar)
@@ -189,18 +193,22 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
+                        if ((jName != null ) && (Namasiswa != null))
+                        {
+                            t = t.Where(x => x.JenisSS.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                        }
                         foreach (var dd in t)
                         {
-                            if (dd.JenisSS.Contains(jName))
+                            if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
                             {
-                                if (dd.JenisSS != "0")
+                                if (dd.JenisSS != "-")
                                 {
                                     RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.Jenjang = dd.Jenjang;
-                                    model.SSId = dd.JenisSS;
+                                    model.SSName = dd.JenisSS;
                                     model.nominal = dd.nominal;
                                     model.tglbayar = dd.tglbayar;
                                     models.Add(model);
@@ -250,7 +258,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 }
                             }
                             SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSName));
-                            models[j].SSId = dtss.JenisSS;
+                            models[j].SSName = dtss.JenisSS;
                         }
                     }
                 }
@@ -271,6 +279,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         break;
                     }
                     IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+                    if((jName != null) && (Namasiswa!= null))
+                    {
+                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.Jenjang.Contains(jName))
@@ -359,15 +371,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Jenjang,
                         //string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
                         data.SSName,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
+                        data.nominal,
                         data.tglbayar.ToString()
                     });
                 }
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = TotalRecord,
-                    iTotalDisplayRecords = TotalRecord,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);

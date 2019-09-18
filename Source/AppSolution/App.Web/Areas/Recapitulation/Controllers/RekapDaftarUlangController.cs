@@ -55,7 +55,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
-
+            string Namasiswa = QS["Namasiswa"];
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -65,7 +65,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                    if ((tglbayar != null) && (Namasiswa != ""))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
 
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.tglbayar == tglbayar)
@@ -115,7 +119,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A")) && M.cicilDaftarUlang != null).ToList();
-
+                        if ((jName != null ) && Namasiswa != null)
+                        {
+                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                        }
                         foreach (var dd in t)
                         {
                             if (dd.Jenjang.Contains(jName))
@@ -174,15 +181,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Namasiswa,
                         data.Kelastingkat,
                         data.Jenjang,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.cicilDaftarUlang) ),
+                        data.cicilDaftarUlang,
                         data.tglbayar.ToString()
                     });
                 }
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = TotalRecord,
-                    iTotalDisplayRecords = TotalRecord,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);

@@ -112,12 +112,11 @@
         <hr id="du4" />
 
         @*school support*@
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.getSS, Model.SS.Select
                                      (x => new SelectListItem { Text = x.JenisSS, Value = x.SSId.ToString() }), new { @class = "form-control chosen-select", @multiple = "true" })
-                @*@Html.DropDownListFor(model => model.SSId, Model.SchoolSupport(), "-- Please Select --", new { @class = "form-control", @onchange = "sschange()" })*@
                 @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -134,11 +133,17 @@
                 @Html.DropDownListFor(model => model.bulanAJ, Model.BulanAJCA.Select
                                      (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
             </div>
+        </div>*@
+		<div class="form-group">
+            @Html.LabelFor(model => model.JenisSS, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JenisSS, new { htmlAttributes = new { @class = "form-control parameter"@*, AutoComplete ="off"*@ } })
+            </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control parameter", @readonly = "readonly" } })
+                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control parameter",} })
             </div>
         </div>
 

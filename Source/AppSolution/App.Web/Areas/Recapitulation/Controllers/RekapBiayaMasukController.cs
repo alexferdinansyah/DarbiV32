@@ -55,7 +55,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
-
+            string Namasiswa = QS["Namasiswa"];
+            
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -63,8 +64,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
+                
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                    if ((tglbayar != null) && (Namasiswa != ""))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+
+                    }
 
                     foreach (var dd in t)
                     {
@@ -102,7 +109,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
             else
             {
-                //jika pencarian berdasarkan Nama Jenjang
+                //jika pencarian berdasarkan  Jenjang
                 try
                 {
                     if (Jid != null)
@@ -110,12 +117,17 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         //Search for jenjangName in Jenjang
                         IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == Jid);
                         var jName = "";
-                        foreach(var i in infoJ)
+                        foreach (var i in infoJ)
                         {
                             jName = i.JenjangName;
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+                        if ((jName != null) && (Namasiswa != ""))
+                        {
+                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+
+                        }
                         foreach (var dd in t)
                         {
                             if (dd.Jenjang.Contains(jName))
@@ -156,7 +168,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
             }
 
-            //Jika ada hasil pencarian baik berdasar nama maupun tglbayar
+            //Jika ada hasil pencarian baik berdasar jenjang maupun tglbayar
             try
             {
                 int TotalRecord = models.Count();
@@ -176,15 +188,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Namasiswa,
                         data.Kelastingkat,
                         data.Jenjang,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
+                        data.biayaBM,
                         data.tglbayar.ToString()
                     });
                 }
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = TotalRecord,
-                    iTotalDisplayRecords = TotalRecord,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);
