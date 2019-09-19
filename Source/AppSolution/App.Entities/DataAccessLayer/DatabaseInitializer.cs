@@ -13,19 +13,19 @@ namespace App.Entities.DataAccessLayer
         {
 
 
-            //var roles = new List<Role>
-            //{
-            //    new Role {Name = "Admin",IsActive = true},
-            //    new Role {Name = "User Manager",IsActive = true},
-            //    new Role {Name = "Role Manager",IsActive = true},
-            //    new Role {Name = "Module Manager",IsActive = true},
-            //    new Role {Name = "Dashboard Access",IsActive = true}
-            //};
-            //roles.ForEach(s => context.Roles.Add(s));
-            //context.SaveChanges();
+            var roles = new List<Role>
+            {
+                new Role {Name = "Admin",IsActive = true},
+                new Role {Name = "Operator",IsActive = true},
+                //new Role {Name = "Role Manager",IsActive = true},
+                //new Role {Name = "Module Manager",IsActive = true},
+                //new Role {Name = "Dashboard Access",IsActive = true}
+            };
+            roles.ForEach(s => context.Roles.Add(s));
+            context.SaveChanges();
 
-            //Role Admin = context.Roles.Where(x => x.Name == "Admin").FirstOrDefault();
-            //Role UserManager = context.Roles.Where(x => x.Name == "User Manager").FirstOrDefault();
+            Role Admin = context.Roles.Where(x => x.Name == "Admin").FirstOrDefault();
+            Role Operator = context.Roles.Where(x => x.Name == "Operator").FirstOrDefault();
             //Role RoleManager = context.Roles.Where(x => x.Name == "Role Manager").FirstOrDefault();
             //Role ModuleManager = context.Roles.Where(x => x.Name == "Module Manager").FirstOrDefault();
             //Role DashboardAccess = context.Roles.Where(x => x.Name == "Dashboard Access").FirstOrDefault();

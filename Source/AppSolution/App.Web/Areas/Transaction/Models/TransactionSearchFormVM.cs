@@ -13,5 +13,6 @@ namespace App.Web.Areas.Transaction.Models
         // GET: Transaction/TransactionSearchFormVM
         [Display(Name = "Nama Siswa")]
         public string NamaSiswa { get; set; }
+        public Boolean? isAdmin { get; set; }
     }
 }
