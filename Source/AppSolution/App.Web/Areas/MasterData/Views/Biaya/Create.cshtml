@@ -32,13 +32,13 @@
         </div>
     </div>
 
-    <div class="form-group" id="JenisBiaya3">
+    @*<div class="form-group" id="JenisBiaya3">
         @Html.LabelFor(model => model.SsId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.SsId, Model.SS(), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.SsId, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.TingkatId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -90,7 +90,7 @@
                     $('#JenisBiaya12').show();
                     kategori.value = "Biaya Masuk";
                     JenisBiaya.value = "Biaya Masuk";
-                    $('#JenisBiaya3').hide();
+                    //$('#JenisBiaya3').hide();
                     $("select[id$=JenisItem] > option").remove();
                     $('#JenisItem').append($("<option></option>").attr("value", "Biaya Masuk").text("Biaya Masuk"));
                 }
@@ -98,25 +98,25 @@
                 if (strUser == "SPP") {
                     kategori.value = "SPP";
                     $('#JenisBiaya12').show();
-                    $('#JenisBiaya3').hide();
+                    //$('#JenisBiaya3').hide();
                     $("select[id$=JenisItem] > option").remove();
                     $('#JenisItem').append($("<option></option>").attr("value",'').text("Pilih Jenis"));
                     $('#JenisItem').append($("<option></option>").attr("value",'SPP').text("SPP"));
                     $('#JenisItem').append($("<option></option>").attr("value", 'KS').text("KS"));
                 }
 
-                if (strUser == "School Support") {
-                    kategori.value = "School Support";
-                    //JenisBiaya.value = "Biaya Masuk";
-                    $('#JenisBiaya12').hide();
-                    $('#JenisBiaya3').show();
-                }
+                //if (strUser == "School Support") {
+                //    kategori.value = "School Support";
+                //    //JenisBiaya.value = "Biaya Masuk";
+                //    $('#JenisBiaya12').hide();
+                //    $('#JenisBiaya3').show();
+                //}
 
                 if (strUser == "Daftar Ulang") {
                     $('#JenisBiaya12').show();
                     kategori.value = "Daftar Ulang";
                     JenisBiaya.value = "Daftar Ulang";
-                    $('#JenisBiaya3').hide();
+                    //$('#JenisBiaya3').hide();
                     $("select[id$=JenisItem] > option").remove();
                     $('#JenisItem').append($("<option></option>").attr("value", "Daftar Ulang").text("Daftar Ulang"));
                 }

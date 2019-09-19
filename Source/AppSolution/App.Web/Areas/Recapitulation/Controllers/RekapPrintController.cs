@@ -21,15 +21,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
-            List<SelectListItem> OpBM = new List<SelectListItem>()
+            //List<SelectListItem> OpBM = new List<SelectListItem>()
 
-            {
-                new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-                new SelectListItem {Text="Nama",Value="1"},
-                new SelectListItem {Text="Tanggal",Value="2"},
-            };
+            //{
+            //    new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
+            //    new SelectListItem {Text="Nama",Value="1"},
+            //    new SelectListItem {Text="Tanggal",Value="2"},
+            //};
 
-            ViewBag.OpBM = OpBM;
+            //ViewBag.OpBM = OpBM;
             return View(model);
         }
 
@@ -50,7 +50,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-
+                    if ((tglbayar != null) && (Namasiswa != null))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.tglbayar == tglbayar)
@@ -96,10 +99,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     if (Namasiswa != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        if ((Namasiswa != null) &&  (tglbayar != null))
+                        {
+                            t = t.Where(x => x.Namasiswa.Contains(Namasiswa) && x.tglbayar.Equals(tglbayar));
+                        }
 
                         foreach (var dd in t)
                         {
-                            if (dd.Namasiswa.Contains(Namasiswa))
+                            if (dd.Namasiswa.ToLower().Contains(Namasiswa.ToLower()))
                             {
                                 RekapPrintVM model = new RekapPrintVM();
                                 model.Nosisda = dd.Nosisda;
@@ -154,9 +161,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
-                        string.Format( "{0:#,#.00}", (data.cicilDaftarUlang == "" ? 0 : Convert.ToInt32(data.cicilDaftarUlang)) ),
-                        string.Format( "{0:#,#.00}", (data.biayaBM == "" ? 0 : Convert.ToInt32(data.biayaBM)) ),
-                        string.Format( "{0:#,#.00}", (data.bayarspp == "" ? 0 : Convert.ToInt32(data.bayarspp)) ),
+                        data.cicilDaftarUlang,
+                        data.biayaBM,
+                        data.bayarspp,
                         data.bulanspp,
                         data.SSName,
                         data.nominal,
@@ -167,8 +174,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = TotalRecord,
-                    iTotalDisplayRecords = TotalRecord,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);
@@ -191,9 +198,5 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
         }
         
-        public ActionResult Print(RekapPrintVM m)
-        {
-            return View();
-        }
     }
 }

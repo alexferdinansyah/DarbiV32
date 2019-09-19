@@ -158,6 +158,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     spp = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
                 }
+                else if (discspp == "")
+                    test = Convert.ToInt32(by.NomBiaya);
 
                 totalspp += (spp * blnspp.Count());
             }
@@ -642,7 +644,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bulanCA = ca;
                 newmodel.bulanAJ = aj;
                 newmodel.periode = model.periode;
-                newmodel.SSId = ss;
+                newmodel.JenisSS = model.JenisSS;
                 newmodel.uang = model.uang;
                 if(model.uang == "0" || model.uang == null)
                 {
@@ -698,7 +700,7 @@ namespace App.Web.Areas.Transaction.Controllers
         {
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
-            var ss = ssid.Split(',');
+            //var ss = ssid.Split(',');
 
             if (id == null)
             {
@@ -707,16 +709,16 @@ namespace App.Web.Areas.Transaction.Controllers
 
             //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            if (transaksi.SSId != "-")
+            if (transaksi.SSId != null)
             {
-                string[] jss = new string[ss.Count()];
-                for (int i = 0; i < ss.Count(); i++)
-                {
-                    SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
-                    jss[i] = s.JenisSS;
-                }
-                var tss = String.Join(",", jss);
-                transaksi.JenisSS = tss;
+                //string[] jss = new string[ss.Count()];
+                //for (int i = 0; i < ss.Count(); i++)
+                //{
+                //    SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
+                //    jss[i] = s.JenisSS;
+                //}
+                //var tss = String.Join(",", jss);
+                //transaksi.JenisSS = tss;
                 //info bayar keseluruhan
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
                     (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
@@ -724,7 +726,7 @@ namespace App.Web.Areas.Transaction.Controllers
             }
             else
             {
-                transaksi.JenisSS = "-";
+                //transaksi.JenisSS = "-";
 
                 Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
                     (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));

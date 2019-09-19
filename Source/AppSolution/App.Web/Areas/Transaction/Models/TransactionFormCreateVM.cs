@@ -90,6 +90,8 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "School Support")]
         public int? SSId { get; set; }
+
+        [Display(Name = "School Support")]
         public string JenisSS
         {
             get; set;

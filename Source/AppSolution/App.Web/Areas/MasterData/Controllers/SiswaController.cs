@@ -31,11 +31,12 @@ namespace App.Web.Areas.MasterData.Controllers
         }
 
         [HttpGet]
-        public ActionResult AjaxSiswa(JQueryDataTableParamModel param)
+        public ActionResult AjaxSiswa(JQueryDataTableParamModel param, SiswaSearchFormVM m)
         {
             var QS = Request.QueryString;
-            String Nosisda = QS["Nosisda"];
-            Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
+            string Nosisda = QS["Nosisda"];
+            string Fullname = QS["Fullname"];
+            //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -43,12 +44,14 @@ namespace App.Web.Areas.MasterData.Controllers
             try
             {
                 IEnumerable<Siswa> Query = db.Siswas;
-                if (Nosisda != "")
+                if ((Nosisda != "") && (Fullname != ""))
                 {
-                    Query = Query.Where(x => x.Nosisda.Contains(Nosisda));
-                }
+                    Query = Query.Where (x => x.Nosisda.Contains(Nosisda) && x.Fullname.Contains(Fullname));
 
-                Query = Query.Where(x => x.IsActive == IsActive);
+                } 
+
+
+                //Query = Query.Where(x => x.IsActive == IsActive);
 
                 int TotalRecord = Query.Count();
 

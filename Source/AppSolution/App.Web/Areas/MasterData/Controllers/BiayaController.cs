@@ -40,7 +40,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },
                 new SelectListItem {Text="Biaya Masuk",Value="1" },
                 new SelectListItem {Text="SPP",Value="2"},
-                new SelectListItem {Text="School Support",Value="3"},
+                //new SelectListItem {Text="School Support",Value="3"},
                 new SelectListItem {Text="Daftar Ulang",Value="4"},
             };
 
@@ -65,16 +65,15 @@ namespace App.Web.Areas.MasterData.Controllers
             {
                 Biaya newmodel = new Biaya();
                 newmodel.KatBiaya = model.KatBiaya;
-                SchoolSupport ss = db.SchoolSupports.Find(model.SsId);
-                if(model.KatBiaya == "School Support")
-                {
-                    newmodel.JenisBiaya = ss.JenisSS;
-                }
-                else
-                {
-                    newmodel.JenisBiaya = model.JenisBiaya;
-                }
-                
+                //SchoolSupport ss = db.SchoolSupports.Find(model.SsId);
+                //if (newmodel.KatBiaya == "School Support")
+                //{
+                //    newmodel.JenisBiaya = ss.JenisSS;
+                //} else
+                //{
+                //    newmodel.JenisBiaya = model.JenisBiaya;
+                //}
+                newmodel.JenisBiaya = model.JenisBiaya;
                 newmodel.TingkatId = model.TingkatId;
                 newmodel.NomBiaya = model.NomBiaya;
 
@@ -225,16 +224,7 @@ namespace App.Web.Areas.MasterData.Controllers
             EditBiayaFormVM model = new EditBiayaFormVM();
             model.BiayaId = biaya.BiayaId;
             model.KatBiaya = biaya.KatBiaya;
-
-            if (model.KatBiaya == "School Support")
-            {
-                model.JenisBiaya = biaya.JenisSS;
-            }
-            else
-            {
-                model.JenisBiaya = biaya.JenisBiaya;
-            }
-            //model.JenisBiaya = biaya.JenisBiaya;
+            model.JenisBiaya = biaya.JenisBiaya;
             model.NomBiaya = biaya.NomBiaya;
             model.TingkatId = biaya.TingkatId;
             List<SelectListItem> ObjItem = new List<SelectListItem>()
@@ -243,7 +233,7 @@ namespace App.Web.Areas.MasterData.Controllers
                 new SelectListItem {Text="Pilih Kategori",Value="0",Selected=true },
                 new SelectListItem {Text="Biaya Masuk",Value="1" },
                 new SelectListItem {Text="SPP",Value="2"},
-                new SelectListItem {Text="School Support",Value="3"},
+                //new SelectListItem {Text="School Support",Value="3"},
                 new SelectListItem {Text="Daftar Ulang",Value="4"},
             };
 
@@ -267,16 +257,7 @@ namespace App.Web.Areas.MasterData.Controllers
 
                 Biaya BiayaCek = db.Biayas.Find(biaya.BiayaId);
                 BiayaCek.KatBiaya = biaya.KatBiaya;
-
-                if (BiayaCek.KatBiaya == "School Support")
-                {
-                    BiayaCek.JenisBiaya = biaya.JenisSS;
-                }
-                else
-                {
-                    BiayaCek.JenisBiaya = biaya.JenisBiaya;
-                }
-                //BiayaCek.JenisBiaya = biaya.JenisBiaya;
+                BiayaCek.JenisBiaya = biaya.JenisBiaya;
                 BiayaCek.TingkatId = biaya.TingkatId;
                 BiayaCek.NomBiaya = biaya.NomBiaya;
 

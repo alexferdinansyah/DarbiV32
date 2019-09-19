@@ -10,16 +10,14 @@ namespace App.Web.Areas.MasterData.Models
 {
     public class SiswaSearchFormVM : Controller
     {
-        // GET: MasterData/SiswaSearchFormVM
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
 
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; } = true;
+
+        [Display(Name ="Nama")]
+        public string Fullname { get; set; }
     }
 }

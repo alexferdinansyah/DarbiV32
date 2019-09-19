@@ -72,8 +72,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
 
             var QS = Request.QueryString;
-            //string Namasiswa = m.Namasiswa;
-            
+            string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
@@ -85,6 +84,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                    if ((tglbayar != null) && (Namasiswa != null))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                    }
 
                     foreach (var dd in t)
                     {
@@ -135,7 +138,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         }
 
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-
+                        if ((jName != null) && (Namasiswa != null))
+                        {
+                            t = t.Where(x => x.Jenjang.Contains(jName) && (x.Namasiswa.Contains(Namasiswa)));
+                        }
 
                         foreach (var dd in t)
                         {

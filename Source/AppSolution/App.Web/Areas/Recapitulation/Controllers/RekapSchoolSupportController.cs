@@ -77,6 +77,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
 
             var QS = Request.QueryString;
+            string Namasiswa = QS["Namasiswa"];
             //var jss = Session["Opsiss"];
             var jj = Session["Opsij"];
             //string JenisSs = m.JenisSS;
@@ -92,7 +93,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-
+                    if ((tglbayar != null) && (Namasiswa != null))
+                    {
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.tglbayar == tglbayar)
@@ -188,10 +192,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             jName = ss.JenisSS;
                             break;
                         }
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Contains(jName)).ToList();
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
                         foreach (var dd in t)
                         {
-                            if (dd.JenisSS.Contains(jName))
+                            if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
                             {
                                 if (dd.JenisSS != "-")
                                 {
@@ -249,8 +253,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     eachsiswa++;
                                 }
                             }
-                            /*SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSName));
-                            models[j].SSId = dtss.JenisSS;*/
+                            SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSName));
+                            models[j].SSName = dtss.JenisSS;
                         }
                     }
                 }
@@ -271,6 +275,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         break;
                     }
                     IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+                    if((jName != null) && (Namasiswa!= null))
+                    {
+                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                    }
                     foreach (var dd in t)
                     {
                         if (dd.Jenjang.Contains(jName))
@@ -359,15 +367,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Jenjang,
                         //string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
                         data.SSName,
-                        string.Format( "{0:#,#.00}", Convert.ToInt32(data.nominal) ),
+                        data.nominal,
                         data.tglbayar.ToString()
                     });
                 }
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = TotalRecord,
-                    iTotalDisplayRecords = TotalRecord,
+                    iTotalRecords = 0,
+                    iTotalDisplayRecords = 0,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);
