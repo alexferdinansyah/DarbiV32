@@ -159,7 +159,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     spp = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
                 }
                 else if (discspp == "")
-                    test = Convert.ToInt32(by.NomBiaya);
+                    spp = Convert.ToInt32(by.NomBiaya);
 
                 totalspp += (spp * blnspp.Count());
             }
