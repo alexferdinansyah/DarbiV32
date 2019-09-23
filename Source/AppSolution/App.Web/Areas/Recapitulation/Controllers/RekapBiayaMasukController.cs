@@ -67,9 +67,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) && (Namasiswa != ""))
+                    if ((tglbayar != null) || (Namasiswa != ""))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa.ToLower()));
 
                     }
 
@@ -107,6 +107,48 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
 
             }
+            // jika pencarian berdasarkan nama
+            if ((Jid == null || Jid == 0) && m.tglbayar == null)
+            {
+                try
+                {
+                    if (Namasiswa != null)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()));
+                        foreach (var dd in t)
+                        {
+                            if (dd.bayarBM != 0)
+                            {
+                                RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
+                                model.biayaBM = dd.bayarBM.ToString();
+                                model.tglbayar = dd.tglbayar;
+                                models.Add(model);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = 0,
+                            iTotalDisplayRecords = 0,
+                            aaData = models,
+                            error = errorMessage
+                        },
+                JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
+            }
+
             else
             {
                 //jika pencarian berdasarkan  Jenjang
@@ -123,9 +165,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-                        if ((jName != null) && (Namasiswa != ""))
+                        if ((jName != null) || (Namasiswa != ""))
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                            t = t.Where(x => x.Jenjang.Contains(jName) || x.Namasiswa.Contains(Namasiswa.ToLower()));
 
                         }
                         foreach (var dd in t)

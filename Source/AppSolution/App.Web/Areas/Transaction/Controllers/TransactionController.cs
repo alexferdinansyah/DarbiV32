@@ -158,7 +158,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
                     spp = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
                 }
-                else if (discspp == "")
+                else if (discspp == "" || discspp == null)
                     spp = Convert.ToInt32(by.NomBiaya);
 
                 totalspp += (spp * blnspp.Count());
@@ -246,7 +246,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         data.Nosisda,
                         data.Fullname,
                         Periode,
-                        data.Kelas + "-" + data.Kelas,
+                        data.Kelas + "-" + data.Tingkat,
                         isAdmin.ToString(),
                         data.Nosisda.ToString()
                     });
