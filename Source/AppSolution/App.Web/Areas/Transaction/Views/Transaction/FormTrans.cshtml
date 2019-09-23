@@ -84,7 +84,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.komiteSekolah, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter",  AutoComplete = "off"} })
+                @Html.EditorFor(model => model.komiteSekolah, new { htmlAttributes = new { @class = "form-control parameter", @readonly = "readonly" } })
             </div>
         </div>
 
@@ -106,7 +106,7 @@
         <div class="form-group" id="du3">
             @Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", id = "txt3", AutoComplete="off" } })
+                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete="off" } })
             </div>
         </div>
         <hr id="du4" />
@@ -201,23 +201,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".chosen-select").chosen();
-        /*$.ajax({
-            type: "GET",
-            url: "/Transaction/Transaction/PeriodeAjax",
-            data: { input: $('#listperiode').val() + "." + $('#Nosisda').val() },
-            success: successFunc,
-            error: errorFunc
-        });
-        function successFunc(data, status) {
-            var s = '<option value="-1">Pilih Bulan</option>';
-            for (var i = 0; i < data.length; i++) {
-                s += '<option value="' + data[i].BulanID + '">' + data[i].BulanName + '</option>';
-            }
-            $("#bulanSPP").append(s);
-        }
-        function errorFunc() {
-            alert('error');
-        }*/
 
         $('#listperiode').change(function () {
             $.ajax({
@@ -250,7 +233,8 @@
             });
             function successFunc(data, status) {
                 //alert(data);
-                document.getElementById("bayarspp").value = data;
+                document.getElementById("bayarspp").value = data.SPP;
+                document.getElementById("komiteSekolah").value = data.KS;
                 var total = 0;
                 $(".parameter").each(function () {
                     if (!isNaN(parseInt($(this).val()))) {
@@ -262,12 +246,10 @@
             }
 
             function errorFunc() {
-                alert('error');
+                alert('Belum Ada Biaya pada masterdata');
             }
         });
 
-        // *Rizky
-        // getSS still have bugs 
         $("#getSS").change(function () {
             $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
             $("#bulanaj").fadeIn("fast")[$.inArray('11', $(this).val()) >= 0 ? 'show' : 'hide']();
@@ -293,7 +275,7 @@
             }
 
             function errorFunc() {
-                alert('error');
+                alert('Belum Ada Biaya pada masterdata');
             }
         });
 

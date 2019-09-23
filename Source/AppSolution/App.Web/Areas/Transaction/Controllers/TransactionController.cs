@@ -24,6 +24,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (model == null)
             {
                 model = new TransactionSearchFormVM();
+               
             }
             System.Web.HttpContext.Current.Session["NamaSiswa"] = model.NamaSiswa;
             return View(model);
@@ -114,6 +115,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
         public ActionResult SPPAjax(string input)
         {
+       
             var inputarray = input.Split('-');
             var blnspp = inputarray[0].Split(',');
             var kt = inputarray[1].Split(' ');
@@ -139,8 +141,9 @@ namespace App.Web.Areas.Transaction.Controllers
 
             Biaya by = null;
 
-            var test = 0;
-            var total = 0;
+            var spp = 0;
+            var totalspp = 0;
+            var totalks = 0;
             if (inputarray[0] != "null")
             {
                 b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
@@ -149,19 +152,29 @@ namespace App.Web.Areas.Transaction.Controllers
 
                 if (discspp == "Rp")
                 {
-                    test = Convert.ToInt32(by.NomBiaya) - (diskonspp);
+                    spp = Convert.ToInt32(by.NomBiaya) - (diskonspp);
                 }
                 if (discspp == "%")
                 {
-                    test = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
+                    spp = Convert.ToInt32(by.NomBiaya) - (Convert.ToInt32(by.NomBiaya) * (diskonspp) / 100);
                 }
-                else if (discspp == "")
-                    test = Convert.ToInt32(by.NomBiaya);
+                else if (discspp == "" || discspp == null)
+                    spp = Convert.ToInt32(by.NomBiaya);
 
-                total += (test * blnspp.Count());
+                totalspp += (spp * blnspp.Count());
+            }
+            if (inputarray[0] != "null")
+            {
+                b = db.Biayas.Where(x => x.TingkatId == ts.TingkatId);
+                b = b.Where(x => x.JenisBiaya.ToLower().Equals("ks") && x.KatBiaya.ToLower().Equals("spp"));
+                by = b.FirstOrDefault();
+
+                totalks += ((Convert.ToInt32(by.NomBiaya)) * blnspp.Count());
             }
 
-            return Json(total, JsonRequestBehavior.AllowGet);
+            var result = new { SPP = totalspp, KS = totalks };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -207,6 +220,20 @@ namespace App.Web.Areas.Transaction.Controllers
                 var PagedQuery = OrderedQuery.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
 
                 int i = 0;
+                var uname = User.Identity.GetUserName();
+                List<User> u = db.Users.Where(x => x.Username.Contains(uname)).ToList();
+                var isAdmin = false;
+                foreach (var uu in u)
+                {
+                    if (uu.Role_Id == 1)
+                    {
+                        isAdmin = true;
+                    }
+                    else
+                    {
+                        isAdmin = false;
+                    }
+                }
                 foreach (var data in PagedQuery)
                 {
 
@@ -219,7 +246,8 @@ namespace App.Web.Areas.Transaction.Controllers
                         data.Nosisda,
                         data.Fullname,
                         Periode,
-                        data.Kelas + "-" + data.Kelas,
+                        data.Kelas + "-" + data.Tingkat,
+                        isAdmin.ToString(),
                         data.Nosisda.ToString()
                     });
                 }
@@ -465,10 +493,10 @@ namespace App.Web.Areas.Transaction.Controllers
 
                     }*/
 
-                    if (dd.JenisBiaya == "KS")
+                    /*if (dd.JenisBiaya == "KS")
                     {
                         mod.komiteSekolah = dd.NomBiaya;
-                    }
+                    }*/
 
 
                     //if (dd.KatBiaya == "School Support")

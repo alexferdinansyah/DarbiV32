@@ -16,6 +16,7 @@
             <th>Nama Lengkap</th>
             <th>Periode</th>
             <th>Kelas - Tingkat</th>
+            <th style="display:none">isAdmin</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -38,6 +39,7 @@
             "ordering": false,
             "sAjaxSource": "/Transaction/Transaction/AjaxTrans?format=JSON",
             "bProcessing": true,
+            "aoColumnDefs": [{ "bVisible": false, "aTargets": [5] }],
             oLanguage: { sProcessing: "<div id='loader'></div>" },
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
@@ -46,6 +48,7 @@
                     { "name": "Fullname", "value": $('#Fullname').val() },
                     { "name": "Periode", "value": $('#Periode').val() },
                     { "name": "Kelas", "value": $('#Kelas').val() },
+                    { "name": "isAdmin", "value": $('#isAdmin').val() }
                 );
             },
             "aoColumns": [
@@ -58,11 +61,20 @@
                 { "sName": "Fullname" },
                 { "sName": "Periode" },
                 { "sName": "Kelas" },
+                { "sName": "isAdmin",},
+
                     {
                         "render": function (data, type, row, meta) {
+                            console.log(row[5]);
                             if (type === 'display') {
-                                var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a> | ';
-                                x += '<a href="/Transaction/Transaction/Delete?nosisda=' + data + '">Batal Transaksi Terakhir</a>';
+                                if (row[5] == "True") {
+                                    var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a> | ';
+                                    x += '<a href="/Transaction/Transaction/Delete?nosisda=' + data + '">Batal Transaksi Terakhir</a>';
+                                }
+                                else {
+                                    var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a>';
+                                }
+                                
                             }
 
                             return x;

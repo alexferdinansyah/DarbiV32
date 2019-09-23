@@ -110,9 +110,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
+
                                 model.SSId = dd.SSId.ToString();
                                 model.tipebayar = dd.tipebayar;
                                 model.Username = uname;
+
+                                model.tglbayar = dd.tglbayar;
+                                //model.SSId = dd.SSId.ToString();
+
                                 models.Add(model);
                             }
 
@@ -190,7 +195,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 //jika pencarian berdasarkan Jenis SS
                     if (jss!= null)
                     {
-                        IEnumerable<SchoolSupport> infoss = db.SchoolSupports.Where(ss => ss.JenisSS == jss.ToString());
+                        IEnumerable<SchoolSupport> infoss = db.SchoolSupports.Where(ss => ss.JenisSS.ToLower() == jss.ToString().ToLower());
                         var jName = "";
                         foreach (var ss in infoss)
                         {
@@ -198,10 +203,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
-                        if ((jName != null ) && (Namasiswa != null))
-                        {
-                            t = t.Where(x => x.JenisSS.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
-                        }
                         foreach (var dd in t)
                         {
                             if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
@@ -296,7 +297,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.Jenjang.Contains(jName))
                         {
-                            if (dd.Jenjang != "")
+                            if (dd.JenisSS != "")
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.tglbayar = dd.tglbayar;

@@ -13,19 +13,19 @@ namespace App.Entities.DataAccessLayer
         {
 
 
-            //var roles = new List<Role>
-            //{
-            //    new Role {Name = "Admin",IsActive = true},
-            //    new Role {Name = "User Manager",IsActive = true},
-            //    new Role {Name = "Role Manager",IsActive = true},
-            //    new Role {Name = "Module Manager",IsActive = true},
-            //    new Role {Name = "Dashboard Access",IsActive = true}
-            //};
-            //roles.ForEach(s => context.Roles.Add(s));
-            //context.SaveChanges();
+            var roles = new List<Role>
+            {
+                new Role {Name = "Admin",IsActive = true},
+                new Role {Name = "Operator",IsActive = true},
+                //new Role {Name = "Role Manager",IsActive = true},
+                //new Role {Name = "Module Manager",IsActive = true},
+                //new Role {Name = "Dashboard Access",IsActive = true}
+            };
+            roles.ForEach(s => context.Roles.Add(s));
+            context.SaveChanges();
 
-            //Role Admin = context.Roles.Where(x => x.Name == "Admin").FirstOrDefault();
-            //Role UserManager = context.Roles.Where(x => x.Name == "User Manager").FirstOrDefault();
+            Role Admin = context.Roles.Where(x => x.Name == "Admin").FirstOrDefault();
+            Role Operator = context.Roles.Where(x => x.Name == "Operator").FirstOrDefault();
             //Role RoleManager = context.Roles.Where(x => x.Name == "Role Manager").FirstOrDefault();
             //Role ModuleManager = context.Roles.Where(x => x.Name == "Module Manager").FirstOrDefault();
             //Role DashboardAccess = context.Roles.Where(x => x.Name == "Dashboard Access").FirstOrDefault();
@@ -165,7 +165,7 @@ namespace App.Entities.DataAccessLayer
             {
                 //new User {Email = "admin@admin.com",Password = Security.GetHashString("Password123"), Roles = context.Roles.Where(x => x.Name == Admin.Name).ToList() ,IsActive = true},
                 //new User {Email = "user@user.com",Password = Security.GetHashString("Password123"),Roles = context.Roles.Where(x => x.Name == DashboardAccess.Name).ToList(), IsActive = true}
-                new User {Fullname = "Admin", Username="admin1",Password = Security.GetHashString("admin123")}
+                new User {Fullname = "Admin", Username="admin1",Password = Security.GetHashString("admin123"), Role_Id = 1}
             };
             users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();

@@ -136,7 +136,7 @@ namespace App.Web.Areas.AccessManagement.Controllers
             }
             if (ModelState.IsValid)
             {
-                User.Roles.Add(db.Roles.Find(model.RoleId));
+                //User.Roles.Add(db.Roles.Find(model.RoleId));
 
                 db.Entry(User).State = EntityState.Modified;
                 db.SaveChanges();
@@ -148,7 +148,9 @@ namespace App.Web.Areas.AccessManagement.Controllers
         // GET: AccessManagement/User/Create
         public ActionResult Create()
         {
-            return View();
+            User u = new User();
+            //u.Roles = db.Roles.ToList();
+            return View(u);
         }
 
         // POST: AccessManagement/User/Create
@@ -156,8 +158,11 @@ namespace App.Web.Areas.AccessManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,Fullname, Username,Password")] User user)
+        public ActionResult Create(User user, FormCollection f)
+            /*[Bind(Include = "UserId,Fullname, Username,Password, Roles")]*/
         {
+            //user.Roles = db.Roles.ToList();
+            var xx = f["Roles"];
             if (ModelState.IsValid)
             {
                 user.Password = Security.GetHashString(user.Password);
@@ -189,7 +194,7 @@ namespace App.Web.Areas.AccessManagement.Controllers
             {
                 var User = db.Users.Find(model.UserId);
                 var Role = db.Roles.Find(model.RoleId);
-                User.Roles.Remove(Role);
+                //User.Roles.Remove(Role);
 
                 db.Entry(User).State = EntityState.Modified;
                 db.SaveChanges();
