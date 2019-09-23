@@ -86,7 +86,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) && (Namasiswa != null))
+                    if ((tglbayar != null) || (Namasiswa != null))
                     {
                         t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
                     }
@@ -125,7 +125,50 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     },
         JsonRequestBehavior.AllowGet);
                 }
-
+            }
+            // jika pencarian berdasarkan nama
+            if ((Jid == null || Jid == 0) && m.tglbayar == null)
+            {
+                try
+                {
+                    if (Namasiswa != null)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()));
+                        foreach (var dd in t)
+                        {
+                            if (dd.bulanspp != null)
+                            {
+                                RekapSPPVM model = new RekapSPPVM();
+                                model.tglbayar = dd.tglbayar;
+                                model.Nosisda = dd.Nosisda;
+                                model.Namasiswa = dd.Namasiswa;
+                                model.Kelastingkat = dd.Kelastingkat;
+                                model.Jenjang = dd.Jenjang;
+                                model.bulanspp = dd.bulanspp.ToString();
+                                model.bayarspp = dd.bayarspp.ToString();
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
+                                models.Add(model);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = 0,
+                            iTotalDisplayRecords = 0,
+                            aaData = models,
+                            error = errorMessage
+                        },
+                JsonRequestBehavior.AllowGet);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }
             }
             else
             {
@@ -142,9 +185,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         }
 
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-                        if ((jName != null) && (Namasiswa != null))
+                        if ((jName != null) || (Namasiswa != null))
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) && (x.Namasiswa.Contains(Namasiswa)));
+                            t = t.Where(x => x.Jenjang.Contains(jName) || (x.Namasiswa.Contains(Namasiswa)));
                         }
 
                         foreach (var dd in t)

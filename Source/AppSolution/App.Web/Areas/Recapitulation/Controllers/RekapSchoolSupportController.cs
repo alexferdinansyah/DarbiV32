@@ -110,12 +110,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
-
                                 model.SSId = dd.SSId.ToString();
                                 model.tipebayar = dd.tipebayar;
                                 model.Username = uname;
-
-                                model.tglbayar = dd.tglbayar;
                                 //model.SSId = dd.SSId.ToString();
 
                                 models.Add(model);
@@ -203,6 +200,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
+                        if (jss != null && Namasiswa != null)
+                        {
+                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa));
+                        }
+                        
                         foreach (var dd in t)
                         {
                             if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
