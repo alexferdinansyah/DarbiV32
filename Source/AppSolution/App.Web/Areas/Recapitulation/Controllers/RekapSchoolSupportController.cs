@@ -109,7 +109,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.tglbayar = dd.tglbayar;
-                                model.SSId = dd.SSId.ToString();
+                                //model.SSId = dd.SSId.ToString();
                                 models.Add(model);
                             }
 
@@ -283,7 +283,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.Jenjang.Contains(jName))
                         {
-                            if (dd.Jenjang != "")
+                            if (dd.JenisSS != "")
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.Nosisda = dd.Nosisda;
