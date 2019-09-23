@@ -11,6 +11,7 @@ using App.Entities.Models;
 using App.Web.Models;
 using App.Web.Areas.Recapitulation.Models;
 using App.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -74,6 +75,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            var uname = User.Identity.GetUserName();
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
             List<string[]> listResult = new List<string[]>();
@@ -103,6 +105,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Jenjang = dd.Jenjang;
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
 
@@ -157,6 +161,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.Jenjang = dd.Jenjang;
                                     model.bulanspp = dd.bulanspp.ToString();
                                     model.bayarspp = dd.bayarspp.ToString();
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = uname;
                                     models.Add(model);
                                 }
                             }
@@ -204,7 +210,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.Jenjang,
                         data.bulanspp,
                         data.bayarspp,
-                        data.Nosisda,
+                        data.tipebayar,
+                        data.Username
                     });
                 }
                 return Json(new

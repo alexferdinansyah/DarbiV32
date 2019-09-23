@@ -11,6 +11,7 @@ using App.Entities.Models;
 using App.Web.Models;
 using App.Web.Areas.Recapitulation.Models;
 using App.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -39,6 +40,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            var uname = User.Identity.GetUserName();
 
             List<RekapPrintVM> models = new List<RekapPrintVM>();
             List<string[]> listResult = new List<string[]>();
@@ -61,6 +63,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (tglbayar == dd.tglbayar)
                             {
                                 RekapPrintVM model = new RekapPrintVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
@@ -70,7 +73,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.SSName = dd.JenisSS;
                                 model.nominal = dd.nominal;
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
                         }
@@ -109,6 +113,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.Namasiswa.ToLower().Contains(Namasiswa.ToLower()))
                             {
                                 RekapPrintVM model = new RekapPrintVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
@@ -118,7 +123,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.SSName = dd.JenisSS;
                                 model.nominal = dd.nominal;
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
 
                             }
@@ -158,6 +164,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
+                        data.tglbayar.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
@@ -167,7 +174,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         data.bulanspp,
                         data.SSName,
                         data.nominal,
-                        data.tglbayar.ToString()
+                        data.tipebayar,
+                        data.Username,
                     });
         
                 }

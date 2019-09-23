@@ -11,6 +11,7 @@ using App.Entities.Models;
 using App.Web.Models;
 using App.Web.Areas.Recapitulation.Models;
 using App.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -82,7 +83,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var jj = Session["Opsij"];
             //string JenisSs = m.JenisSS;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
-
+            var uname = User.Identity.GetUserName();
 
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
@@ -104,12 +105,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.JenisSS != null)
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
-                                model.tglbayar = dd.tglbayar;
                                 model.SSId = dd.SSId.ToString();
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
 
@@ -151,10 +154,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     {
                                         //RekapSPPVM mm = new RekapSPPVM();
                                         //models[j].biayaBM = dt.bayarBM.ToString();
+                                        models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
                                         models[j].SSId = dt.JenisSS;
                                         models[j].SSName = dt.JenisSS;
                                         models[j].nominal = dt.nominal;
-                                        models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                        models[j].tipebayar = dt.tipebayar;
+                                        models[j].Username = uname;
                                         eachsiswa++;
                                     }
                                         
@@ -204,13 +209,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 if (dd.JenisSS != "-")
                                 {
                                     RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.Jenjang = dd.Jenjang;
                                     model.SSName = dd.JenisSS;
                                     model.nominal = dd.nominal;
-                                    model.tglbayar = dd.tglbayar;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = uname;
                                     models.Add(model);
                                 }
                             }
@@ -250,10 +257,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 {
                                     //RekapSPPVM mm = new RekapSPPVM();
                                     //models[j].biayaBM = dt.bayarBM.ToString();
+                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
                                     models[j].SSId = dt.SSId.ToString();
                                     models[j].SSName = dt.JenisSS;
                                     models[j].nominal = dt.nominal;
-                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                    models[j].tipebayar = dt.tipebayar;
+                                    models[j].Username = uname;
                                     eachsiswa++;
                                 }
                             }
@@ -290,13 +299,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.Jenjang != "")
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.SSName = dd.JenisSS;
                                 model.nominal = dd.nominal;
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
                         }
@@ -336,10 +347,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 //RekapSPPVM mm = new RekapSPPVM();
                                 //models[j].biayaBM = dt.bayarBM.ToString();
+                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
                                 models[j].SSId = dt.SSId.ToString();
                                 models[j].SSName = dt.JenisSS;
                                 models[j].nominal = dt.nominal;
-                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                models[j].tipebayar = dt.tipebayar;
+                                models[j].Username = uname;
                                 eachsiswa++;
                             }
                         }
@@ -365,6 +378,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
+                        data.tglbayar.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
@@ -372,7 +386,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         //string.Format( "{0:#,#.00}", Convert.ToInt32(data.biayaBM) ),
                         data.SSName,
                         data.nominal,
-                        data.tglbayar.ToString()
+                        data.tipebayar,
+                        data.Username,
                     });
                 }
                 return Json(new

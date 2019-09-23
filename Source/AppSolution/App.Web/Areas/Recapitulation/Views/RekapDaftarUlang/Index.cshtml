@@ -13,15 +13,17 @@
 
 <table id="tableRekapDU" class="table" style="width:100%">
     <thead>
-        <tr>
-            <th>No</th>
-            <th>No Sisda</th>
-            <th>Nama Siswa</th>
-            <th>Kelas</th>
-            <th>Jenjang</th>
-            <th>Daftar Ulang</th>
-            <th>Tanggal Bayar</th>
-        </tr>
+		<tr>
+			<th>No</th>
+			<th>Tanggal Bayar</th>
+			<th>No Sisda</th>
+			<th>Nama Siswa</th>
+			<th>Kelas</th>
+			<th>Jenjang</th>
+			<th>Daftar Ulang</th>
+			<th>Tipe Bayar</th>
+			<th>Kasir</th>
+		</tr>
     </thead>
     <tbody></tbody>
 </table>
@@ -45,14 +47,16 @@
             oLanguage: { sProcessing: "<div id='loader'></div>" },
             "fnServerParams": function (aoData) {
                 formdata = $('#Req').serializeArray()
-                aoData.push(
+				aoData.push(
+					{ "name": "tglbayar", "value": $('#tglbayar').val() },
                     { "name": "Nosisda", "value": $('#Nosisda').val() },
                     { "name": "Namasiswa", "value": $('#Namasiswa').val() },
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
                     { "name": "Jenjang", "value": $('#Jenjang').val() },
-                    { "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() }
-
+					{ "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
+					{ "name": "tipebayar", "value": $('#tipebayar').val() },
+					{ "name": "Username", "value": $('#Username').val() },
+                    
                 );
             },
             "aoColumns": [
@@ -60,13 +64,15 @@
                     "render": function (data, type, row, meta) {
                         return data;
                     }
-                },
+				},
+				{ "sName": "tglbayar" },
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
                 { "sName": "Kelastingkat" },
                 { "sName": "Jenjang" },
                 { "sName": "cicilDaftarUlang" },
-                { "sName": "tglbayar" },
+				{ "sName": "tipebayar" },
+				{ "sName": "Username" },
             ]
         });
 

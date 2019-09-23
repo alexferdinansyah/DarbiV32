@@ -99,6 +99,12 @@ namespace App.Entities.Models
 
         [Display(Name = "Total Keseluruhan")]
         public string total { get; set; }
+
+        //Kasir
+        public int UserId { get; set; }
+        [Display(Name = "Kasir")]
+        public string Username { get; set; }
+        public string Fullname { get; set; }
     }
 
 }

@@ -40,7 +40,7 @@
 		<div class="form-group" >
 			@Html.LabelFor(model => model.Namasiswa, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
-				@Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.EditorFor(model => model.Namasiswa, new { htmlAttributes = new { @class = "form-control",Autocomplete="off" } })
 			</div>
 		</div>
 

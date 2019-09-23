@@ -27,6 +27,9 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "Tanggal Bayar")]
         public DateTime? tglbayar { get; set; }
 
+        [Display(Name = "Tipe Bayar")]
+        public string tipebayar { get; set; }
+
         [Display(Name = "School Support")]
         public string SSId { get; set; }
 
@@ -35,5 +38,9 @@ namespace App.Web.Areas.Recapitulation.Models
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
+        [Display(Name = "Kasir")]
+        public string Username { get; set; }
+        public int? UserId { get; set; }
     }
 }

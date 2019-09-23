@@ -11,6 +11,7 @@ using App.Entities.Models;
 using App.Web.Models;
 using App.Web.Areas.Recapitulation.Models;
 using App.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -56,6 +57,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
             string Namasiswa = QS["Namasiswa"];
+            var uname = User.Identity.GetUserName();
+
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -77,12 +80,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.cicilDaftarUlang != null)
                             {
                                 RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
                         }
@@ -130,12 +135,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 if (dd.cicilDaftarUlang != 0)
                                 {
                                     RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                                    model.tglbayar = dd.tglbayar;
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.Jenjang = dd.Jenjang;
                                     model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                    model.tglbayar = dd.tglbayar;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = uname;
                                     models.Add(model);
                                 }
                             }
@@ -177,12 +184,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
+                        data.tglbayar.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
                         data.Jenjang,
                         data.cicilDaftarUlang,
-                        data.tglbayar.ToString()
+                        data.tipebayar,
+                        data.Username,
                     });
                 }
                 return Json(new

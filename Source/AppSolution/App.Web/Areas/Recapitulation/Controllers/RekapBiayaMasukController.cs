@@ -11,6 +11,7 @@ using App.Entities.Models;
 using App.Web.Models;
 using App.Web.Areas.Recapitulation.Models;
 using App.Entities;
+using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -56,7 +57,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
             string Namasiswa = QS["Namasiswa"];
-            
+            var uname = User.Identity.GetUserName();
+
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
@@ -70,7 +72,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     if ((tglbayar != null) && (Namasiswa != ""))
                     {
                         t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
-
                     }
 
                     foreach (var dd in t)
@@ -80,12 +81,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.bayarBM != 0)
                             {
                                 RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.biayaBM = dd.bayarBM.ToString();
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = uname;
                                 models.Add(model);
                             }
 
@@ -126,7 +129,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         if ((jName != null) && (Namasiswa != ""))
                         {
                             t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
-
                         }
                         foreach (var dd in t)
                         {
@@ -135,12 +137,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 if (dd.bayarBM != 0)
                                 {
                                     RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                    model.tglbayar = dd.tglbayar;
                                     model.Nosisda = dd.Nosisda;
                                     model.Namasiswa = dd.Namasiswa;
                                     model.Kelastingkat = dd.Kelastingkat;
                                     model.Jenjang = dd.Jenjang;
                                     model.biayaBM = dd.bayarBM.ToString();
-                                    model.tglbayar = dd.tglbayar;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = uname;
                                     models.Add(model);
                                 }
                             }
@@ -184,12 +188,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     listResult.Add(new string[]
                     {
                         i.ToString(),
+                        data.tglbayar.ToString(),
                         data.Nosisda,
                         data.Namasiswa,
                         data.Kelastingkat,
                         data.Jenjang,
                         data.biayaBM,
-                        data.tglbayar.ToString()
+                        data.tipebayar,
+                        data.Username,
                     });
                 }
                 return Json(new
