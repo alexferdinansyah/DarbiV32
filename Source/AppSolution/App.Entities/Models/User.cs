@@ -39,7 +39,7 @@ namespace App.Entities.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        public int Role_Id { get; set; }
+        public int? Role_Id { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

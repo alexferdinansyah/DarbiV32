@@ -44,10 +44,9 @@ namespace App.Web.Areas.MasterData.Controllers
             try
             {
                 IEnumerable<Siswa> Query = db.Siswas;
-                if ((Nosisda != "") && (Fullname != ""))
+                if ((Nosisda != "") || (Fullname != ""))
                 {
-                    Query = Query.Where (x => x.Nosisda.Contains(Nosisda) && x.Fullname.Contains(Fullname));
-
+                    Query = Query.Where (x => x.Nosisda.Contains(Nosisda) && x.Fullname.ToLower().Contains(Fullname.ToLower()));
                 } 
 
 

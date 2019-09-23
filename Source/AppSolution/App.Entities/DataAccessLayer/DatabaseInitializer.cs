@@ -165,7 +165,7 @@ namespace App.Entities.DataAccessLayer
             {
                 //new User {Email = "admin@admin.com",Password = Security.GetHashString("Password123"), Roles = context.Roles.Where(x => x.Name == Admin.Name).ToList() ,IsActive = true},
                 //new User {Email = "user@user.com",Password = Security.GetHashString("Password123"),Roles = context.Roles.Where(x => x.Name == DashboardAccess.Name).ToList(), IsActive = true}
-                new User {Fullname = "Admin", Username="admin1",Password = Security.GetHashString("admin123")}
+                new User {Fullname = "Admin", Username="admin1",Password = Security.GetHashString("admin123"), Role_Id = 1}
             };
             users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();
