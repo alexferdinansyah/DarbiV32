@@ -43,7 +43,10 @@ namespace App.Web.Areas.Transaction.Controllers
             {
                 if ((spp.ToList()[i].bulanspp != "-" || spp.ToList()[i].bulanspp != null) && spp.ToList()[i].periode == periode)
                 {
-                    vv[i] = spp.ToList()[i].bulanspp;
+                    if (spp.ToList()[i].isCanceled == false)
+                    {
+                        vv[i] = spp.ToList()[i].bulanspp;
+                    }
                     //break;
                 }
             }
@@ -246,7 +249,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         data.Nosisda,
                         data.Fullname,
                         Periode,
-                        data.Kelas + "-" + data.Tingkat,
+                        data.Kelas + "-" + data.Kelas,
                         isAdmin.ToString(),
                         data.Nosisda.ToString()
                     });

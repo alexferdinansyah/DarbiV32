@@ -1,4 +1,5 @@
-﻿@model App.Entities.Models.Transaksi
+﻿@using Microsoft.AspNet.Identity;
+@model App.Entities.Models.Transaksi
 @{
 
     ViewBag.Title = "Kwitansi";
@@ -219,13 +220,15 @@
                         <td style="vertical-align: top">Uang Bayar</td>
                         <td style="vertical-align: top">:</td>
                         <td class="pad"><span>@Convert.ToInt32(Model.uang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td rowspan="2"></td>
-                        <td rowspan="2"></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top">Kembali</td>
                         <td style="vertical-align: top">:</td>
                         <td class="pad"><span>@Convert.ToInt32(Model.total).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+                        <td></td>
+                        <td style="text-align: center">@User.Identity.GetUserName()</td>
                     </tr>
                     <tr>
                         <td class="box" colspan="5">Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.</td>
