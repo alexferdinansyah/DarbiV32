@@ -29,12 +29,23 @@ namespace App.Web.Areas.Recapitulation.Models
         [Display(Name = "School Support")]
         public string JenisSS { get; set; }
 
+        public int? UserId { get; set; }
+        [Display(Name = "Kasir")]
+        public string Username { get; set; }
+
         public SelectList Jenjangs()
         {
             DatabaseContext db = new DatabaseContext();
             var Jenjangs = db.Jenjangs;
 
             return new SelectList(Jenjangs.ToList(), "JenjangId", "JenjangName", "0");
+        }
+        public SelectList Users()
+        {
+            DatabaseContext db = new DatabaseContext();
+            var Users = db.Users;
+
+            return new SelectList(Users.ToList(), "UserId", "Username", "0");
         }
     }
 }

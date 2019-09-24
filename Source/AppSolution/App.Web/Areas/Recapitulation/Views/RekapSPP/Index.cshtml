@@ -22,6 +22,8 @@
             <th>Jenjang</th>
             <th>Bulan SPP</th>
             <th>Bayar SPP</th>
+			<th>Tipe Bayar</th>
+			<th>Kasir</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -54,7 +56,9 @@
                     { "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
                     { "name": "Jenjang", "value": $('#Jenjang').val() },
                     { "name": "bulanspp", "value": $('#bulanspp').val() },
-                    { "name": "bayarspp", "value": $('#bayarspp').val() }
+					{ "name": "bayarspp", "value": $('#bayarspp').val() },
+					{ "name": "tipebayar", "value": $('#tipebayar').val() },
+					{ "name": "Username", "value": $('#Username').val() }
                 );
             },
             "aoColumns": [
@@ -69,7 +73,9 @@
                 { "sName": "Kelastingkat" },
                 { "sName": "Jenjang" },
                 { "sName": "bulanspp" },
-                { "sName": "bayarspp" },
+				{ "sName": "bayarspp" },
+				{ "sName": "tipebayar" },
+				{ "sName": "Username" },
                 {
                     "render": function (data, type, row, meta) {
                         if (type === 'display') {

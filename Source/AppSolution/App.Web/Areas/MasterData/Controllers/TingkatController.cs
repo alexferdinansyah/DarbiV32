@@ -66,7 +66,7 @@ namespace App.Web.Areas.MasterData.Controllers
         {
             var QS = Request.QueryString;
             String Namatingkat = QS["Namatingkat"];
-            String Jenjang = QS["NamaJenjang"];
+            String Jenjang = QS["Jenjang"];
             //Boolean IsActive = (QS["IsActive"] == "false" ? false : true);
 
             List<string[]> listResult = new List<string[]>();
@@ -75,9 +75,9 @@ namespace App.Web.Areas.MasterData.Controllers
             try
             {
                 IEnumerable<Tingkat> Query = db.Tingkats;
-                if (Namatingkat != "")
+                if (Namatingkat != ""  )
                 {
-                    Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat));
+                    Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat) );
                 }
                 //if (Jenjang != null)
                 //{

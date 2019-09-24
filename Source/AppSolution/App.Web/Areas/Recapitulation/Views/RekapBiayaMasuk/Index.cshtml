@@ -14,16 +14,18 @@
 
 <table id="tableRekapBiayaMasuk" class="table" style="width:100%">
     <thead>
-        <tr>
-            <th>No</th>
-            <th>No Sisda</th>
-            <th>Nama Siswa</th>
-            <th>Kelas</th>
+		<tr>
+			<th>No</th>
+			<th>Tanggal Bayar</th>
+			<th>No Sisda</th>
+			<th>Nama Siswa</th>
+			<th>Kelas</th>
 			<th>Jenjang</th>
-            <th>BM Yang dibayarkan</th>
-            <th>Tanggal Bayar</th>
-            @*<th>Tanggal History</th>*@
-        </tr>
+			<th>BM Yang dibayarkan</th>
+			<th>Tipe Bayar</th>
+			<th>Kasir</th>
+			@*<th>Tanggal History</th>*@
+		</tr>
     </thead>
     <tbody></tbody>
 </table>
@@ -47,12 +49,15 @@
 			"fnServerParams": function (aoData) {
 				formdata = $('#Req').serializeArray()
 				aoData.push(
+					{ "name": "tglbayar", "value": $('#tglbayar').val() },
 					{ "name": "Nosisda", "value": $('#Nosisda').val() },
 					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
 					{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
 					{ "name": "Jenjang", "value": $('Jenjang').val() },
-                    { "name": "Tingkat", "value": $('#biayaBM').val() },
-                    { "name": "tglbayar", "value": $('#tglbayar').val() }
+					{ "name": "biayaBM", "value": $('#biayaBM').val() },
+					{ "name": "tipebayar", "value": $('#tipebayar').val() },
+					{ "name": "Username", "value": $('#Username').val() },
+                    
                 );
             },
             "aoColumns": [
@@ -60,13 +65,16 @@
                     "render": function (data, type, row, meta) {
                         return data;
                     }
-                },
+				},
+				{ "sName": "tglbayar" },
                 { "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
 				{ "sName": "Kelastingkat" },
 				{ "sName": "Jenjang"},
-                { "sName": "BiayaBM" },
-                { "sName": "tglbayar" },
+				{ "sName": "BiayaBM" },
+				{ "sName": "tipebayar" },
+				{ "sName": "Username" },
+                
             ]
         });
 

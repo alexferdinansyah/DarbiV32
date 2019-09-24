@@ -91,149 +91,161 @@
         <!-- Write HTML just like a web page -->
         <div class="row">
             <div class="column">
-                <table>
-                    <tr>
-                        <td colspan="5" style="border-bottom: 1px solid black;">Sekolah Islam Terpadu Darul Abidin</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding-bottom: 2mm; padding-top: 2mm">KWITANSI PEMBAYARAN ADMINISTRASI</td>
-                    </tr>
-                    <tr>
-                        <td width="25%">Nokwitansi</td>
-                        <td width="1%">:</td>
-                        <td colspan="3">@Html.DisplayFor(model => model.Nokwitansi) | @Html.DisplayFor(model => model.tglbayar)</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" style="vertical-align: top">Nama</td>
-                        <td>:</td>
-                        <td colspan="3">@Html.DisplayFor(model => model.Namasiswa)</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan="3" class="pad"><span>@Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</span></td>
-                    </tr>
-                    <tr>
-                        <td>Biaya Masuk</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.bayarBM).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                    </tr>
-                    <tr>
-                        <td>SPP</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.bayarspp).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
-                    </tr>
-                    <tr>
-                        <td>Komite Sekolah</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.komiteSekolah).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
-                    </tr>
-                    <tr>
-                        <td>Daftar Ulang</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.cicilDaftarUlang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; border-bottom: 1px solid black;">School Support</td>
-                        <td style="vertical-align: top; border-bottom: 1px solid black;">:</td>
-                        <td class="pad" style="border-bottom: 1px solid black;" colspan="3">@Convert.ToInt32(Model.nominal).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.JenisSS)]@*<div>[Catering: @Html.DisplayFor(model => model.bulanCA)]</div><div>[AJ: @Html.DisplayFor(model => model.bulanAJ)]</div>*@</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: middle">Total Bayar</td>
-                        <td style="vertical-align: middle">:</td>
-                        <td class="pad" style="padding-top: 2mm"><span>@Convert.ToInt32(Model.totalkeseluruhan).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td width="25%" style="text-align: center;">Oleh</td>
-                        <td width="25%" style="text-align: center;">Kasir</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top">Uang Bayar</td>
-                        <td style="vertical-align: top">:</td>
-                        <td class="pad"><span>@Convert.ToInt32(Model.uang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td rowspan="2"></td>
-                        <td rowspan="2"></td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top">Kembali</td>
-                        <td style="vertical-align: top">:</td>
-                        <td class="pad"><span>@Convert.ToInt32(Model.total).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                    </tr>
-                    <tr>
-                        <td class="box" colspan="5">Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.</td>
-                    </tr>
-                </table>
+				<table>
+					<tr>
+						<td colspan="5" style="border-bottom: 1px solid black;">Sekolah Islam Terpadu Darul Abidin</td>
+					</tr>
+					<tr>
+						<td colspan="5" style="text-align: center; padding-bottom: 2mm; padding-top: 2mm">KWITANSI PEMBAYARAN ADMINISTRASI</td>
+					</tr>
+					<tr>
+						<td width="25%">Nokwitansi</td>
+						<td width="1%">:</td>
+						<td colspan="3">@Html.DisplayFor(model => model.Nokwitansi) | @Html.DisplayFor(model => model.tglbayar)</td>
+					</tr>
+					<tr>
+						<td rowspan="2" style="vertical-align: top">Nama</td>
+						<td>:</td>
+						<td colspan="3">@Html.DisplayFor(model => model.Namasiswa)</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="3" class="pad"><span>@Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</span></td>
+					</tr>
+					<tr>
+						<td>Biaya Masuk</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.bayarBM).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
+					</tr>
+					<tr>
+						<td>SPP</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.bayarspp).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
+					</tr>
+					<tr>
+						<td>Komite Sekolah</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.komiteSekolah).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
+					</tr>
+					<tr>
+						<td>Daftar Ulang</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.cicilDaftarUlang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top; border-bottom: 1px solid black;">School Support</td>
+						<td style="vertical-align: top; border-bottom: 1px solid black;">:</td>
+						<td class="pad" style="border-bottom: 1px solid black;" colspan="3">@Convert.ToInt32(Model.nominal).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.JenisSS)]@*<div>[Catering: @Html.DisplayFor(model => model.bulanCA)]</div><div>[AJ: @Html.DisplayFor(model => model.bulanAJ)]</div>*@</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle">Total Bayar</td>
+						<td style="vertical-align: middle">:</td>
+						<td class="pad" style="padding-top: 2mm"><span>@Convert.ToInt32(Model.totalkeseluruhan).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+						<td width="25%" style="text-align: center;">Oleh</td>
+						<td width="25%" style="text-align: center;">Kasir</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Uang Bayar</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Convert.ToInt32(Model.uang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+						<td rowspan="2"></td>
+						<td rowspan="2"></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Kembali</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Convert.ToInt32(Model.total).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Tipe Bayar</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Html.DisplayFor(model => model.tipebayar)</span></td>
+						<td width="25%" style="text-align: center;">............</td>
+						<td width="25%" style="text-align: center;">@Html.DisplayFor(model => model.Username)</td>
+					</tr>
+					<tr>
+						<td class="box" colspan="5">Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.</td>
+					</tr>
+				</table>
             </div>
 
             <div class="column">
-                <table>
-                    <tr>
-                        <td colspan="5" style="border-bottom: 1px solid black;">Sekolah Islam Terpadu Darul Abidin</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding-bottom: 2mm; padding-top: 2mm">KWITANSI PEMBAYARAN ADMINISTRASI</td>
-                    </tr>
-                    <tr>
-                        <td width="25%">Nokwitansi</td>
-                        <td width="1%">:</td>
-                        <td colspan="3">@Html.DisplayFor(model => model.Nokwitansi) | @Html.DisplayFor(model=> model.tglbayar)</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" style="vertical-align: top">Nama</td>
-                        <td>:</td>
-                        <td colspan="3">@Html.DisplayFor(model => model.Namasiswa)</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td colspan="3" class="pad"><span>@Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</span></td>
-                    </tr>
-                    <tr>
-                        <td>Biaya Masuk</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.bayarBM).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                    </tr>
-                    <tr>
-                        <td>SPP</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.bayarspp).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
-                    </tr>
-                    <tr>
-                        <td>Komite Sekolah</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.komiteSekolah).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
-                    </tr>
-                    <tr>
-                        <td>Daftar Ulang</td>
-                        <td>:</td>
-                        <td colspan="3">@Convert.ToInt32(Model.cicilDaftarUlang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top; border-bottom: 1px solid black;">School Support</td>
-                        <td style="vertical-align: top; border-bottom: 1px solid black;">:</td>
-                        <td class="pad" style="border-bottom: 1px solid black;" colspan="3">@Convert.ToInt32(Model.nominal).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.JenisSS)]@*<div>[Catering: @Html.DisplayFor(model => model.bulanCA)]</div><div>[AJ: @Html.DisplayFor(model => model.bulanAJ)]</div>*@</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: middle">Total Bayar</td>
-                        <td style="vertical-align: middle">:</td>
-                        <td class="pad" style="padding-top: 2mm"><span>@Convert.ToInt32(Model.totalkeseluruhan).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td width="25%" style="text-align: center;">Oleh</td>
-                        <td width="25%" style="text-align: center;">Kasir</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top">Uang Bayar</td>
-                        <td style="vertical-align: top">:</td>
-                        <td class="pad"><span>@Convert.ToInt32(Model.uang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align: top">Kembali</td>
-                        <td style="vertical-align: top">:</td>
-                        <td class="pad"><span>@Convert.ToInt32(Model.total).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
-                        <td></td>
-                        <td style="text-align: center">@User.Identity.GetUserName()</td>
-                    </tr>
-                    <tr>
-                        <td class="box" colspan="5">Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.</td>
-                    </tr>
-                </table>
+				<table>
+					<tr>
+						<td colspan="5" style="border-bottom: 1px solid black;">Sekolah Islam Terpadu Darul Abidin</td>
+					</tr>
+					<tr>
+						<td colspan="5" style="text-align: center; padding-bottom: 2mm; padding-top: 2mm">KWITANSI PEMBAYARAN ADMINISTRASI</td>
+					</tr>
+					<tr>
+						<td width="25%">Nokwitansi</td>
+						<td width="1%">:</td>
+						<td colspan="3">@Html.DisplayFor(model => model.Nokwitansi) | @Html.DisplayFor(model => model.tglbayar)</td>
+					</tr>
+					<tr>
+						<td rowspan="2" style="vertical-align: top">Nama</td>
+						<td>:</td>
+						<td colspan="3">@Html.DisplayFor(model => model.Namasiswa)</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="3" class="pad"><span>@Html.DisplayFor(model => model.Nosisda) | @Html.DisplayFor(model => model.Kelastingkat)</span></td>
+					</tr>
+					<tr>
+						<td>Biaya Masuk</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.bayarBM).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
+					</tr>
+					<tr>
+						<td>SPP</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.bayarspp).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
+					</tr>
+					<tr>
+						<td>Komite Sekolah</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.komiteSekolah).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.bulanspp)]</td>
+					</tr>
+					<tr>
+						<td>Daftar Ulang</td>
+						<td>:</td>
+						<td colspan="3">@Convert.ToInt32(Model.cicilDaftarUlang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top; border-bottom: 1px solid black;">School Support</td>
+						<td style="vertical-align: top; border-bottom: 1px solid black;">:</td>
+						<td class="pad" style="border-bottom: 1px solid black;" colspan="3">@Convert.ToInt32(Model.nominal).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID")) [@Html.DisplayFor(model => model.JenisSS)]@*<div>[Catering: @Html.DisplayFor(model => model.bulanCA)]</div><div>[AJ: @Html.DisplayFor(model => model.bulanAJ)]</div>*@</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle">Total Bayar</td>
+						<td style="vertical-align: middle">:</td>
+						<td class="pad" style="padding-top: 2mm"><span>@Convert.ToInt32(Model.totalkeseluruhan).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+						<td width="25%" style="text-align: center;">Oleh</td>
+						<td width="25%" style="text-align: center;">Kasir</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Uang Bayar</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Convert.ToInt32(Model.uang).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+						<td rowspan="2"></td>
+						<td rowspan="2"></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Kembali</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Convert.ToInt32(Model.total).ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("id-ID"))</span></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top">Tipe Bayar</td>
+						<td style="vertical-align: top">:</td>
+						<td class="pad"><span>@Html.DisplayFor(model => model.tipebayar)</span></td>
+						<td width="25%" style="text-align: center;">............</td>
+						<td width="25%" style="text-align: center;">@Html.DisplayFor(model => model.Username)</td>
+					</tr>
+					<tr>
+						<td class="box" colspan="5">Dengan ditandatanganinya kwitansi ini, maka sekolah dan pemohon setuju atas data transaksi yang tertera di atas. Mohon disimpan hingga pembayaran berikutnya. Terima Kasih.</td>
+					</tr>
+				</table>
             </div>
         </div>
 
@@ -255,9 +267,6 @@
     </script>*@
 
 <script type="text/javascript">
-    /*$(function () {
-        $('.datetimepicker.').datetimepicker();
-    });*/
     $(document).ready(function () {
 
     })

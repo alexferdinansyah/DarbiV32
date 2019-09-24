@@ -1,7 +1,7 @@
 ﻿@model App.Web.Areas.Recapitulation.Models.SearchRekapBiayaMasuk
 
 @{
-	ViewBag.Title = "Rekap Print";
+	ViewBag.Title = "Rekap Cetak Rekapitulasi";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
 	/**/
@@ -22,6 +22,7 @@
 		<thead>
 			<tr>
 				<th>No</th>
+				<th>Tgl Bayar</th>
 				<th>Sisda</th>
 				<th>Nama</th>
 				<th>Kelas</th>
@@ -31,7 +32,8 @@
 				<th>Bulan SPP</th>
 				<th>SS</th>
 				<th>Bayar SS</th>
-				<th>Tgl Bayar</th>
+				<th>Tipe Bayar</th>
+				<th>Kasir</th>
 			</tr>
 		</thead>
 		<tbody></tbody>
@@ -59,6 +61,7 @@
 				"fnServerParams": function (aoData) {
 					formdata = $('#Req').serializeArray()
 					aoData.push(
+						{ "name": "tglbayar", "value": $('#tglbayar').val() },
 						{ "name": "Nosisda", "value": $('#Nosisda').val() },
 						{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
 						{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
@@ -68,8 +71,8 @@
 						{ "name": "bayarspp", "value": $('#bayarspp').val() },
 						{ "name": "SSName", "value": $('#SSName').val() },
 						{ "name": "nominal", "value": $('#nominal').val() },
-						{ "name": "tglbayar", "value": $('#tglbayar').val() },
-
+						{ "name": "tipebayar", "value": $('#tipebayar').val() },
+						{ "name": "Username", "value": $('#Username').val() },
 					);
 				},
 				"aoColumns": [
@@ -78,6 +81,7 @@
 							return data;
 						}
 					},
+					{ "sName": "tglbayar" },
 					{ "sName": "Nosisda" },
 					{ "sName": "Namasiswa" },
 					{ "sName": "Kelastingkat" },
@@ -87,7 +91,8 @@
 					{ "sName": "bayarspp" },
 					{ "sName": "SSName" },
 					{ "sName": "nominal" },
-					{ "sName": "tglbayar" },
+					{ "sName": "tipebayar" },
+					{ "sName": "Username" },
 				]
 			});
 

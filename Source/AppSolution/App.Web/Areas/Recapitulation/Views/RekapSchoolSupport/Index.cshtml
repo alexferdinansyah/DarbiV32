@@ -12,17 +12,19 @@
 
 <table id="tableRekapSS" class="table" style="width:100%">
     <thead>
-        <tr>
-            <th>No</th>
-            <th>No Sisda</th>
-            <th>Nama Siswa</th>
-            <th>Kelas</th>
+		<tr>
+			<th>No</th>
+			<th>Tanggal Bayar</th>
+			<th>No Sisda</th>
+			<th>Nama Siswa</th>
+			<th>Kelas</th>
 			<th>Jenjang</th>
-            @*<th>BM Yang dibayarkan</th>*@
-            <th>School Support</th>
-            <th>Nominal</th>
-            <th>Tanggal Bayar</th>
-        </tr>
+			@*<th>BM Yang dibayarkan</th>*@
+			<th>School Support</th>
+			<th>Nominal</th>
+			<th>Tipe Bayar</th>
+			<th>Kasir</th>
+		</tr>
     </thead>
     <tbody></tbody>
 </table>
@@ -47,6 +49,7 @@
 			"fnServerParams": function (aoData) {
 				formdata = $('#Req').serializeArray()
 				aoData.push(
+					{ "name": "tglbayar", "value": $('#tglbayar').val()},
 					{ "name": "Nosisda", "value": $('#Nosisda').val() },
 					{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
 					{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
@@ -54,8 +57,8 @@
                     //{ "name": "BiayaBM", "value": $('#biayaBM').val() },
                     { "name": "JenisSS", "value": $('#JenisSS').val() },
                     { "name": "nominal", "value": $('#nominal').val() },
-					{ "name": "tglbayar", "value": $('#tglbayar').val()}
-
+					{ "name": "tipebayar", "value": $('#tipebayar').val() },
+					{ "name": "Username", "value": $('#Username').val() },
 				);
 			},
 			"aoColumns": [
@@ -64,6 +67,7 @@
 						return data;
 					}
 				},
+				{ "sName": "tglbayar" },
 				{ "sName": "Nosisda" },
                 { "sName": "Namasiswa" },
 				{ "sName": "Kelastingkat" },
@@ -71,7 +75,8 @@
                 //{ "sName": "BiayaBM" },
                 { "sName": "SSName" },
                 { "sName": "nominal" },
-				{ "sName": "tglbayar" },
+				{ "sName": "tipebayar" },
+				{ "sName": "Username" },
 			]
 		});
 

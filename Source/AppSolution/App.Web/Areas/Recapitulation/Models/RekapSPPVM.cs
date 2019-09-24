@@ -44,5 +44,9 @@ namespace App.Web.Areas.Recapitulation.Models
 
         [Display(Name = "Nominal")]
         public string nominal { get; set; }
+
+        [Display(Name = "Kasir")]
+        public string Username { get; set; }
+        public int? UserId { get; set; }
     }
 }

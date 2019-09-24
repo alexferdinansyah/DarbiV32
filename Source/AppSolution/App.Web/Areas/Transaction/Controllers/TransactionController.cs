@@ -622,6 +622,8 @@ namespace App.Web.Areas.Transaction.Controllers
                 jId = Convert.ToInt32(tinfo.JenjangId);
 
                 Jenjang jinfo = db.Jenjangs.Find(jId);
+                
+
                 newmodel.Jenjang = jinfo.JenjangName;
                 newmodel.Namasiswa = model.Namasiswa;
                 newmodel.Kelastingkat = model.Kelastingkat;
@@ -632,6 +634,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.tipebayar = model.tipebayar;
                 newmodel.BankId = model.BankId;
                 newmodel.Nokwitansi = model.Nokwitansi;
+                //newmodel.Username = userinfo.Username;
                 if (model.tipebayar == "Tunai")
                 {
                     newmodel.tglbayar = DateTime.UtcNow.Date;
@@ -664,6 +667,8 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.daftarUlang = model.daftarUlang;
                     newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
                 }
+
+                
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);
@@ -703,6 +708,7 @@ namespace App.Web.Areas.Transaction.Controllers
         {
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
+            var uname = User.Identity.GetUserName();
             //var ss = ssid.Split(',');
 
             if (id == null)
@@ -759,6 +765,8 @@ namespace App.Web.Areas.Transaction.Controllers
             db.Entry(kwitansiupdate).State = EntityState.Modified;
             db.SaveChanges();
 
+            //info kasir
+            transaksi.Username = uname;
 
             //infosiswa
             IEnumerable<Siswa> siswas = db.Siswas.Where(x => x.Nosisda.Equals(transaksi.Nosisda));
