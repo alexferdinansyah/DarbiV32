@@ -9,112 +9,103 @@
 <hr />
 
 
-<div>
-    <table style="border-top: 0px solid black">
-        @foreach (var item in Model)
-        {
-            <dl class="dl-horizontal">
-                <dt>
-                    Nama Siswa
-                </dt>
+@using (Html.BeginForm())
 
-                <dd>
-                    @Html.DisplayFor(modelItem => item.Namasiswa)
-                </dd>
-                <dt>
-                    No Sisda
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(modelItem => item.Nosisda)
-                </dd>
-            </dl>
-            break;
-        }
-
-        <tr>
-            <th>Nomor Kwitansi</th>
-            <th>Biaya Masuk</th>
-            <th>Bulan SPP</th>
-            <th>Nominal SPP</th>
-            <th>Daftar Ulang</th>
-            <th>Tipe Pembayaran</th>
-            <th>Nama Bank</th>
-            <th>Tanggal Transfer</th>
-            <th>Tanggal Bayar</th>
-            <th>Action</th>
-
-            <hr align="right">
+{
+    <div>
+        <table style="border-top: 0px solid black">
             @foreach (var item in Model)
             {
+                <dl class="dl-horizontal">
+                    <dt>
+                        Nama Siswa
+                    </dt>
 
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Namasiswa)
+                    </dd>
+                    <dt>
+                        No Sisda
+                    </dt>
 
-                using (Html.BeginForm())
+                    <dd>
+                        @Html.DisplayFor(modelItem => item.Nosisda)
+                    </dd>
+                </dl>
+                break;
+            }
 
+            <tr>
+                <th>Nomor Kwitansi</th>
+                <th>Biaya Masuk</th>
+                <th>Bulan SPP</th>
+                <th>Nominal SPP</th>
+                <th>Daftar Ulang</th>
+                <th>Tipe Pembayaran</th>
+                <th>Nama Bank</th>
+                <th>Tanggal Transfer</th>
+                <th>Tanggal Bayar</th>
+                <th>Action</th>
+
+                <hr align="right">
+                @foreach (var item in Model)
                 {
-                <tr>
-                    @Html.AntiForgeryToken()
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nokwitansi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.bayarBM)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.bulanspp)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.bayarspp)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.cicilDaftarUlang)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tipebayar)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Banknm)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tgltransfer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tglbayar)
-                    <td>
-                        <input type="submit" name="Batal" value="Batal" onclick="return myFunction()" />
-                        <input type="hidden" name="TransId" id="TransId" value="@item.TransId" /><input type="hidden" id="id" name="id" value="@item.TransId" />
-                        @*@Html.DisplayFor(modelItem => item.TransId)*@
 
-                    </td>
-                </tr>
+
+                    using (Html.BeginForm())
+
+                    {
+                    <tr>
+                        @Html.AntiForgeryToken()
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nokwitansi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.bayarBM)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.bulanspp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.bayarspp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cicilDaftarUlang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tipebayar)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Banknm)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tgltransfer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tglbayar)
+                        <td>
+                            <input type="submit" name="Batal" value="Batal" id="open-popup" />
+                            <input type="hidden" name="TransId" id="TransId" value="@item.TransId" /><input type="hidden" id="id" name="id" value="@item.TransId" />
+                            @*@Html.DisplayFor(modelItem => item.TransId)*@
+
+                        </td>
+                    </tr>
+                }
+
             }
+            </table>
+        </div>
+    }
 
-            }
-        </table>
-    </div>
-
-    <p>
-        @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
-    </p>
+<p>
+    @Html.ActionLink("Back to List", "Index", new { NamaSiswa = System.Web.HttpContext.Current.Session["NamaSiswa"] })
+</p>
 
 
-    <script>
-
-        $("#open-popup").click(function () {
-            //alert("Yakin ?");
-            var res = confirm("Yakin Hapus ?");
-            return !!res;
-        });
-        function myFunction() {
-            alert(document.getElementById("TransId").value());
-            var txt;
-            var r = confirm("Anda Yakin Ingin Membatalkan Transaksi Ini ?");
-            if (r == true) {
-                txt = "You pressed OK!";
-                document.getElementById("id").value = document.getElementById("TransId").value;
-            } else {
-                /*txt = "You pressed Cancel!";*/
-                return false;
-            }
-        }
-    </script>
+<script type="text/javascript">
+    $("#open-popup").click(function () {
+        //alert("Yakin ?");
+        var res = confirm("Yakin Batalkan Transaksi ini ?");
+        return !!res;
+    });
+</script>
