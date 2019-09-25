@@ -103,9 +103,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     if (Namasiswa != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                        if ((Namasiswa != null) &&  (tglbayar != null))
+                        if ((Namasiswa != null) || (tglbayar != null))
                         {
-                            t = t.Where(x => x.Namasiswa.Contains(Namasiswa) && x.tglbayar.Equals(tglbayar));
+                            t = t.Where(x => x.Namasiswa.Contains(Namasiswa) || x.tglbayar.Equals(tglbayar));
                         }
 
                         foreach (var dd in t)
