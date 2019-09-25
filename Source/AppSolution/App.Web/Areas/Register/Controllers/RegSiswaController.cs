@@ -159,6 +159,9 @@ namespace App.Web.Areas.Register.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreateRegSiswa model)
         {
+            IEnumerable<Tingkat> tt = db.Tingkats.Where(x => x.TingkatId == model.TingkatId);
+            Tingkat s = tt.FirstOrDefault();
+            var namatingkat = s.Namatingkat;
             try
             {
                 List<string> Years = new List<string>();
@@ -240,6 +243,7 @@ namespace App.Web.Areas.Register.Controllers
                     newmodel.NomDisc = model.NomDisc;
                     newmodel.totaldisc = model.totaldisc;
                     newmodel.TingkatId = model.TingkatId;
+                    newmodel.Tingkat = namatingkat;
                     newmodel.PerDaftar = model.PerDaftar;
                     newmodel.Year = model.Year;
                     newmodel.Tahapsatu = model.Tahapsatu;

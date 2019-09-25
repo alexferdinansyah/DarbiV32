@@ -12,6 +12,7 @@ namespace App.Web.Areas.Transaction.Models
     {
         [Display(Name = "Transaksi Id")]
         public int TransId { get; set; }
+        public string Tingkat { get; set; }
 
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }

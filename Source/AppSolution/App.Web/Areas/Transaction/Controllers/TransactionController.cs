@@ -249,7 +249,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         data.Nosisda,
                         data.Fullname,
                         Periode,
-                        data.Kelas + "-" + data.Kelas,
+                        data.Kelas + "-" + data.Tingkat,
                         isAdmin.ToString(),
                         data.Nosisda.ToString()
                     });
@@ -423,6 +423,7 @@ namespace App.Web.Areas.Transaction.Controllers
             string tkt = "";
             string disc = "";
             string discspp = "";
+            string namatingkat = "";
             int diskonbm = 0;
             int diskonspp = 0;
             foreach (var d in dts)
@@ -430,6 +431,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod.Namasiswa = d.Fullname;
                 mod.periode = d.PerDaftar;
                 mod.Kelastingkat = d.Kelas;
+                mod.Tingkat = d.Tingkat;
                 if (d.Kelas != null || d.Kelas != "")
                 {
                     keltingkat = d.Kelas.Split(' ');
@@ -437,19 +439,18 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
                 disc = d.TypeDiscAdm;
                 discspp = d.TypeDisc;
+                namatingkat = d.Tingkat;
                 diskonbm = Convert.ToInt32(d.NomDiscAdm);
                 diskonspp = Convert.ToInt32(d.NomDisc);
 
             }
 
             //info tingkat to get info biaya
-            IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt));
+            IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(namatingkat));
             int idtingkat = 0;
-            var nama = "";
             foreach (var t in dtTingkat)
             {
                 idtingkat = t.TingkatId;
-                nama = t.Namatingkat;
             }
 
             //info biaya
@@ -511,12 +512,6 @@ namespace App.Web.Areas.Transaction.Controllers
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
-
-                        /*if (dd.KatBiaya == "Daftar Ulang")
-                        {
-                            mod.daftarUlang = dd.NomBiaya;
-                        }*/
-
                     }
                 }
 
@@ -541,7 +536,7 @@ namespace App.Web.Areas.Transaction.Controllers
             }
 
             var idTingkatCounter = 0;
-            if (nama == "PG")
+            if (namatingkat == "PG")
             {
                 IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK A"));
                 for (int i = 0; i < t.Count(); i++)
@@ -559,7 +554,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     }
                 }
             }
-            if (nama == "TK A")
+            if (namatingkat == "TK A")
             {
                 IEnumerable<Tingkat> t = db.Tingkats.Where(x => x.Namatingkat.Equals("TK B"));
                 for (int i = 0; i < t.Count(); i++)

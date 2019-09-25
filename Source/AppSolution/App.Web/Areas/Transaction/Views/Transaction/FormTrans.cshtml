@@ -19,6 +19,7 @@
     @*@Html.HiddenFor(model => model.BankId)*@
     @Html.HiddenFor(model => model.bulanspp)
     @Html.HiddenFor(model => model.periode)
+    @Html.HiddenFor(model => model.Tingkat)
 
     <div class="form-horizontal">
         @*KETERANGAN SISWA*@
@@ -405,7 +406,7 @@
             //alert(strUser);
         });
 
-        if (kelas.value != "TK A" && kelas.value != "PG") {
+        if (Tingkat.value != "TK A" && Tingkat.value != "PG") {
             $('#du1').hide();
             $('#du2').hide();
             $('#du3').hide();
