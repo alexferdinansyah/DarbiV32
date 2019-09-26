@@ -127,7 +127,7 @@ namespace App.Web.Areas.Transaction.Models
         [Display(Name = "Uang Bayar")]
         public string uang { get; set; }
 
-        [Display(Name = "Total Keseluruhan")]
+        [Display(Name = "Total Bayar")]
         public string total { get; set; }
 
         [Display(Name = "No Kwitansi")]

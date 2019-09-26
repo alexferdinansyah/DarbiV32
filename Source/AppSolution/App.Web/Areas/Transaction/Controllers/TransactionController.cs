@@ -650,10 +650,10 @@ namespace App.Web.Areas.Transaction.Controllers
                 if(model.uang == "0" || model.uang == null)
                 {
                     model.uang = model.total;
-                    newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
+                    newmodel.kembalian = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
                 } else
                 {
-                    newmodel.total = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
+                    newmodel.kembalian = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
                 }
 
                 newmodel.nominal = model.nominal;

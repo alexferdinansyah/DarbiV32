@@ -60,7 +60,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     m.tglbayar = null;
                     m.JenjangId = 0;
-                    jjg = Convert.ToInt32( m.JenjangId);
+                    jjg = Convert.ToInt32(m.JenjangId);
                     jss = Session["Opsiss"].ToString();
                 }
                 else if (m.Opsi == "Tanggal")
@@ -88,7 +88,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if ((jss == "" || jss == null) && jjg == 0 )
+            if ((jss == "" || jss == null) && jjg == 0)
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
@@ -96,7 +96,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null) && (Namasiswa != null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa.ToLower()));
                     }
                     foreach (var dd in t)
                     {
@@ -110,7 +110,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
-                                model.SSId = dd.SSId.ToString();
+                                model.SSId = dd.SSId;
                                 model.tipebayar = dd.tipebayar;
                                 model.Username = uname;
                                 //model.SSId = dd.SSId.ToString();
@@ -164,7 +164,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                         models[j].Username = uname;
                                         eachsiswa++;
                                     }
-                                        
+
                                 }
                             }
                         }
@@ -185,12 +185,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 JsonRequestBehavior.AllowGet);
                 }
             }
-            else if(jss != "")
+            else if (jss != "")
             {
                 try
                 {
-                //jika pencarian berdasarkan Jenis SS
-                    if (jss!= null)
+                    //jika pencarian berdasarkan Jenis SS
+                    if (jss != null)
                     {
                         IEnumerable<SchoolSupport> infoss = db.SchoolSupports.Where(ss => ss.JenisSS.ToLower() == jss.ToString().ToLower());
                         var jName = "";
@@ -202,9 +202,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
                         if (jss != null && Namasiswa != null)
                         {
-                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa));
+                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa.ToLower()));
                         }
-                        
+
                         foreach (var dd in t)
                         {
                             if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
@@ -291,9 +291,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         break;
                     }
                     IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-                    if((jName != null) && (Namasiswa!= null))
+                    if ((jName != null) && (Namasiswa != null))
                     {
-                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa));
+                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()));
                     }
                     foreach (var dd in t)
                     {
