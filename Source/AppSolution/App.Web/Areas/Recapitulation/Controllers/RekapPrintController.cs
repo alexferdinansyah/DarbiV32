@@ -22,15 +22,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
         public ActionResult Index(SearchRekapBiayaMasuk model = null)
 
         {
-            //List<SelectListItem> OpBM = new List<SelectListItem>()
-
-            //{
-            //    new SelectListItem {Text="--- Pilih ---",Value="0",Selected=true},
-            //    new SelectListItem {Text="Nama",Value="1"},
-            //    new SelectListItem {Text="Tanggal",Value="2"},
-            //};
-
-            //ViewBag.OpBM = OpBM;
+            if (model == null)
+            {
+                model = new SearchRekapBiayaMasuk();
+            }
             return View(model);
         }
 

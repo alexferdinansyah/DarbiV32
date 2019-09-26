@@ -97,8 +97,8 @@ namespace App.Entities.Models
         [Display(Name = "Uang Bayar")]
         public string uang { get; set; }
 
-        [Display(Name = "Total Keseluruhan")]
-        public string total { get; set; }
+        [Display(Name = "Kembalian")]
+        public string kembalian { get; set; }
 
         //Kasir
         public int UserId { get; set; }
