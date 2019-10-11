@@ -190,6 +190,9 @@ namespace App.Web.Areas.MasterData.Controllers
 
         public ActionResult CreateSaudara(int? id)
         {
+
+
+
             DetailSaudara detailsaudara = new DetailSaudara();
 
             if (id != null)

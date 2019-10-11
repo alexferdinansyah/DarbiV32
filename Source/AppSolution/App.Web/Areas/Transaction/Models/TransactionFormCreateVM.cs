@@ -59,13 +59,13 @@ namespace App.Web.Areas.Transaction.Models
         public string sisaTagihanDU { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tanggal Pembayaran")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Bank")]
