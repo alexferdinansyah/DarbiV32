@@ -74,7 +74,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
-            DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            DateTime tglbayar = Convert.ToDateTime(m.tglbayar);
             var uname = User.Identity.GetUserName();
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
@@ -88,12 +88,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null) || (Namasiswa != null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa));
                     }
 
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.bulanspp != null)
                             {

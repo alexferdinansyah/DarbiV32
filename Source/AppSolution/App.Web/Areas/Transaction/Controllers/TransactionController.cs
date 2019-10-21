@@ -634,7 +634,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 {
 
                     //Perubahan By Billy
-                    newmodel.tglbayar = DateTime.Now;
+                    //newmodel.tglbayar = DateTime.Now;
                     //Aslinya newmodel.tglbayar = DateTime.UtcNow.Date;
 
                     //Perubahan By Billy

@@ -60,12 +60,12 @@ namespace App.Web.Areas.Transaction.Models
 
         [Display(Name = "Tanggal Transfer")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy }", ApplyFormatInEditMode = true)]
         public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tanggal Pembayaran")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd hh:mm:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy }", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Bank")]

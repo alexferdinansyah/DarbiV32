@@ -16,7 +16,8 @@ namespace App.Web.Areas.Recapitulation.Models
         public string Nosisda { get; set; }
 
         [Display(Name = "Tanggal Pembayaran")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy hh-mm}")]
+        [DataType(DataType.DateTime)]
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
 

@@ -70,12 +70,13 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null) || (Namasiswa != ""))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa));
 
                     }
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.cicilDaftarUlang != null)
                             {

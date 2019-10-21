@@ -32,14 +32,14 @@ namespace App.Web.Areas.Recapitulation.Models
 
         [Display(Name = "Tanggal Bayar")]
         //Perubahan By Billy
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy hh:mm:ss}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy }")]
         //Aslinya [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
         //Perubahan By Billy
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy hh:mm:ss}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy }")]
         //Aslinya [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime? tgltransfer { get; set; }
