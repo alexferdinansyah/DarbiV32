@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
+
 namespace App.Entities.Models
 {
     public class DetailSaudara
@@ -24,6 +25,7 @@ namespace App.Entities.Models
         [Required]
         [Display(Name = "Jenis Kelamin")]
         public string Sex { get; set; }
+      
 
         [Required]
         [Display(Name = "Tanggal Lahir")]

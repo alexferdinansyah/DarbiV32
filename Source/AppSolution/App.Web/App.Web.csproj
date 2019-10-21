@@ -220,6 +220,7 @@
     <Compile Include="Areas\MasterData\Controllers\BankController.cs" />
     <Compile Include="Areas\MasterData\Models\BankSearchFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\BiayaSearchFormVM.cs" />
+    <Compile Include="Areas\MasterData\Models\CreateAddSaudara.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBankFormVM.cs" />
     <Compile Include="Areas\MasterData\Models\CreateBiaya.cs" />
     <Compile Include="Areas\MasterData\Models\CreateJenjang.cs" />

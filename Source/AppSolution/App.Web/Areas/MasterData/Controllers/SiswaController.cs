@@ -12,6 +12,7 @@ using App.Web.Models;
 using App.Web.Areas.MasterData.Models;
 using App.Entities;
 
+
 namespace App.Web.Areas.MasterData.Controllers
 {
     public class SiswaController : Controller
@@ -188,25 +189,34 @@ namespace App.Web.Areas.MasterData.Controllers
             return View(detailsaudara);
         }
 
-        public ActionResult CreateSaudara(int? id)
+        public ActionResult CreateSaudara(int? id, CreateAddSaudara model)
         {
             DetailSaudara detailsaudara = new DetailSaudara();
+
+            if (ModelState.IsValid)
+            {
+                Siswa newmodel = new Siswa();
+                newmodel.Sex = model.Sex;
+             
+            }
 
             if (id != null)
             {
                 detailsaudara.SiswaId = Convert.ToInt32(id);
             }
 
-            List<SelectListItem> ListItem = new List<SelectListItem>()
-            {
-                new SelectListItem {Text="Pilih Jenis Kelamin",Value="0",Selected=true},
-                new SelectListItem {Text="Laki-Laki",Value="1"},
-                new SelectListItem {Text="Perempuan",Value="2"},
-            };
+            
+            //List<SelectListItem> ListItem = new List<SelectListItem>()
+            //{
+            //    new SelectListItem {Text="Pilih Jenis Kelamin",Value="0",Selected=true},
+            //    new SelectListItem {Text="Laki-Laki",Value="1"},
+            //    new SelectListItem {Text="Perempuan",Value="2"},
+            //};
+            //ViewBag.ListItem = ListItem;
 
-            ViewBag.ListItem = ListItem;
             return View(detailsaudara);
         }
+      
 
         //POST : MasterData/DetailSaudara/Create
         [HttpPost]

@@ -683,11 +683,13 @@ namespace App.Web.Areas.Transaction.Controllers
             Transaksi mod = null;
             if (ModelState.IsValid)
             {
-                mod = db.Transaksis.Find(model.TransId);
 
+                mod = db.Transaksis.Find(model.TransId);
                 mod.isCanceled = true;
                 mod.canceledBy = HttpContext.User.Identity.Name;
                 mod.canceledDate = DateTime.UtcNow.Date;
+
+                //db.Transaksis.Remove(db.Transaksis.Single(x => x.TransId == 1));
 
                 db.Entry(mod).State = EntityState.Modified;
                 db.SaveChanges();

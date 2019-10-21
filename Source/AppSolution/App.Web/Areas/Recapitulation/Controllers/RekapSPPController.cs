@@ -1,17 +1,15 @@
-﻿using System;
+﻿using App.Entities.DataAccessLayer;
+using App.Entities.Models;
+using App.Web.Areas.Recapitulation.Models;
+using App.Web.Models;
+using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using App.Entities.DataAccessLayer;
-using App.Entities.Models;
-using App.Web.Models;
-using App.Web.Areas.Recapitulation.Models;
-using App.Entities;
-using Microsoft.AspNet.Identity;
 
 namespace App.Web.Areas.Recapitulation.Controllers
 {
@@ -73,7 +71,21 @@ namespace App.Web.Areas.Recapitulation.Controllers
             }
 
             var QS = Request.QueryString;
+            
             string Namasiswa = m.Namasiswa;
+            if(Namasiswa == null)
+            {
+                Namasiswa = "";
+            }
+
+            //string jenj = m.Jenjang.ToString();
+            //if(jenj == null)
+            //{
+            //    jenj = "";
+            //}
+            
+
+
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
             var uname = User.Identity.GetUserName();
 
@@ -86,9 +98,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) || (Namasiswa != null))
+                    if ((tglbayar != null)/* || (jenj != null)*/ || (Namasiswa != null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
+                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa)/*&& x.Jenjang.Contains(jenj) */&& x.isCanceled.Equals(false));
                     }
 
                     foreach (var dd in t)
@@ -133,7 +145,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Namasiswa != null)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()));
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
+                        
+
                         foreach (var dd in t)
                         {
                             if (dd.bulanspp != null)
@@ -176,6 +190,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Jid != null)
                     {
+                        //pencarian berdasarkan jenjang
                         IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == Jid);
                         var jName = "";
                         foreach (var i in infoJ)
@@ -187,7 +202,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
                         if ((jName != null) || (Namasiswa != null))
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) || (x.Namasiswa.Contains(Namasiswa)));
+                            //t = t.Where(x => x.Jenjang.Equals(jName) || (x.Namasiswa.Contains(Namasiswa)) || x.isCanceled.Equals(false));
+                            t = t.Where(x => (x.Jenjang.Equals(jName) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)
