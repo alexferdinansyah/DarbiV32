@@ -148,12 +148,12 @@ namespace App.Web.Areas.Register.Models
 
         [Display(Name = "Tahap Pembayaran 1")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime Tahapsatu { get; set; }
 
         [Display(Name = "Tahap Pembayaran 2")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime Tahapdua { get; set; }
 
         [Display(Name = "Kategori Biaya Masuk")]

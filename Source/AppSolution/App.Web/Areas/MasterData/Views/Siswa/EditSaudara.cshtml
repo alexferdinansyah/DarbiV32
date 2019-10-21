@@ -37,7 +37,11 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control", AutoComplete="off" } })
+            @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control", AutoComplete="off" } })*@
+
+            @Html.RadioButtonFor(model => model.Sex, "Laki-Laki") Laki-Laki &nbsp;
+            @Html.RadioButtonFor(model => model.Sex, "Perempuan") Perempuan
+
             @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
         </div>
     </div>

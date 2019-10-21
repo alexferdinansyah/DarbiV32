@@ -78,13 +78,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null)|| (Namasiswa == null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
 
                     }
 
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.bayarBM != 0)
                             {

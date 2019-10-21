@@ -31,9 +31,17 @@ namespace App.Web.Areas.Recapitulation.Models
         public string bayarspp { get; set; }
 
         [Display(Name = "Tanggal Bayar")]
+        //Perubahan By Billy
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy }")]
+        //Aslinya [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.DateTime)]
         public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Tanggal Transfer")]
+        //Perubahan By Billy
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy }")]
+        //Aslinya [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.DateTime)]
         public DateTime? tgltransfer { get; set; }
 
         [Display(Name = "Tipe Bayar")]

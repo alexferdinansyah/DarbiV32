@@ -593,9 +593,9 @@ namespace App.Web.Areas.Transaction.Controllers
         {
             //SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(model.getSS.ToList()));
             var spp = ""; //bulanspp
-            var ca = ""; //bulan catering
-            var aj = ""; //bulan antarjemput
-            var ss = "";
+            var ca = "" ; //bulan catering
+            var aj = "" ; //bulan antarjemput
+            var ss = "" ;
             if (model.getBulan == null) spp = "-"; else spp = String.Join(",", model.getBulan);
             if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
             if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
@@ -632,7 +632,15 @@ namespace App.Web.Areas.Transaction.Controllers
                 //newmodel.Username = userinfo.Username;
                 if (model.tipebayar == "Tunai")
                 {
-                    newmodel.tglbayar = DateTime.UtcNow.Date;
+
+                    //Perubahan By Billy
+                    //newmodel.tglbayar = DateTime.Now;
+                    //Aslinya newmodel.tglbayar = DateTime.UtcNow.Date;
+
+                    //Perubahan By Billy
+                    newmodel.tglbayar = DateTime.Now;
+                    //Aslinya newmodel.tglbayar = DateTime.UtcNow.Date;
+
                 }
                 else
                 {
@@ -687,7 +695,10 @@ namespace App.Web.Areas.Transaction.Controllers
                 mod = db.Transaksis.Find(model.TransId);
                 mod.isCanceled = true;
                 mod.canceledBy = HttpContext.User.Identity.Name;
-                mod.canceledDate = DateTime.UtcNow.Date;
+                //Perubahan By Billy
+                mod.canceledDate = DateTime.Now;
+
+                //Aslinya mod.canceledDate = DateTime.UtcNow.Date;
 
                 //db.Transaksis.Remove(db.Transaksis.Single(x => x.TransId == 1));
 

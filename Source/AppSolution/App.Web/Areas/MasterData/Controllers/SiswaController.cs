@@ -191,6 +191,9 @@ namespace App.Web.Areas.MasterData.Controllers
 
         public ActionResult CreateSaudara(int? id, CreateAddSaudara model)
         {
+
+
+
             DetailSaudara detailsaudara = new DetailSaudara();
 
             if (ModelState.IsValid)
