@@ -58,6 +58,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
             string Namasiswa = QS["Namasiswa"];
             var uname = User.Identity.GetUserName();
+            //tambah
+            string NamaSiswa = m.Namasiswa;
+            if(Namasiswa == null)
+            {
+                Namasiswa = "";
+            }
 
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
@@ -68,14 +74,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) || (Namasiswa != ""))
+                    if ((tglbayar != null) || (Namasiswa != "") || (NamaSiswa != ""))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa));
 
                     }
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.cicilDaftarUlang != null)
                             {
@@ -115,7 +122,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Namasiswa != null)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()));
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
                         foreach (var dd in t)
                         {
                             if (dd.cicilDaftarUlang != null)
@@ -169,7 +176,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A")) && M.cicilDaftarUlang != null).ToList();
                         if ((jName != null ) || Namasiswa != null)
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) || x.Namasiswa.Contains(Namasiswa.ToLower()));
+                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)

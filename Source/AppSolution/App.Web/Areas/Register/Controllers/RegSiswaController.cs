@@ -233,7 +233,10 @@ namespace App.Web.Areas.Register.Controllers
                     newmodel.Suku = model.Suku;
                     newmodel.Kewarganegaraan = model.Kewarganegaraan;
                     newmodel.TinggiBadan = model.TinggiBadan;
+                    newmodel.Goldar = model.Goldar;
                     newmodel.BeratBadan = model.BeratBadan;
+                    //goldar
+                    newmodel.Goldar = model.Goldar;
                     newmodel.KontakSiswa = model.KontakSiswa;
                     newmodel.SekolahAsal = model.SekolahAsal;
                     newmodel.StatSekolahAsal = model.StatSekolahAsal;

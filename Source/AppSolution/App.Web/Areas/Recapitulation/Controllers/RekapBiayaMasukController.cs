@@ -56,8 +56,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
-            string Namasiswa = QS["Namasiswa"];
+            //string Namasiswa = QS["Namasiswa"];
             var uname = User.Identity.GetUserName();
+
+            //tambah
+            string Namasiswa = m.Namasiswa;
+            if(Namasiswa == null)
+            {
+                Namasiswa = "";
+            }
 
             List<RekapBiayaMasukVM> models = new List<RekapBiayaMasukVM>();
             List<string[]> listResult = new List<string[]>();
@@ -69,15 +76,16 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) || (Namasiswa != ""))
+                    if ((tglbayar != null)|| (Namasiswa == null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa.ToLower()));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
 
                     }
 
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.bayarBM != 0)
                             {
@@ -118,7 +126,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Namasiswa != null)
                     {
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()));
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
                         foreach (var dd in t)
                         {
                             if (dd.bayarBM != 0)
@@ -171,7 +179,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
                         if ((jName != null) || (Namasiswa != ""))
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) || x.Namasiswa.Contains(Namasiswa.ToLower()));
+                            //t = t.Where(x => x.Jenjang.Equals(jName) || x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                            t = t.Where(x => (x.Jenjang.Equals(jName) || x.Namasiswa.Contains(Namasiswa.ToLower())) && x.isCanceled.Equals(false));
 
                         }
                         foreach (var dd in t)

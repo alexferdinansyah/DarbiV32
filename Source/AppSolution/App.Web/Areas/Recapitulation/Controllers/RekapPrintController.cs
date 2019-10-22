@@ -32,6 +32,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapPrint(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
+            
             var QS = Request.QueryString;
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
@@ -40,55 +41,107 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapPrintVM> models = new List<RekapPrintVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-
-            if (Namasiswa == "" || Namasiswa == null)
-            {
-                //jika tglbayar sebagai opsi pencarian
-                if (tglbayar != null)
+            //jid
+            
+            
+                if (Namasiswa == "" || Namasiswa == null)
                 {
-                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) && (Namasiswa != null))
+                    //jika tglbayar sebagai opsi pencarian
+                    if (tglbayar != null)
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa));
-                    }
-                    foreach (var dd in t)
-                    {
-                        if (dd.tglbayar == tglbayar)
+                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        if ((tglbayar != null) && (Namasiswa != null))
                         {
-                            if (tglbayar == dd.tglbayar)
+
+                            t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                            //t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                        }
+                        foreach (var dd in t)
+                        {
+                            if (dd.tglbayar == tglbayar)
                             {
-                                RekapPrintVM model = new RekapPrintVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                model.biayaBM = dd.bayarBM.ToString();
-                                model.bulanspp = dd.bulanspp.ToString();
-                                model.bayarspp = dd.bayarspp.ToString();
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
-                                models.Add(model);
+                                if (tglbayar == dd.tglbayar)
+                                {
+                                    RekapPrintVM model = new RekapPrintVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                    model.biayaBM = dd.bayarBM.ToString();
+                                    model.bulanspp = dd.bulanspp.ToString();
+                                    model.bayarspp = dd.bayarspp.ToString();
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = uname;
+                                    models.Add(model);
+                                }
                             }
                         }
-                    }
-                }
-                else
-                {
-                    //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
-                    return Json(new
-                    {
-                        sEcho = param.sEcho,
-                        iTotalRecords = 0,
-                        iTotalDisplayRecords = 0,
-                        aaData = models,
-                        error = errorMessage
-                    },
-            JsonRequestBehavior.AllowGet);
-                }
+                        // Filtering
+                        int? isDel = null;
+                        for (int j = 0; j < models.Count(); j++)
+                        {
+                            if (isDel != null)
+                            {
+                                j = models.Count() - 2;
+                                models.Remove(models[Convert.ToInt32(isDel)]);
+                            }
+                            IEnumerable<Transaksi> tt = db.Transaksis.OrderBy(x => x.TransId);
+                            //menambahkan isCenceled di filter
+                            tt = tt.Where(x => x.Nosisda.Equals(models[j].Nosisda) && x.isCanceled.Equals(false));
+                            if (tt.Count() == 0)
+                            {
+                                if (j == models.Count() - 1)
+                                {
+                                    models.Remove(models[j]);
+                                }
+                                else
+                                {
+                                    isDel = j;
+                                }
+                            }
+                            else
+                            {
+                                int eachsiswa = 0;
+                                foreach (var dt in tt)
+                                {
+                                    if (dt.tglbayar != null)
+                                    {
+                                        if (tglbayar == dt.tglbayar)
+                                        {
+                                            models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                            models[j].SSId = dt.JenisSS;
+                                            models[j].SSName = dt.JenisSS;
+                                            models[j].nominal = dt.nominal;
+                                            models[j].tipebayar = dt.tipebayar;
+                                            models[j].Username = uname;
+                                            eachsiswa++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
+                        //end flitering
+                    }
+                    else
+                    {
+                        //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = 0,
+                            iTotalDisplayRecords = 0,
+                            aaData = models,
+                            error = errorMessage
+                        },
+                JsonRequestBehavior.AllowGet);
+                    }
+                    //jid
+                
+                
             }
             else
             {
@@ -97,10 +150,12 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Namasiswa != null)
                     {
+
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
                         if ((Namasiswa != null) || (tglbayar != null))
                         {
-                            t = t.Where(x => x.Namasiswa.Contains(Namasiswa) || x.tglbayar.Equals(tglbayar));
+                            t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                            //t = t.Where(x => x.Namasiswa.Contains(Namasiswa) || x.tglbayar.Equals(tglbayar) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)

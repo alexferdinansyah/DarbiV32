@@ -1,5 +1,6 @@
 ﻿@model App.Entities.Models.DetailSaudara
 
+
 @{
     ViewBag.Title = "Create Saudara";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,6 +10,7 @@
 
 @using (Html.BeginForm())
 {
+    
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
@@ -16,7 +18,7 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.SiswaId)
-    @Html.HiddenFor(model => model.Sex)
+    @*@Html.HiddenFor(model => model.Sex)*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.SiswaId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -29,7 +31,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control", AutoComplete="off" } })
+            @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control", AutoComplete = "off" } })
             @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -37,21 +39,26 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("ListItem")
+            @*@Html.DropDownList("ListItem")*@
+
+            Laki-laki  @Html.RadioButtonFor(model => model.Sex, "Laki-Laki")
+            Perempuan  @Html.RadioButtonFor(model => model.Sex, "Perempuan")
+
         </div>
     </div>
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.Dob, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control", AutoComplete="off" } })
+            @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control", AutoComplete = "off" } })
             @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Create" class="btn btn-default" onclick="checked()"/>
         </div>
     </div>
 </div>
@@ -61,10 +68,10 @@
     @Html.ActionLink("Back to List", "DetailSaudara", new { id = Model.SiswaId })
 </div>
 
-@section Scripts {
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<script>
+@*<script>
     $(document).ready(function () {
         var JenisKelamin = document.getElementById("Sex");
         $('#ListItem').change(function () {
@@ -75,4 +82,4 @@
         });
     });
 
-</script>
+</script>*@

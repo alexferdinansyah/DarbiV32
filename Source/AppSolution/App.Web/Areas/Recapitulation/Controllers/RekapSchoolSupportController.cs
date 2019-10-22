@@ -94,13 +94,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 if (tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) && (Namasiswa != null))
+                    if ((tglbayar != null) || (Namasiswa != null))
                     {
-                        t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa.ToLower()));
+                        var D = tglbayar.Date.ToShortDateString();
+                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
                     }
                     foreach (var dd in t)
                     {
-                        if (dd.tglbayar == tglbayar)
+                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
                             if (dd.JenisSS != null)
                             {
@@ -199,10 +200,11 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             jName = ss.JenisSS;
                             break;
                         }
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Equals(jName)).ToList();
+                        // M.JenisSS.Equals[Sebelumnya]
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Contains(jName)).ToList();
                         if (jss != null && Namasiswa != null)
                         {
-                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa.ToLower()));
+                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)
@@ -283,6 +285,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             {
                 if (jjg != null)
                 {
+                    //Pencarian Berdasarkan Jenjang
                     IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == jjg);
                     var jName = "";
                     foreach (var i in infoJ)
@@ -293,7 +296,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
                     if ((jName != null) && (Namasiswa != null))
                     {
-                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()));
+                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                     }
                     foreach (var dd in t)
                     {
