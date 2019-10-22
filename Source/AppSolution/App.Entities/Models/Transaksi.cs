@@ -101,7 +101,7 @@ namespace App.Entities.Models
         public string kembalian { get; set; }
 
         //Kasir
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         [Display(Name = "Kasir")]
         public string Username { get; set; }
         public string Fullname { get; set; }
