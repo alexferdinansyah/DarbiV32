@@ -423,7 +423,7 @@ namespace App.Web.Areas.Transaction.Controllers
             string tkt = "";
             string disc = "";
             string discspp = "";
-            string namatingkat = "";
+            int? tingkat = null;
             int diskonbm = 0;
             int diskonspp = 0;
             foreach (var d in dts)
@@ -439,25 +439,25 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
                 disc = d.TypeDiscAdm;
                 discspp = d.TypeDisc;
-                namatingkat = d.Tingkat;
+                tingkat = d.TingkatId;
                 diskonbm = Convert.ToInt32(d.NomDiscAdm);
                 diskonspp = Convert.ToInt32(d.NomDisc);
 
             }
 
             //info tingkat to get info biaya
-            IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.Namatingkat.Equals(namatingkat));
-            int idtingkat = 0;
+            IEnumerable<Tingkat> dtTingkat = db.Tingkats.Where(x => x.TingkatId == tingkat);
+            string namatingkat = "";
             foreach (var t in dtTingkat)
             {
-                idtingkat = t.TingkatId;
+                namatingkat = t.Namatingkat;
             }
 
             //info biaya
             IEnumerable<Biaya> dtb = db.Biayas;
             foreach (var dd in dtb)
             {
-                if (dd.TingkatId == idtingkat)
+                if (dd.TingkatId == tingkat)
                 {
 
                     if (dd.KatBiaya == "Biaya Masuk")
@@ -571,7 +571,7 @@ namespace App.Web.Areas.Transaction.Controllers
                         break;
                     }
                 }
-                IEnumerable<Transaksi> totalsemua = db.Transaksis.Where(x => x.bayarspp == idtingkat);
+                IEnumerable<Transaksi> totalsemua = db.Transaksis.Where(x => x.bayarspp == tingkat);
                 foreach (var semuatotal in totalsemua)
                 {
                     if (semuatotal.totalkeseluruhan == "total Semua")

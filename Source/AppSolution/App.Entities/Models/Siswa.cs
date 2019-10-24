@@ -18,9 +18,11 @@ namespace App.Entities.Models
         [Display(Name = "No Sisda")]
         public string Nosisda { get; set; }
 
+        [Required]
         [Display(Name = "Nama Lengkap")]
         public string Fullname { get; set; }
 
+        [Required]
         [Display(Name = "Nickname")]
         public string Nickname { get; set; }
 
@@ -30,18 +32,23 @@ namespace App.Entities.Models
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
+        [Required]
         [Display(Name = "Jenis Kelamin")]
         public string Sex { get; set; }
 
+        [Required]
         [Display(Name = "Tempat Lahir")]
         public string Pob { get; set; }
 
+        [Required]
         [Display(Name = "Tanggal Lahir")]
         public string Dob { get; set; }
 
+        [Required]
         [Display(Name = "Nama Ayah")]
         public string NamaAyah { get; set; }
 
+        [Required]
         [Display(Name = "Nama Ibu")]
         public string NamaIbu { get; set; }
 
@@ -51,15 +58,18 @@ namespace App.Entities.Models
         [Display(Name = "Pekerjaan Ibu")]
         public string PekerjaanIbu { get; set; }
 
+        [Required]
         [Display(Name = "Nomor Telpon Ayah")]
         public string NoTelpAyah { get; set; }
 
+        [Required]
         [Display(Name = "Nomor Telpon Ibu")]
         public string NoTelpIbu { get; set; }
 
         [Display(Name = "Email Orangtua")]
         public string EmailOrtu { get; set; }
 
+        [Required]
         [Display(Name = "Alamat")]
         public string Alamat { get; set; }
 
