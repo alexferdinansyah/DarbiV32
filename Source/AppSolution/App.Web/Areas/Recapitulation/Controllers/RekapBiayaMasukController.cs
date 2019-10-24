@@ -38,7 +38,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
         [HttpGet]
         public ActionResult AjaxRekapBiayaMasuk(JQueryDataTableParamModel param, SearchRekapBiayaMasuk m)
         {
-            var Jid = 0;
+            int? Jid = 0;
             if (Session["Opsi"] != null)
             {
                 m.Opsi = Session["Opsi"].ToString();
@@ -73,21 +73,19 @@ namespace App.Web.Areas.Recapitulation.Controllers
             {
                 //jika tglbayar sebagai opsi pencarian
                 if (tglbayar != null)
-                
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null)|| (Namasiswa == null))
+                    if ((tglbayar != null) || (Namasiswa == null))
                     {
                         var D = tglbayar.Date.ToShortDateString();
                         t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
-
                     }
 
                     foreach (var dd in t)
                     {
                         if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
-                            if (dd.bayarBM != 0)
+                            if (dd.bayarBM != 0 && dd.bayarBM != null)
                             {
                                 RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                                 model.tglbayar = dd.tglbayar;
@@ -129,7 +127,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
                         foreach (var dd in t)
                         {
-                            if (dd.bayarBM != 0)
+                            if (dd.bayarBM != 0 && dd.bayarBM != null)
                             {
                                 RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                                 model.Nosisda = dd.Nosisda;
@@ -187,7 +185,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.Jenjang.Contains(jName))
                             {
-                                if (dd.bayarBM != 0)
+                                if (dd.bayarBM != 0 && dd.bayarBM != null)
                                 {
                                     RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                                     model.tglbayar = dd.tglbayar;
@@ -254,8 +252,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
+                    iTotalRecords = TotalRecord,
+                    iTotalDisplayRecords = TotalRecord,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);

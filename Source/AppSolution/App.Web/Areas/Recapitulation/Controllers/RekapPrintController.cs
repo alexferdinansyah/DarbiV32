@@ -150,11 +150,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 {
                     if (Namasiswa != null)
                     {
-
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
                         if ((Namasiswa != null) || (tglbayar != null))
                         {
-                            t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                            t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                             //t = t.Where(x => x.Namasiswa.Contains(Namasiswa) || x.tglbayar.Equals(tglbayar) && x.isCanceled.Equals(false));
                         }
 
@@ -232,8 +231,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
+                    iTotalRecords = TotalRecord,
+                    iTotalDisplayRecords = TotalRecord,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);

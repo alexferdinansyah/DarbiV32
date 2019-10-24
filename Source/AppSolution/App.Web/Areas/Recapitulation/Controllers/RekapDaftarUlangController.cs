@@ -248,8 +248,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 return Json(new
                 {
                     sEcho = param.sEcho,
-                    iTotalRecords = 0,
-                    iTotalDisplayRecords = 0,
+                    iTotalRecords = TotalRecord,
+                    iTotalDisplayRecords = TotalRecord,
                     aaData = listResult
                 },
                 JsonRequestBehavior.AllowGet);
