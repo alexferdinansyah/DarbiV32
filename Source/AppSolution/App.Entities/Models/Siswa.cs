@@ -9,6 +9,7 @@ namespace App.Entities.Models
 {
     public class Siswa
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Siswa Id")]
         public int SiswaId { get; set; }

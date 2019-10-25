@@ -261,7 +261,7 @@ namespace App.Web.Areas.Register.Controllers
 
                    
                     //nosisda generator
-                    Siswa LastSiswa = db.Siswas.OrderByDescending(m => m.SiswaId).First();
+                    Siswa LastSiswa = db.Siswas.OrderByDescending(m => m.Nosisda).First();
                     var lastnosisda = Convert.ToInt32(LastSiswa.Nosisda) + 1;
                     //var newtotalsiswa = totalsiswa.ToString().PadLeft(6, '0');
                     var gnosisda = DateTime.UtcNow.Year;
