@@ -52,7 +52,7 @@ namespace App.Entities.Models
 
         [Display(Name = "Tanggal Pembayaran")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy | HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? tglbayar { get; set; }
 
         [Display(Name = "Bank")]
