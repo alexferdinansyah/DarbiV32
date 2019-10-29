@@ -95,7 +95,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Jenjang = dd.Jenjang;
                                 model.biayaBM = dd.bayarBM.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
 
@@ -130,12 +130,14 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             if (dd.bayarBM != 0 && dd.bayarBM != null)
                             {
                                 RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                                model.tglbayar = dd.tglbayar;
                                 model.Nosisda = dd.Nosisda;
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
                                 model.biayaBM = dd.bayarBM.ToString();
-                                model.tglbayar = dd.tglbayar;
+                                model.tipebayar = dd.tipebayar;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -195,7 +197,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.Jenjang = dd.Jenjang;
                                     model.biayaBM = dd.bayarBM.ToString();
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }

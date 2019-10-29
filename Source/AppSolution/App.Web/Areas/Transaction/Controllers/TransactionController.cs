@@ -665,13 +665,17 @@ namespace App.Web.Areas.Transaction.Controllers
                 }
 
                 newmodel.nominal = model.nominal;
-                if (model.Kelastingkat == "TK A" || model.Kelastingkat == "PG")
+                if (model.Kelastingkat.Contains("Little") || model.Kelastingkat.Contains("little"))
                 {
                     newmodel.daftarUlang = model.daftarUlang;
                     newmodel.cicilDaftarUlang = Convert.ToInt32(model.bayarDaftarUlang);
                 }
+                newmodel.Username = User.Identity.GetUserName();
+                var idu = User.Identity.GetUserId();
+                User fname = db.Users.Find(idu);
+                newmodel.Fullname = fname.Fullname;
 
-                
+
                 db.Transaksis.Add(newmodel);
                 db.SaveChanges();
                 int lastid = db.Transaksis.Max(x => x.TransId);

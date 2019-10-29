@@ -74,7 +74,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.SSName = dd.JenisSS;
                                     model.nominal = dd.nominal;
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }
@@ -116,7 +116,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                             models[j].SSName = dt.JenisSS;
                                             models[j].nominal = dt.nominal;
                                             models[j].tipebayar = dt.tipebayar;
-                                            models[j].Username = uname;
+                                            models[j].Username = dt.Username;
                                             eachsiswa++;
                                         }
                                     }
@@ -173,7 +173,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.SSName = dd.JenisSS;
                                 model.nominal = dd.nominal;
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
 
                             }

@@ -119,7 +119,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
 
@@ -162,7 +162,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -222,7 +222,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.bulanspp = dd.bulanspp.ToString();
                                     model.bayarspp = dd.bayarspp.ToString();
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }

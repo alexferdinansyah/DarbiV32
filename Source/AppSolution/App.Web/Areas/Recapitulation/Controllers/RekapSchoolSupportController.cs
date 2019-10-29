@@ -79,6 +79,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             var QS = Request.QueryString;
             string Namasiswa = QS["Namasiswa"];
+            string SS = QS["JenisSS"];
             //var jss = Session["Opsiss"];
             var jj = Session["Opsij"];
             //string JenisSs = m.JenisSS;
@@ -111,9 +112,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Namasiswa = dd.Namasiswa;
                                 model.Kelastingkat = dd.Kelastingkat;
                                 model.Jenjang = dd.Jenjang;
-                                model.SSId = dd.SSId;
+                                model.SSName = dd.JenisSS;
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 //model.SSId = dd.SSId.ToString();
 
                                 models.Add(model);
@@ -162,7 +163,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                         models[j].SSName = dt.JenisSS;
                                         models[j].nominal = dt.nominal;
                                         models[j].tipebayar = dt.tipebayar;
-                                        models[j].Username = uname;
+                                        models[j].Username = dt.Username;
                                         eachsiswa++;
                                     }
 
@@ -201,15 +202,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         // M.JenisSS.Equals[Sebelumnya]
-                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.Contains(jName)).ToList();
-                        if (jss != null && Namasiswa != null)
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.JenisSS.ToLower().Contains(jss.ToLower())).ToList();
+                        if (jss != null || Namasiswa != null)
                         {
-                            t = t.Where(x => x.JenisSS.Contains(jss) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                            t = t.Where(x => x.JenisSS.ToLower().Contains(jss.ToLower()) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)
                         {
-                            if (dd.JenisSS.ToLower().Contains(jName.ToLower()))
+                            if (dd.JenisSS.ToLower().Contains(jss.ToLower()))
                             {
                                 if (dd.JenisSS != "-")
                                 {
@@ -222,7 +223,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.SSName = dd.JenisSS;
                                     model.nominal = dd.nominal;
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }
@@ -267,7 +268,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     models[j].SSName = dt.JenisSS;
                                     models[j].nominal = dt.nominal;
                                     models[j].tipebayar = dt.tipebayar;
-                                    models[j].Username = uname;
+                                    models[j].Username = dt.Username;
                                     eachsiswa++;
                                 }
                             }
@@ -302,7 +303,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.Jenjang.Contains(jName))
                         {
-                            if (dd.JenisSS != "")
+                            if (dd.JenisSS != "" && dd.nominal != null)
                             {
                                 RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                                 model.tglbayar = dd.tglbayar;
@@ -313,7 +314,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.SSName = dd.JenisSS;
                                 model.nominal = dd.nominal;
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -358,7 +359,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 models[j].SSName = dt.JenisSS;
                                 models[j].nominal = dt.nominal;
                                 models[j].tipebayar = dt.tipebayar;
-                                models[j].Username = uname;
+                                models[j].Username = dt.Username;
                                 eachsiswa++;
                             }
                         }

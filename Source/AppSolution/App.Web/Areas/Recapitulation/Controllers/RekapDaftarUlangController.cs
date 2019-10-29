@@ -94,7 +94,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Jenjang = dd.Jenjang;
                                 model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -135,7 +135,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Jenjang = dd.Jenjang;
                                 model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -193,7 +193,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.Jenjang = dd.Jenjang;
                                     model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }
