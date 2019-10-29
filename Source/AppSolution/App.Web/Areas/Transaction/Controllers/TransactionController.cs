@@ -24,7 +24,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (model == null)
             {
                 model = new TransactionSearchFormVM();
-               
+
             }
             System.Web.HttpContext.Current.Session["NamaSiswa"] = model.NamaSiswa;
             return View(model);
@@ -74,7 +74,7 @@ namespace App.Web.Areas.Transaction.Controllers
             var aj = inputarray[3].Split(',');
             string tkt = "";
             tkt = kt[0].ToString();
-            
+
             Tingkat ts = db.Tingkats.Where(x => x.Namatingkat.Equals(tkt)).FirstOrDefault();
             IEnumerable<Biaya> b = null;
 
@@ -118,7 +118,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
         public ActionResult SPPAjax(string input)
         {
-       
+
             var inputarray = input.Split('-');
             var blnspp = inputarray[0].Split(',');
             var kt = inputarray[1].Split(' ');
@@ -508,7 +508,6 @@ namespace App.Web.Areas.Transaction.Controllers
                     //    mod.nominal = dd.NomBiaya;
                     //}
 
-
                     if (dd.KatBiaya == "Daftar Ulang")
                     {
                         mod.daftarUlang = dd.NomBiaya;
@@ -518,22 +517,32 @@ namespace App.Web.Areas.Transaction.Controllers
             }
 
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
-            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled == false);
+            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled.Equals(false));
             foreach (var t in dtts)
             {
+
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
                 mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
                 mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
+                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+                if (t.daftarUlang == null)
+                {
+                    mod.sisaTagihanDU = mod.daftarUlang;
+                }
+                if (t.totalBM == null)
+                {
+                    mod.paidBM = mod.totalBM;
+                }
                 //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             }
 
             //info sisa tagihan BM & Daftar Ulang
-            IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            foreach (var t in sisa)
-            {
-                //mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
-                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
-            }
+            //IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
+            //foreach (var t in sisa)
+            //{
+            //    //mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+            //    mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+            //}
 
             var idTingkatCounter = 0;
             if (namatingkat == "PG")
@@ -593,9 +602,9 @@ namespace App.Web.Areas.Transaction.Controllers
         {
             //SchoolSupport ss = db.SchoolSupports.Find(Convert.ToInt32(model.getSS.ToList()));
             var spp = ""; //bulanspp
-            var ca = "" ; //bulan catering
-            var aj = "" ; //bulan antarjemput
-            var ss = "" ;
+            var ca = ""; //bulan catering
+            var aj = ""; //bulan antarjemput
+            var ss = "";
             if (model.getBulan == null) spp = "-"; else spp = String.Join(",", model.getBulan);
             if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
             if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
@@ -617,7 +626,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 jId = Convert.ToInt32(tinfo.JenjangId);
 
                 Jenjang jinfo = db.Jenjangs.Find(jId);
-                
+
 
                 newmodel.Jenjang = jinfo.JenjangName;
                 newmodel.Namasiswa = model.Namasiswa;
@@ -645,7 +654,7 @@ namespace App.Web.Areas.Transaction.Controllers
                 else
                 {
                     newmodel.tgltransfer = Convert.ToDateTime(model.tgltransfer);
-                    newmodel.tglbayar = Convert.ToDateTime(model.tgltransfer);
+                    newmodel.tglbayar = DateTime.Now;
                 }
                 //newmodel.bayarspp = Convert.ToInt32(model.bayarspp);
                 /*newmodel.bulanspp = model.getBulan;*/
@@ -655,11 +664,12 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.periode = model.periode;
                 newmodel.JenisSS = model.JenisSS;
                 newmodel.uang = model.uang;
-                if(model.uang == "0" || model.uang == null)
+                if (model.uang == "0" || model.uang == null)
                 {
                     model.uang = model.total;
                     newmodel.kembalian = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
-                } else
+                }
+                else
                 {
                     newmodel.kembalian = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
                 }
