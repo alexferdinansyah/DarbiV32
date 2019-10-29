@@ -176,7 +176,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A")) && M.cicilDaftarUlang != null).ToList();
                         if ((jName != null ) || Namasiswa != null)
                         {
-                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                            t = t.Where(x => (x.Jenjang.Contains(jName) || x.Namasiswa.Contains(Namasiswa.ToLower())) && x.isCanceled.Equals(false));
                         }
 
                         foreach (var dd in t)
