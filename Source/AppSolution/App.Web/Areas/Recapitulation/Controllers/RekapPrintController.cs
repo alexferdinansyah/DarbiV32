@@ -37,6 +37,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
             string Namasiswa = m.Namasiswa;
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
             var uname = User.Identity.GetUserName();
+            if (Namasiswa == null)
+            {
+                Namasiswa = "";
+            }
 
             List<RekapPrintVM> models = new List<RekapPrintVM>();
             List<string[]> listResult = new List<string[]>();
@@ -44,24 +48,25 @@ namespace App.Web.Areas.Recapitulation.Controllers
             //jid
             
             
-                if (Namasiswa == "" || Namasiswa == null)
+                if (m.tglbayar != null)
                 {
                     //jika tglbayar sebagai opsi pencarian
                     if (tglbayar != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                        if ((tglbayar != null) && (Namasiswa != null))
+                        if (tglbayar != null)
                         {
-
-                            t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                            t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) && x.isCanceled.Equals(false));
                             //t = t.Where(x => x.tglbayar.Equals(tglbayar) && x.Namasiswa.Contains(Namasiswa) && x.isCanceled.Equals(false));
+                        }
+                        else if (tglbayar != null && Namasiswa != "")
+                        {
+                            t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) && x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
                         }
                         foreach (var dd in t)
                         {
-                            if (dd.tglbayar == tglbayar)
+                            if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) && dd.Namasiswa.ToLower().Contains(Namasiswa.ToLower()))
                             {
-                                if (tglbayar == dd.tglbayar)
-                                {
                                     RekapPrintVM model = new RekapPrintVM();
                                     model.tglbayar = dd.tglbayar;
                                     model.Nosisda = dd.Nosisda;
@@ -76,7 +81,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.tipebayar = dd.tipebayar;
                                     model.Username = dd.Username;
                                     models.Add(model);
-                                }
                             }
                         }
                         // Filtering
@@ -151,9 +155,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     if (Namasiswa != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                        if ((Namasiswa != null) || (tglbayar != null))
+                        if ((Namasiswa != null))
                         {
-                            t = t.Where(x => x.tglbayar.Equals(tglbayar) || x.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                            t = t.Where(x => x.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
                             //t = t.Where(x => x.Namasiswa.Contains(Namasiswa) || x.tglbayar.Equals(tglbayar) && x.isCanceled.Equals(false));
                         }
 

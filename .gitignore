@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 *.json
+/Source/AppSolution/App.Web/Properties/PublishProfiles
