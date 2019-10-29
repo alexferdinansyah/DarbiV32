@@ -15,7 +15,7 @@ namespace App.Entities.DataAccessLayer
 			//Database.SetInitializer<DatabaseContext>(new CreateDatabaseIfNotExists<DatabaseContext>());
 			//Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseIfModelChanges<DatabaseContext>());
 			//Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
-			Database.SetInitializer<DatabaseContext>(new DatabaseInitializer());
+			//Database.SetInitializer<DatabaseContext>(new DatabaseInitializer());
 
 			//Disable initializer
 			//Database.SetInitializer<DatabaseContext>(null);

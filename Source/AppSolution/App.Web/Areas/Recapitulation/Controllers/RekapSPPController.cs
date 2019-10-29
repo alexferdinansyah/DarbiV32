@@ -108,7 +108,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
-                            if (dd.bulanspp != null)
+                            if (dd.bulanspp != null && dd.bulanspp != "-")
                             {
                                 RekapSPPVM model = new RekapSPPVM();
                                 model.tglbayar = dd.tglbayar;
@@ -119,7 +119,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
 
@@ -151,7 +151,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                         foreach (var dd in t)
                         {
-                            if (dd.bulanspp != null)
+                            if (dd.bulanspp != null && dd.bulanspp != "-")
                             {
                                 RekapSPPVM model = new RekapSPPVM();
                                 model.tglbayar = dd.tglbayar;
@@ -162,7 +162,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.bulanspp = dd.bulanspp.ToString();
                                 model.bayarspp = dd.bayarspp.ToString();
                                 model.tipebayar = dd.tipebayar;
-                                model.Username = uname;
+                                model.Username = dd.Username;
                                 models.Add(model);
                             }
                         }
@@ -211,7 +211,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.Jenjang.Contains(jName))
                             {
-                                if (dd.bulanspp != null)
+                                if (dd.bulanspp != null && dd.bulanspp != "-")
                                 {
                                     RekapSPPVM model = new RekapSPPVM();
                                     model.tglbayar = dd.tglbayar;
@@ -222,7 +222,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                     model.bulanspp = dd.bulanspp.ToString();
                                     model.bayarspp = dd.bayarspp.ToString();
                                     model.tipebayar = dd.tipebayar;
-                                    model.Username = uname;
+                                    model.Username = dd.Username;
                                     models.Add(model);
                                 }
                             }
