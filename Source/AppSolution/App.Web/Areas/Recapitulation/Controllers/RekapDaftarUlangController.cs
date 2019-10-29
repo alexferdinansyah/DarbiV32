@@ -84,7 +84,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                         {
-                            if (dd.cicilDaftarUlang != null)
+                            if (dd.cicilDaftarUlang != 0 && dd.cicilDaftarUlang != null)
                             {
                                 RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                 model.tglbayar = dd.tglbayar;
@@ -125,7 +125,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
                         foreach (var dd in t)
                         {
-                            if (dd.cicilDaftarUlang != null)
+                            if (dd.cicilDaftarUlang != 0 && dd.cicilDaftarUlang != null)
                             {
                                 RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                 model.tglbayar = dd.tglbayar;
@@ -183,7 +183,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.Jenjang.Contains(jName))
                             {
-                                if (dd.cicilDaftarUlang != 0)
+                                if (dd.cicilDaftarUlang != 0 && dd.cicilDaftarUlang != null)
                                 {
                                     RekapDaftarUlangVM model = new RekapDaftarUlangVM();
                                     model.tglbayar = dd.tglbayar;
