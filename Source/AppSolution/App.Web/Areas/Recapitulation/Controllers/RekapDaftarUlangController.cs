@@ -60,7 +60,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var uname = User.Identity.GetUserName();
             //tambah
             string NamaSiswa = m.Namasiswa;
-            if(Namasiswa == null)
+            if (Namasiswa == null)
             {
                 Namasiswa = "";
             }
@@ -68,10 +68,10 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Jid == 0 || Jid == null)
+            if (Jid == 0)
             {
                 //jika tglbayar sebagai opsi pencarian
-                if (tglbayar != null)
+                if (m.tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null) || (Namasiswa != "") || (NamaSiswa != ""))
@@ -102,6 +102,20 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 }
                 else
                 {
+                    IEnumerable<Transaksi> td = db.Transaksis.Where(x => x.tglbayar.ToString().Contains(DateTime.UtcNow.ToString()));
+                    foreach (var dd in td)
+                    {
+                        RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                        model.tglbayar = dd.tglbayar;
+                        model.Nosisda = dd.Nosisda;
+                        model.Namasiswa = dd.Namasiswa;
+                        model.Kelastingkat = dd.Kelastingkat;
+                        model.Jenjang = dd.Jenjang;
+                        model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                        model.tipebayar = dd.tipebayar;
+                        model.Username = dd.Username;
+                        models.Add(model);
+                    }
                     //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
                     return Json(new
                     {
@@ -116,7 +130,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
             }
             // jika pencarian berdasarkan nama
-            if ((Jid == null || Jid == 0) && m.tglbayar == null)
+            if (Jid == 0 && m.tglbayar == null)
             {
                 try
                 {
@@ -174,7 +188,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             break;
                         }
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName) && (M.Jenjang.Equals("PG") || M.Jenjang.Equals("TK A")) && M.cicilDaftarUlang != null).ToList();
-                        if ((jName != null ) || Namasiswa != null)
+                        if ((jName != null) || Namasiswa != null)
                         {
                             t = t.Where(x => (x.Jenjang.Contains(jName) || x.Namasiswa.Contains(Namasiswa.ToLower())) && x.isCanceled.Equals(false));
                         }

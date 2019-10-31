@@ -116,7 +116,7 @@ namespace App.Web.Areas.Transaction.Models
         }
         //school support//
         [Display(Name = "Nominal")]
-        public string nominal { get; set; }
+        public string[] nominal { get; set; }
 
         public SelectList Biaya()
         {

@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.bayarBM, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter",  AutoComplete = "off" } })
+                @Html.EditorFor(model => model.bayarBM, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete = "off" } })
             </div>
         </div>
         <hr />
@@ -107,44 +107,46 @@
         <div class="form-group" id="du3">
             @Html.LabelFor(model => model.bayarDaftarUlang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete="off" } })
+                @Html.EditorFor(model => model.bayarDaftarUlang, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete = "off" } })
             </div>
         </div>
         <hr id="du4" />
 
         @*school support*@
         @*<div class="form-group">
-            @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.getSS, Model.SS.Select
-                                     (x => new SelectListItem { Text = x.JenisSS, Value = x.SSId.ToString() }), new { @class = "form-control chosen-select", @multiple = "true" })
-                @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.SSId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.getSS, Model.SS.Select
+                                         (x => new SelectListItem { Text = x.JenisSS, Value = x.SSId.ToString() }), new { @class = "form-control chosen-select", @multiple = "true" })
+                    @Html.ValidationMessageFor(model => model.SSId, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group box" id="bulanca">
-            @Html.LabelFor(model => model.bulanCA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanCA, Model.BulanAJCA.Select
-                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+            <div class="form-group box" id="bulanca">
+                @Html.LabelFor(model => model.bulanCA, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.bulanCA, Model.BulanAJCA.Select
+                                         (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                </div>
             </div>
-        </div>
-        <div class="form-group" id="bulanaj">
-            @Html.LabelFor(model => model.bulanAJ, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.bulanAJ, Model.BulanAJCA.Select
-                                     (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
-            </div>
-        </div>*@
-		<div class="form-group">
+            <div class="form-group" id="bulanaj">
+                @Html.LabelFor(model => model.bulanAJ, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.bulanAJ, Model.BulanAJCA.Select
+                                         (x => new SelectListItem { Text = x.namaBulan, Value = x.namaBulan }), new { @class = "form-control chosen-select", @multiple = "true" })
+                </div>
+            </div>*@
+        <div class="form-group">
             @Html.LabelFor(model => model.JenisSS, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JenisSS, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete ="off" } })
+                @Html.DropDownListFor(model => model.getSS, Model.SS.Select
+                                     (x => new SelectListItem { Text = x.JenisSS, Value = x.SSId.ToString() }), new { @class = "form-control chosen-select getSS", @multiple = "true" })
+                @*@Html.EditorFor(model => model.SS, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete = "off" } })*@
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.nominal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete ="off"} })
+            <div class="col-md-10" id="append">
+                @Html.EditorFor(model => model.nominal, new { htmlAttributes = new { @class = "form-control parameter", AutoComplete = "off" } })
             </div>
         </div>
 
@@ -159,7 +161,7 @@
         <div class="form-group" id="tipebayar4">
             @Html.LabelFor(model => model.uang, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control",  AutoComplete = "off" } })
+                @Html.EditorFor(model => model.uang, new { htmlAttributes = new { @class = "form-control", AutoComplete = "off" } })
             </div>
         </div>
         <div class="form-group" id="tipebayar2">
@@ -172,8 +174,8 @@
         <div class="form-group" id="tipebayar3">
             @Html.LabelFor(model => model.tgltransfer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.tgltransfer, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", type = "date" }})
-                                                          @*"{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control"}*@
+                @Html.EditorFor(model => model.tgltransfer, "{0:dd-MM-yyyy}", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @*"{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control"}*@
             </div>
         </div>
         <div class="form-group">
@@ -203,6 +205,59 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".chosen-select").chosen();
+        //$('#getSS').change(function () {
+        //    var lastField = $("#buildyourform div:last");
+        //    var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
+        //    var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
+        //    fieldWrapper.data("idx", intId);
+        //    var fName = $("<input type=\"text\" class=\"fieldname\" />");
+        //    var fType = $("<select class=\"fieldtype\"><option value=\"checkbox\">Checked</option><option value=\"textbox\">Text</option><option value=\"textarea\">Paragraph</option></select>");
+        //    var removeButton = $("<input type=\"button\" class=\"remove\" value=\"-\" />");
+        //    removeButton.click(function() {
+        //        $(this).parent().remove();
+        //    });
+        //    fieldWrapper.append(fName);
+        //    fieldWrapper.append(fType);
+        //    fieldWrapper.append(removeButton);
+        //    $("#buildyourform").append(fieldWrapper);
+        //});
+        // Apply select2
+        //$('.chosen-select').chosen()
+
+        // Just a small helper
+        var _h = {
+            capitalize: function (str) {
+                return str.charAt(0).toUpperCase() + str.slice(1)
+            },
+            render: function (id, name) {
+                var html = ''
+
+                $.each([1], function (k, v) {
+                    html += '<input type="text" name="nominal[]" placeholder="' + _h.capitalize(name) + '" class="form-control parameter" autocomplete="off"><br>'
+                })
+
+                return html
+            }
+        }
+
+        // Now listed to change event of select2
+        $(document).on('change', '.getSS', function () {
+            $('#append').html('') // truncate any appended nodes
+
+            $(this).find(':selected').each(function (k, v) {
+                $('#append').append(_h.render($(this).val(), $(this).text()))
+            })
+
+            $(".parameter").on("input", function () {
+                var total = 0;
+                $(".parameter").each(function () {
+                    if (!isNaN(parseInt($(this).val()))) {
+                        total += parseInt($(this).val());
+                    }
+                });
+                $(".total").val(total);
+            });
+        });
 
         $('#listperiode').change(function () {
             $.ajax({
@@ -215,7 +270,7 @@
             function successFunc(data, status) {
                 $('#getBulan').empty();
                 $.each(data, function (index, row) {
-                    $('#getBulan').append("<option value='"+ row.namaBulan +"'>"+ row.namaBulan +"</option>").trigger("chosen:updated");
+                    $('#getBulan').append("<option value='" + row.namaBulan + "'>" + row.namaBulan + "</option>").trigger("chosen:updated");
                 })
             }
             function errorFunc() {
@@ -252,34 +307,35 @@
             }
         });
 
-        $("#getSS").change(function () {
-            $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
-            $("#bulanaj").fadeIn("fast")[$.inArray('11', $(this).val()) >= 0 ? 'show' : 'hide']();
-            $.ajax({
-                type: "POST",
-                url: "/Transaction/Transaction/FirstAjax",
-                data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
-                //contentType: "application/json; charset=utf-8",
-                //dataType: "json",
-                success: successFunc,
-                error: errorFunc
-            });
-            function successFunc(data, status) {
-                //alert(data);
-                document.getElementById("nominal").value = data;
-                var total = 0;
-                $(".parameter").each(function () {
-                    if (!isNaN(parseInt($(this).val()))) {
-                        total += parseInt($(this).val());
-                    }
-                });
-                $(".total").val(total);
-            }
 
-            function errorFunc() {
-                alert('Belum Ada Biaya pada masterdata');
-            }
-        });
+        //$("#getSS").change(function () {
+        //    $("#bulanca").fadeIn("fast")[$.inArray('10', $(this).val()) >= 0 ? 'show' : 'hide']();
+        //    $("#bulanaj").fadeIn("fast")[$.inArray('11', $(this).val()) >= 0 ? 'show' : 'hide']();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Transaction/Transaction/FirstAjax",
+        //        data: { input: $('#getSS').val() + "-" + $('#Kelastingkat').val() + "-" + $('#bulanCA').val() + "-" + $('#bulanAJ').val() + "-" + $('#getBulan').val() },
+        //        //contentType: "application/json; charset=utf-8",
+        //        //dataType: "json",
+        //        success: successFunc,
+        //        error: errorFunc
+        //    });
+        //    function successFunc(data, status) {
+        //        //alert(data);
+        //        document.getElementById("nominal").value = data;
+        //        var total = 0;
+        //        $(".parameter").each(function () {
+        //            if (!isNaN(parseInt($(this).val()))) {
+        //                total += parseInt($(this).val());
+        //            }
+        //        });
+        //        $(".total").val(total);
+        //    }
+
+        //    function errorFunc() {
+        //        alert('Belum Ada Biaya pada masterdata');
+        //    }
+        //});
 
         $("#bulanca").change(function () {
             $.ajax({
@@ -389,8 +445,8 @@
             if (strUser == "Tunai") {
                 tot = Number(val1) - Number(val2);
                 var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
-			} else var res = confirm("Lakukan Transaksi ?");
-			return !!res; 
+            } else var res = confirm("Lakukan Transaksi ?");
+            return !!res;
 
         });
 
