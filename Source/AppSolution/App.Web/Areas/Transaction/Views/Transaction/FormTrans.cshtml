@@ -205,24 +205,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".chosen-select").chosen();
-        //$('#getSS').change(function () {
-        //    var lastField = $("#buildyourform div:last");
-        //    var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
-        //    var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
-        //    fieldWrapper.data("idx", intId);
-        //    var fName = $("<input type=\"text\" class=\"fieldname\" />");
-        //    var fType = $("<select class=\"fieldtype\"><option value=\"checkbox\">Checked</option><option value=\"textbox\">Text</option><option value=\"textarea\">Paragraph</option></select>");
-        //    var removeButton = $("<input type=\"button\" class=\"remove\" value=\"-\" />");
-        //    removeButton.click(function() {
-        //        $(this).parent().remove();
-        //    });
-        //    fieldWrapper.append(fName);
-        //    fieldWrapper.append(fType);
-        //    fieldWrapper.append(removeButton);
-        //    $("#buildyourform").append(fieldWrapper);
-        //});
-        // Apply select2
-        //$('.chosen-select').chosen()
 
         // Just a small helper
         var _h = {
@@ -447,7 +429,6 @@
                 var res = confirm("Lakukan Transaksi ?\n\nKembalian = Rp. " + tot);
             } else var res = confirm("Lakukan Transaksi ?");
             return !!res;
-
         });
 
         $('#listbln').change(function () {
