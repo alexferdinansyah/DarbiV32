@@ -69,14 +69,11 @@ namespace App.Web.Areas.MasterData.Controllers
 			try
 			{
 				IEnumerable<Kelas> Query = db.Kelass;
-				if (KelasName != "")
+				  if ((KelasName != "" ) || (Namatingkat != ""))
 				{
-					Query = Query.Where(x => x.KelasName.Contains(KelasName));
+					Query = Query.Where(x => x.KelasName.Contains(KelasName) || x.Namatingkat.Equals(Namatingkat));
 				}
-                if (Namatingkat != "")
-                {
-                    Query = Query.Where(x => x.Namatingkat.Equals(Namatingkat));
-                }
+                
 
                 int TotalRecord = Query.Count();
 
@@ -176,7 +173,6 @@ namespace App.Web.Areas.MasterData.Controllers
 			editmodel.KelasId = kelas.KelasId;
 			editmodel.KelasName = kelas.KelasName;
             editmodel.TingkatId = kelas.TingkatId;
-            editmodel.Tingkat = kelas.Tingkat;
 			//editmodel. = tingkat.Jenjangs;
 
 			return View(editmodel);
@@ -187,13 +183,13 @@ namespace App.Web.Areas.MasterData.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "KelasId,KelasName,TingkatId,Tingkat")] Kelas kelas)
+		public ActionResult Edit([Bind(Include = "KelasId,KelasName,TingkatId")] Kelas kelas)
 		{
 			if (ModelState.IsValid)
 			{
 				Kelas KelasCek = db.Kelass.Find(kelas.KelasId);
 				KelasCek.KelasName = kelas.KelasName;
-                KelasCek.TingkatId = kelas.TingkatId;
+                 KelasCek.TingkatId = kelas.TingkatId;
 
 				db.Entry(KelasCek).State = EntityState.Modified;
 				db.SaveChanges();

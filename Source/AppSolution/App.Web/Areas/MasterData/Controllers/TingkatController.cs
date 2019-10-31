@@ -62,7 +62,7 @@ namespace App.Web.Areas.MasterData.Controllers
 
         //Tampil Data Table
         [HttpGet]
-        public ActionResult AjaxTingkat(JQueryDataTableParamModel param)
+        public ActionResult AjaxTingkat(JQueryDataTableParamModel param, TingkatSearchFormVM m )
         {
             var QS = Request.QueryString;
             String Namatingkat = QS["Namatingkat"];
@@ -75,15 +75,10 @@ namespace App.Web.Areas.MasterData.Controllers
             try
             {
                 IEnumerable<Tingkat> Query = db.Tingkats;
-                if (Namatingkat != ""  )
+                if((Namatingkat != "") || (Jenjang != ""))
                 {
-                    Query = Query.Where(x => x.Namatingkat.Contains(Namatingkat) );
+                    Query = Query.Where(x => x.Namatingkat.ToLower().Contains(Namatingkat.ToLower()) || x.JenjangId.Equals(Jenjang));
                 }
-                //if (Jenjang != null)
-                //{
-                //    Query = Query.Where(x => m.Jenjang.Contains(Jenjang));
-                //}
-
 
                 int TotalRecord = Query.Count();
 
@@ -184,7 +179,7 @@ namespace App.Web.Areas.MasterData.Controllers
 
 			EditTingkatFormVM editmodel = new EditTingkatFormVM();
 			editmodel.Namatingkat = tingkat.Namatingkat;
-			editmodel.JenjangId = tingkat.JenjangId;
+            editmodel.JenjangId = tingkat.JenjangId;
 			editmodel.TingkatId = tingkat.TingkatId;
 			//editmodel. = tingkat.Jenjangs;
 
@@ -197,12 +192,13 @@ namespace App.Web.Areas.MasterData.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit([Bind(Include = "TingkatId,Namatingkat,JenjangName")] Tingkat tingkat)
+		public ActionResult Edit([Bind(Include = "TingkatId,Namatingkat,JenjangId")] Tingkat tingkat)
 		{
 			if (ModelState.IsValid)
 			{
 				Tingkat TingkatCek = db.Tingkats.Find(tingkat.TingkatId);
 				TingkatCek.Namatingkat = tingkat.Namatingkat;
+                TingkatCek.JenjangId = tingkat.JenjangId;
 
                 db.Entry(TingkatCek).State = EntityState.Modified;
 				db.SaveChanges();
