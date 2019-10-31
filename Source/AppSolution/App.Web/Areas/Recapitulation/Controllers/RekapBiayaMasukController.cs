@@ -56,6 +56,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            DateTime tglnow = DateTime.Now.Date;
             //string Namasiswa = QS["Namasiswa"];
             var uname = User.Identity.GetUserName();
 
@@ -71,8 +72,35 @@ namespace App.Web.Areas.Recapitulation.Controllers
             String errorMessage = "";
             if (Jid == 0 || Jid == null)
             {
+                //jika tidak ada opsi pencarian yang dipilih
+                if ((Jid == 0 || Jid == null) && m.tglbayar == null)
+                {
+                    IEnumerable<Transaksi> tnow = db.Transaksis.ToList();
+                    if ((tglnow != null) || (Namasiswa == null))
+                    {
+                        var D = tglnow.Date.ToShortDateString();
+                        tnow = tnow.Where(x => x.tglbayar.ToString().Contains(tglnow.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
+                    }
+
+                    foreach (var dd in tnow)
+                    {
+                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()))
+                        {
+                            RekapBiayaMasukVM model = new RekapBiayaMasukVM();
+                            model.tglbayar = dd.tglbayar;
+                            model.Nosisda = dd.Nosisda;
+                            model.Namasiswa = dd.Namasiswa;
+                            model.Kelastingkat = dd.Kelastingkat;
+                            model.Jenjang = dd.Jenjang;
+                            model.biayaBM = dd.bayarBM.ToString();
+                            model.tipebayar = dd.tipebayar;
+                            model.Username = dd.Username;
+                            models.Add(model);
+                        }
+                    }
+                }
                 //jika tglbayar sebagai opsi pencarian
-                if (tglbayar != null)
+                else if (m.tglbayar != null)
                 {
                     IEnumerable<Transaksi> t = db.Transaksis.ToList();
                     if ((tglbayar != null) || (Namasiswa == null))

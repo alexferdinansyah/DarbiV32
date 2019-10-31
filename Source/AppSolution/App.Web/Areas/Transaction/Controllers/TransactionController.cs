@@ -517,32 +517,33 @@ namespace App.Web.Areas.Transaction.Controllers
             }
 
             //info paid BM (BM yang sudah dibayarkan/cicilan BM)
-            IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled.Equals(false));
-            foreach (var t in dtts)
-            {
-
-                mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
-                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
-                if (t.daftarUlang == null)
-                {
-                    mod.sisaTagihanDU = mod.daftarUlang;
-                }
-                if (t.totalBM == null)
-                {
-                    mod.paidBM = mod.totalBM;
-                }
-                //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
-            }
-
-            //info sisa tagihan BM & Daftar Ulang
-            //IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda));
-            //foreach (var t in sisa)
+            //IEnumerable<Transaksi> dtts = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled.Equals(false));
+            //foreach (var t in dtts)
             //{
-            //    //mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+
+            //    //mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+            //    //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+            //    mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
             //    mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+            //    if (t.daftarUlang == null)
+            //    {
+            //        mod.sisaTagihanDU = mod.daftarUlang;
+            //    }
+            //    if (t.totalBM == null)
+            //    {
+            //        mod.sisaTagihanBM = mod.totalBM;
+            //    }
+            //    //mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
             //}
+
+            //info sisa tagihan BM &Daftar Ulang
+            IEnumerable<Transaksi> sisa = db.Transaksis.Where(x => x.Nosisda.Equals(mod.Nosisda) && x.isCanceled.Equals(false));
+            foreach (var t in sisa)
+            {
+                mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+                mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+            }
 
             var idTingkatCounter = 0;
             if (namatingkat == "PG")
@@ -605,10 +606,12 @@ namespace App.Web.Areas.Transaction.Controllers
             var ca = ""; //bulan catering
             var aj = ""; //bulan antarjemput
             var ss = "";
+            var nom = "";
             if (model.getBulan == null) spp = "-"; else spp = String.Join(",", model.getBulan);
             if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
             if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
             if (model.getSS == null) ss = "-"; else ss = String.Join(",", model.getSS);
+            if (model.nominal == null) nom = "-"; else nom = String.Join(",", model.nominal);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
@@ -662,8 +665,9 @@ namespace App.Web.Areas.Transaction.Controllers
                 newmodel.bulanCA = ca;
                 newmodel.bulanAJ = aj;
                 newmodel.periode = model.periode;
-                newmodel.JenisSS = model.JenisSS;
+                newmodel.SSId = ss;
                 newmodel.uang = model.uang;
+                newmodel.totalkeseluruhan = model.total;
                 if (model.uang == "0" || model.uang == null)
                 {
                     model.uang = model.total;
@@ -674,7 +678,7 @@ namespace App.Web.Areas.Transaction.Controllers
                     newmodel.kembalian = Convert.ToString(Convert.ToInt32(model.uang) - Convert.ToInt32(model.total));
                 }
 
-                newmodel.nominal = model.nominal;
+                newmodel.nominal = nom;
                 if (model.Kelastingkat.Contains("Little") || model.Kelastingkat.Contains("little"))
                 {
                     newmodel.daftarUlang = model.daftarUlang;
@@ -727,7 +731,7 @@ namespace App.Web.Areas.Transaction.Controllers
             string bayarspp = byr.bayarspp;
             string nominal = byr.nominal;
             var uname = User.Identity.GetUserName();
-            //var ss = ssid.Split(',');
+            var ss = ssid.Split(',');
 
             if (id == null)
             {
@@ -736,28 +740,28 @@ namespace App.Web.Areas.Transaction.Controllers
 
             //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            if (transaksi.SSId != null)
+            if (transaksi.SSId != null || transaksi.SSId != "-")
             {
-                //string[] jss = new string[ss.Count()];
-                //for (int i = 0; i < ss.Count(); i++)
-                //{
-                //    SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
-                //    jss[i] = s.JenisSS;
-                //}
-                //var tss = String.Join(",", jss);
-                //transaksi.JenisSS = tss;
+                string[] jss = new string[ss.Count()];
+                for (int i = 0; i < ss.Count(); i++)
+                {
+                    SchoolSupport s = db.SchoolSupports.Find(Convert.ToInt32(ss[i]));
+                    jss[i] = s.JenisSS;
+                }
+                var tss = String.Join(",", jss);
+                transaksi.JenisSS = tss;
                 //info bayar keseluruhan
-                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
-                transaksi.totalkeseluruhan = totalbayar.ToString();
+                //Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                //    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
+                //transaksi.totalkeseluruhan = totalbayar.ToString();
             }
             else
             {
-                //transaksi.JenisSS = "-";
+                transaksi.JenisSS = "-";
 
-                Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
-                    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
-                transaksi.totalkeseluruhan = totalbayar.ToString();
+                //Int32 totalbayar = (transaksi.bayarBM == null ? 0 : Convert.ToInt32(transaksi.bayarBM)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.bayarspp)) + (transaksi.bulanspp == null ? 0 : Convert.ToInt32(transaksi.komiteSekolah)) + (transaksi.nominal == null ? 0 : Convert.ToInt32
+                //    (transaksi.nominal)) + (transaksi.cicilDaftarUlang == null ? 0 : Convert.ToInt32(transaksi.cicilDaftarUlang));
+                //transaksi.totalkeseluruhan = totalbayar.ToString();
             }
 
             //spp
