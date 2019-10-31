@@ -740,7 +740,7 @@ namespace App.Web.Areas.Transaction.Controllers
 
             //SchoolSupport
             Transaksi transaksi = db.Transaksis.Find(id);
-            if (transaksi.SSId != null || transaksi.SSId != "-")
+            if (transaksi.SSId != "-")
             {
                 string[] jss = new string[ss.Count()];
                 for (int i = 0; i < ss.Count(); i++)

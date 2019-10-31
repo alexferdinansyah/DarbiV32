@@ -77,16 +77,8 @@ namespace App.Web.Areas.Recapitulation.Controllers
             {
                 Namasiswa = "";
             }
-
-            //string jenj = m.Jenjang.ToString();
-            //if(jenj == null)
-            //{
-            //    jenj = "";
-            //}
-            
-
-
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            DateTime tglnow = DateTime.Now.Date;
             var uname = User.Identity.GetUserName();
 
             List<RekapSPPVM> models = new List<RekapSPPVM>();
@@ -94,21 +86,22 @@ namespace App.Web.Areas.Recapitulation.Controllers
             String errorMessage = "";
             if (Jid == 0 || Jid == null)
             {
-                //jika tglbayar sebagai opsi pencarian
+                
                 if (tglbayar != null)
                 {
-                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null)/* || (jenj != null)*/ || (Namasiswa != null))
+                    //jika tidak ada opsi pencarian yang dipilih
+                    if ((Jid == 0 || Jid == null) && m.tglbayar == null)
                     {
-                        var D = tglbayar.Date.ToShortDateString();
-                        t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
-                    }
-
-                    foreach (var dd in t)
-                    {
-                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
+                        IEnumerable<Transaksi> tnow = db.Transaksis.ToList();
+                        if ((tglnow != null) || (Namasiswa == null))
                         {
-                            if (dd.bulanspp != null && dd.bulanspp != "-")
+                            var D = tglnow.Date.ToShortDateString();
+                            tnow = tnow.Where(x => x.tglbayar.ToString().Contains(tglnow.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
+                        }
+
+                        foreach (var dd in tnow)
+                        {
+                            if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.bayarspp != null)
                             {
                                 RekapSPPVM model = new RekapSPPVM();
                                 model.tglbayar = dd.tglbayar;
@@ -122,7 +115,38 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Username = dd.Username;
                                 models.Add(model);
                             }
+                        }
+                    }
+                    //jika tglbayar sebagai opsi pencarian
+                    else if (m.tglbayar != null)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        if ((tglbayar != null) || (Namasiswa != null))
+                        {
+                            var D = tglbayar.Date.ToShortDateString();
+                            t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
+                        }
 
+                        foreach (var dd in t)
+                        {
+                            if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
+                            {
+                                if (dd.bulanspp != null && dd.bulanspp != "-")
+                                {
+                                    RekapSPPVM model = new RekapSPPVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.bulanspp = dd.bulanspp.ToString();
+                                    model.bayarspp = dd.bayarspp.ToString();
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
+
+                            }
                         }
                     }
                 }
