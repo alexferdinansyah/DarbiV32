@@ -62,24 +62,23 @@
                 { "sName": "Periode" },
                 { "sName": "Kelas" },
                 { "sName": "isAdmin",},
-
-                    {
-                        "render": function (data, type, row, meta) {
-                            console.log(row[5]);
-                            if (type === 'display') {
-                                if (row[5] == "True") {
-                                    var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a> | ';
-                                    x += '<a href="/Transaction/Transaction/Delete?nosisda=' + data + '">Batal Transaksi Terakhir</a>';
-                                }
-                                else {
-                                    var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a>';
-                                }
-                                
+                {
+                    "render": function (data, type, row, meta) {
+                        //console.log(row[5]);
+                        if (type === 'display') {
+                            if (row[5] == "True") {
+                                var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a> | ';
+                                x += '<a href="/Transaction/Transaction/Delete?nosisda=' + data + '">Batal Transaksi Terakhir</a>';
                             }
-
-                            return x;
+                            else {
+                                var x = '<a href="/Transaction/Transaction/FormTrans?nosisda=' + data + '">Lakukan Transaksi</a>';
+                            }
+                                
                         }
+
+                        return x;
                     }
+                }
             ]
         });
 

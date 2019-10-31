@@ -541,8 +541,17 @@ namespace App.Web.Areas.Transaction.Controllers
             foreach (var t in sisa)
             {
                 mod.paidBM = Convert.ToString(Convert.ToInt32(mod.paidBM) + Convert.ToInt32(t.bayarBM));
-                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(t.bayarBM));
+                mod.cicilDaftarUlang = Convert.ToString(Convert.ToInt32(mod.cicilDaftarUlang) + Convert.ToInt32(t.cicilDaftarUlang));
+                mod.sisaTagihanBM = Convert.ToString(Convert.ToInt32(t.totalBM) - Convert.ToInt32(mod.paidBM));
                 mod.sisaTagihanDU = Convert.ToString(Convert.ToInt32(t.daftarUlang) - Convert.ToInt32(t.cicilDaftarUlang));
+                if(mod.paidBM == "0")
+                {
+                    mod.sisaTagihanBM = mod.totalBM;
+                }
+                if(mod.cicilDaftarUlang == "0")
+                {
+                    mod.sisaTagihanDU = mod.daftarUlang;
+                }
             }
 
             var idTingkatCounter = 0;
@@ -611,7 +620,7 @@ namespace App.Web.Areas.Transaction.Controllers
             if (model.bulanCA == null) ca = "-"; else ca = String.Join(",", model.bulanCA);
             if (model.bulanAJ == null) aj = "-"; else aj = String.Join(",", model.bulanAJ);
             if (model.getSS == null) ss = "-"; else ss = String.Join(",", model.getSS);
-            if (model.nominal == null) nom = "-"; else nom = String.Join(",", model.nominal);
+            if (model.nominal == null) nom = "0"; else nom = String.Join(",", model.nominal);
             if (ModelState.IsValid)
             {
                 Transaksi newmodel = new Transaksi();
