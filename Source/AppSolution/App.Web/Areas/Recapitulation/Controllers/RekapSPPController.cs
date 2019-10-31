@@ -101,7 +101,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     if ((tglbayar != null)/* || (jenj != null)*/ || (Namasiswa != null))
                     {
                         var D = tglbayar.Date.ToShortDateString();
-                        t = t.Where(x => x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa));
+                        t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
                     }
 
                     foreach (var dd in t)

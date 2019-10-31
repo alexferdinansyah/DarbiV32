@@ -20,6 +20,9 @@ namespace App.Web.Areas.MasterData.Models
         [Display(Name = "Jenjang")]
         public int? JenjangId { get; set; }
 
+        [Display(Name = "Nama Jenjang")]
+        public string JenjangName { get; set; }
+
         public SelectList Jenjangs()
         {
             DatabaseContext db = new DatabaseContext();
