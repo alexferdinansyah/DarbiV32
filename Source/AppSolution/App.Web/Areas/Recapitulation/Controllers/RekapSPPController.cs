@@ -101,7 +101,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                         foreach (var dd in tnow)
                         {
-                            if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.bayarspp != null)
+                            if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.bayarspp != 0)
                             {
                                 RekapSPPVM model = new RekapSPPVM();
                                 model.tglbayar = dd.tglbayar;

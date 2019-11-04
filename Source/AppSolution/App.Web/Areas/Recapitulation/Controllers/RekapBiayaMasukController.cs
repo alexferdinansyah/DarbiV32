@@ -84,7 +84,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                     foreach (var dd in tnow)
                     {
-                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.bayarBM != null)
+                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.bayarBM != 0)
                         {
                             RekapBiayaMasukVM model = new RekapBiayaMasukVM();
                             model.tglbayar = dd.tglbayar;

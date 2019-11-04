@@ -17,7 +17,8 @@
 	<input type="button" id="RekapPrint" value="Print Halaman" class="btn btn-default" onclick="RekapPrint()" Text="Print" />
 </div>*@
 
-@*<div id="details">*@
+<div id="details">
+
 	<table id="tableRekapPrint" class="table" style="width:100%">
 		<thead>
 			<tr>
@@ -46,11 +47,11 @@
 				"processing": true,
 				"sProcessing": true,
 				"bLengthChange": true,
-				dom: 'lBfrtip',
-			buttons: [
-				'print'
-			],
-				//"sLoadingRecords":true,
+					dom: 'lBfrtip',
+				buttons: [
+					'print'
+				],
+				"sLoadingRecords":true,
 				"scrollCollapse": true,
 				"searching": false,
 				"bServerSide": true,
@@ -61,18 +62,18 @@
 				"fnServerParams": function (aoData) {
 					formdata = $('#Req').serializeArray()
 					aoData.push(
-						{ "name": "tglbayar",           "value": $('#tglbayar').val() },
-						{ "name": "Nosisda",            "value": $('#Nosisda').val() },
-						{ "name": "Namasiswa",          "value": $('#Namasiswa').val() },
-						{ "name": "Kelastingkat",       "value": $('#Kelastingkat').val() },
-						{ "name": "cicilDaftarUlang",   "value": $('#cicilDaftarUlang').val() },
-						{ "name": "biayaBM",            "value": $('#biayaBM').val() },
-						{ "name": "bulanspp",           "value": $('#bulanspp').val() },
-						{ "name": "bayarspp",           "value": $('#bayarspp').val() },
-						{ "name": "SSName",             "value": $('#SSName').val() },
-						{ "name": "nominal",            "value": $('#nominal').val() },
-						{ "name": "tipebayar",          "value": $('#tipebayar').val() },
-						{ "name": "Username",           "value": $('#Username').val() },
+						{ "name": "tglbayar", "value": $('#tglbayar').val() },
+						{ "name": "Nosisda", "value": $('#Nosisda').val() },
+						{ "name": "Namasiswa", "value": $('#Namasiswa').val() },
+						{ "name": "Kelastingkat", "value": $('#Kelastingkat').val() },
+						{ "name": "cicilDaftarUlang", "value": $('#cicilDaftarUlang').val() },
+						{ "name": "biayaBM", "value": $('#biayaBM').val() },
+						{ "name": "bulanspp", "value": $('#bulanspp').val() },
+						{ "name": "bayarspp", "value": $('#bayarspp').val() },
+						{ "name": "SSName", "value": $('#SSName').val() },
+						{ "name": "nominal", "value": $('#nominal').val() },
+						{ "name": "tipebayar", "value": $('#tipebayar').val() },
+						{ "name": "Username", "value": $('#Username').val() },
 					);
 				},
 				"aoColumns": [
@@ -101,10 +102,21 @@
 			});
 		});
 	</script>
-@*</div>*@
+</div>
 
 <style>
 	div.dataTables_length {
 		margin-right: 1em;
 	}
 </style>
+
+@section scripts
+{
+	<script>
+		$(function () {
+			$("#RekapPrint").click(function () {
+				window.print();
+			});
+		});
+	</script>
+}

@@ -98,9 +98,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if ((m.tglbayar != null || jjg != null ) && jss != null)
+            if (jjg == 0 || jjg == null) 
             {
-                if ((m.tglbayar != null || jjg != null) && jss != null)
+                if ((jjg == 0 || jjg == null) && m.tglbayar == null)
                 {
                     IEnumerable<Transaksi> tnow = db.Transaksis.ToList();
                     if ((tglnow != null) || (Namasiswa == null))
@@ -111,7 +111,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
 
                     foreach (var dd in tnow)
                     {
-                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.JenisSS != null)
+                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.nominal != null)
                         {
                             RekapSchoolSupportVM model = new RekapSchoolSupportVM();
                             model.tglbayar = dd.tglbayar;
