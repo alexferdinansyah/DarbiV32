@@ -56,6 +56,7 @@ namespace App.Web.Areas.Recapitulation.Controllers
             var QS = Request.QueryString;
             //var Jid = Convert.ToInt32(Session["valOpsi"]);
             DateTime tglbayar = Convert.ToDateTime(m.tglbayar).Date;
+            DateTime tglnow = DateTime.Now.Date;
             string Namasiswa = QS["Namasiswa"];
             var uname = User.Identity.GetUserName();
             //tambah
@@ -68,54 +69,70 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapDaftarUlangVM> models = new List<RekapDaftarUlangVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
-            if (Jid == 0)
+            if (Jid == 0 || Jid == null)
             {
-                //jika tglbayar sebagai opsi pencarian
-                if (m.tglbayar != null)
+                if ((Jid == 0 || Jid == null) && m.tglbayar == null)
                 {
-                    IEnumerable<Transaksi> t = db.Transaksis.ToList();
-                    if ((tglbayar != null) || (Namasiswa != "") || (NamaSiswa != ""))
+                    IEnumerable<Transaksi> tnow = db.Transaksis.ToList();
+                    if ((tglnow != null) || (Namasiswa == null))
                     {
-                        var D = tglbayar.Date.ToShortDateString();
-                        t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
-
+                        var D = tglnow.Date.ToShortDateString();
+                        tnow = tnow.Where(x => x.tglbayar.ToString().Contains(tglnow.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa.ToLower()));
                     }
-                    foreach (var dd in t)
+
+                    foreach (var dd in tnow)
                     {
-                        if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
+                        if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.cicilDaftarUlang != null)
                         {
-                            if (dd.cicilDaftarUlang != 0 && dd.cicilDaftarUlang != null)
+                            RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                            model.tglbayar = dd.tglbayar;
+                            model.Nosisda = dd.Nosisda;
+                            model.Namasiswa = dd.Namasiswa;
+                            model.Kelastingkat = dd.Kelastingkat;
+                            model.Jenjang = dd.Jenjang;
+                            model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                            model.tipebayar = dd.tipebayar;
+                            model.Username = dd.Username;
+                            models.Add(model);
+                        }
+                    }
+                }
+
+                //jika tglbayar sebagai opsi pencarian
+                else if (m.tglbayar != null)
+                {
+                    if (m.tglbayar != null)
+                    {
+                        IEnumerable<Transaksi> t = db.Transaksis.ToList();
+                        if ((tglbayar != null) || (Namasiswa != "") || (NamaSiswa != ""))
+                        {
+                            var D = tglbayar.Date.ToShortDateString();
+                            t = t.Where(x => (x.tglbayar.ToString().Contains(tglbayar.ToShortDateString()) || x.Namasiswa.Contains(Namasiswa)) && x.isCanceled.Equals(false));
+
+                        }
+                        foreach (var dd in t)
+                        {
+                            if (dd.tglbayar.ToString().Contains(tglbayar.ToShortDateString()))
                             {
-                                RekapDaftarUlangVM model = new RekapDaftarUlangVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.cicilDaftarUlang != 0 && dd.cicilDaftarUlang != null)
+                                {
+                                    RekapDaftarUlangVM model = new RekapDaftarUlangVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
                 }
                 else
                 {
-                    IEnumerable<Transaksi> td = db.Transaksis.Where(x => x.tglbayar.ToString().Contains(DateTime.UtcNow.ToString()));
-                    foreach (var dd in td)
-                    {
-                        RekapDaftarUlangVM model = new RekapDaftarUlangVM();
-                        model.tglbayar = dd.tglbayar;
-                        model.Nosisda = dd.Nosisda;
-                        model.Namasiswa = dd.Namasiswa;
-                        model.Kelastingkat = dd.Kelastingkat;
-                        model.Jenjang = dd.Jenjang;
-                        model.cicilDaftarUlang = dd.cicilDaftarUlang.ToString();
-                        model.tipebayar = dd.tipebayar;
-                        model.Username = dd.Username;
-                        models.Add(model);
-                    }
                     //jika tglbayar pada tbl transaksi tidak ada yang sesuai dengan tglbayar pada pencarian 
                     return Json(new
                     {

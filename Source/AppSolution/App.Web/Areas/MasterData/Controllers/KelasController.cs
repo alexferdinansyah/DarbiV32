@@ -69,9 +69,9 @@ namespace App.Web.Areas.MasterData.Controllers
 			try
 			{
 				IEnumerable<Kelas> Query = db.Kelass;
-				  if ((KelasName != "" ) || (Namatingkat != ""))
+				  if ((KelasName != "" ) /*|| (Namatingkat != "")*/)
 				{
-					Query = Query.Where(x => x.KelasName.Contains(KelasName) || x.Namatingkat.Equals(Namatingkat));
+					Query = Query.Where(x => x.KelasName.Contains(KelasName)/* || x.Namatingkat.Equals(Namatingkat)*/);
 				}
                 
 
@@ -189,7 +189,7 @@ namespace App.Web.Areas.MasterData.Controllers
 			{
 				Kelas KelasCek = db.Kelass.Find(kelas.KelasId);
 				KelasCek.KelasName = kelas.KelasName;
-                 KelasCek.TingkatId = kelas.TingkatId;
+                KelasCek.TingkatId = kelas.TingkatId;
 
 				db.Entry(KelasCek).State = EntityState.Modified;
 				db.SaveChanges();
