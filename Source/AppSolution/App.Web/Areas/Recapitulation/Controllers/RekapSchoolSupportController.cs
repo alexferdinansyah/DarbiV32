@@ -126,7 +126,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                 model.Username = dd.Username;
                                 models.Add(model);
                             }
-
                         }
                     }
 
