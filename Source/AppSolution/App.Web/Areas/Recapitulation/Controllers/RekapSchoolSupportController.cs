@@ -96,6 +96,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
             List<RekapSchoolSupportVM> models = new List<RekapSchoolSupportVM>();
             List<string[]> listResult = new List<string[]>();
             String errorMessage = "";
+
+            //jika tidak ada opsi dan field yang terisi
+
             if ((jjg == 0 || jjg == null) && jss == "" && Namasiswa == "")
             {
                 if ((jjg == 0 || jjg == null) && m.tglbayar == null)
@@ -111,23 +114,50 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     {
                         if (dd.tglbayar.ToString().Contains(tglnow.ToShortDateString()) && dd.nominal != null)
                         {
-                            RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                            model.tglbayar = dd.tglbayar;
-                            model.Nosisda = dd.Nosisda;
-                            model.Namasiswa = dd.Namasiswa;
-                            model.Kelastingkat = dd.Kelastingkat;
-                            model.Jenjang = dd.Jenjang;
-                            model.SSName = dd.JenisSS;
-                            model.nominal = dd.nominal;
-                            model.tipebayar = dd.tipebayar;
-                            model.Username = dd.Username;
-                            models.Add(model);
+                            if (dd.JenisSS != null && dd.JenisSS != "-")
+                            {
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
+                            }
                         }
                     }
                 }
 
+                //jika tanggal bayar sebagai opsi pencarian
+
                 else if (m.tglbayar != null)
-                {     //jika tglbayar sebagai opsi pencarian
+                {
                     if (m.tglbayar != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
@@ -142,17 +172,39 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 if (dd.JenisSS != null && dd.JenisSS != "-")
                                 {
-                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                    model.tglbayar = dd.tglbayar;
-                                    model.Nosisda = dd.Nosisda;
-                                    model.Namasiswa = dd.Namasiswa;
-                                    model.Kelastingkat = dd.Kelastingkat;
-                                    model.Jenjang = dd.Jenjang;
-                                    model.SSName = dd.JenisSS;
-                                    model.nominal = dd.nominal;
-                                    model.tipebayar = dd.tipebayar;
-                                    model.Username = dd.Username;
-                                    models.Add(model);
+                                    if (dd.JenisSS.Contains(","))
+                                    {
+                                        var ss = dd.JenisSS.Split(',');
+                                        var nomSS = dd.nominal.Split(',');
+                                        for (int i = 0; i < ss.Length; i++)
+                                        {
+                                            RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                            model.tglbayar = dd.tglbayar;
+                                            model.Nosisda = dd.Nosisda;
+                                            model.Namasiswa = dd.Namasiswa;
+                                            model.Kelastingkat = dd.Kelastingkat;
+                                            model.Jenjang = dd.Jenjang;
+                                            model.SSName = ss[i];
+                                            model.nominal = nomSS[i];
+                                            model.tipebayar = dd.tipebayar;
+                                            model.Username = dd.Username;
+                                            models.Add(model);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = dd.JenisSS;
+                                        model.nominal = dd.nominal;
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
                                 }
                             }
                         }
@@ -200,7 +252,6 @@ namespace App.Web.Areas.Recapitulation.Controllers
                                             models[j].Username = dt.Username;
                                             eachsiswa++;
                                         }
-
                                     }
                                 }
                             }
@@ -223,10 +274,15 @@ namespace App.Web.Areas.Recapitulation.Controllers
                 JsonRequestBehavior.AllowGet);
                 }
             }
+
+            //jika nama siswa sebagai opsi pencarian
+
             else if (Namasiswa != "")
             {
                 try
                 {
+                    //jika nama siswa && jenjang sebagai opsi pencarian
+
                     if (jjg != 0)
                     {
                         IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == jjg);
@@ -241,20 +297,45 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.JenisSS != null && dd.JenisSS != "-")
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
+
+                    //jika nama siswa && jenis ss sebagai opsi pencarian
+
                     else if (jss != "")
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.JenisSS.Contains(jss) && M.isCanceled.Equals(false));
@@ -262,20 +343,45 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.JenisSS != null && dd.JenisSS != "-")
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
+
+                    //jika nama siswa && tgl bayar sebagai opsi pencarian
+
                     else if (m.tglbayar != null)
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.ToList();
@@ -287,20 +393,45 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.JenisSS != null && dd.JenisSS != "-")
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
+
+                    // jika hanya nama siswa sebagai opsi pencarian
+
                     else
                     {
                         IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Namasiswa.ToLower().Contains(Namasiswa.ToLower()) && M.isCanceled.Equals(false));
@@ -308,17 +439,39 @@ namespace App.Web.Areas.Recapitulation.Controllers
                         {
                             if (dd.JenisSS != null && dd.JenisSS != "-")
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
@@ -372,6 +525,9 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     errorMessage = ex.Message;
                 }
             }
+
+            //jika jenis ss sebagai opsi pencarian
+
             else if (jss != "")
             {
                 try
@@ -399,17 +555,39 @@ namespace App.Web.Areas.Recapitulation.Controllers
                             {
                                 if (dd.JenisSS != "-" && dd.JenisSS != null)
                                 {
-                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                    model.tglbayar = dd.tglbayar;
-                                    model.Nosisda = dd.Nosisda;
-                                    model.Namasiswa = dd.Namasiswa;
-                                    model.Kelastingkat = dd.Kelastingkat;
-                                    model.Jenjang = dd.Jenjang;
-                                    model.SSName = dd.JenisSS;
-                                    model.nominal = dd.nominal;
-                                    model.tipebayar = dd.tipebayar;
-                                    model.Username = dd.Username;
-                                    models.Add(model);
+                                    if (dd.JenisSS.Contains(","))
+                                    {
+                                        var ss = dd.JenisSS.Split(',');
+                                        var nomSS = dd.nominal.Split(',');
+                                        for (int i = 0; i < ss.Length; i++)
+                                        {
+                                            RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                            model.tglbayar = dd.tglbayar;
+                                            model.Nosisda = dd.Nosisda;
+                                            model.Namasiswa = dd.Namasiswa;
+                                            model.Kelastingkat = dd.Kelastingkat;
+                                            model.Jenjang = dd.Jenjang;
+                                            model.SSName = ss[i];
+                                            model.nominal = nomSS[i];
+                                            model.tipebayar = dd.tipebayar;
+                                            model.Username = dd.Username;
+                                            models.Add(model);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = dd.JenisSS;
+                                        model.nominal = dd.nominal;
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
                                 }
                             }
                         }
@@ -467,90 +645,118 @@ namespace App.Web.Areas.Recapitulation.Controllers
                     errorMessage = ex.Message;
                 }
             }
+
+            //jika jenjang sebagai opsi pencarian
+
             else
             {
-                if (jjg != 0)
+                try
                 {
-                    //Pencarian Berdasarkan Jenjang
-                    IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == jjg);
-                    var jName = "";
-                    foreach (var i in infoJ)
-                    {
-                        jName = i.JenjangName;
-                        break;
-                    }
-                    IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
-                    if ((jName != null) && (Namasiswa != null))
-                    {
-                        t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
-                    }
-                    foreach (var dd in t)
-                    {
-                        if (dd.Jenjang.Contains(jName))
+                    if (jjg != 0)
+                    {   
+                        IEnumerable<Jenjang> infoJ = db.Jenjangs.Where(n => n.JenjangId == jjg);
+                        var jName = "";
+                        foreach (var i in infoJ)
+                        {
+                            jName = i.JenjangName;
+                            break;
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.Where(M => M.Jenjang.Equals(jName)).ToList();
+                        if ((jName != null) && (Namasiswa != null))
+                        {                            
+                            t = t.Where(x => x.Jenjang.Contains(jName) && x.Namasiswa.Contains(Namasiswa.ToLower()) && x.isCanceled.Equals(false));
+                        }
+                        foreach (var dd in t)
                         {
                             if (dd.JenisSS != "-" && dd.nominal != null)
                             {
-                                RekapSchoolSupportVM model = new RekapSchoolSupportVM();
-                                model.tglbayar = dd.tglbayar;
-                                model.Nosisda = dd.Nosisda;
-                                model.Namasiswa = dd.Namasiswa;
-                                model.Kelastingkat = dd.Kelastingkat;
-                                model.Jenjang = dd.Jenjang;
-                                model.SSName = dd.JenisSS;
-                                model.nominal = dd.nominal;
-                                model.tipebayar = dd.tipebayar;
-                                model.Username = dd.Username;
-                                models.Add(model);
+                                if (dd.JenisSS.Contains(","))
+                                {
+                                    var ss = dd.JenisSS.Split(',');
+                                    var nomSS = dd.nominal.Split(',');
+                                    for (int i = 0; i < ss.Length; i++)
+                                    {
+                                        RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                        model.tglbayar = dd.tglbayar;
+                                        model.Nosisda = dd.Nosisda;
+                                        model.Namasiswa = dd.Namasiswa;
+                                        model.Kelastingkat = dd.Kelastingkat;
+                                        model.Jenjang = dd.Jenjang;
+                                        model.SSName = ss[i];
+                                        model.nominal = nomSS[i];
+                                        model.tipebayar = dd.tipebayar;
+                                        model.Username = dd.Username;
+                                        models.Add(model);
+                                    }
+                                }
+                                else
+                                {
+                                    RekapSchoolSupportVM model = new RekapSchoolSupportVM();
+                                    model.tglbayar = dd.tglbayar;
+                                    model.Nosisda = dd.Nosisda;
+                                    model.Namasiswa = dd.Namasiswa;
+                                    model.Kelastingkat = dd.Kelastingkat;
+                                    model.Jenjang = dd.Jenjang;
+                                    model.SSName = dd.JenisSS;
+                                    model.nominal = dd.nominal;
+                                    model.tipebayar = dd.tipebayar;
+                                    model.Username = dd.Username;
+                                    models.Add(model);
+                                }
                             }
                         }
                     }
-                }
 
-                /*
-                  * iMa : filtering
-                  */
-                int? isDel = null;
-                for (int j = 0; j < models.Count(); j++)
-                {
-                    if (isDel != null)
+                    /*
+                      * iMa : filtering
+                      */
+                    int? isDel = null;
+                    for (int j = 0; j < models.Count(); j++)
                     {
-                        j = models.Count() - 2;
-                        models.Remove(models[Convert.ToInt32(isDel)]);
-                    }
-                    IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
-                    t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
-                    if (t.Count() == 0)
-                    {
-                        if (j == models.Count() - 1)
+                        if (isDel != null)
                         {
-                            models.Remove(models[j]);
+                            j = models.Count() - 2;
+                            models.Remove(models[Convert.ToInt32(isDel)]);
+                        }
+                        IEnumerable<Transaksi> t = db.Transaksis.OrderBy(x => x.TransId);
+                        t = t.Where(x => x.Nosisda.Equals(models[j].Nosisda));
+                        if (t.Count() == 0)
+                        {
+                            if (j == models.Count() - 1)
+                            {
+                                models.Remove(models[j]);
+                            }
+                            else
+                            {
+                                isDel = j;
+                            }
                         }
                         else
                         {
-                            isDel = j;
-                        }
-                    }
-                    else
-                    {
-                        int eachsiswa = 0;
-                        foreach (var dt in t)
-                        {
-                            if (dt.SSId != null)
+                            int eachsiswa = 0;
+                            foreach (var dt in t)
                             {
-                                //RekapSPPVM mm = new RekapSPPVM();
-                                //models[j].biayaBM = dt.bayarBM.ToString();
-                                models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
-                                models[j].SSId = dt.SSId.ToString();
-                                models[j].SSName = dt.JenisSS;
-                                models[j].nominal = dt.nominal;
-                                models[j].tipebayar = dt.tipebayar;
-                                models[j].Username = dt.Username;
-                                eachsiswa++;
+                                if (dt.SSId != null)
+                                {
+                                    //RekapSPPVM mm = new RekapSPPVM();
+                                    //models[j].biayaBM = dt.bayarBM.ToString();
+                                    models[j].tglbayar = Convert.ToDateTime(dt.tglbayar);
+                                    models[j].SSId = dt.SSId.ToString();
+                                    models[j].SSName = dt.JenisSS;
+                                    models[j].nominal = dt.nominal;
+                                    models[j].tipebayar = dt.tipebayar;
+                                    models[j].Username = dt.Username;
+                                    eachsiswa++;
+                                }
                             }
+                            /*SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSId));
+                            models[j].SSId = dtss.JenisSS;*/
                         }
-                        //SchoolSupport dtss = db.SchoolSupports.Find(Convert.ToInt32(models[j].SSName));
-                        //models[j].SSId = dtss.JenisSS;
                     }
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
                 }
             }
 
